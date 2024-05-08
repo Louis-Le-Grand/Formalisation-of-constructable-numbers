@@ -29,3 +29,20 @@ There is a function for the union of two sets (``SetSet.subset_union_right``/``S
 ```lean
 example (a b c d : Set ℂ) : c ⊆ a ∪ b ∪ c ∪ d := by sorry
 ```
+
+## lemmas for Complex.abs
+in lemma int_cir_cir_4'
+
+```lean
+example (a b : ℂ) (h: a ≠ b): Complex.abs (a-b / Complex.abs (a-b)) = 1 := by
+```
+
+```lean
+example (a b  : ℂ) (h: a ≠ b): Complex.abs ((a - b ) / Complex.abs (a - b)) = 1 := by
+  calc
+    _ = Complex.abs (a - b)/ Complex.abs (Complex.abs (a - b))  := by exact map_div₀ Complex.abs (a-b) (Complex.abs (a-b))
+    _ = 1 := by simp; rw[div_self]; rw[←Complex.dist_eq, dist_ne_zero]; exact h
+
+example (a b  : ℂ): Complex.abs (a*b) = Complex.abs a * Complex.abs b := by
+  rw [@AbsoluteValue.map_mul]
+```

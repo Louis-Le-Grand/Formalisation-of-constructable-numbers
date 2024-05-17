@@ -8,6 +8,8 @@ def line_through_two_points (z₁ z₂: ℂ) : Set ℂ:= {(t : ℂ) * z₁ + (1-
 
 #check NormedAddTorsor
 
+--Todo try modify cir to two points
+
 def intersection_line_line (z₁ z₂ z₃ z₄ :ℂ) :=
   line_through_two_points z₁ z₂ ∩ line_through_two_points z₃ z₄
 
@@ -91,6 +93,7 @@ lemma int_cir_cir_4 (c₁ r₁ r₂ c₂ r₃ r₄ : ℂ) (h: (dist c₁ c₂)+(
   .card (intersection_circle_circle c₁ r₁ r₂ c₂ r₃ r₄) = 1 := by
   rw[int_cir_cir_4' (h:=h) (neq:=neq)]; simp
 
+--TODO show comm int
 
 -- dist c₁ c₂ + r₂ = r₁ and circel not equal --> one intersection
 lemma int_cir_cir_5' (c₁ r₁ r₂ c₂ r₃ r₄ : ℂ) (h: (dist c₁ c₂)+(dist r₃ r₄)=(dist r₁ r₂)) (neq: c₁ ≠ c₂):

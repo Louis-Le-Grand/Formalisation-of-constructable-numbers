@@ -1,0 +1,28 @@
+% This file makes the web version of the blueprint
+
+\documentclass{report}
+
+\usepackage{amsmath,amsfonts,amsthm,amssymb}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\DeclareGraphicsExtensions{.svg,.png,.jpg}
+\usepackage[capitalize]{cleveref}
+\usepackage[showmore,dep_graph, project=../../]{blueprint}
+
+\usepackage{tikz-cd}
+\usepackage{tikz}
+
+\input{macro/common}
+\input{macro/web}
+
+\home{https://Louis-Le-Grand.github.io/Formalisation-of-constructable-numbers}
+\github{https://github.com/Louis-Le-Grand/Formalisation-of-constructable-numbers}
+\dochome{https://Louis-Le-Grand.github.io/Formalisation-of-constructable-numbers/docs}
+
+\title{Formalisation-of-constructable-numbers}
+\author{Ludwig Monnerjahn}
+
+\begin{document}
+\maketitle
+\input{content}
+\end{document}

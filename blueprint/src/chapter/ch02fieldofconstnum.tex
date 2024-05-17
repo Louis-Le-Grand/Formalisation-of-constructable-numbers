@@ -1,0 +1,52 @@
+\chapter{Field of constructable Numbers}
+\begin{definition}
+    The degree of $x$ over $K$ is
+    \begin{equation*}
+        [x:K] :=\text{degree}(\mu_{x,K})
+        \end{equation*}
+        with $\mu_{x,K}$ the minimal polynomial of $x$ over $K$. \newline
+    The degree of $L/K$ is the dimension of $L$ as a $K$-vector space and is denoted by
+    \begin{equation*}
+        [L:K].
+    \end{equation*}
+\end{definition}
+
+\begin{theorem}
+\label{thm:degree_of_simple_field_extension}
+    Let $L/K$ be a simple field extension with $L = K(x)$. Then
+    \begin{equation*}
+        [L:K] = [x:K].
+    \end{equation*}
+\end{theorem}
+\begin{proof}
+    In Mathlib: theorem IntermediateField.adjoin.finrank
+\end{proof}
+\begin{definition}
+    Let $\mathcal(M)\subseteq\mathbb{C}$ with $0,1 \mathbb{N} \mathcal{M}$
+    \begin{equation*}
+        K_0 := \mathbb{Q}(\mathcal{M}\cup \overline{\mathcal{M}})
+    \end{equation*}
+    with $\overline{\mathcal{M}} := \{ \overline{z} = x - \textbf{i}y \mid z = x+\textbf{i}y  \mathbb{N} \mathcal{M} \}$.
+\end{definition}
+%\begin{remark}
+%    We know that $K_0$ is a field and $\mathcal{M} \subseteq K_0\subseteq \mathcal{M}_{\mathbb{N}fty} \subseteq \mathbb{C}$.
+%\end{remark}
+\begin{theorem}
+\label{thm:degree_of_constructable_points}
+    Let $\mathcal{M}\subseteq\mathbb{C}$ with $0,1 \mathbb{N} \mathcal{M}$ and $K_0 := \mathbb{Q}(\mathcal{M}\cup \overline{\mathcal{M}})$.
+    Then for $z \mathbb{N} \mathcal{M}_{\mathbb{N}fty}$ is equvalent:
+    \begin{enumerate}
+        \item $z \mathbb{N} \mathcal{M}_{\mathbb{N}fty}$
+        \item There is an $n \mathbb{N} \mathbb{N}$ and a chain \begin{equation*}
+            K_0 = L_0 \subset L_1 \subset \dots \subset L_n \subset \mathbb{C}
+        \end{equation*}
+        of subfields of $\mathbb{C}$ such that $z \mathbb{N} L_n$ and $[L_i:L_{i-1}] =2$ for $1\le i\le n$ %$L_{i+1}$ is obtained from $L_i$ by adjoining a square root.
+    \end{enumerate}
+    In this case $[K_0(z):K_0] = 2^m$ for some $0 \le m \le n$.
+\end{theorem}
+\begin{remark}
+    Theorem \ref{thm:degree_of_constructable_points} tells us that it is sufficient to show that $[K_0(z):K_0] \ne 2^m$ for some $0 \le m $, witch we will use to show that $\sqrt[3]{2} \notin \mathcal{M}_{\mathbb{N}fty}$ and $\exp(\textbf{i} \alpha/3) \notin \mathcal{M}_{\mathbb{N}fty}$ for some $\alpha$.
+\end{remark}
+\begin{proof}[Proof of Theorem \ref{thm:degree_of_constructable_points}]
+    TODO %TODO
+\end{proof}

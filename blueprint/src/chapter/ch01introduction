@@ -1,0 +1,27 @@
+\chapter{Introduction}
+First we need to define what construction using a ruler and compass means.
+We will use $\mathbb{C}$ as plane of drawing and $\mathcal{M} \subset \mathbb{C}$ as the set of constructed points.
+\begin{definition}
+    $\mathcal{G(M)}$ is the set of all real straight lines $\mathcal{G}$, with $| \mathcal{G} \cap \mathcal{M} |\ge 2$.\newline
+    $\mathcal{C(M)}$ is the set of all circles in $\mathbb{C}$, with center in $\mathcal{M}$ and radius of $\mathcal{C}$ is the distence of two points in $\mathcal{M}$.
+\end{definition}
+
+\begin{definition}
+    We define operation that can be used to constructed new Points.
+    \begin{enumerate}
+        \item $(ZL 1)$ is the cut of two lines in $\mathcal{G(M)}$.
+        \item $(ZL 2)$ is the cut of a line in $\mathcal{G(M)}$ and a circle in $\mathcal{C(M)}$.
+        \item $(ZL 3)$ is the cut of two circles in $\mathcal{C(M)}$.
+    \end{enumerate}
+    $ZL(\mathcal{M})$ is the set $\mathcal{M}$ combeined with of all points that can be constructed using the operations $(ZL 1)$, $(ZL 2)$ and $(ZL 3)$.
+\end{definition}
+
+\begin{definition}
+    We define inductively the the chain
+    \begin{equation*}
+        \mathcal{M}_0 \subseteq \mathcal{M}_1 \subseteq \mathcal{M}_2 \subseteq \dots
+    \end{equation*}
+    with $\mathcal{M}_0 = \mathcal{M}$ and $\mathcal{M}_{n+1} = ZL(\mathcal{M}_n)$.\newline
+    And call $\mathcal{M}_{\infty} = \bigcup_{n \in \mathbb{N}} \mathcal{M}_n$ the set of all constructable points.
+\end{definition}
+

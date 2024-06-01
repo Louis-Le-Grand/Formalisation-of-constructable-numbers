@@ -1,15 +1,367 @@
-\chapter{Appendix: A collection of results which are needed in the proof.}\label{ch_bestiary}
-
+\chapter{Appendix: A collection of results which are needed in the proof.}
+\label{ch_bestiary}
 In this (temporary, unorganised) appendix I list a whole host of definitions and theorems which were known to humanity by the end of the univers \cite{JAN_SCHRÖER:2023}. These definitions and theorems will find their way into more relevant sections of the blueprint once I have time. Note also that many of the \emph{definitions} here are yet to be formalised in Lean, and this needs to be done before we can start talking about formalising theorems.
-
-\section{Results from class field theory}
-
-
-\section{Galois representations}
-
-
-\section{Algebra}
-
-
 %We need the a debug placeholder for BibTex Stuff:
-\nocite{*}
+
+
+\section*{Stuff I'm working on}
+
+
+
+\begin{definition}
+    For a Set $U \subset \mathbb{C}$ we define the \emph{conjugate set} of $U$ as 
+    \begin{equation*}
+        Conj(U) = \{z\in \mathbb{C} \mid \exists w\in U: z = \overline{w}\}
+    \end{equation*}
+\end{definition}
+
+%3.14
+\begin{lemma}
+    \label[lemma]{re_im_in_L}
+    Let $L$ be a subfield of $\mathbb{C}$, with $L = conj(L)$. For all $z = x + \imath y \in L$ we have $x, \imath y \in L$.
+\end{lemma}
+\begin{proof}
+    Let $z = x + \imath y \in L$. According to prerequisite we have $\overline{Z}=x-\imath y \in L$. This implies
+    \begin{equation*}
+        \frac{z + \overline{z}}{2} = x \in L
+    \end{equation*}
+    and therfore also $\imath y = z - x \in L$.
+\end{proof}
+
+%3.15
+\begin{lemma}
+    \label[lemma]{dist_sqard_in_L}
+    Let $L$ be a subfield of $\mathbb{C}$, with $L = conj(L)$, and $z_1, z_2 \in L$.
+    For $r := \|z_1-z_2\|$ we get that $r^2 \in L$.
+\end{lemma}
+\begin{proof}
+    For $z_1 = x_1 + \imath y_1$ and $z_2 = x_2 + \imath y_2$ we have
+    \begin{equation*}
+        r = \|z_1 - z_2\| = \sqrt{(x_1 - x_2)^2 + (y_1 - y_2)^2}
+    \end{equation*}
+    and therefore
+    \begin{equation*}
+        r^2 = (x_1 - x_2)^2 + (y_1 - y_2)^2 
+    \end{equation*}
+    After applying Lemma \ref{re_im_in_L} we get $r^2 \in L$.
+\end{proof}
+
+%3.16
+\begin{lemma}
+    \label[lemma]{Intersection_line_line}
+    Let $L$ be a subfield of $\mathbb{C}$, with $L = conj(L)$. For $i = 1,2,3,4$ let $z_i = x_i + \imath y_i \in L$ with $z_1 \ne z_2$ and $z_3 \ne z_4$. Define
+    %TODO: write in two lines
+    \begin{equation*}\begin{aligned}
+        G_1 := \{\lambda z_1 + (1-\lambda)z_2 \mid \lambda \in \mathbb{R}\},\\
+        G_2 := \{\mu z_3 + (1-\mu)z_4 \mid \mu \in \mathbb{R}\}.
+    \end{aligned} \end{equation*}
+    If $G_1 \cap G_2 \ne \emptyset$ and $G_1 \ne G_2$. It is equivalent 
+    \begin{itemize}
+        \item $z\in G_1 \cap G_2$.
+        \item Ther are $\lambda, \mu \in \mathbb{R}$ such that 
+        $$\lambda(x_1 - x_2)+\mu(x_4-x_3) = x_4-x_2,\\
+        \lambda(\imath y_1 - \imath y_2)+\mu(\imath y_4-\imath y_3) = \imath y_4-\imath y_2,$$
+        and $z = \lambda z_1 + (1-\lambda)z_2$.
+    \end{itemize}
+    In this case $z \in L$.
+\end{lemma}
+\begin{proof}
+    It is clear that $z\in G_1\cap G_2$ holds if and only if ther are $\lambda, \mu \in \mathbb{R}$ such that
+    \begin{equation*}
+        \lambda z_1 + (1-\lambda)z_2 = \mu z_3 + (1-\mu)z_4
+    \end{equation*}
+    We can rewrite this as to get the desired result. %TODO: add Rewrite
+    Since $L = conj(L)$ we have $x_i, \imath y_i \in L$ \ref{re_im_in_L}. 
+    If ther is a solution i $\mathbb{R}^2$ for $\mu, \lambda$, then ther is a soltion in $L^2$.
+    %TODO: add more
+    So $\lambda$ and therefore $z$ is in $L$.
+\end{proof}
+
+%3.17
+\begin{lemma}
+    \label[lemma]{Intersection_line_circle}
+    Let $L$ be a subfield of $\mathbb{C}$, with $L = conj(L)$. For $i = 1,2,3$ let $z_i = x_i + \imath y_i \in L$ with $z_1 \ne z_2$, and let $r > 0$ in $\mathbb{R}$ with $r^2 \in L$. Define
+    \begin{equation*}\begin{aligned}
+        G := \{\lambda z_1 + (1-\lambda)z_2 \mid \lambda \in \mathbb{R}\},\\
+        C := \{z = x + \imath y \in \mathbb{C} \mid \|z - z_3\| = r\}.
+    \end{aligned} \end{equation*}
+    If $G \cap C \ne \emptyset$. Then the following is equivalent:
+    \begin{itemize}
+        \item $z\in G \cap C$.
+        \item There is a $\lambda \in \mathbb{R}$ with $\lambda^2 a+ \lambda b + c = 0$ where
+        \begin{align*}
+            a &:= (x_1 - x_2)^2 + (\imath y_1 - \imath y_2)^2,\\
+            b &:= 2(x_1 - x_2)(x_2 - x_3) - 2(\imath y_1 - \imath y_2)(\imath y_2 - \imath y_3),\\
+            c &:= (x_2 - x_3)^2 + (\imath y_2 - \imath y_3)^2 - r^2,
+        \end{align*}
+        and $z = \lambda z_1 + (1-\lambda)z_2$.
+    \end{itemize}
+    In this case $z \in L(\sqrt{w})$ for an $w \in L$.
+\end{lemma}
+
+\begin{proof}
+%TODO: add proof
+\end{proof}
+
+%3.18
+\begin{lemma}
+    \label[lemma]{Intersection_circle_circle}
+    Let $L$ be a subfield of $\mathbb{C}$, with $L = conj(L)$. For $i = 1,2 $ let $z_i = x_i + \imath y_i \in L$ with $z_1 \ne z_2$ and let $r_i > 0$ in $\mathbb{R}$ with $r_i^2 \in L$. Define
+    \begin{equation*} \begin{aligned}
+        C_1 := \{z = x + \imath y \in \mathbb{C} \mid \|z - z_1\| = r_1\},\\
+        C_2 := \{z = x + \imath y \in \mathbb{C} \mid \|z - z_2\| = r_2\}.
+    \end{aligned} \end{equation*}
+    If $C_1 \cap C_2 \ne \emptyset$ and $C_1 \ne C_2$. Then 
+    $$G := \{x+\imath y \in \mathbb{C} \mid 2(x_2 - x_1)x - 2(\imath y_2 - \imath y_1)\imath y = r_1^2 - r_2^2 + x_2^2 - x_1^2 + (\imath y_2)^2 - (\imath y_1)^2\} $$
+    is a real line, and $$ C_1 \cap C_2 = G \cap C_1 = G \cap C_2. $$
+    For $z \in C_1 \cap C_2$ there is a $w \in L$ such that $z \in L(\sqrt{w})$.
+\end{lemma}
+\begin{proof}
+    %TODO: add proof
+\end{proof}
+
+%3.19
+\begin{lemma}
+    \label[lemma]{dergee2_iff_adjoint_sqrt}
+    Let $K\subset L \subset \mathbb{C}$ be fields. Then the following is equivalent:
+    \begin{itemize}
+        \item $[L:K] = 2$.
+        \item There is a $w \in K$ with $\sqrt{w} \notin K$ and $L = K(\sqrt{w})$.
+    \end{itemize}
+\end{lemma}
+\begin{proof}
+    $(ii)\implies (i)$: Let $w$ be as in $(ii)$.Then $\sqrt{w}$ is a root of $X^2 - w \in K[X]$. Since $\sqrt{w} \notin K$ this polynomial is irreducible in $K[X]$. Therefore $[L:K] = 2$.\\
+    $(i)\implies (ii)$: Let $[L:K] = 2$ and $a \in L \setminus K$. Then $K(\alpha) = L$ and 
+    $$\mu_{\alpha, K}=X^2 + bX + c \quad b,c \in K$$
+    This implies 
+    $$\alpha = -\frac{b}{2} \pm \sqrt{\frac{b^2}{4} - c} $$
+    Now let $w := \frac{b^2}{4} - c \in K$ then we get $L = K(\alpha) = K(\sqrt{w})$.
+\end{proof}
+
+%3.20
+\begin{lemma}
+    \label[lemma]{conj_of_adjoin}
+    Let $K$ be a subfield of $\mathbb{C}$ with $conj(K)=K$, and $ M \subset \mathbb{C}$ be a subset with $M = conj(M)$. Then holds
+    \begin{equation*}
+        conj(K(M)) = K(M).
+    \end{equation*}
+\end{lemma}
+\begin{proof}
+    We know that the complex conjugation is a field automorphism $\overline{\cdot }: \mathbb{C} \to \mathbb{C}$, whit $\overline{\overline{z}} = z$ for all $z \in \mathbb{C}$. Therefore we have
+    $conj(K(M))$ is a subfield of $\mathbb{C}$.\\
+    Since $K$ and $M$ are subsets of $K(m)$ we have $conj(K) = K$ and $conj(M) = M$ are subsets of $conj(K(M))$. Therefore $$K(M) \subset conj(K(M)).$$
+    If we know apply $conj$ to both sides we get
+    $$conj(K(M)) \subset conj(conj(K(M))) = K(M).$$
+    Therefore $conj(K(M)) = K(M)$.
+\end{proof}
+
+
+%TODO: add lemma wich $K_0 \subset M_{\infty}$
+
+%3.21
+\begin{theorem}
+    \label[theorem]{Z_in_Minf_1}
+    For $z \in \mathbb{C}$ is equivalent:
+    \begin{itemize}
+        \item $z \in M_{\infty}$
+        \item There is an intermidiate field $L$ of $\mathbb{C}/K_0$ whit $z \in L$, so that $L$ aries from $K_0$ by a sequence of adjunctions of square roots.
+        \item There is an $n\le 0$ and chain 
+            $$K_0 = L_1 \subset L_2 \subset \ldots \subset L_n \subset \mathbb{C}$$
+            of subfields of $\mathbb{C}$ so that $z \in L_n$ and 
+            $$ [L_{i+1}:L_i] = 2 \quad \text{for} \quad i = 0, \ldots, n-1.$$
+    \end{itemize}
+\end{theorem}
+
+\begin{remark}
+    In this cases the $[K_0(z):K_0] = 2^m$ for some $0 \le m \le n$.
+\end{remark}
+\begin{proof}[Proof of Theorem \ref{Z_in_Minf_1}]
+    $(ii) \iff (iii)$ Follows from the definition and Lemma \ref{dergee2_iff_adjoint_sqrt}.\\
+    $(i) \implies (ii)$: We assume that $z$ is derived from $K_0$ by (ZL1), (ZL2) and (ZL3). %TODO: add ref
+    Lemma \ref{Intersection_circle_circle}, \ref{Intersection_line_circle} and \ref{Intersection_line_line} in combination with Lemma \ref{conj_of_adjoin} 
+    imply that ther is an $w \in K_0$ so that $z \in K_0(\sqrt{w})$. Since $\overline{w} \in K_0$, by definition. We define
+    $$K_1 := K_0(\sqrt{w},\sqrt{\overline{w}}).$$
+    $K_1$ derives from $K_0$ sucsessively by adjunction of square roots. Note that $K_1 = conj(K_1)$, by Lemma \ref{conj_of_adjoin} and the fact that $\sqrt{\overline{w} = \overline{\sqrt{w}}}$.
+    Because of the definition of $$M_{\infty} = \bigcup_{n=0}^{\infty} M_n,$$
+    he statement follows by induction.\\ %TODO: Elaborate on induction for lean
+    $(ii) \implies (i)$: We know that $M_inf$ is an quadritc complet field \ref{M_inf_quad_closed}, i.e. $\sqrt{z} \in M_{\infty}$ for all $z \in M_{\infty}$.
+    Futhermore we know that $K_0\subseteq M_{\infty} \subseteq \mathbb{C}$, %TODO: add ref
+    therefore every field $L\subseteq \mathbb{C}$ which is derived from $K_0$ by a sequence of adjunctions of square roots is contaianted in $M_{\infty}$.
+\end{proof}
+
+
+\section[Filed of Constructable Numbers]{Field $M_{\infty}$}
+%2.3
+\begin{theorem}
+    \label{M_inf_subfield_C}
+    For $M\subseteq \mathbb{C}$ with $0,1 \in M$ is $M_{\infty}$ a subfield of $\mathbb{C}$.
+\end{theorem}
+\begin{proof}
+    Chose $z_1, z_2 \in M_{\infty}$,after construction \ref{construction_add}
+    we have $z_1 + z_2 \in M_{\infty}$ and construction \ref{construction_neg}
+    gives us that for every $z \in M_{\infty}$ we have $-z \in M_{\infty}$. Therefore $M_{\infty}$ is closed under addition, and contains the additive invers.\\
+    For multiplication let $z_1 = r_1 \exp(\imath \alpha_1)$ and $z_2 = r_2 \exp(\imath \alpha_2)$ be in $M_{\infty}$. Then we have 
+    $$z_1 z_2 = r_1 r_2 \exp(\imath (\alpha_1 + \alpha_2)) \in M_{\infty}$$. By combining the lemmas \ref{construction_add_angle}, \ref{construction_mult_pos_real} and \ref{construction_polar}
+    we obtain that $z_1 z_2 \in M_{\infty}$.\\
+    For the inverse of $0 \ne z = r \exp(\imath \alpha) \in M_{\infty}$ we know that $$z^{-1} = r^{-1} \exp(\imath(2\pi - \alpha)).$$ We know that $r, \exp(\imath \alpha) \in M_{\infty}$, see construction \ref{construction_polar}.
+    Now we can use construction \ref{construction_inv_pos_real} and \ref{construction_conj} to show,
+    that $r^{-1}, \exp(\imath(2\pi - \alpha)) = \overline{\exp(\imath\alpha)} \in M_{\infty}$. By applying that $M_{\infty}$ is closed under multiplication, shown above, we get that $z^{-1} \in M_{\infty}$.\\
+    Therefore $M_{\infty}$ is a subfield of $\mathbb{C}$.
+\end{proof}
+
+%2.4
+\begin{lemma}
+    \label[lemma]{M_inf_properties}
+    For $M\subseteq \mathbb{C}$ with $0,1 \in M$ applies:
+    \begin{itemize}
+        \item[(i)] $\imath \in M_{\infty}$.
+        \item[(ii)] $M_{\infty} = conj(M_{\infty})$.
+        \item[(iii)] For $z = x + \imath y \in \mathbb{C}$ is equivalent:
+            \begin{itemize}
+                \item $z \in M_{\infty}$.
+                \item $x, y \in M_{\infty}$.
+                \item $x, \imath y \in M_{\infty}$.
+            \end{itemize}
+        \item[(iv)] For $0 \ne z = r \exp(\imath \alpha) \in \mathbb{C}$ is equivalent:
+            \begin{itemize}
+                \item $z \in M_{\infty}$.
+                \item $r,\exp(\imath \alpha) \in M_{\infty}$.
+            \end{itemize}
+    \end{itemize}
+\end{lemma}
+\begin{proof}
+    This lemma is a dierct consequence of section \ref{basic_constructions}.
+    \begin{itemize}
+        \item[(i):] We kan apply construction \ref{construction_imath}
+        \item[(ii):] We can apply construction \ref{construction_conj} and the fact that $\overline{\overline z} = z$ for all $z \in\mathbb{C}$.
+        \item[(iii):] We can apply construction \ref{construction_re_im} and \ref{construction_imath}.
+        \item[(iv):] We can apply construction \ref{construction_polar}.
+    \end{itemize}
+\end{proof}
+
+%2.5
+\begin{lemma}
+    \label[lemma]{sqrt_in_M_inf}
+    For $M\subseteq \mathbb{C}$ with $0,1 \in M$. If $z$ the $M_{\infty}$, then is $\sqrt{z} \in M_{\infty}$.
+\end{lemma}
+\begin{proof}
+    Let $z = r \exp(\imath \alpha) \in M_{\infty}$, whitout loss of generality we can assume that $r \ne 0$. 
+    Lemma \ref{M_inf_properties}(iv) implies that $r, \exp(\imath \alpha) \in M_{\infty}$. By combining construction \ref{construction_halving_angle},
+    which states that $\exp(\imath \alpha / 2) \in M_{\infty}$ and construction \ref{construction_sqrt_pos_real},
+    that gives us that $\sqrt{r} \in M_{\infty}$, we get that $$\sqrt{z} = \sqrt{r} \exp(\imath \alpha / 2) \in M_{\infty}.$$
+\end{proof}
+
+\begin{definition}[quadritc closed field]
+    A field $K$ is called \emph{quadritc closed} if $$K=\{a^2\mid a \in K\}.$$
+\end{definition}
+\begin{remark}
+    An equivalent definition is that $K$ is quadritc closed if for all $z \in K$ we have $\sqrt{z} \in K$.
+\end{remark}
+
+%2.6
+\begin{lemma}
+    \label[lemma]{M_inf_quad_closed}
+    For $M\subseteq \mathbb{C}$ with $0,1 \in M$ is $M_{\infty}$ quadritc closed.
+\end{lemma}
+\begin{proof}
+    Combian theorem \ref{M_inf_subfield_C} to get that $M_{\infty}$ is a field and Lemma \ref{sqrt_in_M_inf} to get that $M_{\infty}$ is quadritc closed.
+\end{proof}
+
+\section{Basic constructions}\label[section]{basic_constructions}
+For the following constructions we assume that $M\subseteq \mathbb{C}$ with $0,1 \in M$.
+
+%2.3.1
+\begin{lemma}[Negative complex numbers]
+    \label[lemma]{construction_neg}
+    For $z \in M_{\infty}$ is $-z \in M_{\infty}$.
+\end{lemma}
+
+\begin{proof}
+    %TODO: add proof, and Construction Idea
+\end{proof}
+
+%2.3.2
+\begin{lemma}[Addition of complex numbers]
+    \label[lemma]{construction_add}
+    For $z_1, z_2 \in M_{\infty}$ is $z_1 + z_2 \in M_{\infty}$.
+\end{lemma}
+
+\begin{proof}
+    %TODO: add proof, and Construction Idea
+\end{proof}
+
+%2.3.3
+%TODO: Comper to mirrowed version
+\begin{lemma}[Complex conjugation]
+    \label[lemma]{construction_conj}
+    For $z \in M_{\infty}$ is $\overline{z} \in M_{\infty}$.
+\end{lemma}
+
+\begin{proof}
+    %TODO: add proof, and Construction Idea
+\end{proof}
+
+%2.3.4
+\begin{lemma}[Mitpiont of two complex numbers]
+    \label[lemma]{construction_midpoint}
+    For $z_1, z_2 \in M_{\infty}$ is $\frac{z_1 + z_2}{2} \in M_{\infty}$.
+\end{lemma}
+%TODO: add proof, and Construction Idea
+
+%2.3.5
+\begin{lemma}[Halving of Angle]
+    \label[lemma]{construction_halving_angle}
+    For $z = r \exp(\imath \alpha) \in M_{\infty}$ is $\exp(\imath \alpha / 2) \in M_{\infty}$.
+\end{lemma}
+
+%TODO: add proof, and Construction Idea
+
+%2.3.6
+%TODO: maybe write as \exp(\imath \alpha) + \exp(\imath \beta) = \exp(\imath \gamma) \in M_{\infty}
+\begin{lemma}[Addition of Angles]
+    \label[lemma]{construction_add_angle}
+    For two given angle $\alpha$ (given by two streches $[a,b]$ and $[c,d]$) and $\beta$ (given by two streches $[e,f]$ and $[g,h]$), with $ a,b,c,d,e,f,g,h \in M_{\infty}$, the addition of the angles is constructable.
+\end{lemma}
+%TODO: add proof, and Construction Idea, 
+
+%2.3.7
+\begin{lemma}[multiplication of positive real numbers]
+    \label[lemma]{construction_mult_pos_real}
+    For $r_1, r_2 > 0 \in \mathbb{R}\cup M_{\infty}$ is $r_1 r_2 \in M_{\infty}$.
+\end{lemma}
+%TODO: add proof, and Construction Idea
+
+%2.3.8
+\begin{lemma}[Inverse of positive real numbers]
+    \label[lemma]{construction_inv_pos_real}
+    For $r > 0\in \mathbb{R}\cup M_{\infty}$ is $r^{-1} \in M_{\infty}$.
+\end{lemma}
+%TODO: add proof, and Construction Idea
+
+%2.3.9
+\begin{lemma}[Root of positive real numbers]
+    \label[lemma]{construction_sqrt_pos_real}
+    For $r > 0 \in \mathbb{R}\cup M_{\infty}$ is $\sqrt{r} \in M_{\infty}$.
+\end{lemma}
+%TODO: add proof, and Construction Idea
+
+%2.3.10
+\begin{lemma}[Polarkoordinates of complex numbers]
+    \label[lemma]{construction_polar}
+    For $z = r \exp(\imath \alpha) \in M_{\infty}$ is $r, \exp(\imath \alpha) \in M_{\infty}$.
+\end{lemma}
+%TODO: add proof, and Construction Idea
+
+%2.3.11
+\begin{lemma}[Real and Imaginary part of complex numbers]
+    \label[lemma]{construction_re_im}
+    For $0 \ne z = x + \imath y \in M_{\infty}$ is $x, \imath y \in M_{\infty}$.
+\end{lemma}
+%TODO: add proof, and Construction Idea
+
+%2.3.12
+\begin{lemma}[Construction of $\imath$]
+    \label[lemma]{construction_imath}
+    $\imath \in M_{\infty}$.
+\end{lemma}
+%TODO: add proof, and Construction Idea

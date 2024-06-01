@@ -7,3 +7,14 @@ An ongoing bachelor thesis.
 # Information about the project
 
 Will be here soon™️.
+
+# Questions
+Shod I definen the Set M in Lean?
+=> Can I define M always withe as M sub \C, with 0,1 in M?
+
+Change Definition to Structure?
+
+
+Can/ Should i setup Doc in a way that the Mathlib is not included in the Documenation?
+
+Divert of makro/maros in ymi?

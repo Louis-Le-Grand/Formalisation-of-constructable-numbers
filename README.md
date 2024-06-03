@@ -19,3 +19,11 @@ Change Definition to Structure?
 Can/ Should i setup Doc in a way that the Mathlib is not included in the Documenation?
 
 Divert of makro/maros in ymi?
+
+
+Latexmk: Summary of warnings from last run of *latex:
+  Latex failed to resolve 36 reference(s)
+  Latex failed to resolve 2 citation(s)s
+
+
+Computer Scine thesis: 

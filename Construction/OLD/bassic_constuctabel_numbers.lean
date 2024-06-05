@@ -1,5 +1,5 @@
-import Construction.Geometry
-import Construction.Set_of_construtable_numbers
+import Construction.OLD.Geometry
+import Construction.OLD.Set_of_construtable_numbers
 
 --  M ⊆ ℂ mit 0,1 ∈ M
 lemma add_inv_in_M_inf (M : Set ℂ) (hM : 0 ∈ M ∧ 1 ∈ M) : ∀ z : ℂ, z ∈ M_inf M → -z ∈ M_inf M := by

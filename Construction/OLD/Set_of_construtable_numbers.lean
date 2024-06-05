@@ -1,4 +1,4 @@
-import Construction.Geometry
+import Construction.OLD.Geometry
 
 -- Definition of construction of M_inf
 def Z_M (M : Set ℂ) : Set ℂ :=
@@ -45,16 +45,17 @@ lemma M_I_in_M_inf (M : Set ℂ)(m: ℕ): M_I M m ⊆ M_inf M := by
 lemma M_I_in_M_inf' (M : Set ℂ)(x : ℂ)(m: ℕ) :  x ∈ M_I M m → x ∈  M_inf M := by
   apply M_I_in_M_inf
 
-lemma M_inf_in_M_I (M : Set ℂ) : ∀ x ∈ M_inf M, ∃ n, ↑x ∈ (M_I M n):= by
+lemma M_inf_in_M_I (M : Set ℂ) : ∀ x ∈ M_inf M, ∃ n, x ∈ (M_I M n):= by
   intro x; apply Set.mem_iUnion.mp
 
---Todo change x : M to x ∈ M
 lemma M_inf_in_M_I' (M : Set ℂ)(x:ℂ): x ∈ M_inf M ↔ ∀ᶠ n in Filter.atTop, x ∈ M_I M n := by
   simp; constructor; intro h; have hn: ∃ n, x ∈ M_I M n := by apply M_inf_in_M_I; exact h;
   obtain ⟨n, hn⟩ := hn; use n; intro m hm; apply M_I_Monotone_elm' M n m hm; exact hn
   simp; intro n hn; apply M_I_in_M_inf' M x n; apply hn; simp
 
 
+
+--Todo Delet or do as exercise for filters
 
 lemma Int_cc_in_M_inf' (M : Set ℂ)(c₁ r₁ r₂ c₂ r₃ r₄ : M_inf M): intersection_circle_circle c₁ r₁ r₂ c₂ r₃ r₄ ⊆ M_inf M := by
   have h₁: ∀ᶠ n in Filter.atTop, ↑c₁ ∈ M_I M n:= by rw[←M_inf_in_M_I']; exact Subtype.coe_prop c₁
@@ -66,7 +67,9 @@ lemma Int_cc_in_M_inf' (M : Set ℂ)(c₁ r₁ r₂ c₂ r₃ r₄ : M_inf M): i
   have h: ∀ᶠ n in Filter.atTop,↑c₁ ∈ M_I M n ∧ ↑r₁ ∈ M_I M n ∧ ↑r₂ ∈ M_I M n ∧ ↑c₂ ∈ M_I M n ∧ ↑r₃ ∈ M_I M n ∧ ↑r₄ ∈ M_I M n := by sorry
   have h' (x : intersection_circle_circle ↑c₁ ↑r₁ ↑r₂ ↑c₂ ↑r₃ ↑r₄): ∀ᶠ n in Filter.atTop, ↑x ∈  M_I M n := by sorry
   rw [@Set.subset_def]; intro x hx
-  rw[M_inf_in_M_I'];
+  -- eventually.and to show that the conciontion holds for some n
+  -- eventually.exist
+  --use M_inf_in_M_I iff
   sorry
 
 lemma Int_cc_in_M_inf'' (M : Set ℂ)(c₁ r₁ r₂ c₂ r₃ r₄ : M_inf M): intersection_circle_circle c₁ r₁ r₂ c₂ r₃ r₄ ⊆ M_inf M := by

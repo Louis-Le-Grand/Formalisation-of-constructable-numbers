@@ -128,6 +128,12 @@ lemma z_neg_M_inf (N: Set ℂ)(h₀: (0:ℂ)∈ N)(z : ℂ)(hz : z ∈ (M_inf N)
   have hl : l ∈ L (M_inf N) := by unfold L; use 0; use z; constructor; simp; constructor; apply M_M_inf' N 0 h₀; exact hz
   have hc : c ∈ C (M_inf N) := by rw[c_in_C_M]; use 0; use 0; use z; constructor; simp_all only [dist_zero_left, Complex.norm_eq_abs, l, c]; constructor; apply M_M_inf' N 0 h₀; constructor; apply M_M_inf' N 0 h₀; exact hz
   have hlc : -z ∈ c.points ∩ l.points := by {rw [@Set.mem_inter_iff]; constructor; simp[circle.points]; simp[line.points]; use 2; ring_nf; calc  -(2 * z) + z = -z := by ring}
-  have hlc' : -z ∈ ilc (M_inf N) := by unfold ilc; rw [@Set.mem_setOf]; use c; constructor; exact hc ; use l
-  apply ilc_M_inf N
-  exact hlc'
+  apply ilc_M_inf N; unfold ilc; rw [@Set.mem_setOf]; use c; constructor; exact hc ; use l
+
+lemma add_M_Inf (N: Set ℂ)(h₀: (0:ℂ)∈ N)(z₁ z₂ : ℂ)(hz₁ : z₁ ∈ (M_inf N))(hz₂ : z₂ ∈ (M_inf N)): z₁ + z₂ ∈ (M_inf N) := by
+  let c₁ : circle := {c := z₁, r := (dist 0 z₂)}
+  let c₂ : circle := {c := z₂, r := (dist 0 z₁)}
+  have hc₁ : c₁ ∈ C (M_inf N) := by rw[c_in_C_M]; use z₁; use 0; use z₂; constructor; simp_all only [dist_zero_left, Complex.norm_eq_abs, c₁]; constructor; exact hz₁; constructor; apply M_M_inf' N 0 h₀; exact hz₂
+  have hc₂ : c₂ ∈ C (M_inf N) := by rw[c_in_C_M]; use z₂; use 0; use z₁; constructor; simp_all only [dist_zero_left, Complex.norm_eq_abs, c₂]; constructor; exact hz₂; constructor; apply M_M_inf' N 0 h₀; exact hz₁
+  have hcc : z₁ + z₂ ∈ c₁.points ∩ c₂.points := by rw [@Set.mem_inter_iff];  simp[circle.points]
+  apply icc_M_inf N; unfold icc; rw [@Set.mem_setOf]; use c₁; constructor; exact hc₁; use c₂

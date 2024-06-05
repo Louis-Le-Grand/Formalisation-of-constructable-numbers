@@ -1,6 +1,10 @@
 \chapter{Introduction}
+
+\section{Defining circles and lines and the set of constructable points}
 First we need to define what construction using a ruler and compass means.
 We will use $\mathbb{C}$ as plane of drawing and $\mathcal{M} \subset \mathbb{C}$ as the set of constructed points.
+
+
 \begin{definition}
     $\mathcal{G(M)}$ is the set of all real straight lines $\mathcal{G}$, with $| \mathcal{G} \cap \mathcal{M} |\ge 2$.\newline
     $\mathcal{C(M)}$ is the set of all circles in $\mathbb{C}$, with center in $\mathcal{M}$ and radius of $\mathcal{C}$ is the distence of two points in $\mathcal{M}$.
@@ -25,3 +29,101 @@ We will use $\mathbb{C}$ as plane of drawing and $\mathcal{M} \subset \mathbb{C}
     And call $\mathcal{M}_{\infty} = \bigcup_{n \in \mathbb{N}} \mathcal{M}_n$ the set of all constructable points.
 \end{definition}
 
+\section{Basic constructions}\label[section]{lem:basic_constructions}
+For the following constructions we assume that $M\subseteq \mathbb{C}$ with $0,1 \in M$.
+
+%2.3.1
+\begin{lemma}[Negative complex numbers]
+    \label{lem:construction_neg}
+    For $z \in M_{\infty}$ is $-z \in M_{\infty}$.
+\end{lemma}
+
+\begin{proof}
+    %TODO: add proof, and Construction Idea
+\end{proof}
+
+%2.3.2
+\begin{lemma}[Addition of complex numbers]
+    \label{lem:construction_add}
+    For $z_1, z_2 \in M_{\infty}$ is $z_1 + z_2 \in M_{\infty}$.
+\end{lemma}
+
+\begin{proof}
+    %TODO: add proof, and Construction Idea
+\end{proof}
+
+%2.3.3
+%TODO: Comper to mirrowed version
+\begin{lemma}[Complex conjugation]
+    \label{lem:construction_conj}
+    For $z \in M_{\infty}$ is $\overline{z} \in M_{\infty}$.
+\end{lemma}
+
+\begin{proof}
+    %TODO: add proof, and Construction Idea
+\end{proof}
+
+%2.3.4
+\begin{lemma}[Mitpiont of two complex numbers]
+    \label{lem:construction_midpoint}
+    For $z_1, z_2 \in M_{\infty}$ is $\frac{z_1 + z_2}{2} \in M_{\infty}$.
+\end{lemma}
+%TODO: add proof, and Construction Idea
+
+%2.3.5
+\begin{lemma}[Halving of Angle]
+    \label{lem:construction_halving_angle}
+    For $z = r \exp(\imath \alpha) \in M_{\infty}$ is $\exp(\imath \alpha / 2) \in M_{\infty}$.
+\end{lemma}
+
+%TODO: add proof, and Construction Idea
+
+%2.3.6
+%TODO: maybe write as \exp(\imath \alpha) + \exp(\imath \beta) = \exp(\imath \gamma) \in M_{\infty}
+\begin{lemma}[Addition of Angles]
+    \label{lem:construction_add_angle}
+    For two given angle $\alpha$ (given by two streches $[a,b]$ and $[c,d]$) and $\beta$ (given by two streches $[e,f]$ and $[g,h]$), with $ a,b,c,d,e,f,g,h \in M_{\infty}$, the addition of the angles is constructable.
+\end{lemma}
+%TODO: add proof, and Construction Idea, 
+
+%2.3.7
+\begin{lemma}[multiplication of positive real numbers]
+    \label{lem:construction_mult_pos_real}
+    For $r_1, r_2 > 0 \in \mathbb{R}\cup M_{\infty}$ is $r_1 r_2 \in M_{\infty}$.
+\end{lemma}
+%TODO: add proof, and Construction Idea
+
+%2.3.8
+\begin{lemma}[Inverse of positive real numbers]
+    \label{lem:construction_inv_pos_real}
+    For $r > 0\in \mathbb{R}\cup M_{\infty}$ is $r^{-1} \in M_{\infty}$.
+\end{lemma}
+%TODO: add proof, and Construction Idea
+
+%2.3.9
+\begin{lemma}[Root of positive real numbers]
+    \label{lem:construction_sqrt_pos_real}
+    For $r > 0 \in \mathbb{R}\cup M_{\infty}$ is $\sqrt{r} \in M_{\infty}$.
+\end{lemma}
+%TODO: add proof, and Construction Idea
+
+%2.3.10
+\begin{lemma}[Polarkoordinates of complex numbers]
+    \label{lem:construction_polar}
+    For $z = r \exp(\imath \alpha) \in M_{\infty}$ is $r, \allowbreak \exp(\imath \alpha) \in M_{\infty}$.
+\end{lemma}
+%TODO: add proof, and Construction Idea
+
+%2.3.11
+\begin{lemma}[Real and Imaginary part of complex numbers]
+    \label{lem:construction_re_im}
+    For $0 \ne z = x + \imath y \in M_{\infty}$ is $x, \imath y \in M_{\infty}$.
+\end{lemma}
+%TODO: add proof, and Construction Idea
+
+%2.3.12
+\begin{lemma}[Construction of $\imath$]
+    \label{lem:construction_imath}
+    $\imath \in M_{\infty}$.
+\end{lemma}
+%TODO: add proof, and Construction Idea

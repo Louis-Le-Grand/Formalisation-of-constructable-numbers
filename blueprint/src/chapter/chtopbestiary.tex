@@ -123,251 +123,56 @@ In this (temporary, unorganised) appendix I list a whole host of definitions and
     %TODO: add proof
 \end{proof}
 
-%3.19
-\begin{lemma}
-    \label{lem:dergee2_iff_adjoint_sqrt}
-    Let $K\subset L \subset \mathbb{C}$ be fields. Then the following is equivalent:
-    \begin{itemize}
-        \item $[L:K] = 2$.
-        \item There is a $w \in K$ with $\sqrt{w} \notin K$ and $L = K(\sqrt{w})$.
-    \end{itemize}
-\end{lemma}
-\begin{proof}
-    $(ii)\implies (i)$: Let $w$ be as in $(ii)$.Then $\sqrt{w}$ is a root of $X^2 - w \in K[X]$. Since $\sqrt{w} \notin K$ this polynomial is irreducible in $K[X]$. Therefore $[L:K] = 2$.\\
-    $(i)\implies (ii)$: Let $[L:K] = 2$ and $a \in L \setminus K$. Then $K(\alpha) = L$ and 
-    $$\mu_{\alpha, K}=X^2 + bX + c \quad b,c \in K$$
-    This implies 
-    $$\alpha = -\frac{b}{2} \pm \sqrt{\frac{b^2}{4} - c} $$
-    Now let $w := \frac{b^2}{4} - c \in K$ then we get $L = K(\alpha) = K(\sqrt{w})$.
-\end{proof}
 
-%3.20
-\begin{lemma}
-    \label{lem:conj_of_adjoin}
-    Let $K$ be a subfield of $\mathbb{C}$ with $conj(K)=K$, and $ M \subset \mathbb{C}$ be a subset with $M = conj(M)$. Then holds
+\section{Kapitel 2 stuff for safekeeping}
+\begin{definition}
+    The degree of $x$ over $K$ is
     \begin{equation*}
-        conj(K(M)) = K(M).
+        [x:K] :=\text{degree}(\mu_{x,K})
+        \end{equation*}
+        with $\mu_{x,K}$ the minimal polynomial of $x$ over $K$. \newline
+    The degree of $L/K$ is the dimension of $L$ as a $K$-vector space and is denoted by
+    \begin{equation*}
+        [L:K].
     \end{equation*}
-\end{lemma}
-\begin{proof}
-    We know that the complex conjugation is a field automorphism $\overline{\cdot }: \mathbb{C} \to \mathbb{C}$, whit $\overline{\overline{z}} = z$ for all $z \in \mathbb{C}$. Therefore we have
-    $conj(K(M))$ is a subfield of $\mathbb{C}$.\\
-    Since $K$ and $M$ are subsets of $K(m)$ we have $conj(K) = K$ and $conj(M) = M$ are subsets of $conj(K(M))$. Therefore $$K(M) \subset conj(K(M)).$$
-    If we know apply $conj$ to both sides we get
-    $$conj(K(M)) \subset conj(conj(K(M))) = K(M).$$
-    Therefore $conj(K(M)) = K(M)$.
-\end{proof}
-
-
-%TODO: add lemma wich $K_0 \subset M_{\infty}$
-
-%3.21
-\begin{theorem}[constructable iff chain dergee2]
-    \label{thm:Z_in_Minf_1}
-    For $z \in \mathbb{C}$ is equivalent:
-    \begin{itemize}
-        \item $z \in M_{\infty}$
-        \item There is an intermidiate field $L$ of $\mathbb{C}/K_0$ whit $z \in L$, so that $L$ aries from $K_0$ by a sequence of adjunctions of square roots.
-        \item There is an $n\le 0$ and chain 
-            $$K_0 = L_1 \subset L_2 \subset \ldots \subset L_n \subset \mathbb{C}$$
-            of subfields of $\mathbb{C}$ so that $z \in L_n$ and 
-            $$ [L_{i+1}:L_i] = 2 \quad \text{for} \quad i = 0, \ldots, n-1.$$
-    \end{itemize}
-\end{theorem}
-
-\begin{remark}
-    \label{rem:Z_in_Minf_1}
-    In this cases the $[K_0(z):K_0] = 2^m$ for some $0 \le m \le n$.
-\end{remark}
-\begin{proof}[Proof of Theorem \ref{thm:Z_in_Minf_1}]
-    \uses{ lem:dergee2_iff_adjoint_sqrt, Lem:Intersection_circle_circle, Lem:Intersection_line_circle, Lem:Intersection_line_line, lem:conj_of_adjoin, LEM:M_inf_quad_closed}
-    $(ii) \iff (iii)$ Follows from the definition and Lemma \ref{lem:dergee2_iff_adjoint_sqrt}.\\
-    $(i) \implies (ii)$: We assume that $z$ is derived from $K_0$ by (ZL1), (ZL2) and (ZL3). %TODO: add ref
-    Lemma \ref{Lem:Intersection_circle_circle}, \ref{Lem:Intersection_line_circle} and \ref{Lem:Intersection_line_line} in combination with Lemma \ref{lem:conj_of_adjoin} 
-    imply that ther is an $w \in K_0$ so that $z \in K_0(\sqrt{w})$. Since $\overline{w} \in K_0$, by definition. We define
-    $$K_1 := K_0(\sqrt{w},\sqrt{\overline{w}}).$$
-    $K_1$ derives from $K_0$ sucsessively by adjunction of square roots. Note that $K_1 = conj(K_1)$, by Lemma \ref{lem:conj_of_adjoin} and the fact that $\sqrt{\overline{w} = \overline{\sqrt{w}}}$.
-    Because of the definition of $$M_{\infty} = \bigcup_{n=0}^{\infty} M_n,$$
-    he statement follows by induction.\\ %TODO: Elaborate on induction for lean
-    $(ii) \implies (i)$: We know that $M_inf$ is an quadritc complet field \ref{LEM:M_inf_quad_closed}, i.e. $\sqrt{z} \in M_{\infty}$ for all $z \in M_{\infty}$.
-    Futhermore we know that $K_0\subseteq M_{\infty} \subseteq \mathbb{C}$, %TODO: add ref
-    therefore every field $L\subseteq \mathbb{C}$ which is derived from $K_0$ by a sequence of adjunctions of square roots is contaianted in $M_{\infty}$.
-\end{proof}
-
-
-\section[Filed of Constructable Numbers]{Field $M_{\infty}$}
-%2.3
-\begin{theorem}
-    \label{THM:M_inf_subfield_C}
-    For $M\subseteq \mathbb{C}$ with $0,1 \in M$ is $M_{\infty}$ a subfield of $\mathbb{C}$.
-\end{theorem}
-\begin{proof}
-    Chose $z_1, z_2 \in M_{\infty}$,after construction \ref{lem:construction_add}
-    we have $z_1 + z_2 \in M_{\infty}$ and construction \ref{lem:construction_neg}
-    gives us that for every $z \in M_{\infty}$ we have $-z \in M_{\infty}$. Therefore $M_{\infty}$ is closed under addition, and contains the additive invers.\\
-    For multiplication let $z_1 = r_1 \exp(\imath \alpha_1)$ and $z_2 = r_2 \exp(\imath \alpha_2)$ be in $M_{\infty}$. Then we have 
-    $$z_1 z_2 = r_1 r_2 \exp(\imath (\alpha_1 + \alpha_2)) \in M_{\infty}$$. By combining the lemmas \ref{lem:lem:construction_add_angle}, \ref{lem:construction_mult_pos_real} and \ref{lem:construction_polar}
-    we obtain that $z_1 z_2 \in M_{\infty}$.\\
-    For the inverse of $0 \ne z = r \exp(\imath \alpha) \in M_{\infty}$ we know that $$z^{-1} = r^{-1} \exp(\imath(2\pi - \alpha)).$$ We know that $r, \exp(\imath \alpha) \in M_{\infty}$, see construction \ref{lem:construction_polar}.
-    Now we can use construction \ref{lem:construction_inv_pos_real} and \ref{lem:construction_conj} to show,
-    that $r^{-1}, \exp(\imath(2\pi - \alpha)) = \overline{\exp(\imath\alpha)} \in M_{\infty}$. By applying that $M_{\infty}$ is closed under multiplication, shown above, we get that $z^{-1} \in M_{\infty}$.\\
-    Therefore $M_{\infty}$ is a subfield of $\mathbb{C}$.
-\end{proof}
-
-%2.4
-\begin{lemma}
-    \label{THM:M_inf_properties}
-    For $M\subseteq \mathbb{C}$ with $0,1 \in M$ applies:
-    \begin{itemize}
-        \item[(i)] $\imath \in M_{\infty}$.
-        \item[(ii)] $M_{\infty} = conj(M_{\infty})$.
-        \item[(iii)] For $z = x + \imath y \in \mathbb{C}$ is equivalent:
-            \begin{itemize}
-                \item $z \in M_{\infty}$.
-                \item $x, y \in M_{\infty}$.
-                \item $x, \imath y \in M_{\infty}$.
-            \end{itemize}
-        \item[(iv)] For $0 \ne z = r \exp(\imath \alpha) \in \mathbb{C}$ is equivalent:
-            \begin{itemize}
-                \item $z \in M_{\infty}$.
-                \item $r,\exp(\imath \alpha) \in M_{\infty}$.
-            \end{itemize}
-    \end{itemize}
-\end{lemma}
-\begin{proof}
-    This lemma is a dierct consequence of section \ref{lem:basic_constructions}.
-    \begin{itemize}
-        \item[(i):] We kan apply construction \ref{lem:construction_imath}
-        \item[(ii):] We can apply construction \ref{lem:construction_conj} and the fact that $\overline{\overline z} = z$ for all $z \in\mathbb{C}$.
-        \item[(iii):] We can apply construction \ref{lem:construction_re_im} and \ref{lem:construction_imath}.
-        \item[(iv):] We can apply construction \ref{lem:construction_polar}.
-    \end{itemize}
-\end{proof}
-
-%2.5
-\begin{lemma}
-    \label{lem:sqrt_in_M_inf}
-    For $M\subseteq \mathbb{C}$ with $0,1 \in M$. If $z$ the $M_{\infty}$, then is $\sqrt{z} \in M_{\infty}$.
-\end{lemma}
-\begin{proof}
-    Let $z = r \exp(\imath \alpha) \in M_{\infty}$, whitout loss of generality we can assume that $r \ne 0$. 
-    Lemma \ref{THM:M_inf_properties}(iv) implies that $r, \exp(\imath \alpha) \in M_{\infty}$. By combining construction \ref{lem:construction_halving_angle},
-    which states that $\exp(\imath \alpha / 2) \in M_{\infty}$ and construction \ref{lem:construction_sqrt_pos_real},
-    that gives us that $\sqrt{r} \in M_{\infty}$, we get that $$\sqrt{z} = \sqrt{r} \exp(\imath \alpha / 2) \in M_{\infty}.$$
-\end{proof}
-
-\begin{definition}[quadritc closed field]
-    \label{def:quadritc_closed_field}
-    A field $K$ is called \emph{quadritc closed} if $$K=\{a^2\mid a \in K\}.$$
 \end{definition}
+
+\begin{theorem}
+\label{thm:degree_of_simple_field_extension}
+    Let $L/K$ be a simple field extension with $L = K(x)$. Then
+    \begin{equation*}
+        [L:K] = [x:K].
+    \end{equation*}
+\end{theorem}
+\begin{proof}
+    In Mathlib: theorem IntermediateField.adjoin.finrank
+\end{proof}
+\begin{definition}
+    Let $\mathcal(M)\subseteq\mathbb{C}$ with $0,1 \mathbb{N} \mathcal{M}$
+    \begin{equation*}
+        K_0 := \mathbb{Q}(\mathcal{M}\cup \overline{\mathcal{M}})
+    \end{equation*}
+    with $\overline{\mathcal{M}} := \{ \overline{z} = x - \textbf{i}y \mid z = x+\textbf{i}y  \mathbb{N} \mathcal{M} \}$.
+\end{definition}
+%\begin{remark}
+%    We know that $K_0$ is a field and $\mathcal{M} \subseteq K_0\subseteq \mathcal{M}_{\mathbb{N}fty} \subseteq \mathbb{C}$.
+%\end{remark}
+\begin{theorem}
+\label{thm:degree_of_constructable_points}
+    Let $\mathcal{M}\subseteq\mathbb{C}$ with $0,1 \mathbb{N} \mathcal{M}$ and $K_0 := \mathbb{Q}(\mathcal{M}\cup \overline{\mathcal{M}})$.
+    Then for $z \mathbb{N} \mathcal{M}_{\mathbb{N}fty}$ is equvalent:
+    \begin{enumerate}
+        \item $z \mathbb{N} \mathcal{M}_{\mathbb{N}fty}$
+        \item There is an $n \mathbb{N} \mathbb{N}$ and a chain \begin{equation*}
+            K_0 = L_0 \subset L_1 \subset \dots \subset L_n \subset \mathbb{C}
+        \end{equation*}
+        of subfields of $\mathbb{C}$ such that $z \mathbb{N} L_n$ and $[L_i:L_{i-1}] =2$ for $1\le i\le n$ %$L_{i+1}$ is obtained from $L_i$ by adjoining a square root.
+    \end{enumerate}
+    In this case $[K_0(z):K_0] = 2^m$ for some $0 \le m \le n$.
+\end{theorem}
 \begin{remark}
-    An equivalent definition is that $K$ is quadritc closed if for all $z \in K$ we have $\sqrt{z} \in K$.
+    Theorem \ref{thm:degree_of_constructable_points} tells us that it is sufficient to show that $[K_0(z):K_0] \ne 2^m$ for some $0 \le m $, witch we will use to show that $\sqrt[3]{2} \notin \mathcal{M}_{\mathbb{N}fty}$ and $\exp(\textbf{i} \alpha/3) \notin \mathcal{M}_{\mathbb{N}fty}$ for some $\alpha$.
 \end{remark}
-
-%2.6
-\begin{lemma}
-    \label{lem:M_inf_quad_closed}
-    For $M\subseteq \mathbb{C}$ with $0,1 \in M$ is $M_{\infty}$ quadritc closed.
-\end{lemma}
-\begin{proof}
-    Combian theorem \ref{THM:M_inf_subfield_C} to get that $M_{\infty}$ is a field and Lemma \ref{lem:sqrt_in_M_inf} to get that $M_{\infty}$ is a quadritc closed field.
+\begin{proof}[Proof of Theorem \ref{thm:degree_of_constructable_points}]
+    TODO %TODO
 \end{proof}
-
-\section{Basic constructions}\label[section]{lem:basic_constructions}
-For the following constructions we assume that $M\subseteq \mathbb{C}$ with $0,1 \in M$.
-
-%2.3.1
-\begin{lemma}[Negative complex numbers]
-    \label{lem:construction_neg}
-    For $z \in M_{\infty}$ is $-z \in M_{\infty}$.
-\end{lemma}
-
-\begin{proof}
-    %TODO: add proof, and Construction Idea
-\end{proof}
-
-%2.3.2
-\begin{lemma}[Addition of complex numbers]
-    \label{lem:construction_add}
-    For $z_1, z_2 \in M_{\infty}$ is $z_1 + z_2 \in M_{\infty}$.
-\end{lemma}
-
-\begin{proof}
-    %TODO: add proof, and Construction Idea
-\end{proof}
-
-%2.3.3
-%TODO: Comper to mirrowed version
-\begin{lemma}[Complex conjugation]
-    \label{lem:construction_conj}
-    For $z \in M_{\infty}$ is $\overline{z} \in M_{\infty}$.
-\end{lemma}
-
-\begin{proof}
-    %TODO: add proof, and Construction Idea
-\end{proof}
-
-%2.3.4
-\begin{lemma}[Mitpiont of two complex numbers]
-    \label{lem:construction_midpoint}
-    For $z_1, z_2 \in M_{\infty}$ is $\frac{z_1 + z_2}{2} \in M_{\infty}$.
-\end{lemma}
-%TODO: add proof, and Construction Idea
-
-%2.3.5
-\begin{lemma}[Halving of Angle]
-    \label{lem:construction_halving_angle}
-    For $z = r \exp(\imath \alpha) \in M_{\infty}$ is $\exp(\imath \alpha / 2) \in M_{\infty}$.
-\end{lemma}
-
-%TODO: add proof, and Construction Idea
-
-%2.3.6
-%TODO: maybe write as \exp(\imath \alpha) + \exp(\imath \beta) = \exp(\imath \gamma) \in M_{\infty}
-\begin{lemma}[Addition of Angles]
-    \label{lem:construction_add_angle}
-    For two given angle $\alpha$ (given by two streches $[a,b]$ and $[c,d]$) and $\beta$ (given by two streches $[e,f]$ and $[g,h]$), with $ a,b,c,d,e,f,g,h \in M_{\infty}$, the addition of the angles is constructable.
-\end{lemma}
-%TODO: add proof, and Construction Idea, 
-
-%2.3.7
-\begin{lemma}[multiplication of positive real numbers]
-    \label{lem:construction_mult_pos_real}
-    For $r_1, r_2 > 0 \in \mathbb{R}\cup M_{\infty}$ is $r_1 r_2 \in M_{\infty}$.
-\end{lemma}
-%TODO: add proof, and Construction Idea
-
-%2.3.8
-\begin{lemma}[Inverse of positive real numbers]
-    \label{lem:construction_inv_pos_real}
-    For $r > 0\in \mathbb{R}\cup M_{\infty}$ is $r^{-1} \in M_{\infty}$.
-\end{lemma}
-%TODO: add proof, and Construction Idea
-
-%2.3.9
-\begin{lemma}[Root of positive real numbers]
-    \label{lem:construction_sqrt_pos_real}
-    For $r > 0 \in \mathbb{R}\cup M_{\infty}$ is $\sqrt{r} \in M_{\infty}$.
-\end{lemma}
-%TODO: add proof, and Construction Idea
-
-%2.3.10
-\begin{lemma}[Polarkoordinates of complex numbers]
-    \label{lem:construction_polar}
-    For $z = r \exp(\imath \alpha) \in M_{\infty}$ is $r, \allowbreak \exp(\imath \alpha) \in M_{\infty}$.
-\end{lemma}
-%TODO: add proof, and Construction Idea
-
-%2.3.11
-\begin{lemma}[Real and Imaginary part of complex numbers]
-    \label{lem:construction_re_im}
-    For $0 \ne z = x + \imath y \in M_{\infty}$ is $x, \imath y \in M_{\infty}$.
-\end{lemma}
-%TODO: add proof, and Construction Idea
-
-%2.3.12
-\begin{lemma}[Construction of $\imath$]
-    \label{lem:construction_imath}
-    $\imath \in M_{\infty}$.
-\end{lemma}
-%TODO: add proof, and Construction Idea

@@ -137,3 +137,11 @@ lemma add_M_Inf (N: Set ℂ)(h₀: (0:ℂ)∈ N)(z₁ z₂ : ℂ)(hz₁ : z₁ �
   have hc₂ : c₂ ∈ C (M_inf N) := by rw[c_in_C_M]; use z₂; use 0; use z₁; constructor; simp_all only [dist_zero_left, Complex.norm_eq_abs, c₂]; constructor; exact hz₂; constructor; apply M_M_inf' N 0 h₀; exact hz₁
   have hcc : z₁ + z₂ ∈ c₁.points ∩ c₂.points := by rw [@Set.mem_inter_iff];  simp[circle.points]
   apply icc_M_inf N; unfold icc; rw [@Set.mem_setOf]; use c₁; constructor; exact hc₁; use c₂
+
+lemma conj_M_Inf (N: Set ℂ)(h₀: 0 ∈ N)(h₁: 1 ∈ N)(z : ℂ)(hz : z ∈ (M_inf N)): (starRingEnd ℂ) z ∈ (M_inf N) := by
+  let c₀ : circle := {c := 0, r := (dist 0 z)}
+  let c₁ : circle := {c := 1, r := (dist 1 z)}
+  have hc₀ : c₀ ∈ C (M_inf N) := by rw[c_in_C_M]; use 0; use 0; use z; constructor; simp_all only [dist_zero_left, Complex.norm_eq_abs, c₀]; constructor; apply M_M_inf' N 0 h₀; constructor; apply M_M_inf' N 0 h₀; exact hz
+  have hc₁ : c₁ ∈ C (M_inf N) := by rw[c_in_C_M]; use 1; use 1; use z; constructor; simp_all only [dist_zero_left, Complex.norm_eq_abs, c₁]; constructor; apply M_M_inf' N 1 h₁; constructor; apply M_M_inf' N 1 h₁; exact hz
+  have hcc : (starRingEnd ℂ) z ∈ c₀.points ∩ c₁.points := by rw [@Set.mem_inter_iff];  simp[circle.points]; rw[dist_comm, Complex.dist_eq, Complex.abs_eq_sqrt_sq_add_sq, Complex.abs_eq_sqrt_sq_add_sq, ←@Mathlib.Tactic.RingNF.add_neg, ←@Mathlib.Tactic.RingNF.add_neg, @Complex.add_re, @Complex.add_im]; simp
+  apply icc_M_inf N; unfold icc; rw [@Set.mem_setOf]; use c₀; constructor; exact hc₀; use c₁

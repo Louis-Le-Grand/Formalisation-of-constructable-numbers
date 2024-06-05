@@ -392,7 +392,6 @@ lemma H''_alpha_zero: 8* Complex.cos (↑Real.pi / 3 / 3) ^ 3 - 6 * Complex.cos 
 lemma H_alpha_zero: 8 * (Complex.cos (↑Real.pi / 3 / 3) ^ 3 - 6 / 8 * Complex.cos (↑Real.pi / 3 / 3) - 8⁻¹) = 0 := by
   rw[mul_sub, mul_sub, ← mul_assoc, mul_div]; simp
   convert  H''_alpha_zero
-  ring
 end
 
 lemma exp_pi_ninth : Polynomial.degree (minpoly ℚ (Real.cos ((Real.pi/3)/3): ℂ)) = 3:= by

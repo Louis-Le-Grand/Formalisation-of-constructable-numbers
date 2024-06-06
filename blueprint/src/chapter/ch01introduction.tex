@@ -213,33 +213,124 @@ For the following constructions we assume that $M\subseteq \mathbb{C}$ with $0,1
 %2.3.1
 \begin{lemma}[Negative complex numbers]
     \label{lem:construction_neg}
+    \lean{z_neg_M_inf}
+    \leanok
+    \uses{def:set_of_constructable_points}
     For $z \in M_{\infty}$ is $-z \in M_{\infty}$.
 \end{lemma}
+To get the point $-z$ we can use the second intersection of the line through $0$ and $z$ with circle with center $0$ and radius $\|z\|$.\ref{Fig.1}
 
 \begin{proof}
-    %TODO: add proof, and Construction Idea
+    \uses{def:line, def:circle, cor:C_M_inf_iff_C_M_i, cor:L_M_inf_iff_L_M_i, lem:ilc_M_inf}
+    Define $l = \{0,z\}$ and $c = \{0,\dist 0 z\}$.\\
+    By assumption $0, z \in M_{\infty}$, so $l \in \mathcal{L(M_{\infty})}$ and $c \in \mathcal{C(M_{\infty})}$.\\
+    \underline{Claim 1}: $-z$ is in $l$.
+    \begin{proof}
+        Unfolding the definition of $l:=\{\lambda 0+(1-\lambda)z\mid\lambda\in\mathbb{R}\}$.
+        By choosing $\lambda = 2$ we get $2 \cdot 0 + (1-2)z = -z$.
+    \end{proof}
+    \underline{Claim 2}: $-z$ is in $c$.
+    \begin{proof}
+        Unfolding the definition of $c:=\{x\in\mathbb{C} \mid\|x-0\|=\dist (0\ z)\}$.
+        By the definition of the distence we get $\|0-(-z)\| = \dist (0\ z)$.
+    \end{proof}
+    By claim 1 and 2 we get that $-z \in l \cap c$. Futhermore  $-z $ is in $M_{\infty}$, after lemma \ref{lem:ilc_M_inf}.
 \end{proof}
+
+\begin{figure}
+    \centering
+    \begin{tikzpicture}
+        \draw[->] (-1,0) -- (3,0) node[right] {$\Re$};
+        \draw[->] (0,-1) -- (0,3) node[above] {$\Im$};
+        \draw (0,0) -- (2,2) node[right] {$z$};
+        \draw (0,0) -- (-2,-2) node[left] {$-z$};
+        \draw (0,0) circle (2.8);
+    \end{tikzpicture}
+    \caption{Construction of $-z$}
+    \label{Fig.1}
+\end{figure}
 
 %2.3.2
 \begin{lemma}[Addition of complex numbers]
     \label{lem:construction_add}
+    \lean{add_M_inf}
+    \leanok
+    \uses{def:set_of_constructable_points}
     For $z_1, z_2 \in M_{\infty}$ is $z_1 + z_2 \in M_{\infty}$.
 \end{lemma}
-
+One can construct the point $z_1 + z_2$ by drawing a circle with center $z_1$ and radius $\|z_2\|$ and a circle with center $z_2$ and radius $\|z_1\|$ and taking the intersection of the two circles.\ref{Fig.2}
 \begin{proof}
-    %TODO: add proof, and Construction Idea
+    \uses{def:line, def:circle, cor:C_M_inf_iff_C_M_i, lem:icc_M_inf}
+    Define $c_1 = \{z_1,\dist (0\ z_2)\}$ and $c_2 = \{z_2,\dist (0\ z_1)\}$.\\
+    By assumption $0, z_1, z_2 \in M_{\infty}$, so $c_1, c_2 \in \mathcal{C(M_{\infty})}$.\\
+    \underline{Claim 1}: $z_1 + z_2$ is in $c_1$.
+    \begin{proof}
+        Unfolding the definition of $c_1:=\{x\in\mathbb{C} \mid\|x-z_1\|=\dist (0\ z_2)\}$.
+        By the definition of the distence we get $\|z_1-(z_1+z_2)\| = \dist (0\ z_2)$.
+    \end{proof}
+    \underline{Claim 2}: $z_1 + z_2$ is in $c_2$.
+    \begin{proof}
+        Unfolding the definition of $c_2:=\{x\in\mathbb{C} \mid\|x-z_2\|=\dist (0\ z_1)\}$.
+        By the definition of the distence we get $\|z_2-(z_1+z_2)\| = \dist (0\ z_1)$.
+    \end{proof}
+    By claim 1 and 2 we get that $z_1 + z_2 \in c_1 \cap c_2$. Futhermore  $z_1 + z_2 $ is in $M_{\infty}$, after lemma \ref{lem:icc_M_inf}.
 \end{proof}
+\begin{figure}
+    \centering
+    \begin{tikzpicture}
+        \draw[->] (-1,0) -- (3,0) node[right] {$\Re$};
+        \draw[->] (0,-1) -- (0,3) node[above] {$\Im$};
+        \draw (0,0) -- (1,2) node[above] {$z_1$}[red];
+        \draw (0,0) -- (2,1) node[right] {$z_2$}[blue];
+        \draw (1,2) circle (2.2360679775)[red];
+        \draw (2,1) circle (2.2360679775)[blue];
+        \draw[dashed,->] (1,2) -- (3,3)[blue];
+        \draw[dashed,->] (2,1) -- (3,3)[red];
+        \draw (0,0) -- (3,3) node[right] {$z_1 + z_2$};
+    \end{tikzpicture}
+    \caption{Construction of $z_1 + z_2$}
+    \label{Fig.2}
+\end{figure}
 
 %2.3.3
 %TODO: Comper to mirrowed version
 \begin{lemma}[Complex conjugation]
     \label{lem:construction_conj}
+    \lean{conj_M_inf}
+    \leanok
+    \uses{def:set_of_constructable_points}
     For $z \in M_{\infty}$ is $\overline{z} \in M_{\infty}$.
 \end{lemma}
-
+Draw two crircles one with center $0$ and radius $\|z\|$ and a second with center $1$ and radius $\|z-1\|$ and take the intersection of the two circles.\ref{Fig.3}
 \begin{proof}
-    %TODO: add proof, and Construction Idea
+    \uses{def:line, def:circle, cor:C_M_inf_iff_C_M_i, lem:icc_M_inf}
+    Define $c_1 = \{0,\dist 0 z\}$ and $c_2 = \{1,\dist 1 z\}$.\\
+    By assumption $0, 1, z \in M_{\infty}$, so $c_1, c_2 \in \mathcal{C(M_{\infty})}$.\\
+    \underline{Claim 1}: $\overline{z}$ is in $c_1$.
+    \begin{proof}
+        Unfolding the definition of $c_1:=\{x\in\mathbb{C} \mid\|x-0\|=\dist (0\ z)\}$.
+        By the definition of the distence we get $\|0-\overline{z}\| = \|\overline{z}\| =\|z\| = \dist (0\ z)$.
+    \end{proof}
+    \underline{Claim 2}: $\overline{z}$ is in $c_2$.
+    \begin{proof}
+        Unfolding the definition of $c_2:=\{x\in\mathbb{C} \mid\|x-1\|=\dist (1\ z)\}$.
+        By the definition of the distence we get $$\|1-\overline{z}\| = \|\overline{z}-1\| = \sqrt{(\Re(\overline{z})-1)^2 + \Im(\overline{z})^2} = \sqrt{(\Re(z)-1)^2 + \Im(z)^2} = \|z-1\|=\dist (1\ z).$$
+    \end{proof}
+    By claim 1 and 2 we get that $\overline{z} \in c_1 \cap c_2$. Futhermore  $\overline{z} $ is in $M_{\infty}$, after lemma \ref{lem:icc_M_inf}.
 \end{proof}
+\begin{figure}
+    \centering
+    \begin{tikzpicture}
+        \draw[->] (-3,0) -- (3,0) node[right] {$\Re$};
+        \draw[->] (0,-2.5) -- (0,2.5) node[above] {$\Im$};
+        \draw[dashed] (0,0) -- (2,1) node[right] {$z$};
+        \draw[dashed] (0,0) -- (2,-1) node[right] {$\overline{z}$};
+        \draw (0,0) circle (2.2360679775);
+        \draw (1,0) circle (1.4142135624);
+    \end{tikzpicture}
+    \caption{Construction of $\overline{z}$}
+    \label{Fig.3}
+\end{figure}
 
 %2.3.4
 \begin{lemma}[Mitpiont of two complex numbers]

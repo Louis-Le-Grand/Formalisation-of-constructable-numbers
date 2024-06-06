@@ -9,14 +9,14 @@ ICL_M
 M_I
 M_inf
 M_in_ICL_M
-M_i_monotone
-M_i_monotone_elm
-M_i_monotone'
-M_i_monotone_elm'
+M_I_Monotone
+M_I_Monotone_elm
+M_I_Monotone'
+M_I_Monotone_elm'
 M_in_M_I
 M_I_in_M_inf
 M_I_in_M_inf_elm
-M_in_M_inf
+M_M_inf
 M_inf_in_M_I
 M_inf_in_M_I'
 L_M_inf_iff_M_M
@@ -25,4 +25,5 @@ ill_M_inf
 ilc_M_inf
 icc_M_inf
 z_neg_M_inf
-add_M_inf
+add_M_Inf
+conj_M_Inf

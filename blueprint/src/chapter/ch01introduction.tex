@@ -4,23 +4,59 @@
 First we need to define what construction using a ruler and compass means.
 We will use $\mathbb{C}$ as plane of drawing and $\mathcal{M} \subset \mathbb{C}$ as the set of constructed points.
 
-
-\begin{definition}
-    $\mathcal{G(M)}$ is the set of all real straight lines $\mathcal{G}$, with $| \mathcal{G} \cap \mathcal{M} |\ge 2$.\newline
-    $\mathcal{C(M)}$ is the set of all circles in $\mathbb{C}$, with center in $\mathcal{M}$ and radius of $\mathcal{C}$ is the distence of two points in $\mathcal{M}$.
+\begin{definition}[Line]
+    \label{def:line}
+    \lean{line}
+    \leanok
+    A line $l$ through two points $x,y\in\mathbb{C}$ for $x\ne y$ is definded by the set: $$l:=\{\lambda x+(1-\lambda)y\mid\lambda\in\mathbb{R}\}.$$
 \end{definition}
 
-\begin{definition}
+\begin{definition}[Circle]
+    \label{def:circle}
+    \lean{circle}
+    \leanok
+    A circle $c$ with center $z\in\mathbb{C}$ and radius $r\in\mathbb{R}_{\ge 0}$ is defined by the set: $$c:=\{z\in\mathbb{C} \mid\|z-c\|=r\}.$$
+\end{definition}
+
+\begin{definition}[Set of lines]
+    \label{def:set_of_lines}
+    \lean{L}
+    \leanok
+    \uses{def:line}
+    $\mathcal{L(M)}$ is the set of all real straight lines $l$, with $| l\cap \mathcal{M} |\ge 2$. As set this would be
+    \begin{equation*}
+        \mathcal{L(M)} := \{l \mid l = \{x,y\} \text{ with }x,y \in \mathcal{M} \land x \neq y\}.
+    \end{equation*}
+\end{definition}
+
+\begin{definition}[Set of circles]
+    \label{def:set_of_circles}
+    \lean{C}
+    \leanok
+    \uses{def:circle}
+    $\mathcal{C(M)}$ is the set of all circles in $\mathbb{C}$, with center in $\mathcal{M}$ and radius of $\mathcal{C}$ is the distence of two points in $\mathcal{M}$. As equation this would be:
+    $$\mathcal{C(M)}:=\{c\mid c = \langle c, \dist r_1 r_2 \rangle \text{ with } c,r_1,r_2\in M\}.$$
+\end{definition}
+
+\begin{definition}[Ruels to constructed a Point]
+    \label{def:rules_to_constructed_a_point}
+    \lean{ill,ilc,icc,ICL_M}
+    \leanok
+    \uses{def:set_of_lines, def:set_of_circles}
     We define operation that can be used to constructed new Points.
     \begin{enumerate}
-        \item $(ZL 1)$ is the cut of two lines in $\mathcal{G(M)}$.
-        \item $(ZL 2)$ is the cut of a line in $\mathcal{G(M)}$ and a circle in $\mathcal{C(M)}$.
-        \item $(ZL 3)$ is the cut of two circles in $\mathcal{C(M)}$.
+        \item $(ILL)$ is the cut of two lines in $\mathcal{L(M)}$.
+        \item $(ILC)$ is the cut of a line in $\mathcal{L(M)}$ and a circle in $\mathcal{C(M)}$.
+        \item $(ICC)$ is the cut of two circles in $\mathcal{C(M)}$.
     \end{enumerate}
-    $ZL(\mathcal{M})$ is the set $\mathcal{M}$ combeined with of all points that can be constructed using the operations $(ZL 1)$, $(ZL 2)$ and $(ZL 3)$.
+    $ICL(\mathcal{M})$ is the set $\mathcal{M}$ combeined with of all points that can be constructed using the operations $(ILL)$, $(ILC)$ and $(ICC)$.
 \end{definition}
 
-\begin{definition}
+\begin{definition}[Set of Constructable Points]
+    \label{def:set_of_constructable_points}
+    \lean{M_I,M_inf}
+    \leanok
+    \uses{def:rules_to_constructed_a_point}
     We define inductively the the chain
     \begin{equation*}
         \mathcal{M}_0 \subseteq \mathcal{M}_1 \subseteq \mathcal{M}_2 \subseteq \dots
@@ -31,7 +67,7 @@ We will use $\mathbb{C}$ as plane of drawing and $\mathcal{M} \subset \mathbb{C}
 
 \section[The set of constructable points]{The Set $M_{\infty}$}\label[section]{set_of_constructable_points}
 
-\section{Basic constructions}\label[section]{basic_constructions}
+\section{Basic constructions}\label{basic_constructions}
 For the following constructions we assume that $M\subseteq \mathbb{C}$ with $0,1 \in M$.
 
 %2.3.1

@@ -1,14 +1,14 @@
 import Construction.Chapter1.def
 
 
-lemma M_in_Z_M (M : Set ℂ) : M ⊆ Z_M M := by
-  unfold Z_M; intro x; intro hx; left; left; left; exact hx
+lemma M_in_ICL_M (M : Set ℂ) : M ⊆ ICL_M M := by
+  unfold ICL_M; intro x; intro hx; left; left; left; exact hx
 
 lemma M_I_Monotone (M : Set ℂ) : ∀n, M_I M n ⊆ M_I M (n+1) := by
-  intro n; apply M_in_Z_M
+  intro n; apply M_in_ICL_M
 
 lemma M_I_Monotone_elm (M : Set ℂ)(n : ℕ) : ∀ x, x ∈ M_I M n → x ∈ M_I M (Nat.succ n) := by
-  intro n; apply M_in_Z_M
+  intro n; apply M_in_ICL_M
 
 lemma M_in_M_I (M : Set ℂ) : ∀n, M ⊆ M_I M n := by
   intro n; induction n; simp [M_I]; exact fun ⦃a⦄ a => a;
@@ -62,7 +62,7 @@ lemma ill_M_inf (M: Set ℂ): ill (M_inf M) ⊆ M_inf M := by
   rw [L_M_inf_iff_M_M] at hl₁ hl₂; have zILL : ∃ n, z ∈ ill (M_I M n) := by {
     unfold ill; simp[exists_comm.mp]; simp at hl₁ hl₂; obtain ⟨a₁, hl₁⟩ := hl₁; obtain ⟨a₂, hl₂⟩ := hl₂;let n := max a₁ a₂; use n; use l₁; refine
       exists_and_left.mp ?h.a; use l₂; constructor; apply hl₁; simp_all only [Set.mem_inter_iff, le_max_iff, le_refl, true_or, n]; constructor; apply hl₂; simp_all only [Set.mem_inter_iff, le_max_iff, le_refl, or_true, n]; simp_all only [Set.mem_inter_iff, and_self]}
-  obtain ⟨n, hzn⟩ := zILL; apply M_I_in_M_inf' M z n.succ; unfold M_I Z_M;
+  obtain ⟨n, hzn⟩ := zILL; apply M_I_in_M_inf' M z n.succ; unfold M_I ICL_M;
   simp_all only [Filter.eventually_atTop, ge_iff_le, Set.mem_inter_iff, Set.mem_union, or_true, true_or]
 
 lemma ilc_M_inf (M: Set ℂ): ilc (M_inf M) ⊆ M_inf M := by
@@ -70,7 +70,7 @@ lemma ilc_M_inf (M: Set ℂ): ilc (M_inf M) ⊆ M_inf M := by
   rw [C_M_inf_iff_M_M] at hc; rw [L_M_inf_iff_M_M] at hl; have zILC : ∃ n, z ∈ ilc (M_I M n) := by {
     unfold ilc; simp[exists_comm.mp]; simp at hc hl; obtain ⟨a₁, hc⟩ := hc; obtain ⟨a₂, hl⟩ := hl;let n := max a₁ a₂; use n; use c; refine
       exists_and_left.mp ?h.a; use l; constructor; apply hc; simp_all only [Set.mem_inter_iff, le_max_iff, le_refl, true_or, n]; constructor; apply hl; simp_all only [Set.mem_inter_iff, le_max_iff, le_refl, or_true, n]; simp_all only [Set.mem_inter_iff, and_self]}
-  obtain ⟨n, hzn⟩ := zILC; apply M_I_in_M_inf' M z n.succ; unfold M_I Z_M;
+  obtain ⟨n, hzn⟩ := zILC; apply M_I_in_M_inf' M z n.succ; unfold M_I ICL_M;
   simp_all only [Filter.eventually_atTop, ge_iff_le, Set.mem_inter_iff, Set.mem_union, or_true, true_or]
 
 lemma icc_M_inf (M: Set ℂ): icc (M_inf M) ⊆ M_inf M := by
@@ -78,5 +78,5 @@ lemma icc_M_inf (M: Set ℂ): icc (M_inf M) ⊆ M_inf M := by
   rw [C_M_inf_iff_M_M] at hc₁ hc₂; have zICC : ∃ n, z ∈ icc (M_I M n) := by {
     unfold icc; simp[exists_comm.mp]; simp at hc₁ hc₂; obtain ⟨a₁, hc₁⟩ := hc₁; obtain ⟨a₂, hc₂⟩ := hc₂;let n := max a₁ a₂; use n; use c₁; refine
       exists_and_left.mp ?h.a; use c₂; constructor; apply hc₁; simp_all only [Set.mem_inter_iff, le_max_iff, le_refl, true_or, n]; constructor; apply hc₂; simp_all only [Set.mem_inter_iff, le_max_iff, le_refl, or_true, n]; simp_all only [Set.mem_inter_iff, and_self]}
-  obtain ⟨n, hzn⟩ := zICC; apply M_I_in_M_inf' M z n.succ; unfold M_I Z_M;
+  obtain ⟨n, hzn⟩ := zICC; apply M_I_in_M_inf' M z n.succ; unfold M_I ICL_M;
   simp_all only [Filter.eventually_atTop, ge_iff_le, Set.mem_inter_iff, Set.mem_union, or_true, true_or]

@@ -1,33 +1,33 @@
 import Construction.OLD.Geometry
 
 -- Definition of construction of M_inf
-def Z_M (M : Set ℂ) : Set ℂ :=
+def ICL_M (M : Set ℂ) : Set ℂ :=
   M ∪ {z : ℂ | ∃ c₁ r₁ r₂ c₂ r₃ r₄ : M, z ∈ intersection_circle_circle c₁ r₁ r₂ c₂ r₃ r₄} ∪
   {z : ℂ | ∃ c r₁ r₂ z₁ z₂ : M, z ∈ intersection_line_circle c r₁ r₂ z₁ z₂} ∪
   {z : ℂ | ∃ z₁ z₂ z₃ z₄ : M, z ∈ intersection_line_line z₁ z₂ z₃ z₄}
 
 def M_I (M : Set ℂ) : ℕ → Set ℂ
   | 0 => M
-  | (Nat.succ n) => Z_M (M_I M n)
+  | (Nat.succ n) => ICL_M (M_I M n)
 
 def M_inf (M : Set ℂ) : Set ℂ :=  ⋃ (n : ℕ), M_I M n
 
 
 @[simp] lemma M_0 (M : Set ℂ) : M_I M 0 = M := rfl
 
-lemma Z_M_eq (M : Set ℂ) : Z_M M = (M ∪
+lemma ICL_M_eq (M : Set ℂ) : ICL_M M = (M ∪
     {z | ∃ c₁ r₁ r₂ c₂ r₃ r₄ : M, z ∈ intersection_circle_circle ↑c₁ ↑r₁ ↑r₂ ↑c₂ ↑r₃ ↑r₄} ∪
     {z | ∃ c r₁ r₂ z₁ z₂: M, z ∈ intersection_line_circle ↑c ↑r₁ ↑r₂ ↑z₁ ↑z₂} ∪
-    {z | ∃ z₁ z₂ z₃ z₄: M, z ∈ intersection_line_line ↑z₁ ↑z₂ ↑z₃ ↑z₄}) := by unfold Z_M; simp
+    {z | ∃ z₁ z₂ z₃ z₄: M, z ∈ intersection_line_line ↑z₁ ↑z₂ ↑z₃ ↑z₄}) := by unfold ICL_M; simp
 
-lemma M_in_Z_M (M : Set ℂ) : M ⊆ Z_M M := by
-  unfold Z_M; intro x; intro hx; left; left; left; exact hx
+lemma M_in_ICL_M (M : Set ℂ) : M ⊆ ICL_M M := by
+  unfold ICL_M; intro x; intro hx; left; left; left; exact hx
 
 lemma M_I_Monotone (M : Set ℂ) : ∀n, M_I M n ⊆ M_I M (n+1) := by
-  intro n; apply M_in_Z_M
+  intro n; apply M_in_ICL_M
 
 lemma M_I_Monotone_elm (M : Set ℂ)(n : ℕ) : ∀ x, x ∈ M_I M n → x ∈ M_I M (Nat.succ n) := by
-  intro n; apply M_in_Z_M
+  intro n; apply M_in_ICL_M
 
 lemma M_in_M_I (M : Set ℂ) : ∀n, M ⊆ M_I M n := by
   intro n; induction n; simp [M_I]; exact fun ⦃a⦄ a => a;
@@ -85,29 +85,29 @@ lemma Int_cc_in_M_inf'' (M : Set ℂ)(c₁ r₁ r₂ c₂ r₃ r₄ : M_inf M): 
 
 
 
-lemma M_in_M_inf (M : Set ℂ) : Z_M (M_inf M) = M_inf M := by
-  rw [@Set.ext_iff]; intro x; constructor; case  mpr => apply M_in_Z_M;
-  intro hx; unfold Z_M at hx; --simp only [@Set.mem_union, @or_assoc] at hx;
+lemma M_in_M_inf (M : Set ℂ) : ICL_M (M_inf M) = M_inf M := by
+  rw [@Set.ext_iff]; intro x; constructor; case  mpr => apply M_in_ICL_M;
+  intro hx; unfold ICL_M at hx; --simp only [@Set.mem_union, @or_assoc] at hx;
   sorry
 
 lemma int_ll_in_M_inf (M : Set ℂ): ∀ z₁ z₂ z₃ z₄:M_inf M, intersection_line_line z₁ z₂ z₃ z₄ ⊆ M_inf M := by
-  have h: Z_M (M_inf M) ⊆  M_inf M := by {refine Eq.subset (M_in_M_inf M)}; intro a₁ a₂ a₃ a₄;
+  have h: ICL_M (M_inf M) ⊆  M_inf M := by {refine Eq.subset (M_in_M_inf M)}; intro a₁ a₂ a₃ a₄;
   let Z := {z | ∃ z₁ z₂ z₃ z₄: M_inf M, z ∈ intersection_line_line ↑z₁ ↑z₂ ↑z₃ ↑z₄}
-  have h': Z ⊆ M_inf M := by apply subset_trans (b:= Z_M (M_inf M)); apply Set.subset_union_right; exact h
+  have h': Z ⊆ M_inf M := by apply subset_trans (b:= ICL_M (M_inf M)); apply Set.subset_union_right; exact h
   have h'': intersection_line_line a₁ a₂ a₃ a₄ ⊆ Z := by intro x hx; refine Set.mem_setOf.mpr ?_; refine SetCoe.exists.mpr ?_; simp; use a₁; constructor; simp; use a₂; constructor; simp; use a₃; constructor; simp; use a₄; constructor; simp; exact hx
   apply subset_trans (b:=Z); exact h''; exact h'
 
 lemma int_lc_in_M_inf (M : Set ℂ): ∀ c r₁ r₂ z₁ z₂:M_inf M, intersection_line_circle c r₁ r₂ z₁ z₂ ⊆ M_inf M := by
-  have h: Z_M (M_inf M) ⊆  M_inf M := by {refine Eq.subset (M_in_M_inf M)}; intro a₁ a₂ a₃ a₄ a₅;
+  have h: ICL_M (M_inf M) ⊆  M_inf M := by {refine Eq.subset (M_in_M_inf M)}; intro a₁ a₂ a₃ a₄ a₅;
   let Z := {z | ∃ c r₁ r₂ z₁ z₂: M_inf M, z ∈ intersection_line_circle ↑c ↑r₁ ↑r₂ ↑z₁ ↑z₂}
-  have h': Z ⊆ M_inf M := by apply subset_trans (b:= Z_M (M_inf M)); unfold Z_M; rw [@Set.union_assoc]; apply subset_trans (b:= ({z | ∃ c r₁ r₂ z₁ z₂: M_inf M, z ∈ intersection_line_circle ↑c ↑r₁ ↑r₂ ↑z₁ ↑z₂} ∪
+  have h': Z ⊆ M_inf M := by apply subset_trans (b:= ICL_M (M_inf M)); unfold ICL_M; rw [@Set.union_assoc]; apply subset_trans (b:= ({z | ∃ c r₁ r₂ z₁ z₂: M_inf M, z ∈ intersection_line_circle ↑c ↑r₁ ↑r₂ ↑z₁ ↑z₂} ∪
       {z | ∃ z₁ z₂ z₃ z₄ :M_inf M, z ∈ intersection_line_line ↑z₁ ↑z₂ ↑z₃ ↑z₄})); apply Set.subset_union_left; apply Set.subset_union_right; exact h
   have h'': intersection_line_circle a₁ a₂ a₃ a₄ a₅ ⊆ Z := by intro x hx; refine Set.mem_setOf.mpr ?_; refine SetCoe.exists.mpr ?_; simp; use a₁, by simp, a₂, by simp, a₃, by simp, a₄, by simp, a₅, by simp
   apply subset_trans (b:=Z); exact h''; exact h'
 
 lemma int_cc_in_M_inf (M : Set ℂ): ∀ c₁ r₁ r₂ c₂ r₃ r₄:M_inf M, intersection_circle_circle c₁ r₁ r₂ c₂ r₃ r₄ ⊆ M_inf M := by
-  have h: Z_M (M_inf M) ⊆  M_inf M := by {refine Eq.subset (M_in_M_inf M)}; intro a₁ a₂ a₃ a₄ a₅ a₆;
+  have h: ICL_M (M_inf M) ⊆  M_inf M := by {refine Eq.subset (M_in_M_inf M)}; intro a₁ a₂ a₃ a₄ a₅ a₆;
   let Z := {z | ∃ c₁ r₁ r₂ c₂ r₃ r₄: M_inf M, z ∈ intersection_circle_circle ↑c₁ ↑r₁ ↑r₂ ↑c₂ ↑r₃ ↑r₄}
-  have h': Z ⊆ M_inf M := by apply subset_trans (b:= Z_M (M_inf M)); unfold Z_M; rw [@Set.union_assoc]; apply subset_trans (b:= M_inf M ∪ {z | ∃ c₁ r₁ r₂ c₂ r₃ r₄: M_inf M, z ∈ intersection_circle_circle ↑c₁ ↑r₁ ↑r₂ ↑c₂ ↑r₃ ↑r₄}); apply Set.subset_union_right; apply Set.subset_union_left; exact h
+  have h': Z ⊆ M_inf M := by apply subset_trans (b:= ICL_M (M_inf M)); unfold ICL_M; rw [@Set.union_assoc]; apply subset_trans (b:= M_inf M ∪ {z | ∃ c₁ r₁ r₂ c₂ r₃ r₄: M_inf M, z ∈ intersection_circle_circle ↑c₁ ↑r₁ ↑r₂ ↑c₂ ↑r₃ ↑r₄}); apply Set.subset_union_right; apply Set.subset_union_left; exact h
   have h'': intersection_circle_circle a₁ a₂ a₃ a₄ a₅ a₆ ⊆ Z := by intro x hx; refine Set.mem_setOf.mpr ?_; refine SetCoe.exists.mpr ?_; simp; use a₁; constructor; simp; use a₂; constructor; simp; use a₃; constructor; simp; use a₄; constructor; simp; use a₅; constructor; simp; use a₆; constructor; simp; exact hx
   apply subset_trans (b:=Z); exact h''; exact h'

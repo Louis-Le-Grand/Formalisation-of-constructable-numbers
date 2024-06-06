@@ -13,19 +13,19 @@ def intersection_line_circle (c r₁ r₂ z₁ z₂ :ℂ) :=
 def intersection_circle_circle (c₁ r₁ r₂ c₂ r₃ r₄ : ℂ) :=
   circle_with_radius_metric c₁ r₁ r₂ ∩ circle_with_radius_metric c₂ r₃ r₄
 
-def Z_M (M : Set ℂ) : Set ℂ :=
+def ICL_M (M : Set ℂ) : Set ℂ :=
   M ∪ {z : ℂ | ∃ c₁ r₁ r₂ c₂ r₃ r₄ : M, z ∈ intersection_circle_circle c₁ r₁ r₂ c₂ r₃ r₄} ∪
   {z : ℂ | ∃ c r₁ r₂ z₁ z₂ : M, z ∈ intersection_line_circle c r₁ r₂ z₁ z₂} ∪
   {z : ℂ | ∃ z₁ z₂ z₃ z₄ : M, z ∈ intersection_line_line z₁ z₂ z₃ z₄}
 
 def M_I (M : Set ℂ) : ℕ → Set ℂ
   | 0 => M
-  | (Nat.succ n) => Z_M (M_I M n)
+  | (Nat.succ n) => ICL_M (M_I M n)
 
 def M_inf (M : Set ℂ) : Set ℂ :=  ⋃ (n : ℕ), M_I M n
 
-lemma M_in_Z_M (M : Set ℂ) : M ⊆ Z_M M := by
-  unfold Z_M; intro x; intro hx; left; left; left; exact hx
+lemma M_in_ICL_M (M : Set ℂ) : M ⊆ ICL_M M := by
+  unfold ICL_M; intro x; intro hx; left; left; left; exact hx
 
 lemma M_inf_in_M_I (M : Set ℂ) : ∀ x : M_inf M, ∃ n, ↑x ∈ (M_I M n):= by
   intro x; apply Set.mem_iUnion.mp; exact Subtype.coe_prop x
@@ -40,9 +40,9 @@ lemma int_lc_in_M_inf (M : Set ℂ): ∀ c r₁ r₂ z₁ z₂:M_inf M, intersec
 lemma int_cc_in_M_inf (M : Set ℂ): ∀ c₁ r₁ r₂ c₂ r₃ r₄:M_inf M, intersection_circle_circle c₁ r₁ r₂ c₂ r₃ r₄ ⊆ M_inf M := by sorry
 
 
-lemma M_in_M_inf (M : Set ℂ) : Z_M (M_inf M) = M_inf M := by sorry
-/-   rw [@Set.Subset.antisymm_iff]; constructor; case right => exact M_in_Z_M (M_inf M)
-  rw [Z_M]; apply Set.union_subset; apply Set.union_subset; apply Set.union_subset; exact
+lemma M_in_M_inf (M : Set ℂ) : ICL_M (M_inf M) = M_inf M := by sorry
+/-   rw [@Set.Subset.antisymm_iff]; constructor; case right => exact M_in_ICL_M (M_inf M)
+  rw [ICL_M]; apply Set.union_subset; apply Set.union_subset; apply Set.union_subset; exact
   fun ⦃a⦄ a ↦ a; refine Set.setOf_subset.mpr ?left.sr.sr.tr.a; intro x hx; apply int_cc_in_M_inf;
   obtain ⟨c₁, r₁, r₂, c₂, r₃, r₄, hx⟩ := hx; sorry
   refine Set.setOf_subset.mpr ?left.sr.tr.a; intro x hx; apply int_cc_in_M_inf;

@@ -44,11 +44,11 @@ lemma M_inf_in_M_I' (M : Set ℂ)(x:ℂ): x ∈ M_inf M ↔ ∀ᶠ n in Filter.a
 
 
 lemma L_M_inf_iff_M_M (M: Set ℂ): l ∈ L (M_inf M) ↔ ∀ᶠ n in Filter.atTop, l ∈ L (M_I M n) := by
-  unfold L; simp; constructor; intro h; obtain ⟨z₁, z₂, h, hz₁, hz₂⟩ := h; rw[M_inf_in_M_I'] at hz₁ hz₂;
+  unfold L; simp; constructor; intro h; obtain ⟨z₁, z₂, h, hz₁, hz₂, Noteq⟩ := h; rw[M_inf_in_M_I'] at hz₁ hz₂;
   rw [←@Filter.eventually_atTop]; filter_upwards [hz₁, hz₂]; rw [h]; simp; intro a hz₁a hz₂a; use z₁; use z₂;
-  intro h; obtain ⟨n, hn⟩ := h; have h: ∃ z₁ z₂, l = {z₁ := z₁, z₂ := z₂} ∧ z₁ ∈ M_I M n ∧ z₂ ∈ M_I M n := by apply hn; simp
-  obtain ⟨z₁, z₂, h, hz₁, hz₂⟩ := h; use z₁; use z₂; rw [h]; simp; constructor;
-  exact M_I_in_M_inf' M z₁ n hz₁; exact M_I_in_M_inf' M z₂ n hz₂
+  intro h; obtain ⟨n, hn⟩ := h; have h: ∃ z₁ z₂, l = {z₁ := z₁, z₂ := z₂} ∧ z₁ ∈ M_I M n ∧ z₂ ∈ M_I M n ∧ z₁ ≠ z₂ := by apply hn; simp
+  obtain ⟨z₁, z₂, h, hz₁, hz₂, Noteq⟩ := h; use z₁; use z₂; rw [h]; simp; constructor;
+  exact M_I_in_M_inf' M z₁ n hz₁;constructor; exact M_I_in_M_inf' M z₂ n hz₂; exact Noteq
 
 lemma C_M_inf_iff_M_M (M: Set ℂ): c ∈ C (M_inf M) ↔ ∀ᶠ n in Filter.atTop, c ∈ C (M_I M n) := by
   unfold C; simp; constructor; intro h; obtain ⟨z, r₁, r₂, h, hz, hr₁, hr₂⟩ := h; rw[M_inf_in_M_I'] at hz hr₁ hr₂;

@@ -3,9 +3,11 @@ import Construction.Chapter1.set_MInf
 --(h₁: 1 ∈ M)
 -- Konstruction Schröer
 lemma z_neg_M_inf (M: Set ℂ)(h₀: (0:ℂ)∈ M)(z : ℂ)(hz : z ∈ (M_inf M)) : -z ∈ (M_inf M) := by
+  by_cases z0:(z=0)
+  simp[z0]; apply M_M_inf; exact h₀
   let l : line := {z₁ := 0, z₂ := z}
   let c : circle := {c := 0, r := (dist 0 z)}
-  have hl : l ∈ L (M_inf M) := by unfold L; use 0; use z; constructor; simp; constructor; apply M_M_inf' M 0 h₀; exact hz
+  have hl : l ∈ L (M_inf M) := by unfold L; use 0; use z; constructor; simp; constructor; apply M_M_inf' M 0 h₀; constructor; exact hz; symm; simp[z0]
   have hc : c ∈ C (M_inf M) := by rw[c_in_C_M]; use 0; use 0; use z; constructor; simp_all only [dist_zero_left, Complex.norm_eq_abs, l, c]; constructor; apply M_M_inf' M 0 h₀; constructor; apply M_M_inf' M 0 h₀; exact hz
   have hlc : -z ∈ c.points ∩ l.points := by {rw [@Set.mem_inter_iff]; constructor; simp[circle.points]; simp[line.points]; use 2; ring_nf; calc  -(2 * z) + z = -z := by ring}
   apply ilc_M_inf M; unfold ilc; rw [@Set.mem_setOf]; use c; constructor; exact hc ; use l

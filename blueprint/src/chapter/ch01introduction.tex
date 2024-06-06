@@ -66,6 +66,146 @@ We will use $\mathbb{C}$ as plane of drawing and $\mathcal{M} \subset \mathbb{C}
 \end{definition}
 
 \section[The set of constructable points]{The Set $M_{\infty}$}\label[section]{set_of_constructable_points}
+To work with the set of constructable points we need some basic lemmas.
+
+\begin{lemma}[$\mathcal{M}\subseteq ICL(\mathcal{M})$]
+    \label{lem:M_in_ICL_M}
+    \lean{M_in_ICL_M}
+    \leanok
+    \uses{def:rules_to_constructed_a_point}
+    Every set $M$ is in include in the constructable points of $M$, i.e.
+    \[M \subseteq ICL(M)\]
+\end{lemma}
+\begin{proof}
+    Folws from the definition of $ICL(M)$.
+\end{proof}
+
+\begin{lemma}{$\mathcal{M}_i$ Monoton}
+    \label{lem:M_i_monoton}
+    \lean{M_i_monotone,M_i_monotone_elm,M_i_monotone', M_i_monotone_elm'}
+    \leanok
+    \uses{def:set_of_constructable_points}
+    The set $\mathcal{M}_i$ is monoton, i.e. $$\mathcal{M}_i \subseteq \mathcal{M}_{i+1}.$$
+    This can be generalised to $$\forall m :\forall n\le m : \mathcal{M}_n \subseteq \mathcal{M}_m.$$
+\end{lemma}
+\begin{proof}
+    Follows from the definition of $\mathcal{M}_i$.
+\end{proof}
+
+\begin{lemma}[$\mathcal{M}$ in $\mathcal{M}_i$]
+    \label{lem:M_in_Mi}
+    \lean{M_in_M_I }
+    \leanok
+    \uses{def:set_of_constructable_points}
+    The set $\mathcal{M}$ is in $\mathcal{M}_i$, i.e. $$\mathcal{M} \subseteq \mathcal{M}_i.$$
+\end{lemma}
+\begin{proof}
+    \uses{lem:M_i_monoton}
+    Combeing the fact that $\mathcal{M}_0 = \mathcal{M}$ \ref{def:set_of_constructable_points} and the monotonity of $\mathcal{M}_i$ \ref{lem:M_i_monoton} we get the result.
+\end{proof}
+
+\begin{lemma}[$\mathcal{M}_i$ in $\mathcal{M}_{\infty}$]
+    \label{lem:M_i_in_M_inf}
+    \lean{M_I_in_M_inf,M_I_in_M_inf_elm}
+    \leanok
+    \uses{def:set_of_constructable_points}
+    The set $\mathcal{M}_i$ is in $\mathcal{M}_{\infty}$, i.e. $$\mathcal{M}_i \subseteq \mathcal{M}_{\infty}.$$
+\end{lemma}
+\begin{proof}
+    Follows from the definition of $\mathcal{M}_{\infty}$.
+\end{proof}
+
+\begin{lemma}[$\mathcal{m}$ in $\mathcal{M}_{\infty}$]
+    \label{lem:M_in_M_inf}
+    \lean{M_in_M_inf}
+    \leanok
+    \uses{def:set_of_constructable_points}
+    The set $\mathcal{M}$ is in $\mathcal{M}_{\infty}$.
+\end{lemma}
+\begin{proof}
+    \uses{lem:M_i_in_M_inf, lem:M_in_Mi}
+    Combeing $\mathcal{M} \subseteq \mathcal{M}_i$ \ref{lem:M_in_Mi} and $\mathcal{M}_i \subseteq \mathcal{M}_{\infty}$ \ref{lem:M_i_in_M_inf} we get the result.
+\end{proof}
+
+\begin{lemma}[$\mathcal{M}_{\infty}$ iff $\mathcal{M}_i$]
+    \label{lem:M_inf_iff_M_i}
+    \lean{M_inf_in_M_I, M_inf_in_M_I'}
+    \leanok
+    \uses{def:set_of_constructable_points}
+    A point $z$ is in $\mathcal{M}_{\infty}$ if and only if $z$ is in $\mathcal{M}_i$ for some $i$.
+\end{lemma}
+\begin{proof}
+    Follows from the definition of $\mathcal{M}_{\infty}$.
+\end{proof}
+
+\begin{corollary}[$L(\mathcal{M_{\infty}})$ iff $L(\mathcal{M_i})$]
+    \label{cor:L_M_inf_iff_L_M_i}
+    \lean{L_M_inf_iff_M_M}
+    \leanok
+    \uses{def:set_of_lines, def:set_of_constructable_points}
+    A line $l$ is in $\mathcal{L(M_{\infty})}$ if and only if $l$ is in $\mathcal{L(M_i)}$ for some $i$.
+\end{corollary}
+\begin{proof}
+    \uses{lem:M_inf_iff_M_i}
+    Follows from \ref{lem:M_inf_iff_M_i} and the fact that every line in $\mathcal{L(M_{\infty})}$ is definded by two pioints in $\mathcal{M_{\infty}}$.
+\end{proof}
+
+\begin{corollary}[$C(\mathcal{M_{\infty}})$ iff $C(\mathcal{M_i})$]
+    \label{cor:C_M_inf_iff_C_M_i}
+    \lean{C_M_inf_iff_M_M}
+    \leanok
+    \uses{def:set_of_circles, def:set_of_constructable_points}
+    A circle $c$ is in $\mathcal{C(M_{\infty})}$ if and only if $c$ is in $\mathcal{C(M_i)}$ for some $i$.
+\end{corollary}
+\begin{proof}
+    \uses{lem:M_inf_iff_M_i}
+    Follows from \ref{lem:M_inf_iff_M_i} and the fact that every circle in $\mathcal{C(M_{\infty})}$ is definded by three points in $\mathcal{M_{\infty}}$.
+\end{proof}
+
+To construct new points in the next section\ref{basic_constructions} we still need to show that every intersection of lines and circles is in $\mathcal{M}_{\infty}$.
+\begin{lemma}[Intersection of lines In $\mathcal{M}_{\infty}$]
+    \label{lem:ill_M_inf}
+    \lean{ill_M_inf}
+    \leanok
+    \uses{def:set_of_constructable_points, def:set_of_lines}
+    For two lines $l_1, l_2 \in \mathcal{L(M_{\infty})}$ is $l_1 \cap l_2 \in \mathcal{M}_{\infty}$.
+\end{lemma}
+\begin{proof}
+    \uses{cor:L_M_inf_iff_L_M_i, lem:M_i_monoton, lem:M_i_in_M_inf}
+    By corollary \ref{cor:L_M_inf_iff_L_M_i} and the monotonity of $\mathcal{M}_i$ \ref{lem:M_i_monoton} we get that ther exist an $n$ such that $l_1, l_2 \in \mathcal{L(M_n)}$.
+    Therfore $l_1 \cap l_2 \in \mathcal{M}_{n+1} \stackrel{\text{\ref{lem:M_i_in_M_inf}}}{\subseteq} \mathcal{M}_{\infty}$.
+\end{proof}
+
+\begin{remark}%TODO: check if remark is needed
+    To formuilise the lemmas \ref{lem:M_inf_iff_M_i}, \ref{cor:L_M_inf_iff_L_M_i} and \ref{cor:C_M_inf_iff_C_M_i} one should use filters in Lean.
+\end{remark}
+
+\begin{lemma}[Intersection of line and circle In $\mathcal{M}_{\infty}$]
+    \label{lem:ilc_M_inf}
+    \lean{ilc_M_inf}
+    \leanok
+    \uses{def:set_of_constructable_points, def:set_of_lines, def:set_of_circles}
+    For a line $l \in \mathcal{L(M_{\infty})}$ and a circle $c \in \mathcal{C(M_{\infty})}$ is $l \cap c \in \mathcal{M}_{\infty}$.
+\end{lemma}
+\begin{proof}
+    \uses{cor:L_M_inf_iff_L_M_i, cor:C_M_inf_iff_C_M_i, lem:M_i_monoton, lem:M_i_in_M_inf}
+    By corollary \ref{cor:L_M_inf_iff_L_M_i} and \ref{cor:C_M_inf_iff_C_M_i} we get that ther exist an $n$ such that $l \in \mathcal{L(M_n)}$ and $c \in \mathcal{C(M_n)}$.
+    Therfore $l \cap c \in \mathcal{M}_{n+1} \stackrel{\text{\ref{lem:M_i_in_M_inf}}}{\subseteq} \mathcal{M}_{\infty}$.
+\end{proof}
+
+\begin{lemma}[Intersection of circles In $\mathcal{M}_{\infty}$]
+    \label{lem:icc_M_inf}
+    \lean{icc_M_inf}
+    \leanok
+    \uses{def:set_of_constructable_points, def:set_of_circles}
+    For two circles $c_1, c_2 \in \mathcal{C(M_{\infty})}$ is $c_1 \cap c_2 \in \mathcal{M}_{\infty}$.
+\end{lemma}
+\begin{proof}
+    \uses{cor:C_M_inf_iff_C_M_i, lem:M_i_monoton, lem:M_i_in_M_inf}
+    By corollary \ref{cor:C_M_inf_iff_C_M_i} we get that ther exist an $n$ such that $c_1, c_2 \in \mathcal{C(M_n)}$.
+    Therfore $c_1 \cap c_2 \in \mathcal{M}_{n+1} \stackrel{\text{\ref{lem:M_i_in_M_inf}}}{\subseteq} \mathcal{M}_{\infty}$.
+\end{proof}
+
 
 \section{Basic constructions}\label{basic_constructions}
 For the following constructions we assume that $M\subseteq \mathbb{C}$ with $0,1 \in M$.

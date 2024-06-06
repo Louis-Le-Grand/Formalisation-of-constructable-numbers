@@ -1,5 +1,6 @@
 import Construction.bestiary
 
+open Polynomial
 noncomputable def P : (Polynomial ℚ) := X ^ 3 - Polynomial.C 2 -- x^3 - 2
 
 lemma P_monic: Monic P := by
@@ -107,10 +108,6 @@ lemma degree_third_root_of_two : Polynomial.degree (minpoly ℚ ((2:ℂ ) ^ (1/3
   apply Polynomial.X_pow_sub_C_ne_zero
   simp
 
-lemma not_mod_eq_imp_not_eq (a b n : ℕ ) (h : ¬ a % n = b % n) : ¬ a = b := by
-  intro h'
-  rw[h'] at h
-  simp at h
 
 --TODO: Tidy Up
 noncomputable def K_zero_P: IntermediateField ℚ ℂ := K_zero {(0:ℂ),(1:ℂ)}

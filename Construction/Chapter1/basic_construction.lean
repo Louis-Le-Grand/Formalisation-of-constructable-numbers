@@ -25,6 +25,11 @@ lemma sub_M_Inf (M: Set ℂ)(h₀: (0:ℂ)∈ M)(z₁ z₂ : ℂ)(hz₁ : z₁ �
   have hz : z₁ - z₂ = z₁ + (-z₂) := by ring
   rw [hz]; apply add_M_Inf M h₀ z₁ (-z₂) hz₁; apply z_neg_M_inf M h₀ z₂ hz₂
 
+lemma parallel_lines_M_inf (M: Set ℂ)(h₀: 0 ∈ M)(z : ℂ)(hz: z ∈ (M_inf M))(l₁: line)(hl₁ : l₁ ∈ L (M_inf M)): ∃ l₂, l₂ ∈ L (M_inf M) ∧ z ∈ l₂.points ∧ parallel l₁ l₂ := by
+  let l₂ : line := {z₁ := z, z₂ := z-l₁.z₁+l₁.z₂}
+  have hl₂ : l₂ ∈ L (M_inf M) := by unfold L; use z; use z-l₁.z₁+l₁.z₂; constructor; simp; constructor; exact hz; constructor; apply add_M_Inf M h₀ (z-l₁.z₁) l₁.z₂; apply sub_M_Inf M h₀ z l₁.z₁; exact hz; obtain ⟨q,_⟩ := (by apply l_in_L_M_imp (M_inf M) l₁; exact hl₁); exact q; obtain ⟨_,t⟩ := (by apply l_in_L_M_imp (M_inf M) l₁; exact hl₁); exact t; refine Ne.intro ?h.right.right.right.h; intro h; rw[←@sub_eq_iff_eq_add] at h; simp at h; have h': l₁.z₂ ≠  l₁.z₁ := by{ symm; apply l_in_L_M_imp' (M_inf M) l₁; exact hl₁}; contradiction
+  use l₂; constructor; exact hl₂; constructor; unfold line.points; simp; use 1; simp; apply parallel_basis; unfold line.z₁ line.z₂; ring
+
 -- Konstruction Schröer
 lemma conj_M_Inf (M: Set ℂ)(h₀: 0 ∈ M)(h₁: 1 ∈ M)(z : ℂ)(hz : z ∈ (M_inf M)): (starRingEnd ℂ) z ∈ (M_inf M) := by
   let c₀ : circle := {c := 0, r := (dist 0 z)}

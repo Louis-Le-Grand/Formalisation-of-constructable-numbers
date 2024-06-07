@@ -11,6 +11,50 @@ We will use $\mathbb{C}$ as plane of drawing and $\mathcal{M} \subset \mathbb{C}
     A line $l$ through two points $x,y\in\mathbb{C}$ for $x\ne y$ is definded by the set: $$l:=\{\lambda x+(1-\lambda)y\mid\lambda\in\mathbb{R}\}.$$
 \end{definition}
 
+\begin{definition}[parallel]
+    \label{def:parallel}
+    \lean{parallel}
+    \leanok
+    \uses{def:line}
+    Two lines $l_1$ and $l_2$ are parallel if they have the same slope, i.e. $\exists c\in\C: l_1 = \{x + r \mid x\in l_2\}$.
+\end{definition}
+
+\begin{lemma}[Parallel definded by basis]
+    \label{lem:parallel_by_basis}
+    \lean{parallel_basis}
+    \leanok
+    \uses{def:line, def:parallel}
+   If the basis of two lines is is moved by the same amound, i.e $l_1.z_1 - l_2.z_1 = l_1.z_2- l_2.z_2$, then they are parallel.
+\end{lemma}
+\begin{proof}
+    \uses{def:line, def:parallel}
+    We have to lines $l_1, l_2$ with basis $z_1, z_2$ and $l_1.z_1 - l_2.z_1 = l_1.z_2- l_2.z_2$. To show that ther are parallel we have to show that $\exists r: l_1 = \{z + r \mid z\in l_2\}$.\\
+    To make it esiar to read we define $a := l_1.z_1$, $b:= l_1.z_2$, $x:= l_2.z_1$ and $y:= l_2.z_2$.\\
+    We use $z:= a - b$ by unfollding the definition we net to show $\exists t: t \cdot a +(1-t)\cdot b=z \iff \exists s :s \cdot x+(1-s)y+(a-x)=z$.\\
+    $\Rightarrow:$ Claim $s = \frac{t(a-b)}{x-y}$ is a solution.\\
+    \begin{proof}
+    \begin{align*}
+        && z &= s \cdot x+(1-s)y+(a-x)&&| z:= t\cdot a+(1-t)\cdot b\\
+        &\Leftrightarrow & t\cdot a+(1-t)\cdot b  &= s \cdot x+(1-s)y+(a-x)\\
+        &\Leftrightarrow & t\cdot a-t\cdot b +b &= s \cdot x-s\cdot y + y+(a-x)&& | -y\\
+        &\Leftrightarrow & t\cdot a-t\cdot b + b-y  &= s \cdot x-s\cdot y+(a-x)-y&&| a-x =b-y\\
+        &\Leftrightarrow & t\cdot a-t\cdot b  &= s \cdot x+s\cdot y\\
+        &\Leftrightarrow & t(a-b)  &= s(x-y)&&|s:= \frac{t(a-b)}{x-y}\\
+        &\Leftrightarrow & t(a-b)  &= \frac{t(a-b)}{x-y}(x-y)\\
+        &\Leftrightarrow & t(a-b)  &= t(a-b)
+    \end{align*}
+    \end{proof}
+    $\Leftarrow:$ Claim $t = \frac{s(x-y)}{a-b}$ is a solution.
+    \begin{proof}
+    \begin{align*}
+        && t\cdot a+(1-t)b &= z&&| z:= s \cdot x+(1-s)y+(a-x)\\
+        &\Leftrightarrow& t\cdot a-t\cdot b+b &= s \cdot x-s\cdot y+y+(a-x)&&|-y;a-x =b-y\\
+        &\Leftrightarrow& t(a-b) &= s(x-y)&&|t:= \frac{s(x-y)}{a-b}\\
+        &\Leftrightarrow& \frac{s(x-y)}{a-b}(a-b) &= s(x-y)
+    \end{align*}
+    \end{proof}
+\end{proof}
+
 \begin{definition}[Circle]
     \label{def:circle}
     \lean{circle}
@@ -304,6 +348,19 @@ One can construct the point $z_1 + z_2$ by drawing a circle with center $z_1$ an
     By lemma \ref{lem:construction_neg} and \ref{lem:construction_add} we get $z_1 - z_2 = z_1 + (-z_2) \in M_{\infty}$.
 \end{proof}
 
+\begin{corollary}[Construction of parallel lines]
+    \label{lem:construction_parallel_lines}
+    \lean{parallel_lines_M_inf}
+    \leanok
+    \uses{def:set_of_constructable_points, def:set_of_lines, def:parallel}
+    For $l \in \mathcal{L(M_{\infty})}$ and $z \in M_{\infty}$ is $\exists l' \in \mathcal{L(M_{\infty}): z\in l' \text{ and } l\|l'}$.
+\end{corollary}
+\begin{proof}
+    \uses{def:line, def:set_of_lines, cor:construction_sub,lem:parallel_by_basis} 
+    Let $l$ be a line through $x,y \in \mathcal{M_{\infty}}$ and $z \in \mathcal{M_{\infty}}$.\\
+    After corollary \ref{cor:construction_sub} we get $z - x \in \mathcal{M_{\infty}}$ and therfore $z-x + y \in \mathcal{M_{\infty}}$\ref{lem:construction_add}.\\
+    Define $l' = \{z, z-x+y\}$, then $l' \in \mathcal{L(M_{\infty})}$ and since a line is defind by two points and we moved them the same distence ($z-x$) $l'$ is parallel to $l$.\ref{lem:parallel_by_basis}
+\end{proof}
 %2.3.3
 %TODO: Comper to mirrowed version
 \begin{lemma}[Complex conjugation]

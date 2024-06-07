@@ -292,6 +292,18 @@ One can construct the point $z_1 + z_2$ by drawing a circle with center $z_1$ an
     \label{Fig.2}
 \end{figure}
 
+\begin{corollary}[Subtraction of complex numbers]
+    \label{cor:construction_sub}
+    \lean{sub_M_Inf}
+    \leanok
+    \uses{def:set_of_constructable_points}
+    For $z_1, z_2 \in M_{\infty}$ is $z_1 - z_2 \in M_{\infty}$.
+\end{corollary}
+\begin{proof}
+    \uses{lem:construction_neg, lem:construction_add}
+    By lemma \ref{lem:construction_neg} and \ref{lem:construction_add} we get $z_1 - z_2 = z_1 + (-z_2) \in M_{\infty}$.
+\end{proof}
+
 %2.3.3
 %TODO: Comper to mirrowed version
 \begin{lemma}[Complex conjugation]

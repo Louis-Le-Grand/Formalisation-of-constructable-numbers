@@ -21,6 +21,10 @@ lemma add_M_Inf (M: Set ℂ)(h₀: (0:ℂ)∈ M)(z₁ z₂ : ℂ)(hz₁ : z₁ �
   have hcc : z₁ + z₂ ∈ c₁.points ∩ c₂.points := by rw [@Set.mem_inter_iff];  simp[circle.points]
   apply icc_M_inf M; unfold icc; rw [@Set.mem_setOf]; use c₁; constructor; exact hc₁; use c₂
 
+lemma sub_M_Inf (M: Set ℂ)(h₀: (0:ℂ)∈ M)(z₁ z₂ : ℂ)(hz₁ : z₁ ∈ (M_inf M))(hz₂ : z₂ ∈ (M_inf M)): z₁ - z₂ ∈ (M_inf M) := by
+  have hz : z₁ - z₂ = z₁ + (-z₂) := by ring
+  rw [hz]; apply add_M_Inf M h₀ z₁ (-z₂) hz₁; apply z_neg_M_inf M h₀ z₂ hz₂
+
 -- Konstruction Schröer
 lemma conj_M_Inf (M: Set ℂ)(h₀: 0 ∈ M)(h₁: 1 ∈ M)(z : ℂ)(hz : z ∈ (M_inf M)): (starRingEnd ℂ) z ∈ (M_inf M) := by
   let c₀ : circle := {c := 0, r := (dist 0 z)}

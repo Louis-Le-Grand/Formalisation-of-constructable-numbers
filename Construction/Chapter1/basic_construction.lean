@@ -64,3 +64,6 @@ lemma ir_M_inf (M: Set ℂ)(h₀: 0 ∈ M)(h₁: 1 ∈ M)(r : ℝ)(hr : ↑r ∈
   have hl: l ∈ L (M_inf M) := by unfold L; use l.z₁; use l.z₂; constructor; simp; constructor; apply icc_M_inf M; unfold icc; rw [@Set.mem_setOf]; use c₁; constructor; exact hc₁; use c₂; constructor; exact hc₂; rw [@Set.mem_inter_iff]; constructor; exact hz₁; exact hz₃; constructor; apply icc_M_inf M; unfold icc; rw [@Set.mem_setOf]; use c₁; constructor; exact hc₁; use c₂; constructor; exact hc₂; rw [@Set.mem_inter_iff]; constructor; exact hz₂; exact hz₄; simp
   have hc : c ∈ C (M_inf M) := by rw[c_in_C_M]; use 0; use 0; use r; constructor; simp_all only [dist_zero_left, Complex.norm_eq_abs, c]; simp; constructor; apply M_M_inf M h₀; constructor; apply M_M_inf M h₀; exact hr
   apply ilc_M_inf M; unfold ilc; rw [@Set.mem_setOf]; use c; constructor; exact hc; use l; constructor; exact hl; rw [@Set.mem_inter_iff]; constructor; simp[circle.points]; simp[line.points]; use (1/2 + r/(2 * (Real.sqrt 3))); norm_cast; rw[@Complex.ofReal_mul', @Complex.ofReal_mul']; ring_nf; simp[Complex.mk_eq_add_mul_I]; ring
+
+lemma imath_M_inf (M: Set ℂ)(h₀: 0 ∈ M)(h₁: 1 ∈ M): Complex.I ∈ M_inf M := by
+  rw[←mul_one I]; apply ir_M_inf M h₀ h₁ 1; apply M_M_inf M h₁

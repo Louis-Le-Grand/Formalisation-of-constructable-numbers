@@ -221,7 +221,7 @@ For the following constructions we assume that $M\subseteq \mathbb{C}$ with $0,1
 To get the point $-z$ we can use the second intersection of the line through $0$ and $z$ with circle with center $0$ and radius $\|z\|$.\ref{Fig.1}
 
 \begin{proof}
-    \uses{def:line, def:circle, lem:ilc_M_inf}
+    \uses{def:line, def:circle, lem:ilc_M_inf, lem:M_in_M_inf}
     Define $l = \{0,z\}$ and $c = \{0,\dist 0 z\}$.\\
     By assumption $0, z \in M_{\infty}$, so $l \in \mathcal{L(M_{\infty})}$ and $c \in \mathcal{C(M_{\infty})}$.\\
     \underline{Claim 1}: $-z$ is in $l$.
@@ -260,7 +260,7 @@ To get the point $-z$ we can use the second intersection of the line through $0$
 \end{lemma}
 One can construct the point $z_1 + z_2$ by drawing a circle with center $z_1$ and radius $\|z_2\|$ and a circle with center $z_2$ and radius $\|z_1\|$ and taking the intersection of the two circles.\ref{Fig.2}
 \begin{proof}
-    \uses{def:line, def:circle,  lem:icc_M_inf}
+    \uses{def:line, def:circle,  lem:icc_M_inf, lem:M_in_M_inf}
     Define $c_1 = \{z_1,\dist (0\ z_2)\}$ and $c_2 = \{z_2,\dist (0\ z_1)\}$.\\
     By assumption $0, z_1, z_2 \in M_{\infty}$, so $c_1, c_2 \in \mathcal{C(M_{\infty})}$.\\
     \underline{Claim 1}: $z_1 + z_2$ is in $c_1$.
@@ -303,7 +303,7 @@ One can construct the point $z_1 + z_2$ by drawing a circle with center $z_1$ an
 \end{lemma}
 Draw two crircles one with center $0$ and radius $\|z\|$ and a second with center $1$ and radius $\|z-1\|$ and take the intersection of the two circles.\ref{Fig.3}
 \begin{proof}
-    \uses{def:line, def:circle, lem:icc_M_inf}
+    \uses{def:line, def:circle, lem:icc_M_inf, lem:M_in_M_inf}
     Define $c_1 = \{0,\dist 0 z\}$ and $c_2 = \{1,\dist 1 z\}$.\\
     By assumption $0, 1, z \in M_{\infty}$, so $c_1, c_2 \in \mathcal{C(M_{\infty})}$.\\
     \underline{Claim 1}: $\overline{z}$ is in $c_1$.
@@ -342,7 +342,7 @@ Draw two crircles one with center $0$ and radius $\|z\|$ and a second with cente
 \end{lemma}
 First you need to consrtuct the imaginary axis by drawing a line $l$ through two crircles with center $-1$ and $1$ and radius $2$. Then you can construct the point $\imath r$, by drawing a circle with center $0$ and radius $r$ and taking the intersection with the imaginary axis.\ref{Fig.4}
 \begin{proof}
-    \uses{def:line, def:circle, lem:construction_neg, lem:icc_M_inf, lem:ilc_M_inf}
+    \uses{def:line, def:circle, lem:construction_neg, lem:icc_M_inf, lem:ilc_M_inf, lem:M_in_M_inf}
     First we construct the imaginary axis. Define $c_1 = \{-1,2\}$ and $c_2 = \{1,2\}$.\\
     \underline{Claim 1}: $c_1, c_2 \in \mathcal{C(M_{\infty})}$
     \begin{proof}
@@ -391,6 +391,18 @@ First you need to consrtuct the imaginary axis by drawing a line $l$ through two
     \caption{Construction of $\imath r$}
     \label{Fig.4}
 \end{figure}
+
+\begin{corollary}
+    \label{cor:construction_imath}
+    \lean{imath_M_inf}
+    \leanok
+    \uses{def:set_of_constructable_points}
+    $\imath \in M_{\infty}$.
+\end{corollary}
+\begin{proof}
+    \uses{lem:construction_imath_r, lem:M_in_M_inf}
+    By lemma \ref{lem:construction_imath_r} with $r = 1$ and the definition of $\mathcal{M}$ we get $\imath \in M_{\infty}$.
+\end{proof}
 
 
 %2.3.4

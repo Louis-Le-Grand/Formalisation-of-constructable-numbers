@@ -1,4 +1,6 @@
 line
+parallel
+parallel_basis
 circle
 L
 C
@@ -26,4 +28,8 @@ ilc_M_inf
 icc_M_inf
 z_neg_M_inf
 add_M_Inf
+sub_M_Inf
+parallel_lines_M_inf
 conj_M_Inf
+ir_M_inf
+imath_M_inf

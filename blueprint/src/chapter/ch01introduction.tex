@@ -221,7 +221,7 @@ For the following constructions we assume that $M\subseteq \mathbb{C}$ with $0,1
 To get the point $-z$ we can use the second intersection of the line through $0$ and $z$ with circle with center $0$ and radius $\|z\|$.\ref{Fig.1}
 
 \begin{proof}
-    \uses{def:line, def:circle, cor:C_M_inf_iff_C_M_i, cor:L_M_inf_iff_L_M_i, lem:ilc_M_inf}
+    \uses{def:line, def:circle, lem:ilc_M_inf}
     Define $l = \{0,z\}$ and $c = \{0,\dist 0 z\}$.\\
     By assumption $0, z \in M_{\infty}$, so $l \in \mathcal{L(M_{\infty})}$ and $c \in \mathcal{C(M_{\infty})}$.\\
     \underline{Claim 1}: $-z$ is in $l$.
@@ -237,7 +237,7 @@ To get the point $-z$ we can use the second intersection of the line through $0$
     By claim 1 and 2 we get that $-z \in l \cap c$. Futhermore  $-z $ is in $M_{\infty}$, after lemma \ref{lem:ilc_M_inf}.
 \end{proof}
 
-\begin{figure}
+\begin{figure}[h!]
     \centering
     \begin{tikzpicture}
         \draw[->] (-1,0) -- (3,0) node[right] {$\Re$};
@@ -260,7 +260,7 @@ To get the point $-z$ we can use the second intersection of the line through $0$
 \end{lemma}
 One can construct the point $z_1 + z_2$ by drawing a circle with center $z_1$ and radius $\|z_2\|$ and a circle with center $z_2$ and radius $\|z_1\|$ and taking the intersection of the two circles.\ref{Fig.2}
 \begin{proof}
-    \uses{def:line, def:circle, cor:C_M_inf_iff_C_M_i, lem:icc_M_inf}
+    \uses{def:line, def:circle,  lem:icc_M_inf}
     Define $c_1 = \{z_1,\dist (0\ z_2)\}$ and $c_2 = \{z_2,\dist (0\ z_1)\}$.\\
     By assumption $0, z_1, z_2 \in M_{\infty}$, so $c_1, c_2 \in \mathcal{C(M_{\infty})}$.\\
     \underline{Claim 1}: $z_1 + z_2$ is in $c_1$.
@@ -275,7 +275,7 @@ One can construct the point $z_1 + z_2$ by drawing a circle with center $z_1$ an
     \end{proof}
     By claim 1 and 2 we get that $z_1 + z_2 \in c_1 \cap c_2$. Futhermore  $z_1 + z_2 $ is in $M_{\infty}$, after lemma \ref{lem:icc_M_inf}.
 \end{proof}
-\begin{figure}
+\begin{figure}[h]
     \centering
     \begin{tikzpicture}
         \draw[->] (-1,0) -- (3,0) node[right] {$\Re$};
@@ -303,7 +303,7 @@ One can construct the point $z_1 + z_2$ by drawing a circle with center $z_1$ an
 \end{lemma}
 Draw two crircles one with center $0$ and radius $\|z\|$ and a second with center $1$ and radius $\|z-1\|$ and take the intersection of the two circles.\ref{Fig.3}
 \begin{proof}
-    \uses{def:line, def:circle, cor:C_M_inf_iff_C_M_i, lem:icc_M_inf}
+    \uses{def:line, def:circle, lem:icc_M_inf}
     Define $c_1 = \{0,\dist 0 z\}$ and $c_2 = \{1,\dist 1 z\}$.\\
     By assumption $0, 1, z \in M_{\infty}$, so $c_1, c_2 \in \mathcal{C(M_{\infty})}$.\\
     \underline{Claim 1}: $\overline{z}$ is in $c_1$.
@@ -318,7 +318,7 @@ Draw two crircles one with center $0$ and radius $\|z\|$ and a second with cente
     \end{proof}
     By claim 1 and 2 we get that $\overline{z} \in c_1 \cap c_2$. Futhermore  $\overline{z} $ is in $M_{\infty}$, after lemma \ref{lem:icc_M_inf}.
 \end{proof}
-\begin{figure}
+\begin{figure}[h]
     \centering
     \begin{tikzpicture}
         \draw[->] (-3,0) -- (3,0) node[right] {$\Re$};
@@ -331,6 +331,67 @@ Draw two crircles one with center $0$ and radius $\|z\|$ and a second with cente
     \caption{Construction of $\overline{z}$}
     \label{Fig.3}
 \end{figure}
+
+
+\begin{lemma}[Construction $\imath r\in\mathcal{M}_{\infty}$ ]
+    \label{lem:construction_imath_r}
+    \lean{ir_M_inf}
+    \leanok
+    \uses{def:set_of_constructable_points}
+    For $r \in \mathbb{R}\cap M_{\infty}$ is $\imath r \in M_{\infty}$.
+\end{lemma}
+First you need to consrtuct the imaginary axis by drawing a line $l$ through two crircles with center $-1$ and $1$ and radius $2$. Then you can construct the point $\imath r$, by drawing a circle with center $0$ and radius $r$ and taking the intersection with the imaginary axis.\ref{Fig.4}
+\begin{proof}
+    \uses{def:line, def:circle, lem:construction_neg, lem:icc_M_inf, lem:ilc_M_inf}
+    First we construct the imaginary axis. Define $c_1 = \{-1,2\}$ and $c_2 = \{1,2\}$.\\
+    \underline{Claim 1}: $c_1, c_2 \in \mathcal{C(M_{\infty})}$
+    \begin{proof}
+        By assumption and lamma \ref{lem:construction_neg} we get $-1, 1 \in M_{\infty}$. Using $\dist(-1 1)=2$ we get $c_1, c_2 \in \mathcal{C(M_{\infty})}$, by the definition of the circle.
+    \end{proof}
+    \underline{Claim 2}: $\imath\sqrt{3}$ and $-\imath\sqrt{3}$ are in $c_1 \cap c_2$.
+    \begin{proof}
+        Unfolding the definition of $c_1:=\{x\in\mathbb{C} \mid\|x+1\|=2\}$ and $c_2:=\{x\in\mathbb{C} \mid\|x-1\|=2\}$.
+        By the definition of the distence we get $\|-\imath\sqrt{3}+1\| = \sqrt{1 + 3} = 2$ and $\|\imath\sqrt{3}-1\| = \sqrt{1 + 3} = 2$.
+    \end{proof}
+    Now we define $l = \{\imath\sqrt{3}, -\imath\sqrt{3}\}$.\\
+    \underline{Claim 3}: $l \in \mathcal{L(M_{\infty})}$
+    \begin{proof}
+        By claim 2 and \ref{lem:icc_M_inf} we get $\imath\sqrt{3}, -\imath\sqrt{3} \in M_{\infty}$, so $l \in \mathcal{L(M_{\infty})}$.
+    \end{proof}
+    To get $\imath r$ we define $c = \{0,|r|\}$.\\
+    \underline{Claim 4}: $\imath r$ is in $c \cap l$.
+    \begin{proof}
+        It is clear that $\imath r \in c$. New using the definition of $l$ and $\lambda = \frac{r}{2\sqrt{3}+\frac{1}{2}}$ we get $(\frac{r}{2\sqrt{3}+\frac{r}{2}})\imath\sqrt{3} + (1-\frac{r}{2\sqrt{3}+\frac{r}{2}})(-\imath\sqrt{3}) = \imath r$. 
+    \end{proof}
+    Therfore $\imath r \in M_{\infty}$ after lemma \ref{lem:ilc_M_inf}.
+\end{proof}
+\begin{figure}[h]
+    \centering
+    \begin{tikzpicture}
+        \tikzset{
+            carc/.style args={#1:#2:#3}{
+              insert path={+(#1:#3) arc (#1:#2:#3)}
+            }
+          }
+          
+        \draw[->] (-3,0) -- (3,0) node[right] {$\Re$};
+        \draw[->] (0,-2.5) -- (0,2.5) node[above] {$\Im$};
+        \coordinate[label=-45:$1$] (one) at (1,0);
+        \coordinate[label=-135:$-1$] (mone) at (-1,0);
+        \fill[black] (one) circle (2pt);
+        \fill[black] (mone) circle (2pt);
+        \draw[dashed] (one) [carc=110:250:2];
+        \draw[dashed] (mone) [carc=70:-70:2];
+        \coordinate[label=45:$r$] (r) at (2,0);
+        \coordinate[label=135:$\imath r$] (ir) at (0,2);
+        \fill[black] (r) circle (2pt);
+        \fill[black] (ir) circle (2pt);
+        \draw (0,0) [carc=-10:100:2];
+    \end{tikzpicture}
+    \caption{Construction of $\imath r$}
+    \label{Fig.4}
+\end{figure}
+
 
 %2.3.4
 \begin{lemma}[Mitpiont of two complex numbers]

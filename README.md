@@ -11,3 +11,6 @@ Will be here soon™️.
 
 # Questions
 Prove that M_inf is a subfield of C by defing a new obj?
+
+Is it a problem that lines and circel are unic by basis?
+How would one generlise to unics by range?

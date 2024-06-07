@@ -1,6 +1,17 @@
 # A list of things that should be added to Lean
 While working with or in Lean, I have come across a number of things that I think should be added to Lean.
 
+## apply lemma with multiple arguments
+I hat a lemma whit multiple arguments, but I could not apply it with ``apply``. I had to use ``obtain`` and ``apply``. This should be possible with ``apply``. 
+### Example
+./Chapter1/basic_constructions.lean
+```lean
+lemma parallel_lines_M_inf ...
+obtain ⟨q,_⟩ := (by apply l_in_L_M_imp (M_inf M) l₁; exact hl₁); exact q; obtain ⟨_,t⟩ := (by apply l_in_L_M_imp (M_inf M) l₁; exact hl₁); exact t;
+[...]
+```
+
+# Old
 ## Use for multipel Exists
 There is an exist that handles multiple elements as a function, which makes using ``use`` complicated.
 

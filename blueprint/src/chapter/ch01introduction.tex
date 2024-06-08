@@ -1,6 +1,6 @@
 \chapter{Introduction}
 
-\section{Defining circles, lines and the set of constructable points}
+\section{Defining lines, circles and the set of constructable points}
 First we need to define what construction using a ruler and compass means.
 We will use $\mathbb{C}$ as plane of drawing and $\mathcal{M} \subset \mathbb{C}$ as the set of constructed points.
 
@@ -8,7 +8,7 @@ We will use $\mathbb{C}$ as plane of drawing and $\mathcal{M} \subset \mathbb{C}
     \label{def:line}
     \lean{line}
     \leanok
-    A line $l$ through two points $x,y\in\mathbb{C}$ for $x\ne y$ is definded by the set: $$l:=\{\lambda x+(1-\lambda)y\mid\lambda\in\mathbb{R}\}.$$
+    A line $l$ through two points $x,y\in\mathbb{C}$ for $x\ne y$ is defined by the set: $$l:=\{\lambda x+(1-\lambda)y\mid\lambda\in\mathbb{R}\}.$$
 \end{definition}
 
 \begin{definition}[parallel]
@@ -19,7 +19,7 @@ We will use $\mathbb{C}$ as plane of drawing and $\mathcal{M} \subset \mathbb{C}
     Two lines $l_1$ and $l_2$ are parallel if they have the same slope, i.e. $\exists c\in\C: l_1 = \{x + r \mid x\in l_2\}$.
 \end{definition}
 
-\begin{lemma}[Parallel definded by basis]
+\begin{lemma}[Parallel defined by basis]
     \label{lem:parallel_by_basis}
     \lean{parallel_basis}
     \leanok
@@ -28,7 +28,7 @@ We will use $\mathbb{C}$ as plane of drawing and $\mathcal{M} \subset \mathbb{C}
 \end{lemma}
 \begin{proof}
     \uses{def:line, def:parallel}
-    We have to lines $l_1, l_2$ with basis $z_1, z_2$ and $l_1.z_1 - l_2.z_1 = l_1.z_2- l_2.z_2$. To show that ther are parallel we have to show that $\exists r: l_1 = \{z + r \mid z\in l_2\}$.\\
+    We have to lines $l_1, l_2$ with basis $z_1, z_2$ and $l_1.z_1 - l_2.z_1 = l_1.z_2- l_2.z_2$. To show that ther are parallel we have to show that $$\exists r: l_1 = \{z + r \mid z\in l_2\}.$$
     To make it esiar to read we define $a := l_1.z_1$, $b:= l_1.z_2$, $x:= l_2.z_1$ and $y:= l_2.z_2$.\\
     We use $z:= a - b$ by unfollding the definition we net to show $\exists t: t \cdot a +(1-t)\cdot b=z \iff \exists s :s \cdot x+(1-s)y+(a-x)=z$.\\
     $\Rightarrow:$ Claim $s = \frac{t(a-b)}{x-y}$ is a solution.\\
@@ -67,7 +67,7 @@ We will use $\mathbb{C}$ as plane of drawing and $\mathcal{M} \subset \mathbb{C}
     \lean{L}
     \leanok
     \uses{def:line}
-    $\mathcal{L(M)}$ is the set of all real straight lines $l$, with $| l\cap \mathcal{M} |\ge 2$. As set this would be
+    $\mathcal{L(M)}$ is the set of all real straight lines $l$, with $| l\cap \mathcal{M} |\ge 2$. As set this is:
     \begin{equation*}
         \mathcal{L(M)} := \{l \mid l = \{x,y\} \text{ with }x,y \in \mathcal{M} \land x \neq y\}.
     \end{equation*}
@@ -78,30 +78,30 @@ We will use $\mathbb{C}$ as plane of drawing and $\mathcal{M} \subset \mathbb{C}
     \lean{C}
     \leanok
     \uses{def:circle}
-    $\mathcal{C(M)}$ is the set of all circles in $\mathbb{C}$, with center in $\mathcal{M}$ and radius of $\mathcal{C}$ is the distence of two points in $\mathcal{M}$. As equation this would be:
+    $\mathcal{C(M)}$ is the set of all circles in $\mathbb{C}$, with center in $\mathcal{M}$ and radius of $\mathcal{C}$ which is the distence of two points in $\mathcal{M}$. As equation this is:
     $$\mathcal{C(M)}:=\{c\mid c = \langle c, \dist r_1 r_2 \rangle \text{ with } c,r_1,r_2\in M\}.$$
 \end{definition}
 
-\begin{definition}[Ruels to constructed a Point]
+\begin{definition}[Ruels to construct a point]
     \label{def:rules_to_constructed_a_point}
     \lean{ill,ilc,icc,ICL_M}
     \leanok
     \uses{def:set_of_lines, def:set_of_circles}
-    We define operation that can be used to constructed new Points.
+    We define operations that can be used to construct new points.
     \begin{enumerate}
         \item $(ILL)$ is the cut of two lines in $\mathcal{L(M)}$.
         \item $(ILC)$ is the cut of a line in $\mathcal{L(M)}$ and a circle in $\mathcal{C(M)}$.
         \item $(ICC)$ is the cut of two circles in $\mathcal{C(M)}$.
     \end{enumerate}
-    $ICL(\mathcal{M})$ is the set $\mathcal{M}$ combeined with of all points that can be constructed using the operations $(ILL)$, $(ILC)$ and $(ICC)$.
+    $ICL(\mathcal{M})$ is the set $\mathcal{M}$ combiened of all points that can be constructed using the operations $(ILL)$, $(ILC)$ and $(ICC)$ and $\mathcal{M}$.
 \end{definition}
 
-\begin{definition}[Set of Constructable Points]
+\begin{definition}[Set of constructable points]
     \label{def:set_of_constructable_points}
     \lean{M_I,M_inf}
     \leanok
     \uses{def:rules_to_constructed_a_point}
-    We define inductively the the chain
+    We define inductively the chain
     \begin{equation*}
         \mathcal{M}_0 \subseteq \mathcal{M}_1 \subseteq \mathcal{M}_2 \subseteq \dots
     \end{equation*}
@@ -109,8 +109,8 @@ We will use $\mathbb{C}$ as plane of drawing and $\mathcal{M} \subset \mathbb{C}
     And call $\mathcal{M}_{\infty} = \bigcup_{n \in \mathbb{N}} \mathcal{M}_n$ the set of all constructable points.
 \end{definition}
 
-\section[The set of constructable points]{The Set $M_{\infty}$}\label[section]{set_of_constructable_points}
-To work with the set of constructable points we need some basic lemmas.
+\section[The set of constructable points]{The Set $M_{\infty}$}\label{set_of_constructable_points}
+When we want to work with the set of constructable points we need some basic lemmas.
 
 \begin{lemma}[$\mathcal{M}\subseteq ICL(\mathcal{M})$]
     \label{lem:M_in_ICL_M}
@@ -124,7 +124,7 @@ To work with the set of constructable points we need some basic lemmas.
     Folws from the definition of $ICL(M)$.
 \end{proof}
 
-\begin{lemma}{$\mathcal{M}_i$ Monoton}
+\begin{lemma}[$\mathcal{M}_i$ Monoton]
     \label{lem:M_i_monoton}
     \lean{M_I_Monotone,M_I_Monotone_elm,M_I_Monotone', M_I_Monotone_elm'}
     \leanok
@@ -191,7 +191,7 @@ To work with the set of constructable points we need some basic lemmas.
 \end{corollary}
 \begin{proof}
     \uses{lem:M_inf_iff_M_i}
-    Follows from \ref{lem:M_inf_iff_M_i} and the fact that every line in $\mathcal{L(M_{\infty})}$ is definded by two pioints in $\mathcal{M_{\infty}}$.
+    Follows from \ref{lem:M_inf_iff_M_i} and the fact that every line in $\mathcal{L(M_{\infty})}$ is defined by two pioints in $\mathcal{M_{\infty}}$.
 \end{proof}
 
 \begin{corollary}[$C(\mathcal{M_{\infty}})$ iff $C(\mathcal{M_i})$]
@@ -203,11 +203,11 @@ To work with the set of constructable points we need some basic lemmas.
 \end{corollary}
 \begin{proof}
     \uses{lem:M_inf_iff_M_i}
-    Follows from \ref{lem:M_inf_iff_M_i} and the fact that every circle in $\mathcal{C(M_{\infty})}$ is definded by three points in $\mathcal{M_{\infty}}$.
+    Follows from \ref{lem:M_inf_iff_M_i} and the fact that every circle in $\mathcal{C(M_{\infty})}$ is defined by three points in $\mathcal{M_{\infty}}$.
 \end{proof}
 
 To construct new points in the next section\ref{basic_constructions} we still need to show that every intersection of lines and circles is in $\mathcal{M}_{\infty}$.
-\begin{lemma}[Intersection of lines In $\mathcal{M}_{\infty}$]
+\begin{lemma}[Intersection of lines in $\mathcal{M}_{\infty}$]
     \label{lem:ill_M_inf}
     \lean{ill_M_inf}
     \leanok
@@ -216,15 +216,15 @@ To construct new points in the next section\ref{basic_constructions} we still ne
 \end{lemma}
 \begin{proof}
     \uses{cor:L_M_inf_iff_L_M_i, lem:M_i_monoton, lem:M_i_in_M_inf}
-    By corollary \ref{cor:L_M_inf_iff_L_M_i} and the monotonity of $\mathcal{M}_i$ \ref{lem:M_i_monoton} we get that ther exist an $n$ such that $l_1, l_2 \in \mathcal{L(M_n)}$.
-    Therfore $l_1 \cap l_2 \in \mathcal{M}_{n+1} \stackrel{\text{\ref{lem:M_i_in_M_inf}}}{\subseteq} \mathcal{M}_{\infty}$.
+    By corollary \ref{cor:L_M_inf_iff_L_M_i} and the monotonity of $\mathcal{M}_i$ \ref{lem:M_i_monoton} we get that there exists an $n$ such that $l_1, l_2 \in \mathcal{L(M_n)}$.
+    Therfore $l_1 \cap l_2 \in \mathcal{M}_{n+1} \stackrel{\ref{lem:M_i_in_M_inf}}{\subseteq} \mathcal{M}_{\infty}$.
 \end{proof}
 
 \begin{remark}%TODO: check if remark is needed
-    To formuilise the lemmas \ref{lem:M_inf_iff_M_i}, \ref{cor:L_M_inf_iff_L_M_i} and \ref{cor:C_M_inf_iff_C_M_i} one should use filters in Lean.
+    To formalise the lemmas \ref{lem:M_inf_iff_M_i}, \ref{cor:L_M_inf_iff_L_M_i} and \ref{cor:C_M_inf_iff_C_M_i} one should use filters in Lean.
 \end{remark}
 
-\begin{lemma}[Intersection of line and circle In $\mathcal{M}_{\infty}$]
+\begin{lemma}[Intersection of line and circle in $\mathcal{M}_{\infty}$]
     \label{lem:ilc_M_inf}
     \lean{ilc_M_inf}
     \leanok
@@ -237,7 +237,7 @@ To construct new points in the next section\ref{basic_constructions} we still ne
     Therfore $l \cap c \in \mathcal{M}_{n+1} \stackrel{\text{\ref{lem:M_i_in_M_inf}}}{\subseteq} \mathcal{M}_{\infty}$.
 \end{proof}
 
-\begin{lemma}[Intersection of circles In $\mathcal{M}_{\infty}$]
+\begin{lemma}[Intersection of circles in $\mathcal{M}_{\infty}$]
     \label{lem:icc_M_inf}
     \lean{icc_M_inf}
     \leanok
@@ -247,7 +247,7 @@ To construct new points in the next section\ref{basic_constructions} we still ne
 \begin{proof}
     \uses{cor:C_M_inf_iff_C_M_i, lem:M_i_monoton, lem:M_i_in_M_inf}
     By corollary \ref{cor:C_M_inf_iff_C_M_i} we get that ther exist an $n$ such that $c_1, c_2 \in \mathcal{C(M_n)}$.
-    Therfore $c_1 \cap c_2 \in \mathcal{M}_{n+1} \stackrel{\text{\ref{lem:M_i_in_M_inf}}}{\subseteq} \mathcal{M}_{\infty}$.
+    Therfore $c_1 \cap c_2 \in \mathcal{M}_{n+1} \stackrel{\ref{lem:M_i_in_M_inf}}{\subseteq} \mathcal{M}_{\infty}$.
 \end{proof}
 
 
@@ -361,7 +361,7 @@ One can construct the point $z_1 + z_2$ by drawing a circle with center $z_1$ an
     \uses{def:line, def:set_of_lines, cor:construction_sub,lem:parallel_by_basis} 
     Let $l$ be a line through $x,y \in \mathcal{M_{\infty}}$ and $z \in \mathcal{M_{\infty}}$.\\
     After corollary \ref{cor:construction_sub} we get $z - x \in \mathcal{M_{\infty}}$ and therfore $z-x + y \in \mathcal{M_{\infty}}$\ref{lem:construction_add}.\\
-    Define $l' = \{z, z-x+y\}$, then $l' \in \mathcal{L(M_{\infty})}$ and since a line is defind by two points and we moved them the same distence ($z-x$) $l'$ is parallel to $l$.\ref{lem:parallel_by_basis}
+    Define $l' = \{z, z-x+y\}$, then $l' \in \mathcal{L(M_{\infty})}$ and since a line is defined by two points and we moved them the same distence ($z-x$) $l'$ is parallel to $l$.\ref{lem:parallel_by_basis}
 \end{proof}
 %2.3.3
 %TODO: Comper to mirrowed version
@@ -412,7 +412,7 @@ Draw two crircles one with center $0$ and radius $\|z\|$ and a second with cente
     \uses{def:set_of_constructable_points}
     For $r \in \mathbb{R}\cap M_{\infty}$ is $\imath r \in M_{\infty}$.
 \end{lemma}
-First you need to consrtuct the imaginary axis by drawing a line $l$ through two crircles with center $-1$ and $1$ and radius $2$. Then you can construct the point $\imath r$, by drawing a circle with center $0$ and radius $r$ and taking the intersection with the imaginary axis.\ref{Fig.4}
+First you need to construct the imaginary axis by drawing a line $l$ through two crircles with center $-1$ and $1$ and radius $2$. Then you can construct the point $\imath r$, by drawing a circle with center $0$ and radius $r$ and taking the intersection with the imaginary axis.\ref{Fig.4}
 \begin{proof}
     \uses{def:line, def:circle, lem:construction_neg, lem:icc_M_inf, lem:ilc_M_inf, lem:M_in_M_inf}
     First we construct the imaginary axis. Define $c_1 = \{-1,2\}$ and $c_2 = \{1,2\}$.\\

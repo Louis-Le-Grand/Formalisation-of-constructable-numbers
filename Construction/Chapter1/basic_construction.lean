@@ -76,3 +76,23 @@ lemma ir_M_inf (M: Set ℂ)(h₀: 0 ∈ M)(h₁: 1 ∈ M)(r : ℝ)(hr : ↑r ∈
 
 lemma imath_M_inf (M: Set ℂ)(h₀: 0 ∈ M)(h₁: 1 ∈ M): Complex.I ∈ M_inf M := by
   rw[←mul_one I]; apply ir_M_inf M h₀ h₁ 1; apply M_M_inf M h₁
+
+--TODO: use parallel_lines_M_inf, because now we have it
+lemma ab_in_M_inf (M: Set ℂ)(h₀: 0 ∈ M)(h₁: 1 ∈ M)(a b :ℝ)(ha: ↑a ∈ M_inf M)(hb: ↑b ∈ M_inf M): ↑(a * b) ∈ M_inf M := by
+  let l₁ : line := {z₁ := a, z₂ := I}
+  let l₂ : line := {z₁ := a+I*b-I, z₂ := I*b}
+  let lr : line := {z₁ := 1, z₂ := 0}
+  have _ : l₁ ∈ L (M_inf M) := by unfold L; use a; use I; constructor; simp; constructor; exact ha; constructor; apply imath_M_inf M h₀ h₁; by_contra h; rw [@ext_iff] at h; simp at h
+  have hl₂ : l₂ ∈ L (M_inf M) := by unfold L; use (a+I*b-I); use I*b; constructor; simp; constructor; apply sub_M_Inf M h₀ (a+I*b) I; apply add_M_Inf M h₀ a (I*b); exact ha; exact ir_M_inf M h₀ h₁ b hb; exact imath_M_inf M h₀ h₁; constructor; exact ir_M_inf M h₀ h₁ b hb; by_contra h; rw [@ext_iff] at h; simp at h
+  have hlr : lr ∈ L (M_inf M) := by unfold L; use 1; use 0; constructor; simp; constructor; apply M_M_inf M h₁; constructor; apply M_M_inf M h₀; simp
+  apply ill_M_inf M; unfold ill; rw [@Set.mem_setOf]; use l₂; constructor; exact hl₂; use lr; constructor; exact hlr; rw [@Set.mem_inter_iff]; constructor; simp[line.points]; use b; ring; use a*b; ring
+
+
+lemma ainv_in_M_inf (M: Set ℂ)(h₀: 0 ∈ M)(h₁: 1 ∈ M)(a :ℝ)(ha: ↑a ∈ M_inf M): ↑(a⁻¹) ∈ M_inf M := by
+by_cases h: a = 0
+rw[h]; apply M_M_inf; simp; exact h₀; rw[←ne_eq] at h
+let l: line := {z₁ := 1-I*a+I, z₂ := I}
+let lr : line := {z₁ := 1, z₂ := 0}
+have hl : l ∈ L (M_inf M) := by unfold L; use (1-I*a+I); use I; constructor; simp; constructor; apply add_M_Inf M h₀ (1-I*a) I; apply sub_M_Inf M h₀ 1 (I*a); exact M_M_inf M h₁; exact ir_M_inf M h₀ h₁ a ha; exact imath_M_inf M h₀ h₁; constructor; exact imath_M_inf M h₀ h₁; by_contra h; rw [@ext_iff] at h; simp at h
+have hlr : lr ∈ L (M_inf M) := by unfold L; use 1; use 0; constructor; simp; constructor; apply M_M_inf M h₁; constructor; apply M_M_inf M h₀; simp
+apply ill_M_inf M; unfold ill; rw [@Set.mem_setOf]; use l; constructor; exact hl; use lr; constructor; exact hlr; rw [@Set.mem_inter_iff]; constructor; simp[line.points]; use a⁻¹; ring_nf; rw [@mul_rotate]; simp[*]; simp[line.points]; use a⁻¹; norm_cast

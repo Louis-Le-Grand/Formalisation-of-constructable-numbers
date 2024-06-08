@@ -262,6 +262,7 @@ For the following constructions we assume that $M\subseteq \mathbb{C}$ with $0,1
     \uses{def:set_of_constructable_points}
     For $z \in M_{\infty}$ is $-z \in M_{\infty}$.
 \end{lemma}
+This constrution is teken from \cite{JAN_SCHRÖER:2023}.\\
 To get the point $-z$ we can use the second intersection of the line through $0$ and $z$ with circle with center $0$ and radius $\|z\|$.\ref{Fig.1}
 
 \begin{proof}
@@ -302,6 +303,7 @@ To get the point $-z$ we can use the second intersection of the line through $0$
     \uses{def:set_of_constructable_points}
     For $z_1, z_2 \in M_{\infty}$ is $z_1 + z_2 \in M_{\infty}$.
 \end{lemma}
+This constrution is teken from \cite{JAN_SCHRÖER:2023}.\\
 One can construct the point $z_1 + z_2$ by drawing a circle with center $z_1$ and radius $\|z_2\|$ and a circle with center $z_2$ and radius $\|z_1\|$ and taking the intersection of the two circles.\ref{Fig.2}
 \begin{proof}
     \uses{def:line, def:circle,  lem:icc_M_inf, lem:M_in_M_inf}
@@ -370,6 +372,7 @@ One can construct the point $z_1 + z_2$ by drawing a circle with center $z_1$ an
     \uses{def:set_of_constructable_points}
     For $z \in M_{\infty}$ is $\overline{z} \in M_{\infty}$.
 \end{lemma}
+This constrution is teken from \cite{JAN_SCHRÖER:2023}.\\
 Draw two crircles one with center $0$ and radius $\|z\|$ and a second with center $1$ and radius $\|z-1\|$ and take the intersection of the two circles.\ref{Fig.3}
 \begin{proof}
     \uses{def:line, def:circle, lem:icc_M_inf, lem:M_in_M_inf}
@@ -461,7 +464,7 @@ First you need to consrtuct the imaginary axis by drawing a line $l$ through two
     \label{Fig.4}
 \end{figure}
 
-\begin{corollary}
+\begin{corollary}[Construction of $\imath$]
     \label{cor:construction_imath}
     \lean{imath_M_inf}
     \leanok
@@ -473,68 +476,84 @@ First you need to consrtuct the imaginary axis by drawing a line $l$ through two
     By lemma \ref{lem:construction_imath_r} with $r = 1$ and the definition of $\mathcal{M}$ we get $\imath \in M_{\infty}$.
 \end{proof}
 
-
-%2.3.4
-\begin{lemma}[Mitpiont of two complex numbers]
-    \label{lem:construction_midpoint}
-    For $z_1, z_2 \in M_{\infty}$ is $\frac{z_1 + z_2}{2} \in M_{\infty}$.
+\begin{lemma}[Multiplication of positve real numbers]
+    \label{lem:construction_mul}
+    \lean{ab_in_M_inf}
+    \leanok
+    \uses{def:set_of_constructable_points}
+    For $a, b \in M_{\infty}\cap\R$ is $a \cdot b \in M_{\infty}$.
 \end{lemma}
-%TODO: add proof, and Construction Idea
+This constrution is taken from \cite{cox2012galois}.\\
+To get the point $a\cdot b$ we draw a line trough $a$ and $\imath$ and a parallel line through $\imath b$. The intersection of the second line with the real axis is $a\cdot b$.\ref{Fig.5} 
+\begin{proof}
+    \uses{def:line, def:set_of_lines, lem:ill_M_inf, lem:construction_imath_r, cor:construction_imath, lem:construction_add, cor:construction_sub}
+    Define the three lines $l = \{a+\imath b - \imath, \imath b\}$ and $l_{\Re} = \{1,0\}$.\\
+    \underline{Claim 1}: $l \in \mathcal{L(M_{\infty})}$
+    \begin{proof}
+        By assumption is $b \in M_{\infty}$ so after Lemma \ref{lem:construction_imath_r} $\imath b \in M_{\infty}$. Futhermore $l_2 \in \mathcal{L(M_{\infty})}$ after Claim 1 and Lemma \ref{lem:construction_parallel_lines}.
+    \end{proof}
+    \underline{Claim 2}: $l_{\Re} \in \mathcal{L(M_{\infty})}$
+    \begin{proof}
+        By assumption $0, 1 \in M_{\infty}$, so $l_{\Re} \in \mathcal{L(M_{\infty})}$.
+    \end{proof}
+    To show that $a\cdot b \in M_{\infty}$ we need to show that $l \cap l_{\Re} \in M_{\infty}$\ref{lem:ill_M_inf}. That $ab \in l_{\Re} \cap l$ is clear after definition $t=ab$. For $ab \in l$ we use $t=b$ and get $t(a+\imath b - \imath) + (1-t)\imath b  \stackrel{t:=b}{=}ba + \imath b^2 -\imath b + \imath b -\imath b^2 = a\cdot b$.
+\end{proof}
+\begin{remark}
+    This construction uses parallel lines, but it is not needed for the proof of the lemma.
+\end{remark}
+\begin{figure}
+    \centering
+    \begin{tikzpicture}
+        \draw[->] (-0.5,0) -- (5,0) node[right] {$\Re$};
+        \draw[->] (0,-0.5) -- (0,3) node[above] {$\Im$};
+        \coordinate[label=135:$\imath$] (i) at (0,1);
+        \coordinate[label=-90:$a$] (a) at (2,0);
+        \coordinate[label=135:$\imath b$] (ib) at (0,2);
+        \coordinate[label=-90:$ab$] (ab) at (4,0);
+        \fill[black] (i) circle (2pt);
+        \fill[black] (a) circle (2pt);
+        \fill[black] (ib) circle (2pt);
+        \fill[black] (ab) circle (2pt);
+        \draw (a) -- (i);
+        \draw (ib) -- (ab);
+    \end{tikzpicture}
+    \caption{Construction of $z_1 \cdot z_2$}
+    \label{Fig.5}
+\end{figure}
 
-%2.3.5
-\begin{lemma}[Halving of Angle]
-    \label{lem:construction_halving_angle}
-    For $z = r \exp(\imath \alpha) \in M_{\infty}$ is $\exp(\imath \alpha / 2) \in M_{\infty}$.
+\begin{lemma}[Invers of a pos real number]
+    \label{lem:construction_inv}
+    \lean{ainv_M_inf}
+    \leanok
+    \uses{def:set_of_constructable_points}
+    If $a \in M_{\infty}\cap\R$, then $a^{-1}$ is in  $M_{\infty}$.
 \end{lemma}
 
-%TODO: add proof, and Construction Idea
-
-%2.3.6
-%TODO: maybe write as \exp(\imath \alpha) + \exp(\imath \beta) = \exp(\imath \gamma) \in M_{\infty}
-\begin{lemma}[Addition of Angles]
-    \label{lem:construction_add_angle}
-    For two given angle $\alpha$ (given by two streches $[a,b]$ and $[c,d]$) and $\beta$ (given by two streches $[e,f]$ and $[g,h]$), with $ a,b,c,d,e,f,g,h \in M_{\infty}$, the addition of the angles is constructable.
-\end{lemma}
-%TODO: add proof, and Construction Idea, 
-
-%2.3.7
-\begin{lemma}[multiplication of positive real numbers]
-    \label{lem:construction_mult_pos_real}
-    For $r_1, r_2 > 0 \in \mathbb{R}\cup M_{\infty}$ is $r_1 r_2 \in M_{\infty}$.
-\end{lemma}
-%TODO: add proof, and Construction Idea
-
-%2.3.8
-\begin{lemma}[Inverse of positive real numbers]
-    \label{lem:construction_inv_pos_real}
-    For $r > 0\in \mathbb{R}\cup M_{\infty}$ is $r^{-1} \in M_{\infty}$.
-\end{lemma}
-%TODO: add proof, and Construction Idea
-
-%2.3.9
-\begin{lemma}[Root of positive real numbers]
-    \label{lem:construction_sqrt_pos_real}
-    For $r > 0 \in \mathbb{R}\cup M_{\infty}$ is $\sqrt{r} \in M_{\infty}$.
-\end{lemma}
-%TODO: add proof, and Construction Idea
-
-%2.3.10
-\begin{lemma}[Polarkoordinates of complex numbers]
-    \label{lem:construction_polar}
-    For $z = r \exp(\imath \alpha) \in M_{\infty}$ is $r, \allowbreak \exp(\imath \alpha) \in M_{\infty}$.
-\end{lemma}
-%TODO: add proof, and Construction Idea
-
-%2.3.11
-\begin{lemma}[Real and Imaginary part of complex numbers]
-    \label{lem:construction_re_im}
-    For $0 \ne z = x + \imath y \in M_{\infty}$ is $x, \imath y \in M_{\infty}$.
-\end{lemma}
-%TODO: add proof, and Construction Idea
-
-%2.3.12
-\begin{lemma}[Construction of $\imath$]
-    \label{lem:construction_imath}
-    $\imath \in M_{\infty}$.
-\end{lemma}
-%TODO: add proof, and Construction Idea
+This can be construceted analog to the multiplication of positve real numbers. Usind the fact that $a\cdot a^{-1} = 1$. Draw a line through $1$ and $\imath a$ and a parallel line through $\imath$. The intersection of the second line with the real axis is $a^{-1}$.\ref{Fig.6}
+\begin{proof}
+    \uses{def:line, def:set_of_lines, lem:ill_M_inf, lem:construction_imath_r, cor:construction_imath, lem:construction_add, cor:construction_sub}
+    The proof is analog to the proof of Lemma \ref{lem:construction_mul} we just need two lines $l = \{1-\imath z + \imath, \imath\}$ and $l_{\Re} = \{1,0\}$.\\
+    With  out loss of generality we can assume that $a \ne 0$.\\
+    That there are in $\mathcal{L(M_{\infty})}$ follows analog to the proof of Lemma \ref{lem:construction_mul}.\\ 
+    So we have just to show that $z^{-1} \in l$, i.e. $\exists t: t  (1 - \imath a + \imath) + (1 - t)  I = a^{-1}$ $$t  (1 - \imath a + \imath) + (1 - t)  \imath \stackrel{t:=a^{-1}}{=}  a^{-1} - a^{-1} \imath a + a^{-1}\imath + \imath - a^{-1}\imath = a^{-1}.$$
+    The rest follws analog.
+\end{proof}
+\begin{figure}
+    \centering
+    \begin{tikzpicture}
+        \draw[->] (-1,0) -- (2,0) node[right] {$\Re$};
+        \draw[->] (0,-1) -- (0,3) node[above] {$\Im$};
+        \coordinate[label=135:$\imath$] (i) at (0,1);
+        \coordinate[label=-90:$1$] (1) at (1,0);
+        \coordinate[label=135:$\imath a$] (ia) at (0,2);
+        \coordinate[label=-90:$a^{-1}$] (ainv) at (0.5,0);
+        \fill[black] (i) circle (2pt);
+        \fill[black] (1) circle (2pt);
+        \fill[black] (ia) circle (2pt);
+        \fill[black] (ainv) circle (2pt);
+        \draw (1) -- (ia);
+        \draw (i) -- (ainv);
+    \end{tikzpicture}
+    \caption{Construction of $z^{-1}$}
+    \label{Fig.6}
+\end{figure}

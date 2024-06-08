@@ -1,4 +1,4 @@
-import Construction.Chapter1.basic_construction
+import Construction.Chapter2.MField
 import Mathlib.Algebra.Polynomial.Basic
 import Mathlib.RingTheory.Polynomial.RationalRoot
 import Mathlib.Algebra.Polynomial.Degree.Definitions

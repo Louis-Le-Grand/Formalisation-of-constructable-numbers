@@ -77,6 +77,33 @@ lemma ir_M_inf (M: Set ℂ)(h₀: 0 ∈ M)(h₁: 1 ∈ M)(r : ℝ)(hr : ↑r ∈
 lemma imath_M_inf (M: Set ℂ)(h₀: 0 ∈ M)(h₁: 1 ∈ M): Complex.I ∈ M_inf M := by
   rw[←mul_one I]; apply ir_M_inf M h₀ h₁ 1; apply M_M_inf M h₁
 
+lemma real_in_M_inf (M: Set ℂ)(h₀: 0 ∈ M)(h₁: 1 ∈ M)(z: ℂ)(h: z ∈ M_inf M): ↑z.re ∈ M_inf M := by
+  by_cases hreal: z.im = 0
+  have hr: ∃ r : ℝ, r = z := by {use z.re; rw[Complex.ext_iff]; simp; symm; exact hreal}; have hz: z = ↑(z.re) := by {obtain ⟨r, hr⟩ := hr; rw[←hr]; simp}; rw[←hz]; exact h
+  let l : line := {z₁ := z, z₂ := starRingEnd ℂ z}
+  let lr : line := {z₁ := 1, z₂ := 0}
+  have hl : l ∈ L (M_inf M) := by unfold L; use z; use starRingEnd ℂ z; constructor; simp; constructor; exact h; constructor; apply conj_M_Inf M h₀ h₁ z h; by_contra h; rw [@ext_iff] at h; simp at h; contradiction
+  have hlr : lr ∈ L (M_inf M) := by unfold L; use 1; use 0; constructor; simp; constructor; apply M_M_inf M h₁; constructor; apply M_M_inf M h₀; simp
+  apply ill_M_inf M; unfold ill; rw [@Set.mem_setOf]; use l; constructor; exact hl; use lr; constructor; exact hlr; rw [@Set.mem_inter_iff]; constructor; simp[line.points]; use 1/2; refine ext_iff.mpr ?h.a; simp; ring_nf; simp; use z.re; ring_nf
+
+lemma i_z_imp_z_in_M_inf (M: Set ℂ)(h₀: 0 ∈ M)(h₁: 1 ∈ M)(z: ℝ)(h: I * z ∈ M_inf M):  ↑z ∈ M_inf M := by
+  let lr : line := {z₁ := 1, z₂ := 0}
+  let c : circle := {c := 0, r := dist 0 (I*z)}
+  have hc : c ∈ C (M_inf M) := by rw[c_in_C_M]; use 0; use 0; use I*z; constructor; simp_all only [dist_zero_left, Complex.norm_eq_abs, c]; constructor; apply M_M_inf M h₀; constructor; apply M_M_inf M h₀; exact h
+  have hlr : lr ∈ L (M_inf M) := by unfold L; use 1; use 0; constructor; simp; constructor; apply M_M_inf M h₁; constructor; apply M_M_inf M h₀; simp
+  apply ilc_M_inf M; unfold ilc; rw [@Set.mem_setOf]; use c; constructor; exact hc; use lr; constructor; exact hlr; rw [@Set.mem_inter_iff]; constructor; simp[circle.points]; simp[line.points];
+
+lemma im_in_M_inf (M: Set ℂ)(h₀: 0 ∈ M)(h₁: 1 ∈ M)(z: ℂ)(h: z ∈ M_inf M): ↑z.im ∈ M_inf M := by
+  let l : line := {z₁ := z, z₂ := z-1}
+  let li : line := {z₁ := I, z₂ := 0}
+  have hl : l ∈ L (M_inf M) := by unfold L; use z; use z-1; constructor; simp; constructor; exact h; constructor; apply sub_M_Inf M h₀ z 1; exact h; apply M_M_inf M h₁; exact Ne.symm (pred_ne_self z)
+  have hlr : li ∈ L (M_inf M) := by unfold L; use I; use 0; constructor; simp; constructor; apply imath_M_inf M h₀ h₁; constructor; apply M_M_inf M h₀; simp
+  have hi: I * z.im  ∈ M_inf M := by apply ill_M_inf M; unfold ill; rw [@Set.mem_setOf]; use l; constructor; exact hl; use li; constructor; exact hlr; rw [@Set.mem_inter_iff]; constructor; simp[line.points]; use (1-z.re); ring_nf; push_cast; rw[← add_sub_assoc, @Ring.add_left_neg, zero_sub, neg_add_eq_sub]; refine sub_eq_of_eq_add' ?h.h; rw[mul_comm]; simp; simp[line.points]; use z.im; ring
+  apply i_z_imp_z_in_M_inf M h₀ h₁ z.im hi
+
+lemma z_iff_re_im_M_inf (M: Set ℂ)(h₀: 0 ∈ M)(h₁: 1 ∈ M)(z: ℂ): z ∈ M_inf M ↔ ↑z.re ∈ M_inf M ∧ ↑z.im ∈ M_inf M := by
+  constructor; intro h; constructor; apply real_in_M_inf M h₀ h₁ z h; apply im_in_M_inf M h₀ h₁ z h; intro h; obtain ⟨hr, hi⟩ := h; have hz: z = ↑z.re + ↑z.im * I := by {simp}; rw[hz]; apply add_M_Inf M h₀ ↑z.re (↑z.im * I); exact hr; rw[mul_comm]; apply ir_M_inf M h₀ h₁ z.im hi;
+
 --TODO: use parallel_lines_M_inf, because now we have it
 lemma ab_in_M_inf (M: Set ℂ)(h₀: 0 ∈ M)(h₁: 1 ∈ M)(a b :ℝ)(ha: ↑a ∈ M_inf M)(hb: ↑b ∈ M_inf M): ↑(a * b) ∈ M_inf M := by
   let l₁ : line := {z₁ := a, z₂ := I}
@@ -87,6 +114,8 @@ lemma ab_in_M_inf (M: Set ℂ)(h₀: 0 ∈ M)(h₁: 1 ∈ M)(a b :ℝ)(ha: ↑a 
   have hlr : lr ∈ L (M_inf M) := by unfold L; use 1; use 0; constructor; simp; constructor; apply M_M_inf M h₁; constructor; apply M_M_inf M h₀; simp
   apply ill_M_inf M; unfold ill; rw [@Set.mem_setOf]; use l₂; constructor; exact hl₂; use lr; constructor; exact hlr; rw [@Set.mem_inter_iff]; constructor; simp[line.points]; use b; ring; use a*b; ring
 
+lemma mul_M_inf (M: Set ℂ)(h₀: 0 ∈ M)(h₁: 1 ∈ M)(a b :ℂ )(ha: a ∈ M_inf M)(hb: b ∈ M_inf M): a * b ∈ M_inf M:= by
+  refine (z_iff_re_im_M_inf M h₀ h₁ (a * b)).mpr ?_; constructor; simp; apply sub_M_Inf M h₀; norm_cast; apply ab_in_M_inf M h₀ h₁; exact real_in_M_inf M h₀ h₁ a ha; exact real_in_M_inf M h₀ h₁ b hb; norm_cast; apply ab_in_M_inf M h₀ h₁; exact im_in_M_inf M h₀ h₁ a ha; exact im_in_M_inf M h₀ h₁ b hb; simp; apply add_M_Inf M h₀; norm_cast; apply ab_in_M_inf M h₀ h₁; exact real_in_M_inf M h₀ h₁ a ha; exact im_in_M_inf M h₀ h₁ b hb; norm_cast; apply ab_in_M_inf M h₀ h₁; exact im_in_M_inf M h₀ h₁ a ha; exact real_in_M_inf M h₀ h₁ b hb
 
 lemma ainv_in_M_inf (M: Set ℂ)(h₀: 0 ∈ M)(h₁: 1 ∈ M)(a :ℝ)(ha: ↑a ∈ M_inf M): ↑(a⁻¹) ∈ M_inf M := by
 by_cases h: a = 0
@@ -96,3 +125,18 @@ let lr : line := {z₁ := 1, z₂ := 0}
 have hl : l ∈ L (M_inf M) := by unfold L; use (1-I*a+I); use I; constructor; simp; constructor; apply add_M_Inf M h₀ (1-I*a) I; apply sub_M_Inf M h₀ 1 (I*a); exact M_M_inf M h₁; exact ir_M_inf M h₀ h₁ a ha; exact imath_M_inf M h₀ h₁; constructor; exact imath_M_inf M h₀ h₁; by_contra h; rw [@ext_iff] at h; simp at h
 have hlr : lr ∈ L (M_inf M) := by unfold L; use 1; use 0; constructor; simp; constructor; apply M_M_inf M h₁; constructor; apply M_M_inf M h₀; simp
 apply ill_M_inf M; unfold ill; rw [@Set.mem_setOf]; use l; constructor; exact hl; use lr; constructor; exact hlr; rw [@Set.mem_inter_iff]; constructor; simp[line.points]; use a⁻¹; ring_nf; rw [@mul_rotate]; simp[*]; simp[line.points]; use a⁻¹; norm_cast
+
+-- Helper lemma for the next lemma
+lemma z_inv_eq (z:ℂ)(hz: z ≠ 0): z⁻¹ = z.re / (z.re^2+z.im^2)-(z.im/ (z.re^2+z.im^2) )*I:= by
+   calc z⁻¹ = 1/ z := by simp
+  _ = (starRingEnd ℂ z /  starRingEnd ℂ z)*(1/z) := by rw[div_self,one_mul]; simp_all only [ne_eq, map_eq_zero, not_false_eq_true]
+  _ = (starRingEnd ℂ z /  (starRingEnd ℂ z * z)) := by rw [← @div_mul_eq_div_mul_one_div]
+  _ = (starRingEnd ℂ z /  Complex.normSq z) := by rw[mul_comm, Complex.mul_conj z]
+  _ = (starRingEnd ℂ z /  (z.re^2+z.im^2)) := by rw[Complex.normSq_apply]; norm_cast; rw[pow_two, pow_two]
+  _ = ((z.re - z.im *I)/ (z.re^2+z.im^2) ) := by have h: starRingEnd ℂ z = z.re - z.im *I := by {refine ((fun {z w} ↦ ext_iff.mpr) ?_).symm; constructor; simp; simp}; rw[h]
+  _ = z.re / (z.re^2+z.im^2)-(z.im/ (z.re^2+z.im^2) )*I := by rw [←div_sub_div_same, @mul_div_right_comm]
+
+lemma inv_M_inf (M: Set ℂ)(h₀: 0 ∈ M)(h₁: 1 ∈ M)(a :ℂ )(ha: a ∈ M_inf M): a⁻¹ ∈ M_inf M:= by
+  by_cases h: a = 0
+  . rw[h]; apply M_M_inf; simp; exact h₀;
+  rw[←ne_eq] at h;rw[z_inv_eq _ h]; refine sub_M_Inf M h₀ (↑a.re / (↑a.re ^ 2 + ↑a.im ^ 2)) (↑a.im / (↑a.re ^ 2 + ↑a.im ^ 2) * I) ?_ ?_;rw[ @Field.div_eq_mul_inv]; apply mul_M_inf M h₀ h₁ (↑a.re) (↑a.re ^ 2 + ↑a.im ^ 2)⁻¹ ?_ ?_; exact real_in_M_inf M h₀ h₁ a ha; norm_cast; apply ainv_in_M_inf M h₀ h₁; push_cast; apply add_M_Inf M h₀ (↑a.re ^ 2) (↑a.im ^ 2);  rw[pow_two]; apply mul_M_inf M h₀ h₁ (↑a.re) (↑a.re) (by apply real_in_M_inf M h₀ h₁; exact ha) (by apply real_in_M_inf M h₀ h₁; exact ha); rw[pow_two]; apply mul_M_inf M h₀ h₁ (↑a.im) (↑a.im) (by apply im_in_M_inf M h₀ h₁; exact ha) (by apply im_in_M_inf M h₀ h₁; exact ha); apply mul_M_inf M h₀ h₁ _ _ ?_ (by exact imath_M_inf M h₀ h₁); rw[ @Field.div_eq_mul_inv]; apply mul_M_inf M h₀ h₁ _ _ (by exact im_in_M_inf M h₀ h₁ a ha); norm_cast; apply ainv_in_M_inf M h₀ h₁; push_cast; apply add_M_Inf M h₀ (↑a.re ^ 2) (↑a.im ^ 2);  rw[pow_two]; apply mul_M_inf M h₀ h₁ (↑a.re) (↑a.re) (by apply real_in_M_inf M h₀ h₁; exact ha) (by apply real_in_M_inf M h₀ h₁; exact ha); rw[pow_two]; apply mul_M_inf M h₀ h₁ (↑a.im) (↑a.im) (by apply im_in_M_inf M h₀ h₁; exact ha) (by apply im_in_M_inf M h₀ h₁; exact ha)

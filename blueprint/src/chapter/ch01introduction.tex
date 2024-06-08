@@ -476,6 +476,28 @@ First you need to construct the imaginary axis by drawing a line $l$ through two
     By lemma \ref{lem:construction_imath_r} with $r = 1$ and the definition of $\mathcal{M}$ we get $\imath \in M_{\infty}$.
 \end{proof}
 
+\begin{lemma}[Construction of real part]
+    \label{lem:construction_real}
+    \lean{real_in_M_inf}
+    \leanok
+    \uses{def:set_of_constructable_points}
+    For $z \in M_{\infty}$ is $z.re \in M_{\infty}$.
+\end{lemma}
+\begin{proof}
+    \uses{cor:construction_sub}
+    Without loss of generality we can assume that $z \in \C\setminus\R$.\\
+    Define the lines $l = \{z, \overline{z}\}$ and $l_{\Re} = \{1, 0\}$.\\
+    Using Lemma \ref{lem:construction_conj}, they are in $\mathcal{L(M_{\infty})}$, by the normal argumentation.\\
+    To show that $z.re \in l \cap l_{\Re}$ we use $t:= 1/2$ for $l$ and $t:= z.re$ for $l_{\Re}$.
+\end{proof}
+\begin{lemma}[Construction of imaginary part]
+    \label{lem:construction_imag}
+    \lean{ima_in_M_inf}
+    \leanok
+    \uses{def:set_of_constructable_points}
+    For $z \in M_{\infty}$ is $z.im \in M_{\infty}$.
+\end{lemma}
+
 \begin{lemma}[Multiplication of positve real numbers]
     \label{lem:construction_mul}
     \lean{ab_in_M_inf}
@@ -520,6 +542,19 @@ To get the point $a\cdot b$ we draw a line trough $a$ and $\imath$ and a paralle
     \caption{Construction of $z_1 \cdot z_2$}
     \label{Fig.5}
 \end{figure}
+
+\begin{corollary}[Multiplication of complex numbers]
+    \label{cor:construction_mul_complex}
+    %\lean{mul_in_M_inf}
+    %\leanok
+    \uses{def:set_of_constructable_points}
+    For $z_1, z_2 \in M_{\infty}$ is $z_1 \cdot z_2$ in $M_{\infty}$.
+\end{corollary}
+\begin{proof}
+    \uses{lem:construction_mul, lem:construction_add, cor:construction_sub}
+    Let $z_1 = a + \imath b$ and $z_2 = c + \imath d$. Then $$z_1 \cdot z_2 = (a + \imath b) \cdot (c + \imath d) = (a \cdot c - b \cdot d) + \imath (a \cdot d + b \cdot c).$$
+    
+\end{proof}
 
 \begin{lemma}[Invers of a pos real number]
     \label{lem:construction_inv}

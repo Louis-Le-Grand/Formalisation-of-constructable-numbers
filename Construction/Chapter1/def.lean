@@ -20,8 +20,7 @@ lemma parallel_symm (l₁ l₂ : line) : parallel l₁ l₂ → parallel l₂ l�
   use -z
   simp[hz]
 
-lemma parallel_basis(l₁ l₂ : line) : l₁.z₁ - l₂.z₁ = l₁.z₂ - l₂.z₂ → parallel l₁ l₂  := by
-  intro h
+lemma parallel_basis(l₁ l₂ : line) (h: l₁.z₁ - l₂.z₁ = l₁.z₂ - l₂.z₂ ): parallel l₁ l₂  := by
   unfold parallel
   use l₁.z₁ - l₂.z₁
   unfold line.points
@@ -30,15 +29,23 @@ lemma parallel_basis(l₁ l₂ : line) : l₁.z₁ - l₂.z₁ = l₁.z₂ - l�
   constructor
   . intro hx
     obtain ⟨t, ht⟩ := hx
-    have hr: ∃ r:ℝ,r = t*(l₁.z₁ - l₁.z₂) / (l₂.z₁ - l₂.z₂):= by
-      have h: (t*(l₁.z₁ - l₁.z₂) / (l₂.z₁ - l₂.z₂)).im = 0 := by
-        sorry
-      sorry
-    obtain ⟨r, hr⟩ := hr
-    use r
-    rw [←ht, sub_mul, ←@add_sub_assoc, ←@add_sub_assoc]
-    sorry --TODO: Umformung
-  sorry
+    simp only [←ht, sub_mul,←add_sub_assoc, one_mul]
+    use t
+    rw [←sub_eq_zero, ←sub_add, ←sub_sub]
+    calc ↑t * l₂.z₁ + l₂.z₂ - ↑t * l₂.z₂ + l₁.z₁ - l₂.z₁ - ↑t * l₁.z₁ - l₁.z₂ + ↑t * l₁.z₂
+     = t * l₂.z₁ - ↑t * l₂.z₂+ t * l₁.z₂ - ↑t * l₁.z₁  + l₁.z₁ - l₂.z₁  - l₁.z₂  + l₂.z₂:= by ring
+      _ = t * (l₁.z₂ - l₂.z₂  - l₁.z₁ + l₂.z₁ ) - (l₁.z₂ - l₂.z₂ - l₁.z₁ + l₂.z₁) := by ring
+      _ = t * (l₁.z₁ - l₂.z₁ - l₁.z₁ + l₂.z₁) - (l₁.z₁ - l₂.z₁ - l₁.z₁ + l₂.z₁) := by rw[←h]
+      _ = 0 := by ring
+  intro hx
+  obtain ⟨a, ha⟩ := hx
+  simp only [←ha, sub_mul,←add_sub_assoc, one_mul]
+  use a
+  rw [←sub_eq_zero, ←sub_add, ←sub_sub, ←sub_add, ←sub_sub]
+  calc _ = ↑a * l₁.z₁ - ↑a * l₁.z₂ - ↑a * l₂.z₁ + ↑a * l₂.z₂ - l₁.z₁ + l₂.z₁ + l₁.z₂ - l₂.z₂ := by ring
+    _ = a * (l₁.z₁ - l₂.z₁ - l₁.z₂ + l₂.z₂) + l₂.z₁ - l₁.z₁ + l₁.z₂ - l₂.z₂ := by ring
+    _ = a * (l₁.z₂ - l₂.z₂- l₁.z₂ + l₂.z₂) + l₂.z₁ - l₁.z₁ + l₁.z₂ - l₂.z₂ := by rw [h]
+    _ = 0 := by ring_nf; rw[←h]; ring
 
 structure circle where
   (c : ℂ)

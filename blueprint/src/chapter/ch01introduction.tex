@@ -439,13 +439,7 @@ First you need to construct the imaginary axis by drawing a line $l$ through two
 \end{proof}
 \begin{figure}[h]
     \centering
-    \begin{tikzpicture}
-        \tikzset{
-            carc/.style args={#1:#2:#3}{
-              insert path={+(#1:#3) arc (#1:#2:#3)}
-            }
-          }
-          
+    \begin{tikzpicture}  
         \draw[->] (-3,0) -- (3,0) node[right] {$\Re$};
         \draw[->] (0,-2.5) -- (0,2.5) node[above] {$\Im$};
         \coordinate[label=-45:$1$] (one) at (1,0);
@@ -483,20 +477,87 @@ First you need to construct the imaginary axis by drawing a line $l$ through two
     \uses{def:set_of_constructable_points}
     For $z \in M_{\infty}$ is $z.re \in M_{\infty}$.
 \end{lemma}
+To get the point $z.re$ we draw a line through $z$ and $\overline{z}$. Then $z.re$ is the Intersection with the real line, defined by $0$ and $1$.\ref{Fig z.re}
 \begin{proof}
-    \uses{cor:construction_sub}
+    \uses{def:line, } %TODO c_in_C_M, ilc_M_inf, M_M_inf
     Without loss of generality we can assume that $z \in \C\setminus\R$.\\
     Define the lines $l = \{z, \overline{z}\}$ and $l_{\Re} = \{1, 0\}$.\\
     Using Lemma \ref{lem:construction_conj}, they are in $\mathcal{L(M_{\infty})}$, by the normal argumentation.\\
     To show that $z.re \in l \cap l_{\Re}$ we use $t:= 1/2$ for $l$ and $t:= z.re$ for $l_{\Re}$.
 \end{proof}
+\begin{figure}
+    \centering
+    \begin{tikzpicture}
+        \draw[->] (-0.5,0) -- (5,0) node[right] {$\Re$};
+        \draw[->] (0,-3) -- (0,3) node[above] {$\Im$};
+        \coordinate[label=135:$z$] (z) at (2,2);
+        \coordinate[label=-45:$z.re$] (zre) at (2,0);
+        \coordinate[label=135:$\overline{z}$] (oz) at (2,-2);
+        \coordinate[label=-135:$0$] (zero) at (0,0);
+        \coordinate[label=-90:$1$] (one) at (1,0);
+        \fill[black] (z) circle (2pt);
+        \fill[black] (zre) circle (2pt);
+        \fill[black] (oz) circle (2pt);
+        \fill[black] (one) circle (1pt);
+        \fill[black] (zero) circle (1pt);
+        \draw (z) -- (oz);
+    \end{tikzpicture}
+    \caption{Construction of $z.re$}
+    \label{Fig z.re}
+\end{figure}
+
 \begin{lemma}[Construction of imaginary part]
     \label{lem:construction_imag}
-    \lean{im_in_M_inf}
+    \lean{im_in_M_inf,i_z_imp_z_in_M_inf}
     \leanok
     \uses{def:set_of_constructable_points}
     For $z \in M_{\infty}$ is $z.im \in M_{\infty}$.
 \end{lemma}
+To get the point $z.im$ we draw a line through $z$ and $z-1$. Now we get $\imath \cdot z.im$ by taking the Intersection with the imaginary line, definded by $0$ and $/imath$. To get $z.im$ draw a circel trough $\imath \cdot z.im$ and take the intersection with the real line.\ref{Fig z.im}
+
+\begin{proof}
+    \uses{def:line, def:circle,}%TODO c_in_C_M, ilc_M_inf, M_M_inf
+    Define the lines $l = \{z, z-1\}$ and $l_{\Im} = \{\imath, 0\}$.\\
+    TODO%TODO
+\end{proof}
+\begin{figure}
+    \centering
+    \begin{tikzpicture}
+        \draw[->] (-1,0) -- (4,0) node[right] {$\Re$};
+        \draw[->] (0,-1) -- (0,4) node[above] {$\Im$};
+        \coordinate[label=90:$z$] (z) at (2,3);
+        \coordinate[label=-45:$z.im$] (zim) at (3,0);
+        \coordinate[label=90:$z-1$] (z1) at (1,3);
+        \coordinate[label=-135:$\imath\cdot z.im$] (izim) at (0,3);
+        \coordinate[label=-135:$0$] (zero) at (0,0);
+        \coordinate[label=180:$\imath$] (i) at (0,1);
+        \coordinate[label=-90:$1$] (one) at (1,0);
+        \fill[black] (z) circle (2pt);
+        \fill[black] (izim) circle (2pt);
+        \fill[black] (zim) circle (2pt);
+        \fill[black] (z1) circle (2pt);
+        \fill[black] (i) circle (1pt);
+        \fill[black] (zero) circle (1pt);
+        \fill[black] (one) circle (1pt);
+        \draw (-0.5,3) -- (3.5,3);
+        \draw (0,0) [carc=-30:120:3];
+    \end{tikzpicture}
+    \caption{Construction of $z.im$}
+    \label{Fig z.im}
+\end{figure}
+
+\begin{corollary}[$z \in M_{\infty} \Rightarrow z.re, z.im \in M_{\infty}$]
+    \label{cor:z_iff_re_im_M_inf}
+    \lean{z_iff_re_im_M_inf}
+    \leanok
+    \uses{def:set_of_constructable_points}
+    For $z \in \C$ $z$ is in $M_{\infty}$ if and only if $z.re, z.im \in M_{\infty}$.
+\end{corollary}
+\begin{proof}
+    \uses{lem:construction_real, lem:construction_imag, lem:construction_add, llem:construction_imath_r}
+    $\Rightarrow$: If $z \in M_{\infty}$ then $z.re, z.im \in M_{\infty}$ after lemma \ref{lem:construction_real} and \ref{lem:construction_imag}.\\
+    $\Leftarrow$: If $z.re, z.im \in M_{\infty}$ then $z.re + \imath z.im \in M_{\infty}$ after lemma \ref{lem:construction_add} and lemma \ref{lem:construction_imath_r}.
+\end{proof}
 
 \begin{lemma}[Multiplication of positve real numbers]
     \label{lem:construction_mul}
@@ -551,9 +612,9 @@ To get the point $a\cdot b$ we draw a line trough $a$ and $\imath$ and a paralle
     For $z_1, z_2 \in M_{\infty}$ is $z_1 \cdot z_2$ in $M_{\infty}$.
 \end{corollary}
 \begin{proof}
-    \uses{lem:construction_mul, lem:construction_add, cor:construction_sub}
+    \uses{lem:construction_mul, lem:construction_add, cor:construction_sub, lem:construction_real, lem:construction_imag}
     Let $z_1 = a + \imath b$ and $z_2 = c + \imath d$. Then $$z_1 \cdot z_2 = (a + \imath b) \cdot (c + \imath d) = (a \cdot c - b \cdot d) + \imath (a \cdot d + b \cdot c).$$
-    
+    By combeing the Lemmas \ref{lem:construction_mul}, \ref{lem:construction_add}, \ref{cor:construction_sub}, \ref{lem:construction_real} and \ref{lem:construction_imag} we get that $z_1 \cdot z_2 \in M_{\infty}$.
 \end{proof}
 
 \begin{lemma}[Invers of a pos real number]
@@ -592,3 +653,17 @@ This can be construceted analog to the multiplication of positve real numbers. U
     \caption{Construction of $z^{-1}$}
     \label{Fig.6}
 \end{figure}
+
+\begin{corollary}[Invers of a complex number]
+    \label{cor:inv_M_inf}
+    \lean{inv_M_inf, z_inv_eq}
+    \leanok
+    \uses{def:set_of_constructable_points}
+    If $z \in M_{\infty}$, then $z^{-1}$ is in  $M_{\infty}$.
+\end{corollary}
+\begin{proof}
+    \uses{lem:construction_inv, lem:construction_mul, cor:construction_sub, lem:construction_real, lem:construction_imag, lem:construction_add}
+    For $z \in M_{\infty}$ we can write $z = a + \imath b$ with $a, b \in \R$. Then
+    $$z^{-1} = \frac{1}{z} = \frac{\overline{z}}{z\overline{z}} = \frac{a - \imath b}{a^2+b^2}= (a - \imath b) \cdot (aa+bb)^{-1}.$$
+    Now we can again combiened the lemmas for addition\ref{lem:construction_add}, subtraction\ref{cor:construction_sub}, multiplication\ref{cor:construction_mul_complex} and the corollary for the invers of a positive real number\ref{lem:construction_inv} with the exists of real an imaginary\ref{lem:construction_re_im} part to get that $z^{-1} \in M_{\infty}$.
+\end{proof}

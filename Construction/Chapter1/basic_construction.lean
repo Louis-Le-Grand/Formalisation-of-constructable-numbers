@@ -1,7 +1,5 @@
 import Construction.Chapter1.set_MInf
 
---(h₁: 1 ∈ M)
--- Konstruction Schröer
 lemma z_neg_M_inf (M: Set ℂ)(h₀: (0:ℂ)∈ M)(z : ℂ)(hz : z ∈ (M_inf M)) : -z ∈ (M_inf M) := by
   by_cases z0:(z=0)
   simp[z0]; apply M_M_inf; exact h₀
@@ -12,7 +10,6 @@ lemma z_neg_M_inf (M: Set ℂ)(h₀: (0:ℂ)∈ M)(z : ℂ)(hz : z ∈ (M_inf M)
   have hlc : -z ∈ c.points ∩ l.points := by {rw [@Set.mem_inter_iff]; constructor; simp[circle.points]; simp[line.points]; use 2; ring_nf; calc  -(2 * z) + z = -z := by ring}
   apply ilc_M_inf M; unfold ilc; rw [@Set.mem_setOf]; use c; constructor; exact hc ; use l
 
--- Konstruction Schröer
 lemma add_M_Inf (M: Set ℂ)(h₀: (0:ℂ)∈ M)(z₁ z₂ : ℂ)(hz₁ : z₁ ∈ (M_inf M))(hz₂ : z₂ ∈ (M_inf M)): z₁ + z₂ ∈ (M_inf M) := by
   let c₁ : circle := {c := z₁, r := (dist 0 z₂)}
   let c₂ : circle := {c := z₂, r := (dist 0 z₁)}
@@ -30,7 +27,6 @@ lemma parallel_lines_M_inf (M: Set ℂ)(h₀: 0 ∈ M)(z : ℂ)(hz: z ∈ (M_inf
   have hl₂ : l₂ ∈ L (M_inf M) := by unfold L; use z; use z-l₁.z₁+l₁.z₂; constructor; simp; constructor; exact hz; constructor; apply add_M_Inf M h₀ (z-l₁.z₁) l₁.z₂; apply sub_M_Inf M h₀ z l₁.z₁; exact hz; obtain ⟨q,_⟩ := (by apply l_in_L_M_imp (M_inf M) l₁; exact hl₁); exact q; obtain ⟨_,t⟩ := (by apply l_in_L_M_imp (M_inf M) l₁; exact hl₁); exact t; refine Ne.intro ?h.right.right.right.h; intro h; rw[←@sub_eq_iff_eq_add] at h; simp at h; have h': l₁.z₂ ≠  l₁.z₁ := by{ symm; apply l_in_L_M_imp' (M_inf M) l₁; exact hl₁}; contradiction
   use l₂; constructor; exact hl₂; constructor; unfold line.points; simp; use 1; simp; apply parallel_basis; unfold line.z₁ line.z₂; ring
 
--- Konstruction Schröer
 lemma conj_M_Inf (M: Set ℂ)(h₀: 0 ∈ M)(h₁: 1 ∈ M)(z : ℂ)(hz : z ∈ (M_inf M)): (starRingEnd ℂ) z ∈ (M_inf M) := by
   let c₀ : circle := {c := 0, r := (dist 0 z)}
   let c₁ : circle := {c := 1, r := (dist 1 z)}
@@ -39,7 +35,6 @@ lemma conj_M_Inf (M: Set ℂ)(h₀: 0 ∈ M)(h₁: 1 ∈ M)(z : ℂ)(hz : z ∈ 
   have hcc : (starRingEnd ℂ) z ∈ c₀.points ∩ c₁.points := by rw [@Set.mem_inter_iff];  simp[circle.points]; rw[dist_comm, Complex.dist_eq, Complex.abs_eq_sqrt_sq_add_sq, Complex.abs_eq_sqrt_sq_add_sq, ←@Mathlib.Tactic.RingNF.add_neg, ←@Mathlib.Tactic.RingNF.add_neg, @Complex.add_re, @Complex.add_im]; simp
   apply icc_M_inf M; unfold icc; rw [@Set.mem_setOf]; use c₀; constructor; exact hc₀; use c₁
 
--- Ludwigs wunderschöne Konstruktion
 open Complex
 /- lemma l_iff (M: Set ℂ)(z : ℂ)(l : line): x ∈ l.points ↔ ∃ t : ℝ, x = t * (l.z₁ + l.z₂) := by sorry
 lemma l_pionts_iff (M: Set ℂ)(z : ℂ)(l₁ l₂ : line): l₁.points = l₂.points ↔ l₂.z₁ ∈ l₁.points ∧ l₂.z₂ ∈ l₁.points := by sorry
@@ -135,6 +130,7 @@ lemma z_inv_eq (z:ℂ)(hz: z ≠ 0): z⁻¹ = z.re / (z.re^2+z.im^2)-(z.im/ (z.r
   _ = (starRingEnd ℂ z /  (z.re^2+z.im^2)) := by rw[Complex.normSq_apply]; norm_cast; rw[pow_two, pow_two]
   _ = ((z.re - z.im *I)/ (z.re^2+z.im^2) ) := by have h: starRingEnd ℂ z = z.re - z.im *I := by {refine ((fun {z w} ↦ ext_iff.mpr) ?_).symm; constructor; simp; simp}; rw[h]
   _ = z.re / (z.re^2+z.im^2)-(z.im/ (z.re^2+z.im^2) )*I := by rw [←div_sub_div_same, @mul_div_right_comm]
+
 
 lemma inv_M_inf (M: Set ℂ)(h₀: 0 ∈ M)(h₁: 1 ∈ M)(a :ℂ )(ha: a ∈ M_inf M): a⁻¹ ∈ M_inf M:= by
   by_cases h: a = 0

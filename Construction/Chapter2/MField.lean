@@ -1,5 +1,6 @@
 import Construction.Chapter1.basic_construction
 
+open Construction
 noncomputable def MField (M: Set ℂ)(h₀: 0 ∈ M)(h₁: 1∈ M): Subfield ℂ := {
   carrier := M_inf M
   zero_mem' := by exact M_M_inf M h₀

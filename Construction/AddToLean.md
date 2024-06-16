@@ -44,6 +44,27 @@ example: (-1:ℂ)^(1/2:ℂ) = Complex.I := by exact?
 For a real number $a \ge 0$, it should be posibbel to cast a real to complex root.
 $$ \sqrt[\mathbb{R}]{a} = \sqrt[\mathbb{C}]{a}\quad \forall a \ge 0$$
 
+## Complex root pow two
+I cloud show it for real numbers greater than 0, but it should hold for all complex numbers and not be that complicated.
+```lean
+example (a:ℝ)(h: a ≥ 0): (a:ℂ) ^(1/2:ℂ) * (↑a)^(1/2:ℂ) = a := by
+  rw [← pow_two, ←root_cast]
+  norm_cast
+  rw[←Real.rpow_natCast]
+  push_cast
+  . rw[←Real.rpow_mul, one_div_mul_eq_div, div_self, Real.rpow_one]
+    . simp only [ne_eq, OfNat.ofNat_ne_zero, not_false_eq_true]
+    . exact h
+  . exact h
+```
+Can be generalized to all real numbers using the following lemma.
+```lean
+lemma neg_comp_root (r:ℝ): ↑r ^ (1 / 2:ℂ ) = ↑(-r) ^ (1 / 2:ℂ) * I := by
+  calc _ = ↑(-1*-r) ^ (1 / 2:ℂ ) := by ring_nf
+    _ = (↑(-r) ^ (1 / 2:ℂ) * (-1:ℝ) ^ (1 / 2:ℂ) :ℂ) := by sorry -- need mul of root
+    _ = ↑(-r) ^ (1 / 2:ℂ) * I := by sorry -- need root of -1
+```
+But first that $\mathbb{R} \ne \mathbb{C}$, and second whitout out missing lemmas from above, I was not able to prove this.
 
 ## Complex root real imaginary
 For a complex number $z = a + bI$, the root of $z$ is equivalent to 
@@ -56,29 +77,6 @@ lemma root_copmlex (z : ℂ): z ^ (1/2:ℂ) = (((abs z)+z.re)/2)^ (1/2:ℂ)+I*z.
     (((abs z )-z.re)/2)^ (1/2:ℂ) := by sorry
 ```
 
-# Old
-## Use for multipel Exists
-There is an exist that handles multiple elements as a function, which makes using ``use`` complicated.
-
-### Example
-
-```lean
-example (M : Set ℂ)(a₁ a₂ a₃ a₄ : M):
-  let Z := {z | ∃ z₁ z₂ z₃ z₄: M, z ∈ intersection_line_line ↑z₁ ↑z₂ ↑z₃ ↑z₄}
-  (intersection_line_line a₁ a₂ a₃ a₄) ⊆ Z := by sorry
-```
-Should be solvebel like 
-```lean
-example (M : Set ℂ)(a₁ a₂ a₃ a₄ : M):
-  let Z := {z | ∃ z₁ z₂ z₃ z₄: M, z ∈ intersection_line_line ↑z₁ ↑z₂ ↑z₃ ↑z₄}
-  (intersection_line_line a₁ a₂ a₃ a₄) ⊆ Z := by intro Z x hx; refine Set.mem_setOf.mpr ?_; use a₁ a₂ a₃ a₄; exact hx
-````
-But in stad you need split and simp multiple times.
-```lean
-example (M : Set ℂ)(a₁ a₂ a₃ a₄ : M):
-  let Z := {z | ∃ z₁ z₂ z₃ z₄: M, z ∈ intersection_line_line ↑z₁ ↑z₂ ↑z₃ ↑z₄}
-  (intersection_line_line a₁ a₂ a₃ a₄) ⊆ Z := by intro Z x hx; refine Set.mem_setOf.mpr ?_; refine SetCoe.exists.mpr ?_; simp; use a₁; constructor; simp; use a₂; constructor; simp; use a₃; constructor; simp; use a₄; constructor; simp; exact hx
-```
 
 ## Element of a Union
 There is a function for the union of two sets (``SetSet.subset_union_right``/``Set.subset_union_left``), but not for the union of a list of sets. This should be added.

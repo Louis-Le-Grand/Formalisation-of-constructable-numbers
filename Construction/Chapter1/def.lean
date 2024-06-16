@@ -2,6 +2,7 @@ import Mathlib.Data.Complex.Basic
 import Mathlib.Geometry.Euclidean.Sphere.Basic
 
 
+namespace Construction
 structure line where
   (z₁ z₂ : ℂ)
 

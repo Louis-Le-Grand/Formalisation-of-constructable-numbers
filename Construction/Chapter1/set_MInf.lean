@@ -1,6 +1,6 @@
 import Construction.Chapter1.def
 
-
+open Construction
 lemma M_in_ICL_M (M : Set ℂ) : M ⊆ ICL_M M := by
   unfold ICL_M
   intro x

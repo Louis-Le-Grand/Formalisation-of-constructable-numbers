@@ -667,3 +667,47 @@ This can be construceted analog to the multiplication of positve real numbers. U
     $$z^{-1} = \frac{1}{z} = \frac{\overline{z}}{z\overline{z}} = \frac{a - \imath b}{a^2+b^2}= (a - \imath b) \cdot (aa+bb)^{-1}.$$
     Now we can again combiened the lemmas for addition\ref{lem:construction_add}, subtraction\ref{cor:construction_sub}, multiplication\ref{cor:construction_mul_complex} and the corollary for the invers of a positive real number\ref{lem:construction_inv} with the exists of real an imaginary\ref{lem:construction_re_im} part to get that $z^{-1} \in M_{\infty}$.
 \end{proof}
+
+\begin{lemma}[Root of real numerb]
+    \label{lem:real_root}
+    If $r \in M_{\infty}\cap\R$, then $\sqrt{r}$ is in  $M_{\infty}$.
+\end{lemma}
+
+This constrution is teken from \cite{JAN_SCHRÖER:2023}.\\
+Draw a circle trough
+
+\begin{figure}
+    \centering
+    \begin{tikzpicture}
+        \draw[->] (-1,0) -- (7,0) node[right] {$\Re$};
+        \draw[->] (0,-1) -- (0,4) node[above] {$\Im$};
+        \coordinate[label=-135:$0$] (zero) at (0,0);
+        \coordinate[label=-90:$1$] (one) at (1,0);
+        \coordinate[label=-45:$r$] (r) at (6,0);
+        \coordinate[label=-90:$\frac{r}{2}$] (r2) at (3,0);
+        \coordinate[label=135:] (sqrt1) at (1,2.2360679775);
+        \coordinate[label=135:$\sqrt{r}$] (sqrt) at (2.4494897428,0);
+        \fill[black] (zero) circle (1pt);
+        \fill[black] (one) circle (2pt);
+        \fill[black] (r) circle (2pt);
+        \fill[black] (r2) circle (2pt);
+        \fill[black] (sqrt1) circle (2pt);
+        \draw (r2) [carc=-10:190:3];
+        \draw (zero) [carc=-10:80:2.4494897428];
+        \draw (one) -- (sqrt1);
+        \fill[red] (sqrt) circle (3pt);
+    \end{tikzpicture}
+    \caption{Construction of $\sqrt{r}$}
+    \label{Fig.root}
+\end{figure}
+
+\begin{corollary}[Squarroot of a complexnumber]
+    \label{cor:root_M_inf}
+    \uses{def:set_of_constructable_points}
+    If $z \in M_{\infty}$, then $\sqrtsign{z}$ is in  $M_{\infty}$.
+\end{corollary}
+\begin{proof}
+    For $z = a +\imath b \in M_{\infty}$ we can write 
+    $$ \sqrt{z} = \sqrt{\frac{|z|+a}{2}}+\imath \frac{b}{|b|}\sqrt{\frac{|z|-a}{2}}.$$
+    Then we can combiene the construction of a rational root \ref{lem:real_root} and the fact that multiplcation, \dots are in $M_\infty$.
+\end{proof}

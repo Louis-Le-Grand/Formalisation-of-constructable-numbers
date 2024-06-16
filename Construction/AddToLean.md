@@ -27,6 +27,35 @@ example (z:ℂ)(hz: z ≠ 0): z⁻¹ = z.re / (z.re^2+z.im^2)-(z.im/ (z.re^2+z.i
   _ = z.re / (z.re^2+z.im^2)-(z.im/ (z.re^2+z.im^2) )*I := by rw [←div_sub_div_same, @mul_div_right_comm]
 ```
 
+## Complex.root
+$$ x^{\frac{1}{n}:\mathbb{C}}=\sqrt[n]{x} $$
+
+## Coplex sqrt mul
+Not sure if this holdes in general, but for real numbers it should be added.
+$$ \sqrt{a}*\sqrt{b} = \sqrt{a*b}$$
+
+
+## Complex.root_neg_one
+$$ (-1)^{\frac{1}{2}:\mathbb{C}} = i$$
+```lean
+example: (-1:ℂ)^(1/2:ℂ) = Complex.I := by exact?
+```
+## Root cast real to complex
+For a real number $a \ge 0$, it should be posibbel to cast a real to complex root.
+$$ \sqrt[\mathbb{R}]{a} = \sqrt[\mathbb{C}]{a}\quad \forall a \ge 0$$
+
+
+## Complex root real imaginary
+For a complex number $z = a + bI$, the root of $z$ is equivalent to 
+$$
+\sqrt{z} = \sqrt{a + bI,}   = \sqrt{ \frac{a + \sqrt{a^2 + b^2}}{2} } + I\frac{b}{|b|}\sqrt{\frac{\sqrt{a^2 + b^2} - a}{2} } 
+$$
+
+```lean
+lemma root_copmlex (z : ℂ): z ^ (1/2:ℂ) = (((abs z)+z.re)/2)^ (1/2:ℂ)+I*z.im/|z.im| *
+    (((abs z )-z.re)/2)^ (1/2:ℂ) := by sorry
+```
+
 # Old
 ## Use for multipel Exists
 There is an exist that handles multiple elements as a function, which makes using ``use`` complicated.

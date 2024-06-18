@@ -699,13 +699,8 @@ lemma inv_comp_root (r:ℝ) (h: 0 < r): ↑r ^ (1 / 2:ℂ ) = ((1 / (r:ℂ) )^ (
     exact Real.pi_ne_zero
   apply le_of_lt h
 
-lemma neg_comp_root (r:ℝ): ↑r ^ (1 / 2:ℂ ) = ↑(-r) ^ (1 / 2:ℂ) * I := by
-  calc _ = ↑(-1*-r) ^ (1 / 2:ℂ ) := by ring_nf
-    _ = (↑(-r) ^ (1 / 2:ℂ) * (-1:ℝ) ^ (1 / 2:ℂ) :ℂ) := by sorry
-    _ = ↑(-r) ^ (1 / 2:ℂ) * I := by sorry
-
-lemma root_copmlex (z : ℂ): z ^ (1/2:ℂ) = (((abs z)+z.re)/2)^ (1/2:ℂ)+I*z.im/|z.im| *
-    (((abs z )-z.re)/2)^ (1/2:ℂ) := by sorry
+/- lemma root_copmlex (z : ℂ): z ^ (1/2:ℂ) = (((abs z)+z.re)/2)^ (1/2:ℂ)+I*z.im/|z.im| *
+    (((abs z )-z.re)/2)^ (1/2:ℂ) := by sorry -/
 
 lemma point_in_circle_pythagorean (z: ℂ) (c: Construction.circle) (hr: 0 < c.r): z ∈ c.points ↔ (dist c.c.re z.re)^2 + (dist c.c.im z.im)^2 = c.r^2 := by
   simp only [Construction.circle.points, Set.mem_setOf_eq, mem_sphere_iff_norm, norm_eq_abs]
@@ -880,7 +875,7 @@ lemma one_real_root (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (r : ℝ) (hr: 
   apply ge_trans (b:=1) hr' (by simp)
 
 
-lemma real_root_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (r : ℝ) (hr: ↑r ∈ M_inf M):
+lemma zero_real_root_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (r : ℝ ) (hr: ↑r ∈ M_inf M) (hr': r ≥ 0):
     (r:ℂ) ^ (1/2:ℂ) ∈ M_inf M := by
   by_cases h: r > 0
   . by_cases hinv: r ≥ 1
@@ -898,23 +893,24 @@ lemma real_root_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (r : ℝ) (hr
       simp only [le_of_lt, hinv]
       exact zero_lt_one
       exact h
-  . by_cases zero: r = 0
-    . rw[zero]
-      apply M_M_inf
-      simp
-      exact h₀
-    . have g: 0 < -r := by
+  . have: r = 0 := by linarith
+    rw[this]
+    apply M_M_inf
+    simp
+    exact h₀
+
+    /-. have g: 0 < -r := by
         rw [@Right.neg_pos_iff, lt_iff_le_and_ne]
         constructor
         . rw [Mathlib.Tactic.PushNeg.not_gt_eq] at h
           exact h
         . exact zero
-      by_cases hinv: (-r) ≥ 1
-      . rw[neg_comp_root r]
+       by_cases hinv: (-r) ≥ 1
+      . rw[neg_comp_root r] --!not True
         apply mul_M_inf M h₀ h₁ (↑(-r) ^ (1 / 2)) I
         apply one_real_root M h₀ h₁ (-r) (by push_cast; apply z_neg_M_inf M h₀; exact hr ) hinv
         apply imath_M_inf M h₀ h₁
-      . rw[neg_comp_root r]
+      . rw[neg_comp_root r] --!not True
         rw [inv_comp_root (-r)]
         apply mul_M_inf M h₀ h₁
         apply inv_M_inf M h₀ h₁
@@ -932,7 +928,7 @@ lemma real_root_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (r : ℝ) (hr
         exact g
         apply imath_M_inf M h₀ h₁
         exact g
-
+ -/
 
 lemma abs_M_Inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (z : ℂ) (hz: z ∈ M_inf M):
     ↑(abs z) ∈ M_inf M := by
@@ -944,7 +940,7 @@ lemma abs_M_Inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (z : ℂ) (hz: z �
     apply ge_trans (b:=|z.re^2+z.im^2|) (by exact abs_add (z.re ^ 2) (z.im ^ 2)) (by simp)
   rw[this]
   norm_cast
-  apply real_root_M_inf M h₀ h₁
+  apply zero_real_root_M_inf M h₀ h₁ _ _ (add_nonneg (pow_two_nonneg z.re) (pow_two_nonneg z.im))
   push_cast
   apply add_M_Inf M h₀
   rw [sq]
@@ -975,7 +971,10 @@ lemma rabs_M_Inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (r : ℝ) (hr: ↑
 
 lemma root_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (z : ℂ) (hz: z ∈ M_inf M):
     z ^ (1/2:ℂ) ∈ M_inf M := by
-  rw[root_copmlex]
+    sorry
+
+--It is nicer to yous polar coordinates
+  /- rw[root_copmlex]
   apply add_M_Inf M h₀
   norm_cast
   apply real_root_M_inf M h₀ h₁
@@ -1017,9 +1016,12 @@ lemma root_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (z : ℂ) (hz: z �
   rw [←one_add_one_eq_two]
   apply add_M_Inf M h₀ 1 1
   apply M_M_inf M h₁
-  apply M_M_inf M h₁
+  apply M_M_inf M h₁ -/
 
 example (a b : ℝ): a ≤ b ∧ a ≠ b → a < b := by
   rw [← lt_iff_le_and_ne]; exact id
 
 example (a b :ℂ ): dist a b = |dist a b| := by rw [@abs_dist]
+
+example ( a b : ℝ ) (ha: 0 ≤ a) (hb: 0 ≤ b): 0 ≤ a + b := by
+  exact add_nonneg ha hb

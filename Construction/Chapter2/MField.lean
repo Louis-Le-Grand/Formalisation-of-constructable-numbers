@@ -10,3 +10,5 @@ noncomputable def MField (M: Set ℂ)(h₀: 0 ∈ M)(h₁: 1∈ M): Subfield ℂ
   mul_mem' := by apply mul_M_inf M h₀ h₁
   inv_mem' := by apply inv_M_inf M h₀ h₁
 }
+
+def quadratic_closed {F: Type*} [Field F] :=  ∀ x : F, ∃ y : F, y * y = x

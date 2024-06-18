@@ -18,7 +18,7 @@ structure M where
   (M_1 : 1 ∈ M)
  -/
 
-
+open Construction
 open Polynomial
 open FiniteDimensional Polynomial
 open scoped Classical Polynomial

@@ -30,16 +30,6 @@ example (z:ℂ)(hz: z ≠ 0): z⁻¹ = z.re / (z.re^2+z.im^2)-(z.im/ (z.re^2+z.i
 ## Complex.root
 $$ x^{\frac{1}{n}:\mathbb{C}}=\sqrt[n]{x} $$
 
-## Coplex sqrt mul
-Not sure if this holdes in general, but for real numbers it should be added.
-$$ \sqrt{a}*\sqrt{b} = \sqrt{a*b}$$
-
-
-## Complex.root_neg_one
-$$ (-1)^{\frac{1}{2}:\mathbb{C}} = i$$
-```lean
-example: (-1:ℂ)^(1/2:ℂ) = Complex.I := by exact?
-```
 ## Root cast real to complex
 For a real number $a \ge 0$, it should be posibbel to cast a real to complex root.
 $$ \sqrt[\mathbb{R}]{a} = \sqrt[\mathbb{C}]{a}\quad \forall a \ge 0$$
@@ -57,14 +47,6 @@ example (a:ℝ)(h: a ≥ 0): (a:ℂ) ^(1/2:ℂ) * (↑a)^(1/2:ℂ) = a := by
     . exact h
   . exact h
 ```
-Can be generalized to all real numbers using the following lemma.
-```lean
-lemma neg_comp_root (r:ℝ): ↑r ^ (1 / 2:ℂ ) = ↑(-r) ^ (1 / 2:ℂ) * I := by
-  calc _ = ↑(-1*-r) ^ (1 / 2:ℂ ) := by ring_nf
-    _ = (↑(-r) ^ (1 / 2:ℂ) * (-1:ℝ) ^ (1 / 2:ℂ) :ℂ) := by sorry -- need mul of root
-    _ = ↑(-r) ^ (1 / 2:ℂ) * I := by sorry -- need root of -1
-```
-But first that $\mathbb{R} \ne \mathbb{C}$, and second whitout out missing lemmas from above, I was not able to prove this.
 
 ## Complex root real imaginary
 For a complex number $z = a + bI$, the root of $z$ is equivalent to 

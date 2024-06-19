@@ -39,3 +39,17 @@ lemma MField_re_im' (M: Set ℂ)(h₀: 0 ∈ M)(h₁: 1∈ M): ∀ x : ℂ, x �
   exact z_iff_re_im_M_inf M h₀ h₁ x
 
 --TODO: Add iff for polar coordinates
+
+class QuadraticClosed (F: Type*) [Field F] : Prop where
+  exists_root: ∀ x : F, ∃ y : F, y * y = x
+
+lemma MField_root (M: Set ℂ)(h₀: 0 ∈ M)(h₁: 1∈ M):  ∀ x : MField M h₀ h₁, ∃ y : MField M h₀ h₁, y * y = x := by
+  push_cast
+  intro x
+  have :  (x:ℂ) ^ (1/2:ℂ) ∈ (MField M h₀ h₁) := by
+    exact root_M_inf M h₀ h₁ x (by rw[←MField_mem M h₀ h₁ x]; simp only [SetLike.coe_mem])
+  --use (((x:ℂ) ^ (1/2:ℂ)): @Subtype ℂ fun x ↦ x ∈ MField M h₀ h₁)
+  sorry
+
+instance MField_QuadraticClosed (M: Set ℂ)(h₀: 0 ∈ M)(h₁: 1∈ M) : QuadraticClosed (MField M h₀ h₁) where
+  exists_root := by exact MField_root M h₀ h₁

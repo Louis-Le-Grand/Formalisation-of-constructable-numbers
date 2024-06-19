@@ -689,7 +689,9 @@ lemma inv_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (a :ℂ ) (ha: a �
     (by apply im_in_M_inf M h₀ h₁; exact ha)
 
 lemma root_cast (x: ℝ) (h: x ≥ 0): ↑((x:ℝ) ^ (1/2:ℝ)) = (x:ℂ) ^ (1/2:ℂ) := by
-  sorry
+  rw[ofReal_cpow]
+  field_simp
+  exact h
 
 lemma inv_comp_root (r:ℝ) (h: 0 < r): ↑r ^ (1 / 2:ℂ ) = ((1 / (r:ℂ) )^ (1 / 2:ℂ))⁻¹:= by
   nth_rewrite 2 [one_div]
@@ -698,6 +700,10 @@ lemma inv_comp_root (r:ℝ) (h: 0 < r): ↑r ^ (1 / 2:ℂ ) = ((1 / (r:ℂ) )^ (
   . symm
     exact Real.pi_ne_zero
   apply le_of_lt h
+
+
+lemma neg_comp_root (r:ℝ) (h: 0 > r): ↑r ^ (1 / 2:ℂ ) = ((r:ℂ) ^ (1 / 2:ℂ)) * I := by
+  sorry
 
 /- lemma root_copmlex (z : ℂ): z ^ (1/2:ℂ) = (((abs z)+z.re)/2)^ (1/2:ℂ)+I*z.im/|z.im| *
     (((abs z )-z.re)/2)^ (1/2:ℂ) := by sorry -/
@@ -972,7 +978,6 @@ lemma rabs_M_Inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (r : ℝ) (hr: ↑
 lemma root_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (z : ℂ) (hz: z ∈ M_inf M):
     z ^ (1/2:ℂ) ∈ M_inf M := by
     sorry
-
 --It is nicer to yous polar coordinates
   /- rw[root_copmlex]
   apply add_M_Inf M h₀

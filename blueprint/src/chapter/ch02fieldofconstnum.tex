@@ -2,10 +2,14 @@
 \section[Filed of Constructable Numbers]{Field $M_{\infty}$}
 %2.3
 \begin{theorem}
-    \label{THM:M_inf_subfield_C}
+    \label{thm:MField}
+    \leanok
+    \lean{MField}
     For $M\subseteq \mathbb{C}$ with $0,1 \in M$ is $M_{\infty}$ a subfield of $\mathbb{C}$.
 \end{theorem}
 \begin{proof}
+    %TODO: uses M_inf M_M_inf add_M_Inf z_neg_M_inf mul_M_inf inv_M_inf
+    %TODO: change proof from lean to latex 
     Chose $z_1, z_2 \in M_{\infty}$,after construction \ref{lem:construction_add}
     we have $z_1 + z_2 \in M_{\infty}$ and construction \ref{lem:construction_neg}
     gives us that for every $z \in M_{\infty}$ we have $-z \in M_{\infty}$. Therefore $M_{\infty}$ is closed under addition, and contains the additive invers.\\
@@ -18,20 +22,35 @@
     Therefore $M_{\infty}$ is a subfield of $\mathbb{C}$.
 \end{proof}
 
+\begin{corollary}
+    \label{cor:MField_field}
+    \leanok
+    \lean{MField_field}
+    For $M\subseteq \mathbb{C}$ with $0,1 \in M$ is $M_{\infty}$ a field.
+\end{corollary}
+\begin{proof}
+    \uses{thm:MField}
+    This is a direct consequence of Theorem \ref{thm:MField} and the fact that a subfield of a field is a field.
+\end{proof}
+
+
 %2.4
 \begin{lemma}
-    \label{THM:M_inf_properties}
+    \label{lem:M_inf_properties}
+    \leanok
+    \lean{MField_i, MField_re_im, MField_re_im'}
+    \uses{thm:MField}
     For $M\subseteq \mathbb{C}$ with $0,1 \in M$ applies:
     \begin{itemize}
         \item[(i)] $\imath \in M_{\infty}$.
-        \item[(ii)] $M_{\infty} = conj(M_{\infty})$.
-        \item[(iii)] For $z = x + \imath y \in \mathbb{C}$ is equivalent:
+        \item[(ii)] For $z = x + \imath y \in \mathbb{C}$ is equivalent:
             \begin{itemize}
                 \item $z \in M_{\infty}$.
                 \item $x, y \in M_{\infty}$.
                 \item $x, \imath y \in M_{\infty}$.
             \end{itemize}
-        \item[(iv)] For $0 \ne z = r \exp(\imath \alpha) \in \mathbb{C}$ is equivalent:
+        \item[(iii)] 
+            TODO For $0 \ne z = r \exp(\imath \alpha) \in \mathbb{C}$ is equivalent:
             \begin{itemize}
                 \item $z \in M_{\infty}$.
                 \item $r,\exp(\imath \alpha) \in M_{\infty}$.
@@ -39,45 +58,46 @@
     \end{itemize}
 \end{lemma}
 \begin{proof}
+    %TODO: \uses{} imath_M_inf z_iff_re_im_M_inf; (i_z_imp_z_in_M_inf/ MField_i_mul)
     This lemma is a dierct consequence of section \ref{basic_constructions}.
     \begin{itemize}
         \item[(i):] We kan apply construction \ref{lem:construction_imath}
-        \item[(ii):] We can apply construction \ref{lem:construction_conj} and the fact that $\overline{\overline z} = z$ for all $z \in\mathbb{C}$.
-        \item[(iii):] We can apply construction \ref{lem:construction_re_im} and \ref{lem:construction_imath}.
-        \item[(iv):] We can apply construction \ref{lem:construction_polar}.
+        \item[(ii):] We can apply construction \ref{lem:construction_re_im} and \ref{lem:construction_imath}.
+        \item[(iii):]  We can apply construction \ref{lem:construction_polar}.
     \end{itemize}
-\end{proof}
-
-%2.5
-\begin{lemma}
-    \label{lem:sqrt_in_M_inf}
-    For $M\subseteq \mathbb{C}$ with $0,1 \in M$. If $z$ the $M_{\infty}$, then is $\sqrt{z} \in M_{\infty}$.
-\end{lemma}
-\begin{proof}
-    Let $z = r \exp(\imath \alpha) \in M_{\infty}$, whitout loss of generality we can assume that $r \ne 0$. 
-    Lemma \ref{THM:M_inf_properties}(iv) implies that $r, \exp(\imath \alpha) \in M_{\infty}$. By combining construction \ref{lem:construction_halving_angle},
-    which states that $\exp(\imath \alpha / 2) \in M_{\infty}$ and construction \ref{lem:construction_sqrt_pos_real},
-    that gives us that $\sqrt{r} \in M_{\infty}$, we get that $$\sqrt{z} = \sqrt{r} \exp(\imath \alpha / 2) \in M_{\infty}.$$
 \end{proof}
 
 \begin{definition}[quadritc closed field]
     \label{def:quadritc_closed_field}
-    A field $K$ is called \emph{quadritc closed} if $$K=\{a^2\mid a \in K\}.$$
+    \leanok
+    \lean{QuadraticClosed}
+    A field $K$ is called \emph{quadritc closed} if for all $z \in K$ we have $\sqrt{z} \in K$.
 \end{definition}
 \begin{remark}
-    An equivalent definition is that $K$ is quadritc closed if for all $z \in K$ we have $\sqrt{z} \in K$.
+    An equivalent definition is that $K$ is quadritc closed if $$K=\{a^2\mid a \in K\}.$$ 
 \end{remark}
 
 %2.6
 \begin{lemma}
     \label{lem:M_inf_quad_closed}
+    %\leanok
+    %\lean{MField_quad_closed}
+    \uses{def:set_of_constructable_points, def:quadritc_closed_field}
     For $M\subseteq \mathbb{C}$ with $0,1 \in M$ is $M_{\infty}$ quadritc closed.
 \end{lemma}
 \begin{proof}
-    Combian theorem \ref{THM:M_inf_subfield_C} to get that $M_{\infty}$ is a field and Lemma \ref{lem:sqrt_in_M_inf} to get that $M_{\infty}$ is a quadritc closed field.
+    \uses{cor:MField_field, cor:root_M_inf}
+    Combian theorem \ref{cor:MField_field} to get that $M_{\infty}$ is a field and Lemma \ref{cor:root_M_inf} to get that $M_{\infty}$ is a quadritc closed field.
 \end{proof}
 
 \section{Condition for constructability}
+
+\begin{lemma}
+    $M_{\infty} = conj(M_{\infty})$.
+\end{lemma}
+\begin{proof}
+    We can apply construction \ref{lem:construction_conj} and the fact that $\overline{\overline z} = z$ for all $z \in\mathbb{C}$.
+\end{proof}
 
 %3.19
 \begin{lemma}

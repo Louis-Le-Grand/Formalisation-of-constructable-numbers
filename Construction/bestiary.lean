@@ -1,11 +1,9 @@
-import Construction.Chapter2.MField
+import Construction.Chapter2.joshua
 import Mathlib.Algebra.Polynomial.Basic
 import Mathlib.RingTheory.Polynomial.RationalRoot
 import Mathlib.Algebra.Polynomial.Degree.Definitions
 import Mathlib.Data.Real.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
-import Mathlib.FieldTheory.IntermediateField
-import Mathlib.FieldTheory.Adjoin
 import Mathlib.Data.Real.Irrational
 import Mathlib.Analysis.SpecialFunctions.Pow.Real
 
@@ -46,8 +44,6 @@ theorem irreducible_iff_roots_eq_zero_of_degree_le_three {R} [CommRing R] [IsDom
   rw [hq.eq_X_add_C hq1, ← sub_neg_eq_add, ← C_neg]; apply h
 
 lemma real_component_in_M_inf(M : Set ℂ):  x.re ∉ M_inf M → x ∉ M_inf M := by sorry
-
-noncomputable def K_zero (M : Set ℂ) : IntermediateField ℚ  ℂ := IntermediateField.adjoin ℚ ({(z : ℂ)  | z ∈ M} ∪ {(starRingEnd ℂ) z  | z ∈ M})
 
 theorem Classfication_z_in_M_inf (M : Set ℂ) (z : ℂ) :
 z ∈ M_inf M ↔
@@ -90,7 +86,6 @@ lemma K_zero_eq_rational_if_M_sub_Q (M : Set ℂ) (h : M ⊆ Set.range ((↑): �
       rw[←hq]
       simp
     intro y hy
-    simp at hy
     obtain ⟨q, hq₁, hq₂⟩ := hy
     rw[←hq₂, h']
     exact h hq₁

@@ -90,13 +90,50 @@
     Combian theorem \ref{cor:MField_field} to get that $M_{\infty}$ is a field and Lemma \ref{cor:root_M_inf} to get that $M_{\infty}$ is a quadritc closed field.
 \end{proof}
 
-\section{Condition for constructability}
+\begin{definition}
+    \label{def:conjugate_set}
+    \leanok
+    \lean{Conj_Set}
+    For a Set $U \subset \mathbb{C}$ we define the \emph{conjugate set} of $U$ as 
+    \begin{equation*}
+        Conj(U) = \{z\in \mathbb{C} \mid \exists w\in U: z = \overline{w}\}
+    \end{equation*}
+\end{definition}
+
+\begin{definition}
+    \label{def:conj_closed}
+    \leanok
+    \lean{ConjClosed}
+    We call a subset of $\C$ \emph{conjugate closed} if $M= Conj(M)$.
+\end{definition}
 
 \begin{lemma}
-    $M_{\infty} = conj(M_{\infty})$.
+    \label{lem:conj_MField}
+    \leanok
+    \lean{MField_conj}
+    $M_{\infty}$ is conjugate closed.
 \end{lemma}
 \begin{proof}
     We can apply construction \ref{lem:construction_conj} and the fact that $\overline{\overline z} = z$ for all $z \in\mathbb{C}$.
+\end{proof}
+
+\section{Joshuas Kapitel}
+
+%3.20
+\begin{lemma}
+    \label{lem:conj_of_adjoin}
+    Let $K$ be a subfield of $\mathbb{C}$ with $conj(K)=K$, and $ M \subset \mathbb{C}$ be a subset with $M = conj(M)$. Then holds
+    \begin{equation*}
+        conj(K(M)) = K(M).
+    \end{equation*}
+\end{lemma}
+\begin{proof}
+    We know that the complex conjugation is a field automorphism $\overline{\cdot }: \mathbb{C} \to \mathbb{C}$, whit $\overline{\overline{z}} = z$ for all $z \in \mathbb{C}$. Therefore we have
+    $conj(K(M))$ is a subfield of $\mathbb{C}$.\\
+    Since $K$ and $M$ are subsets of $K(m)$ we have $conj(K) = K$ and $conj(M) = M$ are subsets of $conj(K(M))$. Therefore $$K(M) \subset conj(K(M)).$$
+    If we know apply $conj$ to both sides we get
+    $$conj(K(M)) \subset conj(conj(K(M))) = K(M).$$
+    Therefore $conj(K(M)) = K(M)$.
 \end{proof}
 
 %3.19
@@ -115,23 +152,6 @@
     This implies 
     $$\alpha = -\frac{b}{2} \pm \sqrt{\frac{b^2}{4} - c} $$
     Now let $w := \frac{b^2}{4} - c \in K$ then we get $L = K(\alpha) = K(\sqrt{w})$.
-\end{proof}
-
-%3.20
-\begin{lemma}
-    \label{lem:conj_of_adjoin}
-    Let $K$ be a subfield of $\mathbb{C}$ with $conj(K)=K$, and $ M \subset \mathbb{C}$ be a subset with $M = conj(M)$. Then holds
-    \begin{equation*}
-        conj(K(M)) = K(M).
-    \end{equation*}
-\end{lemma}
-\begin{proof}
-    We know that the complex conjugation is a field automorphism $\overline{\cdot }: \mathbb{C} \to \mathbb{C}$, whit $\overline{\overline{z}} = z$ for all $z \in \mathbb{C}$. Therefore we have
-    $conj(K(M))$ is a subfield of $\mathbb{C}$.\\
-    Since $K$ and $M$ are subsets of $K(m)$ we have $conj(K) = K$ and $conj(M) = M$ are subsets of $conj(K(M))$. Therefore $$K(M) \subset conj(K(M)).$$
-    If we know apply $conj$ to both sides we get
-    $$conj(K(M)) \subset conj(conj(K(M))) = K(M).$$
-    Therefore $conj(K(M)) = K(M)$.
 \end{proof}
 
 

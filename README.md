@@ -10,7 +10,14 @@ An ongoing bachelor thesis.
 Will be here soon™️.
 
 # Questions
-Prove that M_inf is a subfield of C by defing a new obj?
 
 Is it a problem that lines and circel are unic by basis?
 How would one generlise to unics by range?
+
+## How to generalise the root to complex numbers?
+- Using polar coordinates or
+- root formula for real and imaginary part
+
+# TODO
+- Add $K_i$, $K_{\infty}$ and theorems about them (Not need for the construction proplems)
+- Section about conjugtion closed sets and subfields (Not need for the construction proplems)

@@ -1030,3 +1030,62 @@ example (a b :ℂ ): dist a b = |dist a b| := by rw [@abs_dist]
 
 example ( a b : ℝ ) (ha: 0 ≤ a) (hb: 0 ≤ b): 0 ≤ a + b := by
   exact add_nonneg ha hb
+
+
+lemma angle_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (z : ℂ) (hz: z ∈ M_inf M):
+    ↑(exp (arg z*I)) ∈ M_inf M := by
+  by_cases h: 0 = z
+  . rw[←h]
+    apply M_M_inf
+    simp
+    exact h₁
+  rw[←ne_eq] at h
+  let l : line := {z₁ := z, z₂ := 0}
+  let c : Construction.circle := {c := 0, r := 1}
+  have hc : c ∈ C (M_inf M) := by
+    rw[c_in_C_M]
+    use 0
+    use 0
+    use 1
+    constructor
+    . simp
+    constructor
+    . exact M_M_inf M h₀
+    constructor
+    . exact M_M_inf M h₀
+    . exact M_M_inf M h₁
+  have hl : l ∈ L (M_inf M) := by
+    unfold L
+    use z
+    use 0
+    constructor
+    . simp
+    constructor
+    . exact hz
+    constructor
+    . exact M_M_inf M h₀
+    symm
+    exact h
+  apply ilc_M_inf M
+  unfold ilc
+  rw [Set.mem_setOf]
+  use c
+  constructor
+  . exact hc
+  use l
+  constructor
+  . exact hl
+  rw [Set.mem_inter_iff]
+  constructor
+  . simp[Construction.circle.points, abs_exp]
+  simp[line.points]
+  use 1/ (abs z)
+  nth_rw 2 [←abs_mul_exp_arg_mul_I z]
+  rw[←mul_assoc]
+  push_cast
+  rw[one_div_mul_eq_div, div_self,one_mul]
+  norm_cast
+  rw [←ne_eq, AbsoluteValue.ne_zero_iff]
+  symm
+  exact h
+  #print axioms angle_M_inf

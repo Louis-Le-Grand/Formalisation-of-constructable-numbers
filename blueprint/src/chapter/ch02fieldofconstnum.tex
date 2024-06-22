@@ -117,7 +117,42 @@
     We can apply construction \ref{lem:construction_conj} and the fact that $\overline{\overline z} = z$ for all $z \in\mathbb{C}$.
 \end{proof}
 
+
 \section{Joshuas Kapitel}
+
+\begin{definition}
+    The degree of $x$ over $K$ is
+    \begin{equation*}
+        [x:K] :=\text{degree}(\mu_{x,K})
+        \end{equation*}
+        with $\mu_{x,K}$ the minimal polynomial of $x$ over $K$. \newline
+    The degree of $L/K$ is the dimension of $L$ as a $K$-vector space and is denoted by
+    \begin{equation*}
+        [L:K].
+    \end{equation*}
+\end{definition}
+
+\begin{theorem}
+\label{thm:degree_of_simple_field_extension}
+    Let $L/K$ be a simple field extension with $L = K(x)$. Then
+    \begin{equation*}
+        [L:K] = [x:K].
+    \end{equation*}
+\end{theorem}
+\begin{proof}
+    In Mathlib: theorem IntermediateField.adjoin.finrank
+\end{proof}
+
+\begin{definition}
+    \label{def:K_M_0}
+    Let $\mathcal(M)\subseteq\mathbb{C}$ with $0,1 \in \mathcal{M}$
+    \begin{equation*}
+        K_0 := \mathbb{Q}(\mathcal{M}\cup \overline{\mathcal{M}})
+    \end{equation*}
+    with $\overline{\mathcal{M}} := \{ \overline{z} = x - \textbf{i}y \mid z = x+\textbf{i}y  \in \mathcal{M} \}$.
+\end{definition}
+
+TODO: Add $K_i$ and $K_{\infty}$ and a Lemma that states that $K_{\infty} = M_{\infty}$. But this is not needed for the project.
 
 %3.20
 \begin{lemma}

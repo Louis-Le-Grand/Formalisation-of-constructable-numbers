@@ -668,15 +668,19 @@ This can be construceted analog to the multiplication of positve real numbers. U
     Now we can again combiened the lemmas for addition\ref{lem:construction_add}, subtraction\ref{cor:construction_sub}, multiplication\ref{cor:construction_mul_complex} and the corollary for the invers of a positive real number\ref{lem:construction_inv} with the exists of real an imaginary\ref{lem:construction_re_im} part to get that $z^{-1} \in M_{\infty}$.
 \end{proof}
 
-\begin{lemma}[Root of real numerb]
-    \label{lem:real_root}
-    If $r \in M_{\infty}\cap\R$, then $\sqrt{r}$ is in  $M_{\infty}$.
+\begin{lemma}[Root of pos real numerb]
+    \label{lem:pos_real_root}
+    If $r \in M_{\infty}\cap\R_{\ge 1}$, then $\sqrt{r}$ is in  $M_{\infty}$.
 \end{lemma}
 
 This constrution is teken from \cite{JAN_SCHRÖER:2023}.\\
-Draw a circle trough
+Draw a circle trough $0$ and $r$ and a line through $1$ parallel to the imaginary axis. Project the intersection to the real axis, using a circel with center $0$ and you get $\sqrt{r}$.\ref{Fig.root}
+\begin{proof}
+    \uses{def:line, def:circle, lem:icc_M_inf, lem:M_in_M_inf} %TODO add rest of dependencies   
+Without loss of generality we can assume that $r \ge 1$. Otherwise we can use the fact that $\sqrt{r} = \frac{1}{\sqrt{r^{-1}}}$.\\
 
-\begin{figure}
+\end{proof}
+\begin{figure}[h]
     \centering
     \begin{tikzpicture}
         \draw[->] (-1,0) -- (7,0) node[right] {$\Re$};
@@ -712,14 +716,82 @@ Draw a circle trough
     Then we can combiene the construction of a rational root \ref{lem:real_root} and the fact that multiplcation, \dots are in $M_\infty$.
 \end{proof}
 
+\begin{lemma}[Angle in $M_{\infty}$]
+    \label{lem:angle_M_inf}
+    \uses{def:set_of_constructable_points}
+    \lean{angle_M_inf}
+    \leanok
+    If $z = r\cdot e^{\imath\alpha} \in M_{\infty}$, then $e^{\imath\alpha} \in  M_{\infty}$.
+\end{lemma}
+To construct we draw a line through $0$ and $z$ and take the intersection with the unit circle. \ref{Fig.angle}
+
+\begin{proof}
+
+    Let $l$ be a line through $0$ and $z$ and $c$ be the unit circle. Then $l \cap c = \{e^{\imath\alpha}\}$.
+    The rest follows from the construction of the intersection of a line and a circle\ref{lem:icc_M_inf}.
+\end{proof}
+
+\begin{figure}[h]
+    \centering
+    \begin{tikzpicture}
+        \draw[->] (-0.5,0) -- (4,0) node[right] {$\Re$};
+        \draw[->] (0,-0.5) -- (0,3) node[above] {$\Im$};
+        \coordinate[label=-135:$0$] (zero) at (0,0);
+        \coordinate[label=-135:$1$] (one) at (1,0);
+        \coordinate[label=135:$z$] (z) at (3,2);
+        \coordinate[label=90:$e^{\imath\alpha}$] (ea) at (0.8321,0.5547);
+        \fill[black] (zero) circle (1pt);
+        \fill[black] (one) circle (2pt);
+        \fill[black] (z) circle (2pt);
+        \fill[black] (ea) circle (2pt);
+        \draw (zero) -- (z);
+        \draw (zero) [carc=-20:110:1];
+    \end{tikzpicture}
+    \caption{Construction of $e^{\imath\alpha}$}
+    \label{Fig.angle}
+\end{figure}
+
+\begin{lemma}[Construction of radius]
+    \label{lem:construction_radius}
+    \uses{def:set_of_constructable_points}
+    If $z = r\cdot e^{\imath\alpha} \in M_{\infty}$, then $r \in  M_{\infty}$.
+\end{lemma}
+\begin{remark}
+    The radius is the distence from $0$ to $z$, wich is the same as $\|z\|$.
+\end{remark}
+We get the radius by taking the intersection of the real axis with a circle in zero with radius $\dist (0,z)$. \ref{Fig.radius}
+\begin{proof}
+    We use the fact that $r = \|z\| = \sqrt{\Re(z)^2 + \Im(z)^2}$ and the root of a real number\ref{lem:pos_real_root}.
+\end{proof}
+
+\begin{figure}[h]
+    \centering
+    \begin{tikzpicture}
+        \draw[->] (-0.5,0) -- (4,0) node[right] {$\Re$};
+        \draw[->] (0,-0.5) -- (0,4) node[above] {$\Im$};
+        \coordinate[label=-135:$0$] (zero) at (0,0);
+        \coordinate[label=-135:$1$] (one) at (1,0);
+        \coordinate[label=90:$z$] (z) at (3,2);
+        \coordinate[label=-135:$r$] (r) at (3.6056,0);
+        \fill[black] (zero) circle (2pt);
+        \fill[black] (one) circle (1pt);
+        \fill[black] (z) circle (2pt);
+        \fill[black] (r) circle (2pt);
+        \draw (zero) -- (z);
+        \draw (zero) [carc=-10:100:3.6056];
+    \end{tikzpicture}
+    \caption{Construction of $r = \|z\|$}
+    \label{Fig.radius}
+\end{figure}
+
 %2.5
-%\begin{lemma}
+% \begin{lemma}
 %   \label{lem:sqrt_in_M_inf}
 %   For $M\subseteq \mathbb{C}$ with $0,1 \in M$. If $z$ the $M_{\infty}$, then is $\sqrt{z} \in M_{\infty}$.
-%\end{lemma}
-%\begin{proof}
+% \end{lemma}
+% \begin{proof}
 %    Let $z = r \exp(\imath \alpha) \in M_{\infty}$, whitout loss of generality we can assume that $r \ne 0$. 
 %    Lemma \ref{THM:M_inf_properties}(iv) implies that $r, \exp(\imath \alpha) \in M_{\infty}$. By combining construction \ref{lem:construction_halving_angle},
 %    which states that $\exp(\imath \alpha / 2) \in M_{\infty}$ and construction \ref{lem:construction_sqrt_pos_real},
 %    that gives us that $\sqrt{r} \in M_{\infty}$, we get that $$\sqrt{z} = \sqrt{r} \exp(\imath \alpha / 2) \in M_{\infty}.$$
-%\end{proof}
+% \end{proof}

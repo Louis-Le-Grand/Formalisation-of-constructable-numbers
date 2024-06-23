@@ -688,6 +688,19 @@ lemma inv_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (a :ℂ ) (ha: a �
   apply mul_M_inf M h₀ h₁ (↑a.im) (↑a.im) (by apply im_in_M_inf M h₀ h₁; exact ha)
     (by apply im_in_M_inf M h₀ h₁; exact ha)
 
+--Todo: add to blueprint
+lemma midpoiont (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (a b : ℂ) (ha: a ∈ M_inf M) (hb: b ∈ M_inf M):
+    ↑((a+b)/2) ∈ M_inf M := by
+  apply mul_M_inf M h₀ h₁
+  apply add_M_Inf M h₀
+  exact ha
+  exact hb
+  apply inv_M_inf M h₀ h₁
+  rw [←one_add_one_eq_two]
+  apply add_M_Inf M h₀ 1 1
+  exact M_M_inf M h₁
+  exact M_M_inf M h₁
+
 lemma root_cast (x: ℝ) (h: x ≥ 0): ↑((x:ℝ) ^ (1/2:ℝ)) = (x:ℂ) ^ (1/2:ℂ) := by
   rw[ofReal_cpow]
   field_simp

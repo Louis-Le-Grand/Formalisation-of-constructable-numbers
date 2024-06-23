@@ -1101,4 +1101,204 @@ lemma angle_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (z : ℂ) (hz: z 
   rw [←ne_eq, AbsoluteValue.ne_zero_iff]
   symm
   exact h
-  #print axioms angle_M_inf
+  
+lemma exp_one (a : ℝ): exp (a * I) = 1 ↔ ∃ n : ℤ, a = n * 2 * Real.pi := by
+  refine ⟨?_,?_⟩
+  . intro h
+    sorry
+    --#exit
+  . intro h
+    obtain ⟨n, hn⟩ := h
+    simp only [hn, ofReal_mul, ofReal_intCast, ofReal_ofNat, mul_assoc]
+    nth_rw 2 [← mul_assoc]
+    rw[exp_int_mul_two_pi_mul_I]
+
+lemma exp_eq_iff (a b : ℝ): exp (a * I) = exp (b * I) ↔ ∃ n : ℤ, a = n * 2 * Real.pi + b := by
+  refine ⟨?_,?_⟩
+  . intro h
+    rw [exp_eq_exp_iff_exp_sub_eq_one, ←mul_sub_right_distrib] at h
+    norm_cast at h
+    rw [exp_one] at h
+    obtain ⟨n, hn⟩ := h
+    use n
+    linarith
+  . intros h
+    obtain ⟨n, hn⟩ := h
+    simp only [hn, ofReal_add, ofReal_mul, ofReal_intCast, ofReal_ofNat, add_mul, exp_add,
+      mul_assoc]
+    nth_rw 2 [← mul_assoc]
+    rw[exp_int_mul_two_pi_mul_I, one_mul]
+
+lemma exp_ang_neg_one (z : ℂ): exp (↑z.arg * I) = -1 ↔ z.arg = Real.pi := by
+  refine ⟨?_,?_⟩
+  . intro h
+    rw [←exp_pi_mul_I, exp_eq_iff] at h
+    obtain ⟨n, hn⟩ := h
+    have : n = 0 := by
+      have : n * 2 * Real.pi + Real.pi ∈ Set.Ioc (-Real.pi) Real.pi := by
+        rw [←hn]
+        exact arg_mem_Ioc z
+      simp at this
+      obtain ⟨h₁, h₂⟩ := this
+      rw[← zero_add (-Real.pi), add_comm, ←lt_tsub_iff_left, sub_neg_eq_add, add_assoc,
+        ←mul_two Real.pi] at h₁
+      nth_rewrite 3 [mul_comm] at h₁
+      rw [add_comm] at h₁
+      push_cast at h₁
+      rw[mul_assoc, ← one_add_mul (n:ℝ) (2 * Real.pi)] at h₁
+      rw[mul_comm, ←div_lt_iff' (by linarith), zero_div,← neg_lt_iff_pos_add'] at h₁
+      rw[mul_nonpos_iff] at h₂
+      have :  (Real.pi ≤ 0) = False := by
+        simp only [eq_iff_iff, iff_false, not_le]
+        exact Real.pi_pos
+      rw[this, and_false, false_or] at h₂
+      obtain ⟨h₂, _⟩ := h₂
+      rw[mul_nonpos_iff] at h₂
+      have : ((2:ℝ) ≤ 0) = False := by
+        simp only [eq_iff_iff, iff_false, not_le]
+        exact two_pos
+      rw[this, and_false, false_or] at h₂
+      obtain ⟨h₂, _⟩ := h₂
+      norm_cast at h₁ h₂
+      simp only [Int.reduceNegSucc, Int.reduceNeg] at h₁
+      linarith [h₁, h₂]
+    rw[this] at hn
+    rw[hn]
+    simp
+  . intro h
+    rw [←exp_pi_mul_I, h]
+
+lemma angle_half_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (z : ℂ) (hz: z ∈ M_inf M):
+    ↑(exp (arg z*I/2)) ∈ M_inf M := by
+  by_cases h: arg z = Real.pi
+  . have : exp (Real.pi * I / 2) = I := by
+      rw [div_eq_mul_inv,mul_assoc, mul_comm I (2⁻¹), ←mul_assoc, ←div_eq_mul_inv]
+      simp only [exp_mul_I, cos_pi_div_two, sin_pi_div_two, one_mul, zero_add]
+    rw[h,this]
+    exact imath_M_inf M h₀ h₁
+  let c : Construction.circle := {c := 0, r := 1}
+  let l : line := {z₁ := (((exp (arg z*I)) + 1)/2), z₂ := 0}
+  have hc : c ∈ C (M_inf M) := by
+    rw[c_in_C_M]
+    use 0
+    use 0
+    use 1
+    constructor
+    . simp
+    constructor
+    . exact M_M_inf M h₀
+    constructor
+    . exact M_M_inf M h₀
+    . exact M_M_inf M h₁
+  have hl : l ∈ L (M_inf M) := by
+    unfold L
+    use (((exp (arg z*I)) + 1)/2)
+    use 0
+    constructor
+    . simp
+    constructor
+    . apply midpoiont M h₀ h₁
+      apply angle_M_inf M h₀ h₁
+      exact hz
+      apply M_M_inf M h₁
+    constructor
+    . exact M_M_inf M h₀
+    . simp only [ne_eq, div_eq_zero_iff, OfNat.ofNat_ne_zero, or_false]
+      rw [add_eq_zero_iff_eq_neg, exp_ang_neg_one]
+      exact h
+  apply ilc_M_inf M
+  unfold ilc
+  rw [Set.mem_setOf]
+  use c
+  refine ⟨hc, ?_⟩
+  use l
+  refine ⟨hl, ?_⟩
+  rw [Set.mem_inter_iff]
+  constructor
+  . simp[Construction.circle.points]
+    rw[← one_div_mul_eq_div, Mathlib.Tactic.RingNF.mul_assoc_rev, one_div_mul_eq_div]
+    norm_cast
+    exact abs_exp_ofReal_mul_I ( arg z/2)
+  . simp[line.points]
+    have : ∃ r:ℝ, (z.arg * I / 2).exp/(((z.arg * I).exp + 1) / 2) = r := by
+      use ((z.arg * I / 2).exp/(((z.arg * I).exp + 1) / 2)).re
+      simp only [← div_mul, ext_iff, ofReal_re, mul_im, ofReal_im, true_and, im_ofNat, mul_zero,
+      re_ofNat, zero_add, mul_eq_zero, OfNat.ofNat_ne_zero, or_false]
+
+      have  (a : ℝ)(h: ¬(↑a * I).exp = -1): im ((exp (a * I / 2)) / (exp (a * I) + 1)) = 0 := by
+        have g: (((a).cos + (a).sin * I + 1) * ((a).cos - (a).sin * I + 1)) = 2*(1+ (a).cos) := by
+          ring_nf
+          simp only [ofReal_cos, ofReal_sin, I_sq, mul_neg, mul_one, sub_neg_eq_add,
+            cos_sq_add_sin_sq]
+          ring_nf
+
+        have : (↑(a / 2).sin * (↑a.cos + 1) - ↑(a / 2).cos * ↑a.sin) * I = 0 := by
+          have hcos :  (a).cos = (a/2).cos ^ 2 - (a/2).sin ^ 2 := by
+            rw [← Real.cos_two_mul', mul_div_left_comm, div_self (by norm_num), mul_one]
+          have hsin :  (a).sin = 2 * (a/2).sin * (a/2).cos := by
+            rw [← Real.sin_two_mul, mul_div_left_comm, div_self (by norm_num), mul_one]
+          rw [hsin, hcos, mul_add]
+          norm_cast
+          rw[mul_sub]
+          calc _ = ((a/2).sin * (a/2).cos^2 - 2 * (a/2).cos^2 * (a/2).sin - (a/2).sin *
+            (a/2).sin^2 + (a/2).sin) * I := by push_cast; ring_nf
+            _ = ((a/2).sin * ((a/2).cos^2 - 2 * (a/2).cos^2  - (a/2).sin^2 + 1)) * I := by ring_nf
+            _ = ((a/2).sin * (- ((a/2).cos^2 + (a/2).sin^2) + 1)) * I := by ring_nf
+            _ = ((a/2).sin * (- 1 + 1)) * I := by norm_cast; simp only [Real.cos_sq_add_sin_sq,
+              add_left_neg, mul_zero, ofReal_zero, zero_mul, Int.reduceNegSucc, Int.cast_zero]
+            _ = 0 := by ring_nf
+
+        calc _ = ((↑a / 2*I).exp / ((↑a * I).exp + 1)).im := by ring_nf
+        _ = (((a / 2).cos + (a / 2).sin * I) / ((a).cos + (a).sin * I + 1)).im := by
+          rw [exp_mul_I, exp_mul_I]; norm_cast
+        _ = ((((a / 2).cos + (a / 2).sin * I)  / ((a).cos + (a).sin * I + 1)) *
+          (((a).cos - (a).sin * I + 1)/((a).cos - (a).sin * I + 1))).im := by
+            rw [div_self (by push_cast; rw [cos_sub_sin_I a, Ne.eq_def, add_eq_zero_iff_eq_neg,
+              ←neg_mul_eq_neg_mul, exp_neg, inv_eq_iff_eq_inv, inv_neg_one]; exact h), mul_one]
+        _ = ((((a / 2).cos + (a / 2).sin * I) * ((a).cos - (a).sin * I + 1)) /
+          (((a).cos + (a).sin * I + 1) * ((a).cos - (a).sin * I + 1))).im := by rw[mul_div_mul_comm]
+        _ = ((((a / 2).cos + (a / 2).sin * I) * ((a).cos - (a).sin * I + 1)) /
+          (2*(1+ (a).cos))).im := by rw[g]
+        _ = (((a / 2).cos * ((a).cos + 1) - (a / 2).sin  * (a).sin * I^2 - (a / 2).cos * (a).sin * I
+          + (a / 2).sin * ((a).cos+1) * I) / (2*(1+ (a).cos))).im := by ring_nf
+        _ = (((a / 2).cos * ((a).cos + 1) + (a / 2).sin  * (a).sin  - (a / 2).cos * (a).sin * I
+          + (a / 2).sin * ((a).cos+1) * I) / (2*(1+ (a).cos))).im := by
+            simp only [I_sq, mul_neg, mul_one, sub_neg_eq_add]
+        _ = (((a / 2).cos * ((a).cos + 1) + (a / 2).sin  * (a).sin
+          + ((a / 2).sin * ((a).cos+1) - (a / 2).cos * (a).sin) * I) / (2*(1+ (a).cos))).im := by
+            ring_nf
+        _ = (((a / 2).cos * ((a).cos + 1) + (a / 2).sin  * (a).sin
+          + (0:ℂ) ) / (2*(1+ (a).cos))).im := by rw [this]
+        _ = (((a / 2).cos * ((a).cos + 1) + (a / 2).sin  * (a).sin) / (2*(1+ (a).cos)):ℂ).im := by
+          simp only [ofReal_cos, ofReal_div, ofReal_ofNat, ofReal_sin, add_zero]
+        _ = 0 := by norm_cast
+
+      apply this
+      rw[exp_ang_neg_one]
+      exact h
+    obtain ⟨r, hr⟩ := this
+    use r
+    rw[←hr]
+    calc (z.arg * I / 2).exp / (((z.arg * I).exp + 1) / 2) * (((z.arg * I).exp + 1) / 2)
+    = (((z.arg * I).exp + 1) / 2) / (((z.arg * I).exp + 1) / 2) * (z.arg * I / 2).exp := by ring_nf
+     _ = (z.arg * I / 2).exp := by
+        rw [div_self, one_mul]
+        simp only [ne_eq, div_eq_zero_iff, OfNat.ofNat_ne_zero, or_false]
+        rw [add_eq_zero_iff_eq_neg, exp_ang_neg_one]
+        exact h
+
+
+noncomputable instance : CommGroupWithZero ℂ where
+  mul := (.*.)
+  mul_assoc := fun a b c => by ring
+  one := 1
+  one_mul := fun a => by ring
+  mul_one := fun a => by ring
+  mul_comm := fun a b => by ring
+  zero := 0
+  zero_mul :=  fun a => by ring
+  mul_zero :=  fun a => by ring
+  inv := fun a => a⁻¹
+  exists_pair_ne := ⟨0, 1, fun h => by simp_all only [zero_ne_one]⟩
+  inv_zero := by simp
+  mul_inv_cancel := fun a ha => by rw[mul_comm, inv_mul_cancel ha]

@@ -988,9 +988,25 @@ lemma rabs_M_Inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (r : ℝ) (hr: ↑
     apply z_neg_M_inf M h₀ r hr
 
 
+lemma exp_root (α: ℝ)(n:ℕ): exp (α/(n:ℂ) * I) = (exp (α * I)) ^ (n:ℂ)⁻¹ := by sorry
+--Complex.exp_int_mul
+
 lemma root_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (z : ℂ) (hz: z ∈ M_inf M):
     z ^ (1/2:ℂ) ∈ M_inf M := by
+    rw [←abs_mul_exp_arg_mul_I z]
+    have: (↑(Complex.abs z) * (↑z.arg * I).exp) ^ (1 / 2:ℂ ) = ↑(Complex.abs z) ^ (1 / 2:ℂ ) * ((↑z.arg * I).exp) ^ (1/2:ℂ) := by
+      sorry
+    rw[this]
+    norm_cast
+    apply mul_M_inf M h₀ h₁
+    apply zero_real_root_M_inf M h₀ h₁
+    apply abs_M_Inf M h₀ h₁
+    exact hz
+    simp only [ge_iff_le, apply_nonneg]
+
     sorry
+
+    --#exit
 --It is nicer to yous polar coordinates
   /- rw[root_copmlex]
   apply add_M_Inf M h₀
@@ -1101,12 +1117,18 @@ lemma angle_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (z : ℂ) (hz: z 
   rw [←ne_eq, AbsoluteValue.ne_zero_iff]
   symm
   exact h
-  
+
 lemma exp_one (a : ℝ): exp (a * I) = 1 ↔ ∃ n : ℤ, a = n * 2 * Real.pi := by
   refine ⟨?_,?_⟩
   . intro h
-    sorry
-    --#exit
+    rw [exp_mul_I, ext_iff] at h
+    obtain ⟨hcos, hsin⟩ := h
+    simp only [add_re, mul_re, I_re, mul_zero, sin_ofReal_im, I_im, mul_one, sub_self, add_zero,
+      one_re, add_im, cos_ofReal_im, mul_im, zero_add, one_im] at hcos hsin
+    norm_cast at hsin hcos
+    rw[Real.sin_eq_zero_iff] at hsin
+    simp_rw[Real.cos_eq_one_iff, ←mul_assoc, eq_comm] at hcos
+    exact hcos
   . intro h
     obtain ⟨n, hn⟩ := h
     simp only [hn, ofReal_mul, ofReal_intCast, ofReal_ofNat, mul_assoc]
@@ -1129,6 +1151,8 @@ lemma exp_eq_iff (a b : ℝ): exp (a * I) = exp (b * I) ↔ ∃ n : ℤ, a = n *
     nth_rw 2 [← mul_assoc]
     rw[exp_int_mul_two_pi_mul_I, one_mul]
 
+-- Real.Angle.sin_eq_zero_iff
+-- Real.Angle.sin_ne_zero_iff
 lemma exp_ang_neg_one (z : ℂ): exp (↑z.arg * I) = -1 ↔ z.arg = Real.pi := by
   refine ⟨?_,?_⟩
   . intro h

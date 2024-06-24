@@ -40,7 +40,18 @@ lemma MField_re_im' (M: Set ℂ)(h₀: 0 ∈ M)(h₁: 1∈ M): ∀ x : ℂ, x �
   rw[←MField_i_mul M h₀ h₁]
   exact z_iff_re_im_M_inf M h₀ h₁ x
 
---TODO: Add iff for polar coordinates
+lemma MField_polar (M: Set ℂ)(h₀: 0 ∈ M)(h₁: 1∈ M): ∀ x : ℂ, x ∈ MField M h₀ h₁ ↔
+    ↑(Complex.abs x) ∈ MField M h₀ h₁ ∧ Complex.exp (Complex.arg x * Complex.I) ∈  MField M h₀ h₁ := by
+  intro x
+  constructor
+  . intro hx
+    constructor
+    apply abs_M_Inf M h₀ h₁ x hx
+    apply angle_M_inf M h₀ h₁ x hx
+  intro hx
+  obtain ⟨habs, hang⟩ := hx
+  rw[←Complex.abs_mul_exp_arg_mul_I x]
+  apply mul_M_inf M h₀ h₁ _ _ habs hang
 
 class QuadraticClosed (F: Type*) [Field F] : Prop where
   exists_root: ∀ x : F, ∃ y : F, y * y = x

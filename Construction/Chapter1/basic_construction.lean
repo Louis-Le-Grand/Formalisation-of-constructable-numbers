@@ -714,12 +714,12 @@ lemma inv_comp_root (r:ℝ) (h: 0 < r): ↑r ^ (1 / 2:ℂ ) = ((1 / (r:ℂ) )^ (
     exact Real.pi_ne_zero
   apply le_of_lt h
 
+-- --Todo remove or proof or stuff
+-- lemma neg_comp_root (r:ℝ) (h: 0 > r): ↑r ^ (1 / 2:ℂ ) = ((r:ℂ) ^ (1 / 2:ℂ)) * I := by
+--   sorry
 
-lemma neg_comp_root (r:ℝ) (h: 0 > r): ↑r ^ (1 / 2:ℂ ) = ((r:ℂ) ^ (1 / 2:ℂ)) * I := by
-  sorry
-
-/- lemma root_copmlex (z : ℂ): z ^ (1/2:ℂ) = (((abs z)+z.re)/2)^ (1/2:ℂ)+I*z.im/|z.im| *
-    (((abs z )-z.re)/2)^ (1/2:ℂ) := by sorry -/
+--  lemma root_copmlex (z : ℂ): z ^ (1/2:ℂ) = (((abs z)+z.re)/2)^ (1/2:ℂ)+I*z.im/|z.im| *
+--     (((abs z )-z.re)/2)^ (1/2:ℂ) := by sorry
 
 lemma point_in_circle_pythagorean (z: ℂ) (c: Construction.circle) (hr: 0 < c.r): z ∈ c.points ↔ (dist c.c.re z.re)^2 + (dist c.c.im z.im)^2 = c.r^2 := by
   simp only [Construction.circle.points, Set.mem_setOf_eq, mem_sphere_iff_norm, norm_eq_abs]

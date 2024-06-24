@@ -987,80 +987,6 @@ lemma rabs_M_Inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (r : ℝ) (hr: ↑
     push_cast
     apply z_neg_M_inf M h₀ r hr
 
-
-lemma exp_root (α: ℝ)(n:ℕ): exp (α/(n:ℂ) * I) = (exp (α * I)) ^ (n:ℂ)⁻¹ := by sorry
---Complex.exp_int_mul
-
-lemma root_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (z : ℂ) (hz: z ∈ M_inf M):
-    z ^ (1/2:ℂ) ∈ M_inf M := by
-    rw [←abs_mul_exp_arg_mul_I z]
-    have: (↑(Complex.abs z) * (↑z.arg * I).exp) ^ (1 / 2:ℂ ) = ↑(Complex.abs z) ^ (1 / 2:ℂ ) * ((↑z.arg * I).exp) ^ (1/2:ℂ) := by
-      sorry
-    rw[this]
-    norm_cast
-    apply mul_M_inf M h₀ h₁
-    apply zero_real_root_M_inf M h₀ h₁
-    apply abs_M_Inf M h₀ h₁
-    exact hz
-    simp only [ge_iff_le, apply_nonneg]
-
-    sorry
-
-    --#exit
---It is nicer to yous polar coordinates
-  /- rw[root_copmlex]
-  apply add_M_Inf M h₀
-  norm_cast
-  apply real_root_M_inf M h₀ h₁
-  push_cast
-  rw [div_eq_mul_inv]
-  apply mul_M_inf M h₀ h₁
-  apply add_M_Inf M h₀
-  apply abs_M_Inf M h₀ h₁
-  exact hz
-  apply real_in_M_inf M h₀ h₁
-  exact hz
-  apply inv_M_inf M h₀ h₁
-  rw [←one_add_one_eq_two]
-  apply add_M_Inf M h₀ 1 1
-  apply M_M_inf M h₁
-  apply M_M_inf M h₁
-  apply mul_M_inf M h₀ h₁
-  rw [div_eq_mul_inv]
-  apply mul_M_inf M h₀ h₁
-  apply mul_M_inf M h₀ h₁
-  apply imath_M_inf M h₀ h₁
-  apply im_in_M_inf M h₀ h₁
-  exact hz
-  apply inv_M_inf M h₀ h₁
-  apply rabs_M_Inf M h₀ h₁
-  apply im_in_M_inf M h₀ h₁
-  exact hz
-  norm_cast
-  apply real_root_M_inf M h₀ h₁
-  push_cast
-  rw [div_eq_mul_inv]
-  apply mul_M_inf M h₀ h₁
-  apply sub_M_Inf M h₀
-  apply abs_M_Inf M h₀ h₁
-  exact hz
-  apply real_in_M_inf M h₀ h₁
-  exact hz
-  apply inv_M_inf M h₀ h₁
-  rw [←one_add_one_eq_two]
-  apply add_M_Inf M h₀ 1 1
-  apply M_M_inf M h₁
-  apply M_M_inf M h₁ -/
-
-example (a b : ℝ): a ≤ b ∧ a ≠ b → a < b := by
-  rw [← lt_iff_le_and_ne]; exact id
-
-example (a b :ℂ ): dist a b = |dist a b| := by rw [@abs_dist]
-
-example ( a b : ℝ ) (ha: 0 ≤ a) (hb: 0 ≤ b): 0 ≤ a + b := by
-  exact add_nonneg ha hb
-
-
 lemma angle_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (z : ℂ) (hz: z ∈ M_inf M):
     ↑(exp (arg z*I)) ∈ M_inf M := by
   by_cases h: 0 = z
@@ -1118,6 +1044,7 @@ lemma angle_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (z : ℂ) (hz: z 
   symm
   exact h
 
+-- Maybe in Mathlib
 lemma exp_one (a : ℝ): exp (a * I) = 1 ↔ ∃ n : ℤ, a = n * 2 * Real.pi := by
   refine ⟨?_,?_⟩
   . intro h
@@ -1193,10 +1120,9 @@ lemma exp_ang_neg_one (z : ℂ): exp (↑z.arg * I) = -1 ↔ z.arg = Real.pi := 
     rw [←exp_pi_mul_I, h]
 
 lemma angle_half_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (z : ℂ) (hz: z ∈ M_inf M):
-    ↑(exp (arg z*I/2)) ∈ M_inf M := by
+    ↑(exp (arg z/2*I)) ∈ M_inf M := by
   by_cases h: arg z = Real.pi
-  . have : exp (Real.pi * I / 2) = I := by
-      rw [div_eq_mul_inv,mul_assoc, mul_comm I (2⁻¹), ←mul_assoc, ←div_eq_mul_inv]
+  . have : exp (Real.pi/2 * I ) = I := by
       simp only [exp_mul_I, cos_pi_div_two, sin_pi_div_two, one_mul, zero_add]
     rw[h,this]
     exact imath_M_inf M h₀ h₁
@@ -1240,10 +1166,10 @@ lemma angle_half_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (z : ℂ) (h
   rw [Set.mem_inter_iff]
   constructor
   . simp[Construction.circle.points]
-    rw[← one_div_mul_eq_div, Mathlib.Tactic.RingNF.mul_assoc_rev, one_div_mul_eq_div]
     norm_cast
     exact abs_exp_ofReal_mul_I ( arg z/2)
   . simp[line.points]
+
     have : ∃ r:ℝ, (z.arg * I / 2).exp/(((z.arg * I).exp + 1) / 2) = r := by
       use ((z.arg * I / 2).exp/(((z.arg * I).exp + 1) / 2)).re
       simp only [← div_mul, ext_iff, ofReal_re, mul_im, ofReal_im, true_and, im_ofNat, mul_zero,
@@ -1310,19 +1236,89 @@ lemma angle_half_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (z : ℂ) (h
         simp only [ne_eq, div_eq_zero_iff, OfNat.ofNat_ne_zero, or_false]
         rw [add_eq_zero_iff_eq_neg, exp_ang_neg_one]
         exact h
+     _ = (z.arg / 2 * I ).exp := by ring_nf
 
+--TODO add
+-- lemma exp_root (α: ℝ) (n:ℕ): exp (α/(n:ℂ) * I) = (exp (α * I)) ^ (n:ℂ)⁻¹ := by
+--   sorry
+-- --Complex.exp_int_mul
 
-noncomputable instance : CommGroupWithZero ℂ where
-  mul := (.*.)
-  mul_assoc := fun a b c => by ring
-  one := 1
-  one_mul := fun a => by ring
-  mul_one := fun a => by ring
-  mul_comm := fun a b => by ring
-  zero := 0
-  zero_mul :=  fun a => by ring
-  mul_zero :=  fun a => by ring
-  inv := fun a => a⁻¹
-  exists_pair_ne := ⟨0, 1, fun h => by simp_all only [zero_ne_one]⟩
-  inv_zero := by simp
-  mul_inv_cancel := fun a ha => by rw[mul_comm, inv_mul_cancel ha]
+--! Währe schöner min  z ^ (1/2:ℂ) ∈ M_inf M
+lemma root_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (z : ℂ) (hz: z ∈ M_inf M):
+    (↑(Complex.abs z) ^ (1/2:ℂ) * ((↑z.arg/2 * I).exp) )∈ M_inf M := by
+    norm_cast
+    apply mul_M_inf M h₀ h₁
+    apply zero_real_root_M_inf M h₀ h₁
+    apply abs_M_Inf M h₀ h₁
+    exact hz
+    simp only [ge_iff_le, apply_nonneg]
+    simp only [ofReal_div, ofReal_ofNat]
+    exact angle_half_M_inf M h₀ h₁ z hz
+
+--It is nicer to yous polar coordinates
+  /- rw[root_copmlex]
+  apply add_M_Inf M h₀
+  norm_cast
+  apply real_root_M_inf M h₀ h₁
+  push_cast
+  rw [div_eq_mul_inv]
+  apply mul_M_inf M h₀ h₁
+  apply add_M_Inf M h₀
+  apply abs_M_Inf M h₀ h₁
+  exact hz
+  apply real_in_M_inf M h₀ h₁
+  exact hz
+  apply inv_M_inf M h₀ h₁
+  rw [←one_add_one_eq_two]
+  apply add_M_Inf M h₀ 1 1
+  apply M_M_inf M h₁
+  apply M_M_inf M h₁
+  apply mul_M_inf M h₀ h₁
+  rw [div_eq_mul_inv]
+  apply mul_M_inf M h₀ h₁
+  apply mul_M_inf M h₀ h₁
+  apply imath_M_inf M h₀ h₁
+  apply im_in_M_inf M h₀ h₁
+  exact hz
+  apply inv_M_inf M h₀ h₁
+  apply rabs_M_Inf M h₀ h₁
+  apply im_in_M_inf M h₀ h₁
+  exact hz
+  norm_cast
+  apply real_root_M_inf M h₀ h₁
+  push_cast
+  rw [div_eq_mul_inv]
+  apply mul_M_inf M h₀ h₁
+  apply sub_M_Inf M h₀
+  apply abs_M_Inf M h₀ h₁
+  exact hz
+  apply real_in_M_inf M h₀ h₁
+  exact hz
+  apply inv_M_inf M h₀ h₁
+  rw [←one_add_one_eq_two]
+  apply add_M_Inf M h₀ 1 1
+  apply M_M_inf M h₁
+  apply M_M_inf M h₁ -/
+
+-- example (a b : ℝ): a ≤ b ∧ a ≠ b → a < b := by
+--   rw [← lt_iff_le_and_ne]; exact id
+
+-- example (a b :ℂ ): dist a b = |dist a b| := by rw [@abs_dist]
+
+-- example ( a b : ℝ ) (ha: 0 ≤ a) (hb: 0 ≤ b): 0 ≤ a + b := by
+--   exact add_nonneg ha hb
+
+-- noncomputable instance : CommGroupWithZero ℂ where
+--   mul := (.*.)
+--   mul_assoc := fun a b c => by ring
+--   one := 1
+--   one_mul := fun a => by ring
+--   mul_one := fun a => by ring
+--   mul_comm := fun a b => by ring
+--   zero := 0
+--   zero_mul :=  fun a => by ring
+--   mul_zero :=  fun a => by ring
+--   inv := fun a => a⁻¹
+--   exists_pair_ne := ⟨0, 1, fun h => by simp_all only [zero_ne_one]⟩
+--   inv_zero := by simp
+--   mul_inv_cancel := fun a ha => by rw[mul_comm, inv_mul_cancel ha]

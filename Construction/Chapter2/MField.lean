@@ -50,11 +50,18 @@ instance MField_QuadraticClosed (M: Set ℂ)(h₀: 0 ∈ M)(h₁: 1∈ M) :
   exists_root := by
     intro x
     rw[Subtype.exists]
-    use ((x:ℂ) ^ (1/2:ℂ))
+    use (↑(Complex.abs x) ^ (1/2:ℂ) * ((↑ (Complex.arg x)/(2:ℂ) * Complex.I).exp))
     constructor
     push_cast
     rw[←pow_two]
     simp only [one_div, SubmonoidClass.mk_pow, Complex.cpow_ofNat_inv_pow, Subtype.coe_eta]
+    simp_rw[pow_two]
+    ring_nf
+    norm_cast
+    simp_rw[←Complex.exp_nat_mul (↑(x:ℂ).arg * Complex.I * (1 / 2)) 2]
+    simp only [one_div, Complex.cpow_ofNat_inv_pow, Nat.cast_ofNat]
+    ring_nf
+    simp only [Complex.abs_mul_exp_arg_mul_I, Subtype.coe_eta]
     exact root_M_inf M h₀ h₁ x (by rw[←MField_mem M h₀ h₁ x]; simp only [SetLike.coe_mem])
 
 def conj_set (M : Set ℂ) : Set ℂ := {starRingEnd ℂ z | z ∈ M}

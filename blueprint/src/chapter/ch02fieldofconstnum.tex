@@ -14,10 +14,10 @@
     we have $z_1 + z_2 \in M_{\infty}$ and construction \ref{lem:construction_neg}
     gives us that for every $z \in M_{\infty}$ we have $-z \in M_{\infty}$. Therefore $M_{\infty}$ is closed under addition, and contains the additive invers.\\
     For multiplication let $z_1 = r_1 \exp(\imath \alpha_1)$ and $z_2 = r_2 \exp(\imath \alpha_2)$ be in $M_{\infty}$. Then we have 
-    $$z_1 z_2 = r_1 r_2 \exp(\imath (\alpha_1 + \alpha_2)) \in M_{\infty}$$. By combining the lemmas \ref{lem:construction_add_angle}, \ref{lem:construction_mult_pos_real} and \ref{lem:construction_polar}
+    $$z_1 z_2 = r_1 r_2 \exp(\imath (\alpha_1 + \alpha_2)) \in M_{\infty}$$. By combining the lemmas \ref{construction_add_angle}, \ref{construction_mult_pos_real} and \ref{construction_polar}
     we obtain that $z_1 z_2 \in M_{\infty}$.\\
-    For the inverse of $0 \ne z = r \exp(\imath \alpha) \in M_{\infty}$ we know that $$z^{-1} = r^{-1} \exp(\imath(2\pi - \alpha)).$$ We know that $r, \exp(\imath \alpha) \in M_{\infty}$, see construction \ref{lem:construction_polar}.
-    Now we can use construction \ref{lem:construction_inv_pos_real} and \ref{lem:construction_conj} to show,
+    For the inverse of $0 \ne z = r \exp(\imath \alpha) \in M_{\infty}$ we know that $$z^{-1} = r^{-1} \exp(\imath(2\pi - \alpha)).$$ We know that $r, \exp(\imath \alpha) \in M_{\infty}$, see construction \ref{construction_polar}.
+    Now we can use construction \ref{construction_inv_pos_real} and \ref{lem:construction_conj} to show,
     that $r^{-1}, \exp(\imath(2\pi - \alpha)) = \overline{\exp(\imath\alpha)} \in M_{\infty}$. By applying that $M_{\infty}$ is closed under multiplication, shown above, we get that $z^{-1} \in M_{\infty}$.\\
     Therefore $M_{\infty}$ is a subfield of $\mathbb{C}$.
 \end{proof}
@@ -61,9 +61,9 @@
     %TODO: \uses{} imath_M_inf z_iff_re_im_M_inf; (i_z_imp_z_in_M_inf/ MField_i_mul)
     This lemma is a dierct consequence of section \ref{basic_constructions}.
     \begin{itemize}
-        \item[(i):] We kan apply construction \ref{lem:construction_imath}
-        \item[(ii):] We can apply construction \ref{lem:construction_re_im} and \ref{lem:construction_imath}.
-        \item[(iii):]  We can apply construction \ref{lem:construction_polar}.
+        \item[(i):] We kan apply construction \ref{construction_imath}
+        \item[(ii):] We can apply construction \ref{construction_re_im} and \ref{construction_imath}.
+        \item[(iii):]  We can apply construction \ref{construction_polar}.
     \end{itemize}
 \end{proof}
 
@@ -211,10 +211,10 @@ TODO: Add $K_i$ and $K_{\infty}$ and a Lemma that states that $K_{\infty} = M_{\
     In this cases the $[K_0(z):K_0] = 2^m$ for some $0 \le m \le n$.
 \end{remark}
 \begin{proof}[Proof of Theorem \ref{thm:Z_in_Minf_1}]
-    \uses{ lem:dergee2_iff_adjoint_sqrt, Lem:Intersection_circle_circle, Lem:Intersection_line_circle, Lem:Intersection_line_line, lem:conj_of_adjoin, lem:M_inf_quad_closed}
+    \uses{ lem:dergee2_iff_adjoint_sqrt, Intersection_circle_circle, Intersection_line_circle, Intersection_line_line, lem:conj_of_adjoin, lem:M_inf_quad_closed}
     $(ii) \iff (iii)$ Follows from the definition and Lemma \ref{lem:dergee2_iff_adjoint_sqrt}.\\
     $(i) \implies (ii)$: We assume that $z$ is derived from $K_0$ by (ZL1), (ZL2) and (ZL3). %TODO: add ref
-    Lemma \ref{Lem:Intersection_circle_circle}, \ref{Lem:Intersection_line_circle} and \ref{Lem:Intersection_line_line} in combination with Lemma \ref{lem:conj_of_adjoin} 
+    Lemma \ref{Intersection_circle_circle}, \ref{Intersection_line_circle} and \ref{Intersection_line_line} in combination with Lemma \ref{lem:conj_of_adjoin} 
     imply that ther is an $w \in K_0$ so that $z \in K_0(\sqrt{w})$. Since $\overline{w} \in K_0$, by definition. We define
     $$K_1 := K_0(\sqrt{w},\sqrt{\overline{w}}).$$
     $K_1$ derives from $K_0$ sucsessively by adjunction of square roots. Note that $K_1 = conj(K_1)$, by Lemma \ref{lem:conj_of_adjoin} and the fact that $\sqrt{\overline{w} = \overline{\sqrt{w}}}$.

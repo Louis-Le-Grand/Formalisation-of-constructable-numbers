@@ -554,7 +554,7 @@ To get the point $z.im$ we draw a line through $z$ and $z-1$. Now we get $\imath
     For $z \in \C$ $z$ is in $M_{\infty}$ if and only if $z.re, z.im \in M_{\infty}$.
 \end{corollary}
 \begin{proof}
-    \uses{lem:construction_real, lem:construction_imag, lem:construction_add, llem:construction_imath_r}
+    \uses{lem:construction_real, lem:construction_imag, lem:construction_add, lem:construction_imath_r}
     $\Rightarrow$: If $z \in M_{\infty}$ then $z.re, z.im \in M_{\infty}$ after lemma \ref{lem:construction_real} and \ref{lem:construction_imag}.\\
     $\Leftarrow$: If $z.re, z.im \in M_{\infty}$ then $z.re + \imath z.im \in M_{\infty}$ after lemma \ref{lem:construction_add} and lemma \ref{lem:construction_imath_r}.
 \end{proof}
@@ -665,7 +665,7 @@ This can be construceted analog to the multiplication of positve real numbers. U
     \uses{lem:construction_inv, lem:construction_mul, cor:construction_sub, lem:construction_real, lem:construction_imag, lem:construction_add}
     For $z \in M_{\infty}$ we can write $z = a + \imath b$ with $a, b \in \R$. Then
     $$z^{-1} = \frac{1}{z} = \frac{\overline{z}}{z\overline{z}} = \frac{a - \imath b}{a^2+b^2}= (a - \imath b) \cdot (aa+bb)^{-1}.$$
-    Now we can again combiened the lemmas for addition\ref{lem:construction_add}, subtraction\ref{cor:construction_sub}, multiplication\ref{cor:construction_mul_complex} and the corollary for the invers of a positive real number\ref{lem:construction_inv} with the exists of real an imaginary\ref{lem:construction_re_im} part to get that $z^{-1} \in M_{\infty}$.
+    Now we can again combiened the lemmas for addition\ref{lem:construction_add}, subtraction\ref{cor:construction_sub}, multiplication\ref{cor:construction_mul_complex} and the corollary for the invers of a positive real number\ref{lem:construction_inv} with the exists of real an imaginary\ref{construction_re_im} part to get that $z^{-1} \in M_{\infty}$.
 \end{proof}
 
 \begin{lemma}[Root of pos real numerb]
@@ -792,6 +792,6 @@ We get the radius by taking the intersection of the real axis with a circle in z
 % \begin{proof}
 %    Let $z = r \exp(\imath \alpha) \in M_{\infty}$, whitout loss of generality we can assume that $r \ne 0$. 
 %    Lemma \ref{THM:M_inf_properties}(iv) implies that $r, \exp(\imath \alpha) \in M_{\infty}$. By combining construction \ref{lem:construction_halving_angle},
-%    which states that $\exp(\imath \alpha / 2) \in M_{\infty}$ and construction \ref{lem:construction_sqrt_pos_real},
+%    which states that $\exp(\imath \alpha / 2) \in M_{\infty}$ and construction \ref{construction_sqrt_pos_real},
 %    that gives us that $\sqrt{r} \in M_{\infty}$, we get that $$\sqrt{z} = \sqrt{r} \exp(\imath \alpha / 2) \in M_{\infty}.$$
 % \end{proof}

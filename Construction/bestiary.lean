@@ -6,6 +6,7 @@ import Mathlib.Data.Real.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
 import Mathlib.Data.Real.Irrational
 import Mathlib.Analysis.SpecialFunctions.Pow.Real
+import Mathlib.RingTheory.IntegralClosure
 
 
 
@@ -43,7 +44,13 @@ theorem irreducible_iff_roots_eq_zero_of_degree_le_three {R} [CommRing R] [IsDom
   refine ⟨fun h r ↦ h _ (monic_X_sub_C r) (natDegree_X_sub_C r), fun h q hq hq1 ↦ ?_⟩
   rw [hq.eq_X_add_C hq1, ← sub_neg_eq_add, ← C_neg]; apply h
 
-lemma real_component_in_M_inf(M : Set ℂ):  x.re ∉ M_inf M → x ∉ M_inf M := by sorry
+lemma real_component_in_M_inf (M : Set ℂ) (h₀ : 0 ∈ M) (h₁ : 1 ∈ M):  x.re ∉ M_inf M → x ∉ M_inf M := by
+  by_contra h
+  simp at h
+  obtain ⟨ _, h⟩ := h
+  have : ↑x.re ∈ M_inf M := by
+    exact real_in_M_inf M h₀ h₁ _ h
+  contradiction
 
 theorem Classfication_z_in_M_inf (M : Set ℂ) (z : ℂ) :
 z ∈ M_inf M ↔
@@ -60,7 +67,16 @@ lemma Classfication_z_in_M_inf_2m (M : Set ℂ) (z : ℂ) :
     intro h
     rw [Classfication_z_in_M_inf] at h
     obtain ⟨n, L, H, h₁, h₂, h₃⟩ := h
+    have: IsIntegral (↥(K_zero M)) z := by sorry --apply IsIntegral.of_finite (K_zero M) (L n)
+    rw[Polynomial.degree_eq_natDegree]
+    rw[←IntermediateField.adjoin.finrank _]
+    rw[h₂]
+    have h: ∃ j:ℕ, z ∈ L j ∧ z ∉ L (j-1) := by
+      sorry
+    obtain ⟨j, hj, _⟩ := h
     sorry
+    exact this
+    exact minpoly.ne_zero this
 
 lemma short (M : Set ℂ) (z : ℂ) :
   ¬ (∃ (m : ℕ) ,((2  : ℕ) ^ m : WithBot ℕ) = Polynomial.degree (minpoly (K_zero M) z)) → z ∉ M_inf M := by

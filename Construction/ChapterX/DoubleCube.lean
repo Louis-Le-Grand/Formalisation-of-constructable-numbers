@@ -1,6 +1,7 @@
 import Construction.bestiary
 
 open Polynomial
+open Construction
 noncomputable def P : (Polynomial ℚ) := X ^ 3 - Polynomial.C 2 -- x^3 - 2
 
 lemma P_monic: Monic P := by
@@ -112,7 +113,7 @@ lemma degree_third_root_of_two : Polynomial.degree (minpoly ℚ ((2:ℂ ) ^ (1/3
 --TODO: Tidy Up
 noncomputable def K_zero_P: IntermediateField ℚ ℂ := K_zero {(0:ℂ),(1:ℂ)}
 
-lemma third_root_of_two_not_in_M_inf (M := {(0:ℂ),(1:ℂ)}): (2 : ℂ) ^ (1/3: ℂ) ∉ M_inf M := by
+lemma third_root_of_two_not_in_M_inf: (2 : ℂ) ^ (1/3: ℂ) ∉ M_inf {(0:ℂ),(1:ℂ)} := by
   apply short
   simp
   intro x
@@ -128,15 +129,13 @@ lemma third_root_of_two_not_in_M_inf (M := {(0:ℂ),(1:ℂ)}): (2 : ℂ) ^ (1/3:
     · rw [K_zero_P, K_zero]
     rintro _ (rfl|rfl)
     exacts [⟨0, by simp⟩, ⟨1, by simp⟩]
-  have K_P_eq_K_M: K_zero_P = K_zero M := by
-    rw [K_zero_P_eq_bot, K_zero_eq_rational_if_M_sub_Q M]
+  have K_P_eq_K_M: K_zero_P = K_zero {(0:ℂ),(1:ℂ)} := by
+    rw [K_zero_P_eq_bot, K_zero_eq_rational_if_M_sub_Q {(0:ℂ),(1:ℂ)}]
     have: {0,(1:ℂ)} ⊆ Set.range Rat.cast:= by
       rintro _ (rfl|rfl)
       exacts [⟨0, by simp⟩, ⟨1, by simp⟩]
-    have M_eqq: M = {0,(1:ℂ)} := by sorry
-    rw[←M_eqq] at this
     exact this
   rw[K_P_eq_K_M] at K_zero_P_eq_bot
-  rw [minpoly.map_of_isScalarTower ℚ (K_zero M), Polynomial.degree_map]
+  rw [minpoly.map_of_isScalarTower ℚ (K_zero {(0:ℂ),(1:ℂ)}), Polynomial.degree_map]
   rw [K_zero_P_eq_bot]
   exact (IntermediateField.botEquiv ℚ ℂ).symm.bijective

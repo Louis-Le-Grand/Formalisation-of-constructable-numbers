@@ -21,3 +21,10 @@ lemma conj_adjion (K : IntermediateField ℚ ℂ) [ConjClosed K] (M : Set ℂ) [
     constructor
     sorry
     sorry
+
+
+open IntermediateField
+variable (K L : IntermediateField ℚ ℂ) [Module K L]
+
+-- theorem dergree_two_eq_sqr :  FiniteDimensional.finrank K L = 2 ↔
+--     ∃ w : K, (w:ℂ)^(1/2:ℂ) ∉ K ∧ L = K⟮(w:ℂ)^(1/2:ℂ)⟯ := by sorry

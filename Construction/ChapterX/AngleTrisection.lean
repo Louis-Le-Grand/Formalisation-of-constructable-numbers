@@ -1,6 +1,7 @@
 import Construction.bestiary
 
 open Polynomial IsFractionRing
+open Construction
 
 noncomputable def H : Polynomial ℚ := X ^ 3 - (Polynomial.C (6/8) * X) - Polynomial.C (1/8)  -- x^3 - 6/8 x - 1/8
 noncomputable def H' : Polynomial ℤ := Polynomial.C 8 * X ^ 3 - Polynomial.C 6 * X - 1
@@ -141,9 +142,9 @@ lemma exp_pi_ninth : Polynomial.degree (minpoly ℚ (Real.cos ((Real.pi/3)/3): �
   have h₂: 0 = 3 := by rw[←h₀, h₁]
   contradiction
 
-lemma pi_third_not_in_M_inf (M := {⟨0,0⟩ ,⟨1,0⟩,  Complex.exp (Complex.I *Real.pi/3) }) :
-  (Complex.exp (Complex.I * (Real.pi/3)/3) : ℂ) ∉ M_inf M := by
-  apply real_component_in_M_inf
+lemma pi_third_not_in_M_inf :
+  (Complex.exp (Complex.I * (Real.pi/3)/3) : ℂ) ∉ M_inf {(0:ℂ) ,1 ,  Complex.exp (Complex.I *Real.pi/3) } := by
+  apply real_component_in_M_inf _ (by simp) (by simp)
   apply short
   simp
   intro x
@@ -155,12 +156,14 @@ lemma pi_third_not_in_M_inf (M := {⟨0,0⟩ ,⟨1,0⟩,  Complex.exp (Complex.I
       | zero => simp
       | succ x => norm_cast; rw[pow_succ]; apply not_mod_eq_imp_not_eq (n:= 2); norm_num
   convert h
+  -- deggre of Complex.exp (Complex.I *Real.pi/3) over Q is 2^i => dgree over ℚ not 2^n imolies degree over K_zero is not 2^m
   sorry
 
 variable (α : ℂ)
-lemma Angle_not_Trisectable(M := {⟨0,0⟩ ,⟨1,0⟩, Complex.exp (Complex.I * α)}) :
-  ∃ (α : ℂ), (Complex.exp (Complex.I * α/3) : ℂ) ∉ M_inf M := by
+lemma Angle_not_Trisectable :
+  ∃ (α : ℂ), (Complex.exp (Complex.I * α/3) : ℂ) ∉ M_inf {(0:ℂ) ,1, Complex.exp (Complex.I * α)} := by
   use (Real.pi/3)
-  exact pi_third_not_in_M_inf M
+  nth_rw 2 [←mul_div_assoc]
+  apply pi_third_not_in_M_inf
 
 --end constructionAngleTrisection

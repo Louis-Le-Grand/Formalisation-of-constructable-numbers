@@ -11,7 +11,7 @@ In this (temporary, unorganised) appendix I list a whole host of definitions and
 
 %3.14
 \begin{lemma}
-    \label{lem:re_im_in_L}
+    \label{re_im_in_L}
     Let $L$ be a subfield of $\mathbb{C}$, with $L = conj(L)$. For all $z = x + \imath y \in L$ we have $x, \imath y \in L$.
 \end{lemma}
 \begin{proof}
@@ -24,12 +24,12 @@ In this (temporary, unorganised) appendix I list a whole host of definitions and
 
 %3.15
 \begin{lemma}
-    \label{lem:dist_sqard_in_L}
+    \label{dist_sqard_in_L}
     Let $L$ be a subfield of $\mathbb{C}$, with $L = conj(L)$, and $z_1, z_2 \in L$.
     For $r := \|z_1-z_2\|$ we get that $r^2 \in L$.
 \end{lemma}
 \begin{proof}
-    \uses{lem:re_im_in_L}
+    \uses{re_im_in_L}
     For $z_1 = x_1 + \imath y_1$ and $z_2 = x_2 + \imath y_2$ we have
     \begin{equation*}
         r = \|z_1 - z_2\| = \sqrt{(x_1 - x_2)^2 + (y_1 - y_2)^2}
@@ -38,12 +38,12 @@ In this (temporary, unorganised) appendix I list a whole host of definitions and
     \begin{equation*}
         r^2 = (x_1 - x_2)^2 + (y_1 - y_2)^2 
     \end{equation*}
-    After applying Lemma \ref{lem:re_im_in_L} we get $r^2 \in L$.
+    After applying Lemma \ref{re_im_in_L} we get $r^2 \in L$.
 \end{proof}
 
 %3.16
 \begin{lemma}
-    \label{Lem:Intersection_line_line}
+    \label{Intersection_line_line}
     Let $L$ be a subfield of $\mathbb{C}$, with $L = conj(L)$. For $i = 1,2,3,4$ let $z_i = x_i + \imath y_i \in L$ with $z_1 \ne z_2$ and $z_3 \ne z_4$. Define
     %TODO: write in two lines
     \begin{equation*}\begin{aligned}
@@ -61,13 +61,13 @@ In this (temporary, unorganised) appendix I list a whole host of definitions and
     In this case $z \in L$.
 \end{lemma}
 \begin{proof}
-    \uses{lem:re_im_in_L}
+    \uses{re_im_in_L}
     It is clear that $z\in G_1\cap G_2$ holds if and only if ther are $\lambda, \mu \in \mathbb{R}$ such that
     \begin{equation*}
         \lambda z_1 + (1-\lambda)z_2 = \mu z_3 + (1-\mu)z_4
     \end{equation*}
     We can rewrite this as to get the desired result. %TODO: add Rewrite
-    Since $L = conj(L)$ we have $x_i, \imath y_i \in L$ \ref{lem:re_im_in_L}. 
+    Since $L = conj(L)$ we have $x_i, \imath y_i \in L$ \ref{re_im_in_L}. 
     If ther is a solution i $\mathbb{R}^2$ for $\mu, \lambda$, then ther is a soltion in $L^2$.
     %TODO: add more
     So $\lambda$ and therefore $z$ is in $L$.
@@ -75,7 +75,7 @@ In this (temporary, unorganised) appendix I list a whole host of definitions and
 
 %3.17
 \begin{lemma}
-    \label{Lem:Intersection_line_circle}
+    \label{Intersection_line_circle}
     Let $L$ be a subfield of $\mathbb{C}$, with $L = conj(L)$. For $i = 1,2,3$ let $z_i = x_i + \imath y_i \in L$ with $z_1 \ne z_2$, and let $r > 0$ in $\mathbb{R}$ with $r^2 \in L$. Define
     \begin{equation*}\begin{aligned}
         G := \{\lambda z_1 + (1-\lambda)z_2 \mid \lambda \in \mathbb{R}\},\\
@@ -101,7 +101,7 @@ In this (temporary, unorganised) appendix I list a whole host of definitions and
 
 %3.18
 \begin{lemma}
-    \label{Lem:Intersection_circle_circle}
+    \label{Intersection_circle_circle}
     Let $L$ be a subfield of $\mathbb{C}$, with $L = conj(L)$. For $i = 1,2 $ let $z_i = x_i + \imath y_i \in L$ with $z_1 \ne z_2$ and let $r_i > 0$ in $\mathbb{R}$ with $r_i^2 \in L$. Define
     \begin{equation*} \begin{aligned}
         C_1 := \{z = x + \imath y \in \mathbb{C} \mid \|z - z_1\| = r_1\},\\
@@ -123,7 +123,7 @@ In this (temporary, unorganised) appendix I list a whole host of definitions and
 %    We know that $K_0$ is a field and $\mathcal{M} \subseteq K_0\subseteq \mathcal{M}_{\infty} \subseteq \mathbb{C}$.
 %\end{remark}
 \begin{theorem}
-\label{thm:degree_of_constructable_points}
+\label{degree_of_constructable_points}
     Let $\mathcal{M}\subseteq\mathbb{C}$ with $0,1 \in \mathcal{M}$ and $K_0 := \mathbb{Q}(\mathcal{M}\cup \overline{\mathcal{M}})$.
     Then for $z \in \mathcal{M}_{\infty}$ is equvalent:
     \begin{enumerate}
@@ -136,9 +136,9 @@ In this (temporary, unorganised) appendix I list a whole host of definitions and
     In this case $[K_0(z):K_0] = 2^m$ for some $0 \le m \le n$.
 \end{theorem}
 \begin{remark}
-    Theorem \ref{thm:degree_of_constructable_points} tells us that it is sufficient to show that $[K_0(z):K_0] \ne 2^m$ for some $0 \le m $, witch we will use to show that $\sqrt[3]{2} \notin \mathcal{M}_{\infty}$ and $\exp(\textbf{i} \alpha/3) \notin \mathcal{M}_{\infty}$ for some $\alpha$.
+    Theorem \ref{degree_of_constructable_points} tells us that it is sufficient to show that $[K_0(z):K_0] \ne 2^m$ for some $0 \le m $, witch we will use to show that $\sqrt[3]{2} \notin \mathcal{M}_{\infty}$ and $\exp(\textbf{i} \alpha/3) \notin \mathcal{M}_{\infty}$ for some $\alpha$.
 \end{remark}
-\begin{proof}[Proof of Theorem \ref{thm:degree_of_constructable_points}]
+\begin{proof}[Proof of Theorem \ref{degree_of_constructable_points}]
     TODO %TODO
 \end{proof}
 
@@ -146,7 +146,7 @@ In this (temporary, unorganised) appendix I list a whole host of definitions and
 
 %2.3.4
 \begin{lemma}[Mitpiont of two complex numbers]
-    \label{lem:construction_midpoint}
+    \label{construction_midpoint}
     For $z_1, z_2 \in M_{\infty}$ is $\frac{z_1 + z_2}{2} \in M_{\infty}$.
 \end{lemma}
 %TODO: add proof, and Construction Idea
@@ -162,49 +162,49 @@ In this (temporary, unorganised) appendix I list a whole host of definitions and
 %2.3.6
 %TODO: maybe write as \exp(\imath \alpha) + \exp(\imath \beta) = \exp(\imath \gamma) \in M_{\infty}
 \begin{lemma}[Addition of Angles]
-    \label{lem:construction_add_angle}
+    \label{construction_add_angle}
     For two given angle $\alpha$ (given by two streches $[a,b]$ and $[c,d]$) and $\beta$ (given by two streches $[e,f]$ and $[g,h]$), with $ a,b,c,d,e,f,g,h \in M_{\infty}$, the addition of the angles is constructable.
 \end{lemma}
 %TODO: add proof, and Construction Idea, 
 
 %2.3.7
 \begin{lemma}[multiplication of positive real numbers]
-    \label{lem:construction_mult_pos_real}
+    \label{construction_mult_pos_real}
     For $r_1, r_2 > 0 \in \mathbb{R}\cup M_{\infty}$ is $r_1 r_2 \in M_{\infty}$.
 \end{lemma}
 %TODO: add proof, and Construction Idea
 
 %2.3.8
 \begin{lemma}[Inverse of positive real numbers]
-    \label{lem:construction_inv_pos_real}
+    \label{construction_inv_pos_real}
     For $r > 0\in \mathbb{R}\cup M_{\infty}$ is $r^{-1} \in M_{\infty}$.
 \end{lemma}
 %TODO: add proof, and Construction Idea
 
 %2.3.9
 \begin{lemma}[Root of positive real numbers]
-    \label{lem:construction_sqrt_pos_real}
+    \label{construction_sqrt_pos_real}
     For $r > 0 \in \mathbb{R}\cup M_{\infty}$ is $\sqrt{r} \in M_{\infty}$.
 \end{lemma}
 %TODO: add proof, and Construction Idea
 
 %2.3.10
 \begin{lemma}[Polarkoordinates of complex numbers]
-    \label{lem:construction_polar}
+    \label{construction_polar}
     For $z = r \exp(\imath \alpha) \in M_{\infty}$ is $r, \allowbreak \exp(\imath \alpha) \in M_{\infty}$.
 \end{lemma}
 %TODO: add proof, and Construction Idea
 
 %2.3.11
 \begin{lemma}[Real and Imaginary part of complex numbers]
-    \label{lem:construction_re_im}
+    \label{construction_re_im}
     For $0 \ne z = x + \imath y \in M_{\infty}$ is $x, \imath y \in M_{\infty}$.
 \end{lemma}
 %TODO: add proof, and Construction Idea
 
 %2.3.12
 \begin{lemma}[Construction of $\imath$]
-    \label{lem:construction_imath}
+    \label{construction_imath}
     $\imath \in M_{\infty}$.
 \end{lemma}
 %TODO: add proof, and Construction Idea

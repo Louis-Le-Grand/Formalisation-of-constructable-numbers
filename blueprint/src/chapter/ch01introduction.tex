@@ -6,14 +6,14 @@ We will use $\mathbb{C}$ as plane of drawing and $\mathcal{M} \subset \mathbb{C}
 
 \begin{definition}[Line]
     \label{def:line}
-    \lean{line}
+    \lean{Construction.line}
     \leanok
     A line $l$ through two points $x,y\in\mathbb{C}$ for $x\ne y$ is defined by the set: $$l:=\{\lambda x+(1-\lambda)y\mid\lambda\in\mathbb{R}\}.$$
 \end{definition}
 
 \begin{definition}[parallel]
     \label{def:parallel}
-    \lean{parallel}
+    \lean{Construction.parallel}
     \leanok
     \uses{def:line}
     Two lines $l_1$ and $l_2$ are parallel if they have the same slope, i.e. $\exists c\in\C: l_1 = \{x + r \mid x\in l_2\}$.
@@ -21,7 +21,7 @@ We will use $\mathbb{C}$ as plane of drawing and $\mathcal{M} \subset \mathbb{C}
 
 \begin{lemma}[Parallel defined by basis]
     \label{lem:parallel_by_basis}
-    \lean{parallel_basis}
+    \lean{Construction.parallel_basis}
     \leanok
     \uses{def:line, def:parallel}
    If the basis of two lines is is moved by the same amound, i.e $l_1.z_1 - l_2.z_1 = l_1.z_2- l_2.z_2$, then they are parallel.
@@ -57,14 +57,14 @@ We will use $\mathbb{C}$ as plane of drawing and $\mathcal{M} \subset \mathbb{C}
 
 \begin{definition}[Circle]
     \label{def:circle}
-    \lean{circle}
+    \lean{Construction.circle}
     \leanok
     A circle $c$ with center $z\in\mathbb{C}$ and radius $r\in\mathbb{R}_{\ge 0}$ is defined by the set: $$c:=\{z\in\mathbb{C} \mid\|z-c\|=r\}.$$
 \end{definition}
 
 \begin{definition}[Set of lines]
     \label{def:set_of_lines}
-    \lean{L}
+    \lean{Construction.L}
     \leanok
     \uses{def:line}
     $\mathcal{L(M)}$ is the set of all real straight lines $l$, with $| l\cap \mathcal{M} |\ge 2$. As set this is:
@@ -75,7 +75,7 @@ We will use $\mathbb{C}$ as plane of drawing and $\mathcal{M} \subset \mathbb{C}
 
 \begin{definition}[Set of circles]
     \label{def:set_of_circles}
-    \lean{C}
+    \lean{Construction.C}
     \leanok
     \uses{def:circle}
     $\mathcal{C(M)}$ is the set of all circles in $\mathbb{C}$, with center in $\mathcal{M}$ and radius of $\mathcal{C}$ which is the distence of two points in $\mathcal{M}$. As equation this is:
@@ -84,7 +84,7 @@ We will use $\mathbb{C}$ as plane of drawing and $\mathcal{M} \subset \mathbb{C}
 
 \begin{definition}[Ruels to construct a point]
     \label{def:rules_to_constructed_a_point}
-    \lean{ill,ilc,icc,ICL_M}
+    \lean{Construction.ill,Construction.ilc,Construction.icc,Construction.ICL_M}
     \leanok
     \uses{def:set_of_lines, def:set_of_circles}
     We define operations that can be used to construct new points.
@@ -98,7 +98,7 @@ We will use $\mathbb{C}$ as plane of drawing and $\mathcal{M} \subset \mathbb{C}
 
 \begin{definition}[Set of constructable points]
     \label{def:set_of_constructable_points}
-    \lean{M_I,M_inf}
+    \lean{Construction.M_I,Construction.M_inf}
     \leanok
     \uses{def:rules_to_constructed_a_point}
     We define inductively the chain
@@ -713,7 +713,7 @@ Without loss of generality we can assume that $r \ge 1$. Otherwise we can use th
 \begin{proof}
     For $z = a +\imath b \in M_{\infty}$ we can write 
     $$ \sqrt{z} = \sqrt{\frac{|z|+a}{2}}+\imath \frac{b}{|b|}\sqrt{\frac{|z|-a}{2}}.$$
-    Then we can combiene the construction of a rational root \ref{lem:real_root} and the fact that multiplcation, \dots are in $M_\infty$.
+    Then we can combiene the construction of a rational root \ref{lem:pos_real_root} and the fact that multiplcation, \dots are in $M_\infty$.
 \end{proof}
 
 \begin{lemma}[Angle in $M_{\infty}$]

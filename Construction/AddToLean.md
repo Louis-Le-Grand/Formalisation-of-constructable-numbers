@@ -1,3 +1,29 @@
+# Questions
+
+## Definition
+Is it a problem that lines and circel are unic by basis?
+How would one generlise to unic by range?
+
+## Show that bot in adjion
+Show that $K$ is in $K(a)$ for all $a \in L$.
+
+## Lemma 2.14
+```lean
+theorem dergree_two_eq_sqr :  FiniteDimensional.finrank K L = 2 ↔
+    ∃ w : K, (w:ℂ)^(1/2:ℂ) ∉ K ∧ L = K⟮(w:ℂ)^(1/2:ℂ)⟯ := by sorry
+```
+
+## Print used lemmas
+
+
+## Prove by metazyktlisch?
+
+
+# TODO
+- Add $K_i$, $K_{\infty}$ and theorems about them (Not need for the construction proplems)
+- Section about conjugtion closed sets and subfields (Not need for the construction proplems)
+
+
 # A list of things that should be added to Lean
 While working with or in Lean, I have come across a number of things that I think should be added to Lean.
 

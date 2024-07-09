@@ -1,0 +1,21 @@
+\section{Conclusing}
+
+So have everything we need to construct the field of constructable numbers $\mathcal{M}_{\infty}$.
+\begin{lstlisting}
+    noncomputable def MField (M: Set ℂ)(h₀: 0 ∈ M)(h₁: 1∈ M): Subfield ℂ where
+        carrier := M_inf M
+        zero_mem' := by exact M_M_inf M h₀
+        one_mem' := by exact M_M_inf M h₁
+        add_mem' := by apply add_M_Inf M h₀
+        neg_mem' := by apply z_neg_M_inf M h₀
+        mul_mem' := by apply mul_M_inf M h₀ h₁
+        inv_mem' := by apply inv_M_inf M h₀ h₁
+\end{lstlisting}
+
+Now it is just a \verb|instance|, proven by \verb|exact?|. To get the structure of the field.
+\begin{lstlisting}
+    noncomputable instance MField_field (M: Set ℂ)(h₀: 0 ∈ M)(h₁: 1∈ M): Field (MField M h₀ h₁) := by
+        exact SubfieldClass.toField (Subfield ℂ) (MField M h₀ h₁)
+\end{lstlisting}
+
+This can be used to proof that $x\in \mathbb{C}$ is in $\mathcal{M}_{\infty}$ if and only if the degree of $x$ over $\mathbb{Q}(M)$ is of the form $2^n$ for some $n\in \mathbb{N}$.

@@ -1,0 +1,67 @@
+\section{Zero and one in $\mathcal{M}_{\infty}$}
+And since we assume that $\mathcal{M}$ contains the points $0$ and $1$ we can fill in the next two blank, 
+after proving that $\mathcal{M} \subseteq \mathcal{M}_{\infty}$.
+
+\begin{lemma}[$\mathcal{M}$ in $\mathcal{M}_i$]
+    \label{lem:M_in_Mi}
+    The set $\mathcal{M}$ is in $\mathcal{M}_i$, i.e. $$\mathcal{M} \subseteq \mathcal{M}_i.$$
+\end{lemma}
+\begin{proof}
+    Combeing the fact that $\mathcal{M}_0 = \mathcal{M}$ \ref{def:set_of_constructable_points} and the monotonity of $\mathcal{M}_i$ wich sollos by $\mathcal{M} \subset \mathcal{ICL(M)}$.
+\end{proof}
+
+\begin{lstlisting}
+    lemma M_in_ICL_M (M : Set ℂ) : M ⊆ ICL_M M := by
+        unfold ICL_M
+        intro x hx 
+        left; left; left
+        exact hx
+
+    lemma M_I_Monotone (M : Set ℂ) : ∀n, M_I M n ⊆ M_I M (n+1) := by
+        intro n
+        apply M_in_ICL_M
+
+    lemma M_in_M_I (M : Set ℂ) : ∀n, M ⊆ M_I M n := by
+        intro n
+        induction n
+        simp only [M_I]
+        exact fun ⦃a⦄ a => a
+        case succ n hn =>
+          apply le_trans hn
+          apply M_I_Monotone
+\end{lstlisting}
+
+\begin{lemma}[$\mathcal{M}_i$ in $\mathcal{M}_{\infty}$]
+
+    The set $\mathcal{M}_i$ is in $\mathcal{M}_{\infty}$, i.e. $$\mathcal{M}_i \subseteq \mathcal{M}_{\infty}.$$
+\end{lemma}
+\begin{proof}
+    Follows from the definition of $\mathcal{M}_{\infty}$.
+\end{proof}
+
+\begin{lstlisting}
+    lemma M_I_in_M_inf (M : Set ℂ)(m: ℕ): M_I M m ⊆ M_inf M := by
+        unfold M_inf
+        exact Set.subset_iUnion_of_subset m fun ⦃a⦄ a => a
+\end{lstlisting}
+
+\begin{lemma}[$\mathcal{M}$ in $\mathcal{M}_{\infty}$]
+
+    The set $\mathcal{M}$ is in $\mathcal{M}_{\infty}$.
+\end{lemma}
+\begin{proof}
+    \uses{lem:M_i_in_M_inf, lem:M_in_Mi}
+    Combeing $\mathcal{M} \subseteq \mathcal{M}_i$ \ref{lem:M_in_Mi} and $\mathcal{M}_i \subseteq \mathcal{M}_{\infty}$ \ref{lem:M_i_in_M_inf} we get the result.
+\end{proof}
+
+\begin{lstlisting}
+    lemma M_M_inf (M : Set ℂ) : M ⊆ M_inf M := by apply le_trans (M_in_M_I M 0) (M_I_in_M_inf M 0)
+\end{lstlisting}
+
+So now we have:
+\begin{lstlisting}
+    noncomputable def MField (M: Set ℂ)(h₀: 0 ∈ M)(h₁: 1∈ M): Subfield ℂ := {
+        carrier := M_inf M
+        zero_mem' := by exact M_M_inf M h₀
+        one_mem' := by exact M_M_inf M h₁
+\end{lstlisting}

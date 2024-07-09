@@ -1,0 +1,23 @@
+This talk is about formalising the proof that the set of all constructible points $\mathcal{M}_{\infty}$ forms a field. 
+This is the first step needed to solve anicient construction problems such as squaring the circle, doubling the cube, and trisecting an angle. 
+$\mathcal{M}_{\infty}$ is a subset of the complex numbers $\mathbb{C}$, so we just need to show that $\mathcal{M}_{\infty}$ is a subfield of $\mathbb{C}$. 
+In lean we do this by defining a structure on $\mathcal{M}_{\infty}$.
+
+\begin{lstlisting}
+    noncomputable def MFinf : Subfield ℂ := {
+    carrier := _
+    zero_mem' := _
+    one_mem' := _
+    add_mem' := _
+    neg_mem' := _
+    mul_mem' := _
+    inv_mem' := _
+    }
+\end{lstlisting}
+
+Now we need to fill in the blanks. To do this we first need to fill in the carrier set of $\mathcal{M}_{\infty}$, 
+so we need to recall the definitions for $\mathcal{M}_{\infty}$ and state them in lean.
+
+\begin{remark}
+    The structure of the proof is based on the lecture notes of the course \emph{Einführung in die Algebra} by Prof. Dr. Jan Schröer at the University of Bonn.\cite{JAN_SCHROEER:2023}
+\end{remark}

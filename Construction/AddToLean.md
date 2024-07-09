@@ -27,6 +27,15 @@ theorem dergree_two_eq_sqr :  FiniteDimensional.finrank K L = 2 ↔
 # A list of things that should be added to Lean
 While working with or in Lean, I have come across a number of things that I think should be added to Lean.
 
+## 
+```lean
+lemma K_le_K_adjion (K : IntermediateField F E) (M : Set E) ( x : E) (hx: x ∈ K) : x ∈ IntermediateField.adjoin K M := by
+    unfold IntermediateField.adjoin
+    apply Subfield.subset_closure
+    apply Or.inl
+    simp [hx]
+```
+
 ## apply lemma with multiple arguments
 I hat a lemma whit multiple arguments, but I could not apply it with ``apply``. I had to use ``obtain`` and ``apply``. This should be possible with ``apply``. 
 ### Example

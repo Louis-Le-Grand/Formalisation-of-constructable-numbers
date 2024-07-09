@@ -1,0 +1,84 @@
+\section{Definition of $\mathcal{M}_{\infty}$}
+We start with a basic set of points $\mathcal{M} \subseteq \mathbb{C}$ in the complex plane. 
+Without loss of generality we can assume that $\mathcal{M}$ contains the points $0$ and $1$.
+Because constructing whit less than two points is trivial and we can always scale and translate the plane to get $0$ and $1$ in $\mathcal{M}$.
+
+\begin{definition}[Line]
+    \label{def:line}
+    A line $l$ through two points $x,y\in\mathbb{M}$ for $x\ne y$ is defined by the set: $$l:=\{\lambda x+(1-\lambda)y\mid\lambda\in\mathbb{R}\}.$$
+\end{definition}
+
+\begin{lstlisting}
+    structure line where
+        (z₁ z₂ : ℂ)
+
+    def line.points (l: line) : Set ℂ:= {(t : ℂ) * l.z₁ + (1-t) * l.z₂ | (t : ℝ)}
+\end{lstlisting}
+
+\begin{definition}[Circle]
+    \label{def:circle}
+    A circle $c$ with center $z\in\mathbb{C}$ and radius $r\in\mathbb{R}_{\ge 0}$ is defined by the set: $$c:=\{z\in\mathbb{C} \mid\|z-c\|=r\}.$$
+\end{definition}
+
+\begin{lstlisting}
+    structure circle where
+        (c : ℂ)
+        (r : ℝ)
+
+    def circle.points (c: circle) := Metric.sphere c.c c.r
+\end{lstlisting}
+
+
+\begin{definition}[Set of lines]
+    \label{def:set_of_lines_and_circles}
+    $\mathcal{L(M)}$ is the set of all real straight lines defined by two points in $\mathcal{M}$.\\
+    And $\mathcal{C(M)}$ is the set of all circles defined by a centre in $\mathcal{M}$ and a radius equal to the distance between two points in $\mathcal{M}$.
+\end{definition}
+
+\begin{lstlisting}
+    def set_of_lines (M : Set ℂ) : Set (line) := {l | ∃ x y ∈ M, l = line.mk x y}
+    def C (M:Set ℂ): Set circle := {c |∃ z r₁ r₂, c = {c:=z, r:=(dist r₁ r₂)} ∧ z ∈ M ∧ r₁ ∈ M ∧ r₂ ∈ M}
+\end{lstlisting}
+
+\begin{definition}[Ruels to construct a point]
+    \label{def:rules_to_constructed_a_point}
+    We define operations that can be used to construct new points.
+    \begin{enumerate}
+        \item $(ILL)$ is the cut of two lines in $\mathcal{L(M)}$.
+        \item $(ILC)$ is the cut of a line in $\mathcal{L(M)}$ and a circle in $\mathcal{C(M)}$.
+        \item $(ICC)$ is the cut of two circles in $\mathcal{C(M)}$.
+    \end{enumerate}
+    $ICL(\mathcal{M})$ is the set $\mathcal{M}$ combiened of all points that can be constructed using the operations $(ILL)$, $(ILC)$ and $(ICC)$ and $\mathcal{M}$.
+\end{definition}
+
+\begin{lstlisting}
+    def ill (M:Set ℂ): Set ℂ := { z  |∃l₁ ∈ L M, ∃ l₂ ∈ L M,  z ∈ l₁.points ∩ l₂.points}
+    def ilc (M:Set ℂ): Set ℂ := { z  |∃c ∈ C M, ∃ l ∈ L M,  z ∈ c.points ∩ l.points}
+    def icc (M:Set ℂ): Set ℂ := { z  |∃c₁ ∈ C M, ∃ c₂ ∈ C M,  z ∈ c₁.points ∩ c₂.points}
+
+    def ICL_M (M : Set ℂ) : Set ℂ := M ∪ ill M ∪ ilc M ∪ icc M
+\end{lstlisting}
+
+\begin{definition}[Set of constructable points]
+    \label{def:set_of_constructable_points}
+    We define inductively the chain
+    \begin{equation*}
+        \mathcal{M}_0 \subseteq \mathcal{M}_1 \subseteq \mathcal{M}_2 \subseteq \dots
+    \end{equation*}
+    with $\mathcal{M}_0 = \mathcal{M}$ and $\mathcal{M}_{n+1} = ICL(\mathcal{M}_n)$.\newline
+    And call $\mathcal{M}_{\infty} = \bigcup_{n \in \mathbb{N}} \mathcal{M}_n$ the set of all constructable points.
+\end{definition}
+
+\begin{lstlisting}
+    def M_I (M : Set ℂ) : ℕ → Set ℂ
+        | 0 => M
+        | (Nat.succ n) => ICL_M (M_I M n)
+
+    def M_inf (M : Set ℂ) : Set ℂ :=  ⋃ (n : ℕ), M_I M n
+\end{lstlisting}
+
+We can now fill in the firtst blank:
+\begin{lstlisting}
+    noncomputable def MFinf (M: Set ℂ) : Subfield ℂ := {
+    carrier := M_inf M
+\end{lstlisting}

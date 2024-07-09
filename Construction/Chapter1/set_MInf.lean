@@ -3,11 +3,8 @@ import Construction.Chapter1.def
 open Construction
 lemma M_in_ICL_M (M : Set ℂ) : M ⊆ ICL_M M := by
   unfold ICL_M
-  intro x
-  intro hx
-  left
-  left
-  left
+  intro x hx
+  left; left; left
   exact hx
 
 lemma M_I_Monotone (M : Set ℂ) : ∀n, M_I M n ⊆ M_I M (n+1) := by
@@ -30,7 +27,7 @@ lemma M_I_Monotone_elm' (M : Set ℂ)(n m : ℕ)(h: n ≤ m) : ∀ x, x ∈ M_I 
 lemma M_in_M_I (M : Set ℂ) : ∀n, M ⊆ M_I M n := by
   intro n
   induction n
-  simp [M_I]
+  simp only [M_I]
   exact fun ⦃a⦄ a => a
   case succ n hn =>
     apply le_trans hn

@@ -1,4 +1,5 @@
-\documentclass[12pt]{article}
+\ProvidesClass{handout}
+\LoadClassWithOptions{article}
 
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
@@ -54,24 +55,3 @@
               insert path={+(#1:#3) arc (#1:#2:#3)}
             }
           }
-
-\title{Formalization of construcactable numbers}
-\author{Ludwig Monnerjahn}
-%\date{\time}
-
-\begin{document}
-
-\maketitle
-
-\input{intro}
-\input{def}
-\input{M_in_M_inf}
-\input{construction}
-\input{Field_Minf}
-
-\bibliographystyle{plain}
-\bibliography{reference}
-
-\nocite{*}
-
-\end{document}

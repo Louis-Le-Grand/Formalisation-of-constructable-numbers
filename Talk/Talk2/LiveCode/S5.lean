@@ -13,13 +13,10 @@ lemma add_M_Inf (M: Set ℂ) (h₀: (0:ℂ)∈ M) (z₁ z₂ : ℂ) (hz₁ : z�
   let c₁ : Construction.circle := {c := z₁, r := (dist 0 z₂)}
   let c₂ : Construction.circle := {c := z₂, r := (dist 0 z₁)}
   have hc₁ : c₁ ∈ C (M_inf M) := by
-    use z₁, 0, z₂
-    refine ⟨?_, (by exact hz₁), (by exact M_M_inf M h₀), (by exact hz₂)⟩
+    refine ⟨z₁, 0, z₂, ?_, hz₁,M_M_inf M h₀, hz₂⟩
     simp [c₁]
   have hc₂ : c₂ ∈ C (M_inf M) := by
-    use z₂, 0, z₁
-    refine ⟨?_, (by exact hz₂), (by exact M_M_inf M h₀), (by exact hz₁)⟩
+    refine ⟨z₂, 0, z₁, ?_,hz₂,M_M_inf M h₀,hz₁⟩
     simp [c₂]
-  apply icc_M_inf M
-  refine ⟨c₁, (by exact hc₁), c₂, (by exact hc₂), ?_⟩
+  refine icc_M_inf M ⟨c₁,hc₁, c₂,hc₂, ?_⟩
   simp [circle.points, Set.mem_inter_iff]

@@ -17,10 +17,8 @@ structure M where
   (M_1 : 1 ∈ M)
  -/
 
-open Construction
-open Polynomial
-open FiniteDimensional Polynomial
-open scoped Classical Polynomial
+open Construction Polynomial FiniteDimensional
+open scoped Classical
 --https://leanprover.zulipchat.com/#narrow/stream/113489-new-members/topic/Polynomial.20irreducible/near/412616130
 theorem irreducible_iff_lt_natDegree_lt {R} [CommSemiring R] [NoZeroDivisors R]
     {p : R[X]} (hp : p.Monic) (hp1 : p ≠ 1) :

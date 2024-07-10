@@ -62,8 +62,9 @@ lemma M_M_inf (M : Set ℂ) : M ⊆ M_inf M := by
 
 So now we have:
 \begin{lstlisting}
-    noncomputable def MField (M: Set ℂ)(h₀: 0 ∈ M)(h₁: 1∈ M): Subfield ℂ := {
+    noncomputable def MField (M: Set ℂ)(h₀: 0 ∈ M)(h₁: 1∈ M): Subfield ℂ where
         carrier := M_inf M
         zero_mem' := by exact M_M_inf M h₀
         one_mem' := by exact M_M_inf M h₁
+        ...
 \end{lstlisting}

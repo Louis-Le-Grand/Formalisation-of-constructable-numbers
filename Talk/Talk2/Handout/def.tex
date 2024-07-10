@@ -78,6 +78,7 @@ def ICL_M (M : Set ℂ) : Set ℂ := M ∪ ill M ∪ ilc M ∪ icc M
 
 We can now fill in the firtst blank:
 \begin{lstlisting}
-    noncomputable def MFinf (M: Set ℂ) : Subfield ℂ := {
-    carrier := M_inf M
+    noncomputable def MFinf (M: Set ℂ) : Subfield ℂ where
+        carrier := M_inf M
+        ...
 \end{lstlisting}

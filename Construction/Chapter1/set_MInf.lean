@@ -148,7 +148,7 @@ lemma ill_M_inf (M: Set ℂ): ill (M_inf M) ⊆ M_inf M := by
       constructor
       . apply hl₂
         simp_all only [Set.mem_inter_iff, le_max_iff, le_refl, or_true, n]
-      simp_all only [Set.mem_inter_iff, and_self]
+      simp_all only [Set.mem_inter_iff, ne_eq, and_self, not_false_eq_true]
   obtain ⟨n, hzn⟩ := zILL
   apply M_I_in_M_inf_elm M z n.succ
   unfold M_I ICL_M
@@ -210,7 +210,7 @@ lemma icc_M_inf (M: Set ℂ): icc (M_inf M) ⊆ M_inf M := by
     constructor
     . apply hc₂
       simp_all only [Set.mem_inter_iff, le_max_iff, le_refl, or_true, n]
-    simp_all only [Set.mem_inter_iff, and_self]
+    simp_all only [Set.mem_inter_iff, ne_eq, and_self, not_false_eq_true]
   obtain ⟨n, hzn⟩ := zICC
   apply M_I_in_M_inf_elm M z n.succ
   unfold M_I ICL_M

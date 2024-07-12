@@ -11,9 +11,6 @@ noncomputable def MField (M: Set ℂ)(h₀: 0 ∈ M)(h₁: 1∈ M): Subfield ℂ
   inv_mem' := by apply inv_M_inf M h₀ h₁
 }
 
-noncomputable instance MField_field (M: Set ℂ)(h₀: 0 ∈ M)(h₁: 1∈ M): Field (MField M h₀ h₁) := by
-  exact SubfieldClass.toField (Subfield ℂ) (MField M h₀ h₁)
-
 --? TODO: Add to blueprint
 lemma MField_mem (M: Set ℂ)(h₀: 0 ∈ M)(h₁: 1∈ M): ∀ x : ℂ, x ∈ MField M h₀ h₁ ↔ x ∈ M_inf M := by
   intro x

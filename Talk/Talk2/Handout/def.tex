@@ -25,13 +25,15 @@ We start with a basic set of points $\mathcal{M} \subseteq \mathbb{C}$ in the co
         (r : ℝ)
 
     def circle.points (c: circle) := Metric.sphere c.c c.r
+    noncomputable def circle.points' (c: circle) := 
+        (⟨c.c, c.r⟩ : EuclideanGeometry.Sphere ℂ)
 \end{lstlisting}
 
 
 \begin{definition}[Set of lines and circles]
     \label{def:set_of_lines_and_circles}
     $\mathcal{L(M)}$ is the set of all real straight lines defined by two points in $\mathcal{M}$.\\
-    And $\mathcal{C(M)}$ is the set of all circles defined by a centre in $\mathcal{M}$ and a radius equal to the distance between two points in $\mathcal{M}$.
+    And $\mathcal{C(M)}$ is the set of all circles defined by a center in $\mathcal{M}$ and a radius equal to the distance between two points in $\mathcal{M}$.
 \end{definition}
 
 \begin{lstlisting}
@@ -39,7 +41,7 @@ def L (M:Set ℂ): Set line := {l |∃ z₁ z₂, l = {z₁ := z₁, z₂ := z�
 def C (M:Set ℂ): Set circle := {c |∃ z r₁ r₂, c = {c:=z, r:=(dist r₁ r₂)} ∧ z ∈ M ∧ r₁ ∈ M ∧ r₂ ∈ M}
 \end{lstlisting}
 
-\begin{definition}[Ruels to construct a point]
+\begin{definition}[Rules to construct a point]
     \label{def:rules_to_constructed_a_point}
     We define operations that can be used to construct new points.
     \begin{enumerate}
@@ -47,18 +49,18 @@ def C (M:Set ℂ): Set circle := {c |∃ z r₁ r₂, c = {c:=z, r:=(dist r₁ r
         \item $(ILC)$ is the intersection of a line in $\mathcal{L(M)}$ and a circle in $\mathcal{C(M)}$.
         \item $(ICC)$ is the intersection of two different circles in $\mathcal{C(M)}$.
     \end{enumerate}
-    $ICL(\mathcal{M})$ is the set $\mathcal{M}$ combiened of all points that can be constructed using the operations $(ILL)$, $(ILC)$ and $(ICC)$ and $\mathcal{M}$.
+    $ICL(\mathcal{M})$ is the set $\mathcal{M}$ combined with all points that can be constructed using the operations $(ILL)$, $(ILC)$ and $(ICC)$.
 \end{definition}
 
 \begin{lstlisting}
-def ill (M:Set ℂ): Set ℂ := { z  |∃l₁ ∈ L M, ∃ l₂ ∈ L M,  z ∈ l₁.points ∩ l₂.points}
+def ill (M:Set ℂ): Set ℂ := { z  |∃l₁ ∈ L M, ∃ l₂ ∈ L M,  z ∈ l₁.points ∩ l₂.points ∧ l₁.points ≠ l₂.points}
 def ilc (M:Set ℂ): Set ℂ := { z  |∃c ∈ C M, ∃ l ∈ L M,  z ∈ c.points ∩ l.points}
-def icc (M:Set ℂ): Set ℂ := { z  |∃c₁ ∈ C M, ∃ c₂ ∈ C M,  z ∈ c₁.points ∩ c₂.points}
+def icc (M:Set ℂ): Set ℂ := { z  |∃c₁ ∈ C M, ∃ c₂ ∈ C M,  z ∈ c₁.points ∩ c₂.points ∧ c₁.points' ≠ c₂.points'}    
 
 def ICL_M (M : Set ℂ) : Set ℂ := M ∪ ill M ∪ ilc M ∪ icc M
 \end{lstlisting}
 
-\begin{definition}[Set of constructable points]
+\begin{definition}[Set of constructible points]
     \label{def:set_of_constructable_points}
     We define inductively the chain
     \begin{equation*}
@@ -76,7 +78,7 @@ def ICL_M (M : Set ℂ) : Set ℂ := M ∪ ill M ∪ ilc M ∪ icc M
     def M_inf (M : Set ℂ) : Set ℂ :=  ⋃ (n : ℕ), M_I M n
 \end{lstlisting}
 
-We can now fill in the firtst blank:
+We can now fill in the first blank:
 \begin{lstlisting}
     noncomputable def MFinf (M: Set ℂ) : Subfield ℂ where
         carrier := M_inf M

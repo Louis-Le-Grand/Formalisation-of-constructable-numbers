@@ -1,8 +1,9 @@
-\section{Conclusing}
+\section{Conclusion}
 
-So have everything we need to construct the field of constructable numbers $\mathcal{M}_{\infty}$.
+So have everything we need to construct the field of constructible numbers $\mathcal{M}_{\infty}$.
 \begin{lstlisting}
-    noncomputable def MField (M: Set ℂ)(h₀: 0 ∈ M)(h₁: 1∈ M): Subfield ℂ where
+    noncomputable def MField (M: Set ℂ)(h₀: 0 ∈ M)(h₁: 1∈ M):
+            Subfield ℂ where
         carrier := M_inf M
         zero_mem' := by exact M_M_inf M h₀
         one_mem' := by exact M_M_inf M h₁
@@ -12,9 +13,10 @@ So have everything we need to construct the field of constructable numbers $\mat
         inv_mem' := by apply inv_M_inf M h₀ h₁
 \end{lstlisting}
 
-Now it is just a \verb|instance|, proven by \verb|exact?|. To get the structure of the field. Normally this would be done by \verb|infer_instance|, but I want to show the proof in this talk.
+Now it is just an \verb|instance|, proven by \verb|exact?|. To get the structure of the field. Normally this would be done by \verb|infer_instance|, but I want to show the proof in this talk.
 \begin{lstlisting}
-    noncomputable instance MField_field (M: Set ℂ)(h₀: 0 ∈ M)(h₁: 1∈ M): Field (MField M h₀ h₁) := by
+    noncomputable instance MField_field (M: Set ℂ)(h₀: 0 ∈ M)
+            (h₁: 1∈ M): Field (MField M h₀ h₁) := by
         exact SubfieldClass.toField (Subfield ℂ) (MField M h₀ h₁)
 \end{lstlisting}
 

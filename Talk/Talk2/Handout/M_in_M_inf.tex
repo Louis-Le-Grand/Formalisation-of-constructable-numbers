@@ -1,7 +1,7 @@
 \section{Zero and one in $\mathcal{M}_{\infty}$}
 Without loss of generality we can assume that $\mathcal{M}$ contains the points $0$ and $1$.
-Because constructing whit less than two points is trivial ($\mathcal{M}=ILC(\mathcal{M}$ and thefore $\mathcal{M}=\mathcal{M}_{\infty}$)) and we can always scale and translate the plane to get $0$ and $1$ in $\mathcal{M}$.
-And since we assume that $\mathcal{M}$ contains the points $0$ and $1$ we can fill in the next two blank, 
+Because constructing with less than two points is trivial ($\mathcal{M}=ILC(\mathcal{M}$ and therefore $\mathcal{M}=\mathcal{M}_{\infty}$)) and we can always scale and translate the plane to get $0$ and $1$ in $\mathcal{M}$.
+And since we assume that $\mathcal{M}$ contains the points $0$ and $1$ we can fill in the next two blanks, 
 after proving that $\mathcal{M} \subseteq \mathcal{M}_{\infty}$.
 
 \begin{lemma}[$\mathcal{M}\subseteq\mathcal{M}_i$]
@@ -9,7 +9,7 @@ after proving that $\mathcal{M} \subseteq \mathcal{M}_{\infty}$.
     The set $\mathcal{M}$ is contained in $\mathcal{M}_i$, i.e. $\mathcal{M} \subseteq \mathcal{M}_i$.
 \end{lemma}
 \begin{proof}
-    Combeing the fact that $\mathcal{M}_0 = \mathcal{M}$ \ref{def:set_of_constructable_points} and the monotonity of $\mathcal{M}_i$ wich follws by $\mathcal{M} \subset \mathcal{ICL(M)}$.
+    Combining the fact that $\mathcal{M}_0 = \mathcal{M}$ \ref{def:set_of_constructable_points} and the monotony of $\mathcal{M}_i$ which follows by $\mathcal{M} \subset \mathcal{ICL(M)}$.
 \end{proof}
 
 \begin{lstlisting}
@@ -62,7 +62,8 @@ lemma M_M_inf (M : Set ℂ) : M ⊆ M_inf M := by
 
 So now we have:
 \begin{lstlisting}
-    noncomputable def MField (M: Set ℂ)(h₀: 0 ∈ M)(h₁: 1∈ M): Subfield ℂ where
+    noncomputable def MField (M: Set ℂ)(h₀: 0 ∈ M)(h₁: 1∈ M): 
+            Subfield ℂ where
         carrier := M_inf M
         zero_mem' := by exact M_M_inf M h₀
         one_mem' := by exact M_M_inf M h₁

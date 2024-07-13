@@ -15,6 +15,9 @@ lemma ir_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (r : ℝ) (hr : ↑r
 
 lemma ab_in_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (a b :ℝ) (ha: ↑a ∈ M_inf M) (hb: ↑b ∈ M_inf M):
     ↑(a * b) ∈ M_inf M := by
+  by_cases h: a*b = 0
+  . rw[h]
+    exact M_M_inf M h₀
   let l : line := {z₁ := a+I*b-I, z₂ := I*b}
   let lr : line := {z₁ := 1, z₂ := 0}
   have hl : l ∈ L (M_inf M) := by
@@ -24,10 +27,14 @@ lemma ab_in_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (a b :ℝ) (ha: �
   have hlr : lr ∈ L (M_inf M) := by
     refine ⟨1, 0, (by simp only), M_M_inf M h₁,  M_M_inf M h₀, ?_⟩
     simp only [ne_eq, one_ne_zero, not_false_eq_true]
-  refine ill_M_inf M ⟨l,hl, lr, hlr,  ⟨b, ?_⟩, ⟨a*b, ?_⟩⟩
+  refine ill_M_inf M ⟨l,hl, lr, hlr, ⟨⟨b, ?_⟩, ⟨a*b, ?_⟩⟩, ?_ ⟩
   push_cast; ring_nf
   push_cast; ring_nf
-
+  refine line_not_eq_if'  l lr ⟨0, ⟨?_, ?_⟩⟩
+  . simp[line.points]
+  . simp[line.points, ext_iff, sub_mul, mul_sub, sub_eq_zero]
+    rw[mul_eq_zero, or_comm, Mathlib.Tactic.PushNeg.not_or_eq] at h
+    exact h
 
 lemma real_in_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (z: ℂ) (h: z ∈ M_inf M): ↑z.re ∈ M_inf M := sorry
 

@@ -16,6 +16,9 @@ import Mathlib.Geometry.Euclidean.Sphere.Basic
   - `Metric.sphere c r` is the set of points on the circle with center `c` and radius `r`
 -/
 
+
+--noncomputable def circle.points' (c: circle) := (⟨c.c, c.r⟩ : EuclideanGeometry.Sphere ℂ)
+
 /-
 # Set of lienes and circles in `M`
   - `L M` is the set of lines trough two points in `M`
@@ -33,7 +36,7 @@ def L (M:Set ℂ): Set line := sorry
 -/
 def ill (M:Set ℂ): Set ℂ := sorry
 --def ilc (M:Set ℂ): Set ℂ := { z  |∃c ∈ C M, ∃ l ∈ L M,  z ∈ c.points ∩ l.points}
---def icc (M:Set ℂ): Set ℂ := { z  |∃c₁ ∈ C M, ∃ c₂ ∈ C M,  z ∈ c₁.points ∩ c₂.points}
+--def icc (M:Set ℂ): Set ℂ := { z  |∃c₁ ∈ C M, ∃ c₂ ∈ C M,  z ∈ c₁.points ∩ c₂.points ∧ c₁.points' ≠ c₂.points'}
 
 def ICL_M (M : Set ℂ) : Set ℂ := sorry
 

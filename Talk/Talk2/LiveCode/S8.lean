@@ -31,10 +31,13 @@ lemma ainv_in_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (a :ℝ) (ha: �
   have hlr : lr ∈ L (M_inf M) := by
     refine ⟨1, 0, (by simp only), M_M_inf M h₁, M_M_inf M h₀, ?_⟩
     simp
-  refine ill_M_inf M ⟨l, hl, lr, hlr, ⟨a⁻¹, ?_⟩ , ⟨a⁻¹, ?_⟩⟩
+  refine ill_M_inf M ⟨l, hl, lr, hlr, ⟨⟨a⁻¹, ?_⟩ , ⟨a⁻¹, ?_⟩⟩, ?_⟩
   . ring_nf
     simp [h, mul_rotate]
-  simp only [ofReal_inv, mul_one, mul_zero, add_zero]
+  . simp only [ofReal_inv, mul_one, mul_zero, add_zero]
+  refine line_not_eq_if' l lr ⟨0, ⟨?_, ?_⟩⟩
+  . simp[line.points]
+  . simp[line.points, ext_iff]
 
 -- Helper lemma for the next lemma
 lemma z_inv_eq (z:ℂ) (hz: z ≠ 0): z⁻¹ = z.re / (z.re^2+z.im^2)-(z.im/ (z.re^2+z.im^2) )*I := sorry

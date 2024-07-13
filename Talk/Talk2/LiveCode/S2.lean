@@ -1,6 +1,6 @@
-import Mathlib.Algebra.Field.Subfield
-import MAthlib.Data.Complex.Basic
---import Construction.Talk.Talk2.LiveCode.S1
+import Construction.Chapter1.def
+
+open Construction
 
 /-
 # Now we can fill in the carrier

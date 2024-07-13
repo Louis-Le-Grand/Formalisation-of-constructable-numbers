@@ -53,6 +53,15 @@ structure circle where
   (r : ℝ)
 
 def circle.points (c: circle) := Metric.sphere c.c c.r
+noncomputable def circle.points' (c: circle) := (⟨c.c, c.r⟩ : EuclideanGeometry.Sphere ℂ)
+
+lemma circle_points_eq (c: circle) : c.points = c.points' := by
+  simp only [circle.points, circle.points']
+
+lemma circle_not_eq_iff {c₁ c₂ : Construction.circle} (h: c₁.c ≠ c₂.c): c₁.points' ≠ c₂.points' := by
+  rw[@EuclideanGeometry.Sphere.ne_iff ℂ _ c₁.points' c₂.points']
+  left
+  exact h
 
 
 def L (M:Set ℂ): Set line := {l |∃ z₁ z₂, l = {z₁ := z₁, z₂ := z₂} ∧ z₁ ∈  M ∧ z₂ ∈ M ∧ z₁ ≠ z₂}
@@ -83,7 +92,7 @@ lemma l_in_L_M_imp' (M:Set ℂ)(l: line) (hl: l ∈ L M ): l.z₁ ≠ l.z₂ := 
 
 def ill (M:Set ℂ): Set ℂ := { z  |∃l₁ ∈ L M, ∃ l₂ ∈ L M,  z ∈ l₁.points ∩ l₂.points ∧ l₁.points ≠ l₂.points}
 def ilc (M:Set ℂ): Set ℂ := { z  |∃c ∈ C M, ∃ l ∈ L M,  z ∈ c.points ∩ l.points}
-def icc (M:Set ℂ): Set ℂ := { z  |∃c₁ ∈ C M, ∃ c₂ ∈ C M,  z ∈ c₁.points ∩ c₂.points ∧ c₁.points ≠ c₂.points}
+def icc (M:Set ℂ): Set ℂ := { z  |∃c₁ ∈ C M, ∃ c₂ ∈ C M,  z ∈ c₁.points ∩ c₂.points ∧ c₁.points' ≠ c₂.points'}
 
 
 def ICL_M (M : Set ℂ) : Set ℂ := M ∪ ill M ∪ ilc M ∪ icc M

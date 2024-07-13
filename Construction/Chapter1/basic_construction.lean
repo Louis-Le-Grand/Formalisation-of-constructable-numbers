@@ -51,8 +51,53 @@ lemma z_neg_M_inf (M: Set ℂ) (h₀: (0:ℂ)∈ M) (z : ℂ) (hz : z ∈ (M_inf
   . exact hc
   . use l
 
+
 lemma add_M_Inf (M: Set ℂ) (h₀: (0:ℂ)∈ M) (z₁ z₂ : ℂ) (hz₁ : z₁ ∈ (M_inf M)) (hz₂ : z₂ ∈ (M_inf M)):
      z₁ + z₂ ∈ (M_inf M) := by
+  by_cases h: (z₁ = z₂)
+  by_cases hz₁0: (z₁ = 0)
+  . simp[hz₁0]
+    exact hz₂
+  . let c: Construction.circle := {c := z₁, r := (dist 0 z₁)}
+    let l: line := {z₁ := z₁, z₂ := 0}
+    have hc: c ∈ C (M_inf M) := by
+      rw[c_in_C_M]
+      use z₁
+      use 0
+      use z₁
+      constructor
+      . simp_all only [dist_zero_left, Complex.norm_eq_abs, c]
+      constructor
+      . exact hz₁
+      constructor
+      . exact M_M_inf M h₀
+      exact hz₁
+    have hl: l ∈ L (M_inf M) := by
+      unfold L
+      use z₁
+      use 0
+      constructor
+      . simp
+      constructor
+      . exact hz₁
+      constructor
+      . exact M_M_inf M h₀
+      . exact hz₁0
+    apply ilc_M_inf M
+    unfold ilc
+    rw [Set.mem_setOf]
+    use c
+    constructor
+    . exact hc
+    use l
+    constructor
+    . exact hl
+    rw [Set.mem_inter_iff]
+    constructor
+    . simp only [h, circle.points, dist_zero_left, Complex.norm_eq_abs, mem_sphere_iff_norm,
+      add_sub_cancel_right]
+    . use 2
+      simp only [Complex.ofReal_ofNat, h, two_mul, mul_zero, add_zero]
   let c₁ : Construction.circle := {c := z₁, r := (dist 0 z₂)}
   let c₂ : Construction.circle := {c := z₂, r := (dist 0 z₁)}
   have hc₁ : c₁ ∈ C (M_inf M) := by
@@ -89,6 +134,11 @@ lemma add_M_Inf (M: Set ℂ) (h₀: (0:ℂ)∈ M) (z₁ z₂ : ℂ) (hz₁ : z�
   constructor
   . exact hc₁
   use c₂
+  constructor
+  . exact hc₂
+  constructor
+  . exact hcc
+  exact circle_not_eq_iff  (by exact h)
 
 lemma sub_M_Inf (M: Set ℂ) (h₀: (0:ℂ)∈ M) (z₁ z₂ : ℂ) (hz₁ : z₁ ∈ (M_inf M)) (hz₂ : z₂ ∈ (M_inf M)):
      z₁ - z₂ ∈ (M_inf M) := by
@@ -179,6 +229,11 @@ lemma conj_M_Inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (z : ℂ) (hz : z 
   constructor
   . exact hc₀
   use c₁
+  constructor
+  . exact hc₁
+  constructor
+  . exact hcc
+  exact circle_not_eq_iff  (by simp only [ne_eq, zero_ne_one, not_false_eq_true])
 
 open Complex
 
@@ -261,8 +316,11 @@ lemma ir_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (r : ℝ) (hr : ↑r
       . exact hc₂
       rw [Set.mem_inter_iff]
       constructor
-      . exact hz₁
-      exact hz₃
+      . constructor
+        exact hz₁
+        exact hz₃
+      exact circle_not_eq_iff  (by simp only [ne_eq, eq_neg_self_iff, one_ne_zero,
+        not_false_eq_true])
     constructor
     . apply icc_M_inf M
       unfold icc
@@ -275,8 +333,11 @@ lemma ir_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (r : ℝ) (hr : ↑r
       . exact hc₂
       rw [Set.mem_inter_iff]
       constructor
-      . exact hz₂
-      exact hz₄
+      . constructor
+        exact hz₂
+        exact hz₄
+      exact circle_not_eq_iff  (by simp only [ne_eq, eq_neg_self_iff, one_ne_zero,
+        not_false_eq_true])
     simp
   have hc : c ∈ C (M_inf M) := by
     rw[c_in_C_M]
@@ -330,6 +391,9 @@ lemma real_in_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (z: ℂ) (h: z 
     simp
   rw[←hz]
   exact h
+  by_cases him: z.re = 0
+  . rw[him]
+    exact M_M_inf M h₀
   let l : line := {z₁ := z, z₂ := starRingEnd ℂ z}
   let lr : line := {z₁ := 1, z₂ := 0}
   have hl : l ∈ L (M_inf M) := by
@@ -374,8 +438,18 @@ lemma real_in_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (z: ℂ) (h: z 
     simp
     ring_nf
     simp
-  use z.re
+  simp only [line.points, mul_one, mul_zero, add_zero, ne_eq]
+  rw [Set.ext_iff, Mathlib.Tactic.PushNeg.not_forall_eq]
+  use 0
+  simp only [Set.mem_setOf_eq, ofReal_eq_zero, exists_eq, iff_true, not_exists]
+  intro x
   ring_nf
+  rw[add_comm, ←add_sub_assoc, sub_eq_zero, ext_iff]
+  by_contra cont
+  obtain ⟨cont_re, _⟩ := cont
+  simp only [add_re, conj_re, mul_re, ofReal_re, ofReal_im, zero_mul, sub_zero, conj_im, mul_neg,
+    neg_zero, add_left_eq_self] at cont_re
+  contradiction
 
 lemma i_z_imp_z_in_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (z: ℝ) (h: I * z ∈ M_inf M):
     ↑z ∈ M_inf M := by
@@ -457,17 +531,42 @@ lemma im_in_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (z: ℂ) (h: z �
     . exact hlr
     rw [Set.mem_inter_iff]
     constructor
-    . simp[line.points]
-      use (1-z.re)
+    . constructor
+      . simp[line.points]
+        use (1-z.re)
+        ring_nf
+        push_cast
+        rw[← add_sub_assoc, Ring.add_left_neg, zero_sub, neg_add_eq_sub]
+        refine sub_eq_of_eq_add' ?h.h
+        rw[mul_comm]
+        simp
+      simp[line.points]
+      use z.im
+      ring
+    simp only [line.points, mul_zero, add_zero, ne_eq]
+    rw [Set.ext_iff, Mathlib.Tactic.PushNeg.not_forall_eq]
+    by_cases hI: z.im = 0
+    . use I
+      simp only [Set.mem_setOf_eq, ne_eq, I_ne_zero, not_false_eq_true, mul_eq_right₀,
+        ofReal_eq_one, exists_eq, iff_true, not_exists]
+      intro x
       ring_nf
-      push_cast
-      rw[← add_sub_assoc, Ring.add_left_neg, zero_sub, neg_add_eq_sub]
-      refine sub_eq_of_eq_add' ?h.h
-      rw[mul_comm]
-      simp
-    simp[line.points]
-    use z.im
-    ring
+      by_contra cont
+      simp[ext_iff] at cont
+      obtain ⟨_, cont⟩ := cont
+      have : z.im ≠ 0 := by simp only [cont, ne_eq, one_ne_zero, not_false_eq_true]
+      contradiction
+    simp[line.points] at hI
+    use 0
+    simp only [Set.mem_setOf_eq, mul_eq_zero, ofReal_eq_zero, I_ne_zero, or_false, exists_eq,
+      iff_true, not_exists]
+    intro x
+    ring_nf
+    rw[ext_iff]
+    by_contra cont
+    obtain ⟨_, cont⟩ := cont
+    simp at cont
+    contradiction
   apply i_z_imp_z_in_M_inf M h₀ h₁ z.im hi
 
 lemma z_iff_re_im_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (z: ℂ): z ∈ M_inf M ↔
@@ -489,6 +588,9 @@ lemma z_iff_re_im_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (z: ℂ): z
 --TODO: use parallel_lines_M_inf, because now we have it
 lemma ab_in_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (a b :ℝ) (ha: ↑a ∈ M_inf M) (hb: ↑b ∈ M_inf M):
     ↑(a * b) ∈ M_inf M := by
+  by_cases h: a * b = 0
+  . rw[h]
+    exact M_M_inf M h₀
   let l₁ : line := {z₁ := a, z₂ := I}
   let l₂ : line := {z₁ := a+I*b-I, z₂ := I*b}
   let lr : line := {z₁ := 1, z₂ := 0}
@@ -544,11 +646,28 @@ lemma ab_in_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (a b :ℝ) (ha: �
   . exact hlr
   rw [Set.mem_inter_iff]
   constructor
-  . simp[line.points]
-    use b
+  . constructor
+    . simp[line.points]
+      use b
+      ring
+    use a*b
     ring
-  use a*b
-  ring
+  simp only [line.points, mul_one, mul_zero, add_zero, ne_eq]
+  rw [Set.ext_iff, Mathlib.Tactic.PushNeg.not_forall_eq]
+  use 0
+  simp only [Set.mem_setOf_eq, ofReal_eq_zero, exists_eq, iff_true, not_exists]
+  intro x
+  ring_nf
+  rw[ext_iff]
+  by_contra cont
+  obtain ⟨cont_re, cont_im⟩ := cont
+  simp only [add_re, sub_re, mul_re, ofReal_re, ofReal_im, mul_zero, sub_zero, I_re, I_im, mul_one,
+    sub_self, zero_mul, add_zero, zero_re, mul_eq_zero, add_im, sub_im, mul_im, zero_sub, one_mul,
+    zero_add, zero_im] at cont_re cont_im
+  rw [neg_add_eq_zero] at cont_im
+  rw [cont_im] at cont_re
+  have : a * b = 0 := by simp only [mul_eq_zero]; rw[or_comm]; exact cont_re
+  contradiction
 
 lemma mul_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (a b :ℂ ) (ha: a ∈ M_inf M) (hb: b ∈ M_inf M): a * b ∈ M_inf M:= by
   refine (z_iff_re_im_M_inf M h₀ h₁ (a * b)).mpr ?_
@@ -622,14 +741,28 @@ lemma ainv_in_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (a :ℝ) (ha: �
   . exact hlr
   rw [Set.mem_inter_iff]
   constructor
-  . simp[line.points]
+  . constructor
+    . simp[line.points]
+      use a⁻¹
+      ring_nf
+      rw [mul_rotate]
+      simp[*]
+    simp[line.points]
     use a⁻¹
-    ring_nf
-    rw [mul_rotate]
-    simp[*]
-  simp[line.points]
-  use a⁻¹
-  norm_cast
+    norm_cast
+  simp only [line.points, mul_one, mul_zero, add_zero, ne_eq]
+  rw [Set.ext_iff, Mathlib.Tactic.PushNeg.not_forall_eq]
+  use 0
+  simp only [Set.mem_setOf_eq, ofReal_eq_zero, exists_eq, iff_true, not_exists]
+  intro x
+  ring_nf
+  rw[ext_iff]
+  by_contra cont
+  obtain ⟨cont_re, cont_im⟩ := cont
+  simp only [add_re, sub_re, ofReal_re, mul_re, I_re, mul_zero, ofReal_im, I_im, mul_one, sub_self,
+    zero_mul, mul_im, add_zero, sub_zero, zero_re, add_im, sub_im, zero_add, zero_sub, zero_im] at cont_re cont_im
+  rw [cont_re] at cont_im
+  simp only [zero_mul, neg_zero, zero_add, one_ne_zero] at cont_im
 
 -- Helper lemma for the next lemma
 lemma z_inv_eq (z:ℂ) (hz: z ≠ 0): z⁻¹ = z.re / (z.re^2+z.im^2)-(z.im/ (z.re^2+z.im^2) )*I:= by

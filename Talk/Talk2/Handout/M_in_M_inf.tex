@@ -9,7 +9,7 @@ after proving that $\mathcal{M} \subseteq \mathcal{M}_{\infty}$.
     The set $\mathcal{M}$ is contained in $\mathcal{M}_i$, i.e. $\mathcal{M} \subseteq \mathcal{M}_i$.
 \end{lemma}
 \begin{proof}
-    Combining the fact that $\mathcal{M}_0 = \mathcal{M}$ \ref{def:set_of_constructable_points} and the monotony of $\mathcal{M}_i$ which follows by $\mathcal{M} \subset \mathcal{ICL(M)}$.
+    Combining the fact that $\mathcal{M}_0 = \mathcal{M}$ \ref{def:set_of_constructable_points} and the monotony of $\mathcal{M}_i$ which follows from $\mathcal{M} \subset \mathcal{ICL(M)}$.
 \end{proof}
 
 \begin{lstlisting}
@@ -34,6 +34,7 @@ lemma M_in_M_I (M : Set ℂ) : ∀n, M ⊆ M_I M n := by
 \end{lstlisting}
 
 \begin{lemma}[$\mathcal{M}_i\subseteq\mathcal{M}_{\infty}$]
+    \ref{lem:M_i_in_M_inf}
     The set $\mathcal{M}_i$ is contained in $\mathcal{M}_{\infty}$, i.e. $\mathcal{M}_i \subseteq \mathcal{M}_{\infty}$.
 \end{lemma}
 
@@ -52,7 +53,7 @@ lemma M_I_in_M_inf (M : Set ℂ)(m: ℕ): M_I M m ⊆ M_inf M := by
 
 \begin{proof}
     \uses{lem:M_i_in_M_inf, lem:M_in_Mi}
-    Combeing $\mathcal{M} \subseteq \mathcal{M}_i$ \ref{lem:M_in_Mi} and $\mathcal{M}_i \subseteq \mathcal{M}_{\infty}$ \ref{lem:M_i_in_M_inf} we get the result.
+    Combining $\mathcal{M} \subseteq \mathcal{M}_i$ \ref{lem:M_in_Mi} and $\mathcal{M}_i \subseteq \mathcal{M}_{\infty}$ \ref{lem:M_i_in_M_inf} we get the result.
 \end{proof}
 
 \begin{lstlisting}
@@ -60,7 +61,7 @@ lemma M_M_inf (M : Set ℂ) : M ⊆ M_inf M := by
     apply le_trans (M_in_M_I M 0) (M_I_in_M_inf M 0)6
 \end{lstlisting}
 
-So now we have:
+By applying this, the following can be obtained:
 \begin{lstlisting}
     noncomputable def MField (M: Set ℂ)(h₀: 0 ∈ M)(h₁: 1∈ M): 
             Subfield ℂ where

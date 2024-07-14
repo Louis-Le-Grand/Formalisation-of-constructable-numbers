@@ -169,7 +169,7 @@ lemma ab_in_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (a b :ℝ)
 \begin{proof}
     \uses{lem:construction_mul, lem:construction_add, cor:construction_sub, lem:construction_real, lem:construction_imag}
     Let $z_1 = a + \imath b$ and $z_2 = c + \imath d$. Then $$z_1 \cdot z_2 = (a + \imath b) \cdot (c + \imath d) = (a \cdot c - b \cdot d) + \imath (a \cdot d + b \cdot c).$$
-    By combining the Lemmas \ref{lem:construction_add}, \ref{lem:construction_mul} with subtraction ,real and imaginary part we get that $z_1 \cdot z_2 \in M_{\infty}$.
+    By combining the Lemmas \ref{lem:construction_add}, \ref{lem:construction_mul} with subtraction, real and imaginary part we get that $z_1 \cdot z_2 \in M_{\infty}$.
 \end{proof}
 
 \begin{lstlisting}
@@ -203,7 +203,7 @@ lemma mul_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (a b :ℂ )
 This can be constructed analog to the multiplication of positive real numbers. Using the fact that $a\cdot a^{-1} = 1$. Draw a line through $1$ and $\imath a$ and a parallel line through $\imath$. The intersection of the second line with the real axis is $a^{-1}$ Fig.\ref{Fig.6}.
 \begin{proof}
     \uses{def:line, def:set_of_lines, lem:ill_M_inf, lem:construction_imath_r, cor:construction_imath, lem:construction_add, cor:construction_sub}
-    With  out loss of generality we can assume that $a \ne 0$.\\
+    Without loss of generality we can assume that $a \ne 0$.\\
     Then the proof is analog to the proof of Lemma \ref{lem:construction_mul}, we just need two lines $l = \{1-\imath a + \imath, \imath\}$ and $l_{\Re} = \{1,0\}$.\\
     That there are in $\mathcal{L(M_{\infty})}$ follows analog to the proof of Lemma \ref{lem:construction_mul}.\\ 
     So we have just to show that $a^{-1} \in l$, i.e. $\exists t: t  (1 - \imath a + \imath) + (1 - t)  I = a^{-1}$ $$t  (1 - \imath a + \imath) + (1 - t)  \imath \stackrel{t:=a^{-1}}{=}  a^{-1} - a^{-1} \imath a + a^{-1}\imath + \imath - a^{-1}\imath = a^{-1}.$$

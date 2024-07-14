@@ -1,6 +1,6 @@
 This talk is about formalising the proof that the set of all constructible points $\mathcal{M}_{\infty}$ forms a field. 
 This is the first step needed to solve ancient construction problems, such as doubling the cube and trisecting an angle. 
-$\mathcal{M}_{\infty}$ is a subset of the complex numbers $\mathbb{C}$. So, we just need to show that $\mathcal{M}_{\infty}$ is a subfield of $\mathbb{C}$. 
+$\mathcal{M}_{\infty}$ is a subset of the complex numbers $\mathbb{C}$. Therefore, it is sufficient to demonstrate that $\mathcal{M}_{\infty}$is a subfield of $\mathbb{C}$. 
 In lean we do this by defining a structure on $\mathcal{M}_{\infty}$.
 
 \begin{lstlisting}
@@ -14,5 +14,5 @@ In lean we do this by defining a structure on $\mathcal{M}_{\infty}$.
         inv_mem' := _
 \end{lstlisting}
 
-Now we need to fill in the blanks. To do this we first need to fill in the carrier set of $\mathcal{M}_{\infty}$, 
-so we need to recall the definitions for $\mathcal{M}_{\infty}$ and state them in lean.
+The next step is to complete the blanks. 
+This will entail first filling in the carrier set of $\mathcal{M}_{\infty}$. To do this, it is first necessary to recall the definitions of $\mathcal{M}_{\infty}$ and state them in lean.

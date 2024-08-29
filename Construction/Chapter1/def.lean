@@ -18,46 +18,6 @@ lemma line_not_eq_if' (l₁ l₂: line) (h: ∃ x, x ∈ l₂.points ∧ x ∉ l
   symm
   exact line_not_eq_if l₂ l₁ h
 
-def parallel (l₁ l₂ : line) := ∃ z, l₁.points = {x + z | x ∈ l₂.points}
-
---TODO: not in Blueprint
-lemma parallel_self (l : line) : parallel l l := by
-  use 0
-  simp
---TODO: not in Blueprint
-lemma parallel_symm (l₁ l₂ : line) : parallel l₁ l₂ → parallel l₂ l₁ := by
-  intro h
-  obtain ⟨z, hz⟩ := h
-  use -z
-  simp[hz]
-
-lemma parallel_basis(l₁ l₂ : line) (h: l₁.z₁ - l₂.z₁ = l₁.z₂ - l₂.z₂ ): parallel l₁ l₂  := by
-  unfold parallel
-  use l₁.z₁ - l₂.z₁
-  unfold line.points
-  ext x
-  simp
-  constructor
-  . intro hx
-    obtain ⟨t, ht⟩ := hx
-    simp only [←ht, sub_mul,←add_sub_assoc, one_mul]
-    use t
-    rw [←sub_eq_zero, ←sub_add, ←sub_sub]
-    calc ↑t * l₂.z₁ + l₂.z₂ - ↑t * l₂.z₂ + l₁.z₁ - l₂.z₁ - ↑t * l₁.z₁ - l₁.z₂ + ↑t * l₁.z₂
-     = t * l₂.z₁ - ↑t * l₂.z₂+ t * l₁.z₂ - ↑t * l₁.z₁  + l₁.z₁ - l₂.z₁  - l₁.z₂  + l₂.z₂:= by ring
-      _ = t * (l₁.z₂ - l₂.z₂  - l₁.z₁ + l₂.z₁ ) - (l₁.z₂ - l₂.z₂ - l₁.z₁ + l₂.z₁) := by ring
-      _ = t * (l₁.z₁ - l₂.z₁ - l₁.z₁ + l₂.z₁) - (l₁.z₁ - l₂.z₁ - l₁.z₁ + l₂.z₁) := by rw[←h]
-      _ = 0 := by ring
-  intro hx
-  obtain ⟨a, ha⟩ := hx
-  simp only [←ha, sub_mul,←add_sub_assoc, one_mul]
-  use a
-  rw [←sub_eq_zero, ←sub_add, ←sub_sub, ←sub_add, ←sub_sub]
-  calc _ = ↑a * l₁.z₁ - ↑a * l₁.z₂ - ↑a * l₂.z₁ + ↑a * l₂.z₂ - l₁.z₁ + l₂.z₁ + l₁.z₂ - l₂.z₂ := by ring
-    _ = a * (l₁.z₁ - l₂.z₁ - l₁.z₂ + l₂.z₂) + l₂.z₁ - l₁.z₁ + l₁.z₂ - l₂.z₂ := by ring
-    _ = a * (l₁.z₂ - l₂.z₂- l₁.z₂ + l₂.z₂) + l₂.z₁ - l₁.z₁ + l₁.z₂ - l₂.z₂ := by rw [h]
-    _ = 0 := by ring_nf; rw[←h]; ring
-
 structure circle where
   (c : ℂ)
   (r : ℝ)
@@ -112,3 +72,44 @@ def M_I (M : Set ℂ) : ℕ → Set ℂ
   | (Nat.succ n) => ICL_M (M_I M n)
 
 def M_inf (M : Set ℂ) : Set ℂ :=  ⋃ (n : ℕ), M_I M n
+
+lemma L_mono (M N : Set ℂ) (h: M ⊆ N) : Construction.L M ⊆ Construction.L N := by
+  unfold Construction.L
+  simp only [Set.iUnion_subset_iff, Set.subset_def]
+  intro l hl
+  obtain ⟨z₁, z₂, hl, hz₁, hz₂, hne⟩ := hl
+  refine ⟨z₁, z₂, hl,  h hz₁, h hz₂, hne⟩
+
+lemma C_mono (M N : Set ℂ) (h: M ⊆ N) : Construction.C M ⊆ Construction.C N := by
+  unfold Construction.C
+  simp only [Set.iUnion_subset_iff, Set.subset_def]
+  intro c hc
+  obtain ⟨z, r₁, r₂, hl, hz, hr₁, hr₂⟩ := hc
+  refine ⟨z, r₁, r₂, hl,  h hz, h hr₁, h hr₂⟩
+
+lemma ill_mono (M N : Set ℂ) (h: M ⊆ N) : ill M ⊆ ill N := by
+  unfold ill
+  simp only [Set.iUnion_subset_iff, Set.subset_def]
+  intro x hx
+  obtain ⟨l₁, hl₁, l₂, hl₂, hx, hlne⟩ := hx
+  refine ⟨l₁, ?_, l₂, ?_, hx, hlne⟩
+  apply L_mono M N h hl₁
+  apply L_mono M N h hl₂
+
+lemma ilc_mono (M N : Set ℂ) (h: M ⊆ N) : ilc M ⊆ ilc N := by
+  unfold ilc
+  simp only [Set.iUnion_subset_iff, Set.subset_def]
+  intro x hx
+  obtain ⟨c, hc, l, hl, hx, hlne⟩ := hx
+  refine ⟨c, ?_, l, ?_, hx, hlne⟩
+  apply C_mono M N h hc
+  apply L_mono M N h hl
+
+lemma icc_mono (M N : Set ℂ) (h: M ⊆ N) : icc M ⊆ icc N := by
+  unfold icc
+  simp only [Set.iUnion_subset_iff, Set.subset_def]
+  intro x hx
+  obtain ⟨c₁, hc₁, c₂, hc₂, hx, hlne⟩ := hx
+  refine ⟨c₁, ?_, c₂, ?_, hx, hlne⟩
+  apply C_mono M N h hc₁
+  apply C_mono M N h hc₂

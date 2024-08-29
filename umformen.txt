@@ -1,0 +1,1 @@
+j * x3 - j * x4 + (j * y3 * I - j * y4 * I) + (x4 - i * x1) + (i * x2- i * y1* I) + (i * y2 * I - x2) + (y4 * I - y2 * I) = j * x3 - j * x4 + (j * y3 * I - j * y4 * I) + x4 + (-(i * x1) - i * x2) + (-(i * y1* I) - i * y2 * I) + x2 + y4 * I + y2 * I

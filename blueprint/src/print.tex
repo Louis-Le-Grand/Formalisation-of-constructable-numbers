@@ -25,11 +25,14 @@
 
 \input{macros/common}
 
+\usepackage{mathtools}
 \usepackage{amsthm}
 \usepackage{etexcmds}
 \usepackage{thmtools}
 
 \input{macros/print}
+
+\newcommand{\RNum}[1]{\uppercase\expandafter{\romannumeral #1\relax}}
 
 \tikzset{
             carc/.style args={#1:#2:#3}{

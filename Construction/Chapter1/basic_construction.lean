@@ -1,4 +1,5 @@
 import Construction.Chapter1.set_MInf
+import Construction.Chapter1.line
 import Mathlib.Analysis.SpecialFunctions.Pow.Real
 import Mathlib.Analysis.SpecialFunctions.Pow.Complex
 import Mathlib.Analysis.MellinTransform
@@ -319,8 +320,7 @@ lemma ir_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (r : ℝ) (hr : ↑r
       . constructor
         exact hz₁
         exact hz₃
-      exact circle_not_eq_iff  (by simp only [ne_eq, eq_neg_self_iff, one_ne_zero,
-        not_false_eq_true])
+      exact circle_not_eq_iff  (by simp only [ne_eq, CharZero.eq_neg_self_iff, one_ne_zero, not_false_eq_true])
     constructor
     . apply icc_M_inf M
       unfold icc
@@ -336,9 +336,9 @@ lemma ir_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (r : ℝ) (hr : ↑r
       . constructor
         exact hz₂
         exact hz₄
-      exact circle_not_eq_iff  (by simp only [ne_eq, eq_neg_self_iff, one_ne_zero,
+      exact circle_not_eq_iff  (by simp only [ne_eq, CharZero.eq_neg_self_iff, one_ne_zero,
         not_false_eq_true])
-    simp
+    simp only [ne_eq, mk.injEq, CharZero.eq_neg_self_iff, Nat.ofNat_nonneg, Real.sqrt_eq_zero, OfNat.ofNat_ne_zero, and_false, not_false_eq_true]
   have hc : c ∈ C (M_inf M) := by
     rw[c_in_C_M]
     use 0
@@ -407,8 +407,8 @@ lemma real_in_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (z: ℂ) (h: z 
     constructor
     . apply conj_M_Inf M h₀ h₁ z h
     by_contra h
-    rw [ext_iff] at h
-    simp at h
+    rw [Complex.ext_iff] at h
+    simp only [conj_re, conj_im, CharZero.eq_neg_self_iff, true_and] at h
     contradiction
   have hlr : lr ∈ L (M_inf M) := by
     unfold L
@@ -434,7 +434,7 @@ lemma real_in_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (z: ℂ) (h: z 
   constructor
   . simp[line.points]
     use 1/2
-    refine ext_iff.mpr ?h.a
+    refine Complex.ext_iff.mpr ?h.a
     simp
     ring_nf
     simp
@@ -444,7 +444,7 @@ lemma real_in_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (z: ℂ) (h: z 
   simp only [Set.mem_setOf_eq, ofReal_eq_zero, exists_eq, iff_true, not_exists]
   intro x
   ring_nf
-  rw[add_comm, ←add_sub_assoc, sub_eq_zero, ext_iff]
+  rw[add_comm, ←add_sub_assoc, sub_eq_zero, Complex.ext_iff]
   by_contra cont
   obtain ⟨cont_re, _⟩ := cont
   simp only [add_re, conj_re, mul_re, ofReal_re, ofReal_im, zero_mul, sub_zero, conj_im, mul_neg,
@@ -536,10 +536,10 @@ lemma im_in_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (z: ℂ) (h: z �
         use (1-z.re)
         ring_nf
         push_cast
-        rw[← add_sub_assoc, Ring.add_left_neg, zero_sub, neg_add_eq_sub]
+        rw[← add_sub_assoc, neg_add_cancel, zero_sub, neg_add_eq_sub]
         refine sub_eq_of_eq_add' ?h.h
         rw[mul_comm]
-        simp
+        exact Eq.symm (re_add_im z)
       simp[line.points]
       use z.im
       ring
@@ -552,7 +552,7 @@ lemma im_in_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (z: ℂ) (h: z �
       intro x
       ring_nf
       by_contra cont
-      simp[ext_iff] at cont
+      simp[Complex.ext_iff] at cont
       obtain ⟨_, cont⟩ := cont
       have : z.im ≠ 0 := by simp only [cont, ne_eq, one_ne_zero, not_false_eq_true]
       contradiction
@@ -562,7 +562,7 @@ lemma im_in_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (z: ℂ) (h: z �
       iff_true, not_exists]
     intro x
     ring_nf
-    rw[ext_iff]
+    rw[Complex.ext_iff]
     by_contra cont
     obtain ⟨_, cont⟩ := cont
     simp at cont
@@ -605,7 +605,7 @@ lemma ab_in_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (a b :ℝ) (ha: �
     constructor
     . apply imath_M_inf M h₀ h₁
     by_contra h
-    rw [ext_iff] at h
+    rw [Complex.ext_iff] at h
     simp at h
   have hl₂ : l₂ ∈ L (M_inf M) := by
     unfold L
@@ -622,7 +622,7 @@ lemma ab_in_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (a b :ℝ) (ha: �
     constructor
     . exact ir_M_inf M h₀ h₁ b hb
     by_contra h
-    rw [ext_iff] at h
+    rw [Complex.ext_iff] at h
     simp at h
   have hlr : lr ∈ L (M_inf M) := by
     unfold L
@@ -658,7 +658,7 @@ lemma ab_in_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (a b :ℝ) (ha: �
   simp only [Set.mem_setOf_eq, ofReal_eq_zero, exists_eq, iff_true, not_exists]
   intro x
   ring_nf
-  rw[ext_iff]
+  rw[Complex.ext_iff]
   by_contra cont
   obtain ⟨cont_re, cont_im⟩ := cont
   simp only [add_re, sub_re, mul_re, ofReal_re, ofReal_im, mul_zero, sub_zero, I_re, I_im, mul_one,
@@ -717,7 +717,7 @@ lemma ainv_in_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (a :ℝ) (ha: �
     constructor
     . exact imath_M_inf M h₀ h₁
     by_contra h
-    rw [ext_iff] at h
+    rw [Complex.ext_iff] at h
     simp at h
   have hlr : lr ∈ L (M_inf M) := by
     unfold L
@@ -756,7 +756,7 @@ lemma ainv_in_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (a :ℝ) (ha: �
   simp only [Set.mem_setOf_eq, ofReal_eq_zero, exists_eq, iff_true, not_exists]
   intro x
   ring_nf
-  rw[ext_iff]
+  rw[Complex.ext_iff]
   by_contra cont
   obtain ⟨cont_re, cont_im⟩ := cont
   simp only [add_re, sub_re, ofReal_re, mul_re, I_re, mul_zero, ofReal_im, I_im, mul_one, sub_self,
@@ -778,7 +778,7 @@ lemma z_inv_eq (z:ℂ) (hz: z ≠ 0): z⁻¹ = z.re / (z.re^2+z.im^2)-(z.im/ (z.
       rw[pow_two, pow_two]
   _ = ((z.re - z.im *I)/ (z.re^2+z.im^2) ) := by
     have h: starRingEnd ℂ z = z.re - z.im *I := by
-      refine ((fun {z w} ↦ ext_iff.mpr) ?_).symm
+      refine ((fun {z w} ↦ Complex.ext_iff.mpr) ?_).symm
       constructor
       simp
       simp
@@ -860,7 +860,6 @@ lemma point_in_circle_pythagorean (z: ℂ) (c: Construction.circle) (hr: 0 < c.r
   constructor
   . intro h
     rw [← h, dist_eq, Real.dist_eq, Real.dist_eq, Complex.sq_abs, normSq_apply]
-    norm_cast
     rw[pow_two, pow_two, abs_sub_sq, abs_sub_sq, sub_re, sub_im,←sub_eq_zero, ←sub_sub, one_add_one_eq_two]
     ring
   . intro h
@@ -987,7 +986,7 @@ lemma one_real_root (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (r : ℝ) (hr: 
     nth_rewrite 1 [←Real.rpow_natCast]
     push_cast
     rw[←Real.rpow_mul, one_div_mul_eq_div, div_self, Real.rpow_one]
-    simp only [add_sub_cancel_right, add_right_neg]
+    simp only [add_sub_cancel_right, add_neg_cancel]
     . simp only [ne_eq, OfNat.ofNat_ne_zero, not_false_eq_true]
     . linarith
     . rw [@Int.cast_negSucc, zero_add]
@@ -1181,7 +1180,7 @@ lemma angle_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (z : ℂ) (hz: z 
 lemma exp_one (a : ℝ): exp (a * I) = 1 ↔ ∃ n : ℤ, a = n * 2 * Real.pi := by
   refine ⟨?_,?_⟩
   . intro h
-    rw [exp_mul_I, ext_iff] at h
+    rw [exp_mul_I,Complex.ext_iff] at h
     obtain ⟨hcos, hsin⟩ := h
     simp only [add_re, mul_re, I_re, mul_zero, sin_ofReal_im, I_im, mul_one, sub_self, add_zero,
       one_re, add_im, cos_ofReal_im, mul_im, zero_add, one_im] at hcos hsin
@@ -1228,7 +1227,6 @@ lemma exp_ang_neg_one (z : ℂ): exp (↑z.arg * I) = -1 ↔ z.arg = Real.pi := 
         ←mul_two Real.pi] at h₁
       nth_rewrite 3 [mul_comm] at h₁
       rw [add_comm] at h₁
-      push_cast at h₁
       rw[mul_assoc, ← one_add_mul (n:ℝ) (2 * Real.pi)] at h₁
       rw[mul_comm, ←div_lt_iff' (by linarith), zero_div,← neg_lt_iff_pos_add'] at h₁
       rw[mul_nonpos_iff] at h₂
@@ -1305,7 +1303,7 @@ lemma angle_half_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (z : ℂ) (h
 
     have : ∃ r:ℝ, (z.arg * I / 2).exp/(((z.arg * I).exp + 1) / 2) = r := by
       use ((z.arg * I / 2).exp/(((z.arg * I).exp + 1) / 2)).re
-      simp only [← div_mul, ext_iff, ofReal_re, mul_im, ofReal_im, true_and, im_ofNat, mul_zero,
+      simp only [← div_mul, Complex.ext_iff, ofReal_re, mul_im, ofReal_im, true_and, im_ofNat, mul_zero,
       re_ofNat, zero_add, mul_eq_zero, OfNat.ofNat_ne_zero, or_false]
 
       have  (a : ℝ)(h: ¬(↑a * I).exp = -1): im ((exp (a * I / 2)) / (exp (a * I) + 1)) = 0 := by
@@ -1328,7 +1326,7 @@ lemma angle_half_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (z : ℂ) (h
             _ = ((a/2).sin * ((a/2).cos^2 - 2 * (a/2).cos^2  - (a/2).sin^2 + 1)) * I := by ring_nf
             _ = ((a/2).sin * (- ((a/2).cos^2 + (a/2).sin^2) + 1)) * I := by ring_nf
             _ = ((a/2).sin * (- 1 + 1)) * I := by norm_cast; simp only [Real.cos_sq_add_sin_sq,
-              add_left_neg, mul_zero, ofReal_zero, zero_mul, Int.reduceNegSucc, Int.cast_zero]
+              neg_add_cancel, mul_zero, ofReal_zero, zero_mul, Int.reduceNegSucc, Int.cast_zero]
             _ = 0 := by ring_nf
 
         calc _ = ((↑a / 2*I).exp / ((↑a * I).exp + 1)).im := by ring_nf

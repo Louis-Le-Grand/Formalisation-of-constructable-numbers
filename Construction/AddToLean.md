@@ -1,22 +1,59 @@
 # Questions
 
-## Definition
-Is it a problem that lines and circel are unic by basis?
-How would one generlise to unic by range?
+## `aesop` 
+Can I keep `aesop` or shloud I replaces it
 
-## Show that bot in adjion
-Show that $K$ is in $K(a)$ for all $a \in L$.
+## P-Q Formel 
+Is there a way to use [Quadratic formula](https://en.wikipedia.org/wiki/Quadratic_formula)
 
-## Lemma 2.14
+I want to show that $\iota  \in L(\sqrt{(\frac{v ^ 2} {(4 * u ^ 2)} - \frac{w } {u})})$  and I have $u\cdot \iota ^ 2 + v\cdot \iota + w = 0$. My idea was 
+
+Was to defiene the function and show that the roots are some element of L $\pm\sqrt{(\frac{v ^ 2} {(4 * u ^ 2)} - \frac{w } {u})}$.
 ```lean
-theorem dergree_two_eq_sqr :  FiniteDimensional.finrank K L = 2 ↔
-    ∃ w : K, (w:ℂ)^(1/2:ℂ) ∉ K ∧ L = K⟮(w:ℂ)^(1/2:ℂ)⟯ := by sorry
+have: u ≠ 0 := by sorry
+have f_degree: degree f = 2 := by sorry
+have f_ne_zero: f ≠ 0 := by sorry
+have : ↑ι ∈ f.roots := by sorry
+have : ↑(Multiset.card (f.roots)) ≤ 2 := by sorry
+have : f.roots = { - v/(2*u) + (v ^ 2 / (4 * u ^ 2) - w / u)^(1/2:ℂ),  - v/(2*u) - (v ^ 2 / (4 * u ^ 2) - w / u)^(1/2:ℂ) } := by
+  sorry --! Here I'm Stuck
+have h: ι = - v/(2*u) + (v ^ 2 / (4 * u ^ 2) - w / u)^(1/2:ℂ) ∨ ι = - v/(2*u) - (v ^ 2 / (4 * u ^ 2) - w / u)^(1/2:ℂ) := by sorry
+cases h <;> rename_i h <;> rw[h]
+exact add_mem (div_mem (neg_mem (cast_L hv)) (mul_mem (ofNat_mem _ 2) (cast_L hu))) (IntermediateField.mem_adjoin_simple_self _ _)
+exact sub_mem (div_mem (neg_mem (cast_L hv)) (mul_mem (ofNat_mem _ 2) (cast_L hu))) (IntermediateField.mem_adjoin_simple_self _ _)
+```
+## Stuctur of BA
+What should i writte in the written part?
+- Leaninfo?
+- Missing in mathlib?
+
+## Nest Wendsday meeting?
+Can we have a meeting next wendsday?
+- Date of talk
+- final questions
+- prove layout ...
+
+<!-- 
+
+## How to use $\mathbb{Q}$ as subset of $\mathbb{C}$?
+```lean
+ lemma Rat_ConjClosed : ConjClosed {x:ℂ|∃q:ℚ, ↑q = x} where
+  equal := by simp only [conj_set, Set.mem_setOf_eq, exists_exists_eq_and, map_ratCast]
 ```
 
-## Print used lemmas
+And for proving that $K_0$ is Conjugation closed, I want to use `conj_adjion`
 
-
-## Prove by metazyktlisch?
+## How to use `restrict_scalars`?
+I have this lemma
+```lean
+lemma conj_adjion (K : IntermediateField ℚ ℂ) [ConjClosed K] (M : Set ℂ) [ConjClosed M] :
+```
+and want to use `restrict_scalars` to prove that
+```lean 
+lemma conj_adjion' (K : IntermediateField ℚ ℂ) (E : IntermediateField K ℂ) [ConjClosed E] (M : Set ℂ) [ConjClosed M] :
+    ConjClosed (IntermediateField.adjoin E M) where
+  equal := by
+``` -->
 
 
 # TODO
@@ -34,6 +71,11 @@ lemma K_le_K_adjion (K : IntermediateField F E) (M : Set E) ( x : E) (hx: x ∈ 
     apply Subfield.subset_closure
     apply Or.inl
     simp [hx]
+```
+
+## split union Fin
+```lean
+lemma split_union_fin (n m: ℕ) (α₁ : Fin n → Set ℂ) (α₂ : Fin m → Set ℂ): ⋃ i, Fin.append α₁ α₂ i = (⋃ i, α₁ i) ∪ ⋃ i, α₂ i := by
 ```
 
 ## apply lemma with multiple arguments

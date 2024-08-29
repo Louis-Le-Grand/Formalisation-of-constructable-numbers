@@ -53,24 +53,53 @@ In this (temporary, unorganised) appendix I list a whole host of definitions and
     If $G_1 \cap G_2 \ne \emptyset$ and $G_1 \ne G_2$. It is equivalent 
     \begin{itemize}
         \item $z\in G_1 \cap G_2$.
-        \item Ther are $\lambda, \mu \in \mathbb{R}$ such that 
-        $$\lambda(x_1 - x_2)+\mu(x_4-x_3) = x_4-x_2,\\
-        \lambda(\imath y_1 - \imath y_2)+\mu(\imath y_4-\imath y_3) = \imath y_4-\imath y_2,$$
-        and $z = \lambda z_1 + (1-\lambda)z_2$.
+        \item Ther are $\lambda, \mu \in \mathbb{R}$ such that:
+        \subitem - $\lambda(x_1 - x_2)+\mu(x_4-x_3) = x_4-x_2$
+        \subitem - $\lambda(\imath y_1 - \imath y_2)+\mu(\imath y_4-\imath y_3) = \imath y_4-\imath y_2$
+        \subitem - $z = \lambda z_1 + (1-\lambda)z_2$
     \end{itemize}
     In this case $z \in L$.
 \end{lemma}
 \begin{proof}
     \uses{re_im_in_L}
-    It is clear that $z\in G_1\cap G_2$ holds if and only if ther are $\lambda, \mu \in \mathbb{R}$ such that
-    \begin{equation*}
-        \lambda z_1 + (1-\lambda)z_2 = \mu z_3 + (1-\mu)z_4
-    \end{equation*}
-    We can rewrite this as to get the desired result. %TODO: add Rewrite
-    Since $L = conj(L)$ we have $x_i, \imath y_i \in L$ \ref{re_im_in_L}. 
-    If ther is a solution i $\mathbb{R}^2$ for $\mu, \lambda$, then ther is a soltion in $L^2$.
-    %TODO: add more
-    So $\lambda$ and therefore $z$ is in $L$.
+    The proof is done in two steps we show that $z \in G_1 \cap G_2$ if and only if there are $\lambda, \mu \in \mathbb{R}$ such that the equations hold. \\
+    TODO \\%TODO: add proof
+
+    Now we can show that $z \in L$.\\
+    Since we now that z is equal to $\lambda z_1 + (1-\lambda)z_2$ and $z_1, z_2 \in L$ we only have to show that $\lambda \in L$. Here for we use the equations from the first part of the proof.
+    \begin{align*}
+        \RNum{1} &&\lambda(x_1 - x_2)+\mu(x_4-x_3) &= x_4-x_2\\
+        \RNum{2} &&\lambda(\imath y_1 - \imath y_2)+\mu(\imath y_4-\imath y_3) &= \imath y_4-\imath y_2
+    \end{align*}
+    Now we solve \RNum{2} for $\mu$ 
+    \begin{align*}
+        && \lambda(\imath y_1 - \imath y_2)+\mu(\imath y_4-\imath y_3) &= \imath y_4-\imath y_2 && \mid -\lambda(\imath y_1 - \imath y_2)\\
+        &\Leftrightarrow & \mu(\imath y_4-\imath y_3) &= \imath y_4-\imath y_2 - \lambda(\imath y_1 - \imath y_2) && \mid \div \imath(y_4-y_3)\\
+        &\Leftrightarrow & \mu &= \frac{\imath y_4-\imath y_2 - \lambda(\imath y_1 - \imath y_2)}{\imath y_4-\imath y_3}\\
+       %&\Leftrightarrow & \mu(y_4-y_3) &= y_4-y_2 - \lambda(y_1 - y_2) &&\mid \div \imath(y_4-y_3)\\
+        %&\Leftrightarrow & \mu &= \frac{y_4-y_2 - \lambda(y_1 - y_2)}{y_4-y_3}\\
+    \end{align*}
+    Since we divided by $\imath (y_4-y_3)$ we need to assume that $y_4 \ne y_3$, so we need to first handel the case $y_4 = y_3$.\\
+    If $y_4 = y_3$ we have $\lambda(\imath y_1 - \imath y_2) = \imath y_4-\imath y_2$ and since $y_4 = y_3$ $y_1 \ne y_2$, because otherwise boothe Lines would be parrale to the Rael line an therefore $G_1 = G_2$ or $G_1 \cap G_2 = \varnothing$. Therefore $\lambda = \frac{\imath y_4-\imath y_2}{\imath y_1 - \imath y_2}$. Using the fact that real part and the imaginary part times $\imath$ are in $L$ \ref{re_im_in_L} we have written $\lambda$ as a fraction of two elements in $L$. Therefore $\lambda$ is in $L$, wich implies that $z = \lambda z_1 + (1-\lambda)z_2$ is in $L$.\\
+   
+    Now we insert $\mu$ in \RNum{1} and solve for $\lambda$.\\
+    \resizebox{1\linewidth}{!}{
+    \begin{minipage}{\linewidth}
+    \begin{alignat*}{3}
+        && \lambda(x_1 - x_2)+\mu(x_4-x_3) &= x_4-x_2 && \mid \RNum{1} \leftarrow \RNum{2}\\
+        &\Leftrightarrow & \lambda(x_1 - x_2)+\frac{\imath y_4-\imath y_2 - \lambda(\imath y_1 - \imath y_2)}{\imath y_4-\imath y_3}(x_4-x_3) &= x_4-x_2 && \mid \cdot (\imath y_4-\imath y_3)\\
+        &\Leftrightarrow & \lambda(x_1 - x_2)(\imath y_4-\imath y_3)+(\imath y_4-\imath y_2 - \lambda(\imath y_1 - \imath y_2))(x_4-x_3) &= (x_4-x_2)(\imath y_4-\imath y_3) && \mid - (x_1 - x_2)(\imath y_4-\imath y_3)\\
+        %&\Leftrightarrow & \lambda(y_4-y_3)(x_1 - x_2)+(y_4-y_2)(x_4-x_3) - \lambda(y_1 - y_2)(x_4-x_3) &= (x_4-x_2)(y_4-y_3) && 
+        &\Leftrightarrow & \lambda((x_1 - x_2)(\imath y_4-\imath y_3) - (\imath y_4-\imath y_2)(x_4-x_3)) &= (x_4-x_2)(\imath y_4-\imath y_3) - (\imath y_4-\imath y_2)(x_4-x_3) && \mid \div ((\imath y_4-\imath y_3)(x_1 - x_2)- (\imath y_1 - \imath y_2)(x_4-x_3))\\
+        %&\Leftrightarrow & \lambda((y_4-y_3)(x_1 - x_2)- (y_1 - y_2)(x_4-x_3)) &= (x_4-x_2)(y_4-y_3) - (y_4-y_2)(x_4-x_3) && \mid \div ((y_4-y_3)(x_1 - x_2)- (y_1 - y_2)(x_4-x_3))\\
+        &\Leftrightarrow & \lambda &= \frac{(x_4-x_2)(\imath y_4-\imath y_3) - (\imath y_4-\imath y_2)(x_4-x_3)}{(\imath y_4-\imath y_3)(x_1 - x_2)- (\imath y_1 - \imath y_2)(x_4-x_3)}\\
+    \end{alignat*}
+    \end{minipage}
+    }\\
+    We need to check that the denominator $(y_4-y_3)(x_1 - x_2)- (y_1 - y_2)(x_4-x_3)$ is not zero.
+    If would be zero we would have $(y_4-y_3)(x_1 - x_2) = (y_1 - y_2)(x_4-x_3)$, wich is equivalent to $\frac{y_4-y_3}{x_4-x_3} = \frac{y_1 - y_2}{x_1 - x_2}$. This would mean that the two lines are parralel and therefore $G_1 = G_2$ or $G_1 \cup G_2 = \varnothing$.\\
+    So we can assume that the denominator is not zero and therefore we can write $\lambda$ as a fraction of two elements in $L$. Therefore $\lambda$ is in $L$, wich implies that $z = \lambda z_1 + (1-\lambda)z_2$ is in $L$.
+
 \end{proof}
 
 %3.17
@@ -208,3 +237,60 @@ In this (temporary, unorganised) appendix I list a whole host of definitions and
     $\imath \in M_{\infty}$.
 \end{lemma}
 %TODO: add proof, and Construction Idea
+
+\section{Calssification}
+Now we want to find a critirum for a element of $\mathbb{C}$ to be constructable, i.e. to be in $\mathcal{M}_{\infty}$.
+
+\begin{theorem}
+    \label{thm:Z_in_Minf_imp}
+    For $z \in \mathbb{C}$. $z \in \mathcal{M}_{\infty}$ is equivalent to:\\
+    There is an $n\le 0$ and chain 
+    $$K_0 = L_1 \subset L_2 \subset \ldots \subset L_n \subset \mathbb{C}$$
+    of subfields of $\mathbb{C}$ so that $z \in L_n$ and 
+    $ [L_{i+1}:L_i] = 2 \quad \text{for} \quad i = 0, \ldots, n-1$.
+\end{theorem}
+
+\begin{lemma}
+    \label{lem:Z_in_Minf_imp_eq} 
+    For $z \in \mathbb{C}$. \\
+    The exists of an $n\le 0$ and chain 
+    $$K_0 = L_1 \subset L_2 \subset \ldots \subset L_n \subset \mathbb{C}$$
+    of subfields of $\mathbb{C}$ so that $z \in L_n$ and 
+    $ [L_{i+1}:L_i] = 2 \quad \text{for} \quad i = 0, \ldots, n-1$ is equivalent to:\\
+    There is an intermidiate field $L$ of $\mathbb{C}/K_0$ whit $z \in L$, so that $L$ aries from $K_0$ by a sequence of adjunctions of square roots.
+\end{lemma}
+
+\begin{lemma}
+    \label{lem:Mi_chain}
+    For $M_n$ existiert a chain of intermidiate Fields $K_0 \le K_1 \le \ldots \le K_n$ so that $M_i\subset K_i$ and $K_i:= K_{i-1}(X_i)$ for a set of square roots $X_i$ of elements of $K_{i-1}$.
+\end{lemma}
+
+\begin{proof}
+Induction over $n$
+
+\end{proof}
+
+\begin{lemma} 
+    \label{lem:Z_in_Minf_imp_eq2}
+    For $z \in \mathbb{C}$. $z \in \mathcal{M}_{\infty}$ is implies that there exists an $m \in \mathbb{N}$ such that $[z:K_0] = [K_0(z):K_0]= 2^m$.
+\end{lemma}
+
+\begin{proof} \uses{thm:Z_in_Minf_imp} %Todo add uses
+    Let $z \in \mathbb{C}$ be an element of  $\mathcal{M}_{\infty}$.\\
+    After theorem \ref{thm:Z_in_Minf_imp}, there exist an intermidiate field $L_n$ of $\Q$ $\C$ such that $z\in L_n$.\\
+    Clame 1: $[L_n:K_0]= 2^n$\\
+
+    Sinces ther is a chain \\
+    Since $z\in L_n$ $K_0(z)$ is a gdsiufos $2^n=[L_n : K_0] = [L_n : K_0(z)] \cdot [K_0(Z):K_0]$.
+    So $[K_0(Z):K_0] | 2^n$, since the only diversos of $2^n$ is $2^i$ for $\forall 0\le i \le n$ $[K_0(Z):K_0]$ is equal to $2^m$
+\end{proof}
+
+\begin{corollary}
+    \label{cor:not_in_M_inf}
+    For $z \in \mathbb{C}$, if ther is no $m$ such that $[z:K_0]=2^m$ then $z\notin \mathcal{M}_{\infty}$.
+\end{corollary}
+
+\begin{proof}
+    \uses{lem:Z_in_Minf_imp_eq2}
+    Follws diractly from \ref{lem:Z_in_Minf_imp_eq2}
+\end{proof}

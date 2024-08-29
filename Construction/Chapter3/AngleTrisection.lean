@@ -1,4 +1,13 @@
-import Construction.bestiary
+import Construction.Chapter2.ClasificationMinf
+import Construction.NotMyCode.map_of_isScalarTower
+
+import Mathlib.Algebra.Polynomial.SpecificDegree
+import Mathlib.Data.Real.Irrational
+import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
+import Mathlib.Algebra.Polynomial.Degree.Definitions
+import Mathlib.RingTheory.Polynomial.RationalRoot
+
+
 
 open Polynomial IsFractionRing
 open Construction
@@ -17,6 +26,7 @@ lemma H_degree : H.natDegree = 3 := by
   . simp_rw[h]
     apply Polynomial.natDegree_cubic_le
 
+--! not needed
 lemma HM: Monic H := by
   refine monic_of_natDegree_le_of_coeff_eq_one ?n ?pn ?p1
   . use 3
@@ -90,7 +100,7 @@ lemma H_roots: ¬ ∃ a, a ∈ H.roots := by
   rcases this with (h1 | h1 | h1 | h1 | h1 | h1 | h1 | h1) <;> norm_num [h, h1] at ha
 
 lemma H_irreducible : Irreducible H := by
-  rw[irreducible_iff_roots_eq_zero_of_degree_le_three HM]
+  rw[irreducible_iff_roots_eq_zero_of_degree_le_three]
   . exact Multiset.eq_zero_of_forall_not_mem (fun a ha ↦ H_roots ⟨a, ha⟩)
   . apply le_trans (b:=3)
     linarith
@@ -142,10 +152,23 @@ lemma exp_pi_ninth : Polynomial.degree (minpoly ℚ (Real.cos ((Real.pi/3)/3): �
   have h₂: 0 = 3 := by rw[←h₀, h₁]
   contradiction
 
+--! Check
+lemma real_component_in_M_inf (M : Set ℂ) (h₀ : 0 ∈ M) (h₁ : 1 ∈ M):  x.re ∉ M_inf M → x ∉ M_inf M := by
+  by_contra h
+  simp at h
+  obtain ⟨ _, h⟩ := h
+  have : ↑x.re ∈ M_inf M := by
+    exact real_in_M_inf M h₀ h₁ _ h
+  contradiction
+
+lemma not_mod_eq_imp_not_eq (a b n : ℕ ) (h : ¬ a % n = b % n) : ¬ a = b := by
+  exact fun a_1 ↦ h (congrFun (congrArg HMod.hMod a_1) n)
+
 lemma pi_third_not_in_M_inf :
   (Complex.exp (Complex.I * (Real.pi/3)/3) : ℂ) ∉ M_inf {(0:ℂ) ,1 ,  Complex.exp (Complex.I *Real.pi/3) } := by
   apply real_component_in_M_inf _ (by simp) (by simp)
-  apply short
+  apply Classfication_z_in_M_inf_2m_not (Set.mem_insert 0 {1, cexp (I * ↑Real.pi / 3)})
+  . simp only [Set.mem_insert_iff, one_ne_zero, Set.mem_singleton_iff, true_or, or_true]
   simp
   intro x
   have h: ↑(Complex.exp (Complex.I * (↑Real.pi / 3) / 3)).re = (Real.cos ((Real.pi/3)/3): ℂ):= by sorry
@@ -154,7 +177,11 @@ lemma pi_third_not_in_M_inf :
     rw[exp_pi_ninth]
     cases x with
       | zero => simp
-      | succ x => norm_cast; rw[pow_succ]; apply not_mod_eq_imp_not_eq (n:= 2); norm_num
+      | succ x =>
+        norm_cast
+        rw[pow_succ]
+        apply not_mod_eq_imp_not_eq (n:= 2)
+        norm_num
   convert h
   -- deggre of Complex.exp (Complex.I *Real.pi/3) over Q is 2^i => dgree over ℚ not 2^n imolies degree over K_zero is not 2^m
   sorry

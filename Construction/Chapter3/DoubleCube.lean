@@ -1,4 +1,11 @@
-import Construction.bestiary
+import Construction.Chapter2.ClasificationMinf
+import Construction.NotMyCode.map_of_isScalarTower
+
+import Mathlib.Algebra.Polynomial.SpecificDegree
+import Mathlib.Data.Real.Irrational
+import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
+import Mathlib.Algebra.Polynomial.Degree.Definitions
+import Mathlib.RingTheory.Polynomial.RationalRoot
 
 open Polynomial
 open Construction
@@ -84,7 +91,7 @@ lemma P_roots: roots P = 0 := by
   simp
 
 lemma P_irreducible : Irreducible P := by
-  rw[irreducible_iff_roots_eq_zero_of_degree_le_three P_monic]
+  rw[irreducible_iff_roots_eq_zero_of_degree_le_three]
   . exact P_roots
   . apply le_trans (b:=3)
     linarith
@@ -113,8 +120,13 @@ lemma degree_third_root_of_two : Polynomial.degree (minpoly ℚ ((2:ℂ ) ^ (1/3
 --TODO: Tidy Up
 noncomputable def K_zero_P: IntermediateField ℚ ℂ := K_zero {(0:ℂ),(1:ℂ)}
 
+--TODO: Tidy Up
+lemma not_mod_eq_imp_not_eq (a b n : ℕ ) (h : ¬ a % n = b % n) : ¬ a = b := by
+  exact fun a_1 ↦ h (congrFun (congrArg HMod.hMod a_1) n)
+
+
 lemma third_root_of_two_not_in_M_inf: (2 : ℂ) ^ (1/3: ℂ) ∉ M_inf {(0:ℂ),(1:ℂ)} := by
-  apply short
+  apply Classfication_z_in_M_inf_2m_not (Set.mem_insert 0 {1}) (Set.mem_insert_of_mem 0 rfl)
   simp
   intro x
   have h: ¬ 2 ^ x =  Polynomial.degree (minpoly ℚ ((2:ℂ ) ^ (1/3:ℂ))) := by

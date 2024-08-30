@@ -72,6 +72,14 @@ instance MField_QuadraticClosed (M: Set ℂ)(h₀: 0 ∈ M)(h₁: 1∈ M) :
     simp only [Complex.abs_mul_exp_arg_mul_I, Subtype.coe_eta]
     exact root_M_inf M h₀ h₁ x (by rw[←MField_mem M h₀ h₁ x]; simp only [SetLike.coe_mem])
 
+lemma MField_QuadraticClosed_def (M: Set ℂ)(h₀: 0 ∈ M)(h₁: 1∈ M) {x : ℂ} (h: x ∈ (MField M h₀ h₁)): ∃ y : (MField M h₀ h₁), y * y = x := by
+  have: ∃ x' : (MField M h₀ h₁), x' = x := by
+    exact CanLift.prf x h
+  obtain ⟨x', hx'⟩ := this
+  rw[← hx']
+  norm_cast
+  exact QuadraticClosed.exists_root x'
+
 def conj_set (M : Set ℂ) : Set ℂ := {starRingEnd ℂ z | z ∈ M}
 
 lemma conj_union (M N : Set ℂ) : conj_set (M ∪ N) = conj_set M ∪ conj_set N := by
@@ -298,11 +306,6 @@ lemma ilc_L  (c: Construction.circle) (l: line) (hc: 0 ≤ c.r): z ∈ c.points 
     rw[←h₁]
     ring_nf
 
-lemma icc_L' (c₁ c₂ : Construction.circle): z ∈ c₁.points ∩ c₂.points ↔
-  let l : line := ⟨c₁.c, c₂.c⟩
-  z ∈ l.points ∩ c₁.points ∧ z ∈ l.points ∩ c₂.points := by
-
-    sorry
 end Intersection
 
 variable (L : Subfield ℂ) [ConjClosed L]
@@ -491,6 +494,9 @@ lemma sq_add_sq_eq_zero (a b :ℝ) : a^2 + b^2 = 0 ↔ a = 0 ∧ b = 0 := by
     exact h
   . simp only [h, ne_eq, OfNat.ofNat_ne_zero, not_false_eq_true, zero_pow, add_zero]
 
+lemma quadratic_formula (ι u v w : ℂ) (h:  u * ι ^ 2 +  v * ι + w = 0 ) (hu: u≠0): ι = - v/(2*u) + (v ^ 2 / (4 * u ^ 2) - w / u)^(1/2:ℂ) ∨ ι = - v/(2*u) - (v ^ 2 / (4 * u ^ 2) - w / u)^(1/2:ℂ):= by
+    sorry
+
 lemma ilc_L' (z : ℂ) (h : z ∈ ilc L): ∃ ω ∈ L, ∃ x : ℂ, x * x = ω ∧ z ∈ L⟮x⟯ := by
   obtain ⟨c, hc, l, hl, hz⟩ := h
   have: 0 ≤ c.r := by
@@ -563,33 +569,15 @@ lemma ilc_L' (z : ℂ) (h : z ∈ ilc L): ∃ ω ∈ L, ∃ x : ℂ, x * x = ω 
       refine add_mem (mul_mem this (cast_L hlz₁)) (mul_mem ?_ (cast_L hlz₂))
       exact sub_mem (by apply OneMemClass.one_mem) this
     }
-    let f : (Polynomial ℂ) :=  C u * X ^ 2 + C v * X + C w
     have: u ≠ 0 := by
       simp only [← sub_mul, mul_pow, I_sq, mul_neg, mul_one, sub_neg_eq_add, ne_eq, u]
       norm_cast
       rw [sq_add_sq_eq_zero, sub_eq_zero, sub_eq_zero, ← Complex.ext_iff]
       obtain ⟨_,_,_,_,_,_⟩ := hl
       simp_all only [one_div, SetLike.mem_coe, ne_eq, not_false_eq_true]
-    have f_degree: degree f = 2 := by
-      simp[f]
-      compute_degree!
-    have f_ne_zero: f ≠ 0 := by
-      rw [← @zero_le_degree_iff, f_degree]
-      norm_num
-    have : ↑ι ∈ f.roots := by
-      rw [mem_roots']
-      refine ⟨f_ne_zero, ?_⟩
-      simp[f]
-      rw[← hι]
-      ring_nf
-    have : ↑(Multiset.card (f.roots)) ≤ 2 := by
-      exact le_trans (b:= f.natDegree) (Polynomial.card_roots' f) (natDegree_quadratic_le)
-    have : f.roots = { - v/(2*u) + (v ^ 2 / (4 * u ^ 2) - w / u)^(1/2:ℂ),  - v/(2*u) - (v ^ 2 / (4 * u ^ 2) - w / u)^(1/2:ℂ) } := by
-      sorry
     have h: ι = - v/(2*u) + (v ^ 2 / (4 * u ^ 2) - w / u)^(1/2:ℂ) ∨ ι = - v/(2*u) - (v ^ 2 / (4 * u ^ 2) - w / u)^(1/2:ℂ) := by
-      rename_i h
-      rw[this] at h
-      simp_all only [one_div, Multiset.insert_eq_cons, Multiset.mem_cons, Multiset.mem_singleton]
+      have hι:  u * ι ^ 2 +  v * ι + w = 0 := by rw[←hι]; ring
+      exact quadratic_formula ι u v w hι this
     cases h <;> rename_i h <;> rw[h]
     exact add_mem (div_mem (neg_mem (cast_L hv)) (mul_mem (ofNat_mem _ 2) (cast_L hu))) (IntermediateField.mem_adjoin_simple_self _ _)
     exact sub_mem (div_mem (neg_mem (cast_L hv)) (mul_mem (ofNat_mem _ 2) (cast_L hu))) (IntermediateField.mem_adjoin_simple_self _ _)

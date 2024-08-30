@@ -468,8 +468,8 @@ lemma ill_mono (M N : Set ℂ) (h: M ⊆ N) : ill M ⊆ ill N := by
   intro x hx
   obtain ⟨l₁, hl₁, l₂, hl₂, hx, hlne⟩ := hx
   refine ⟨l₁, ?_, l₂, ?_, hx, hlne⟩
-  apply L_mono M N h hl₁
-  apply L_mono M N h hl₂
+  apply Construction.L_mono M N h hl₁
+  apply Construction.L_mono M N h hl₂
 
 lemma ilc_mono (M N : Set ℂ) (h: M ⊆ N) : ilc M ⊆ ilc N := by
   unfold ilc
@@ -477,8 +477,8 @@ lemma ilc_mono (M N : Set ℂ) (h: M ⊆ N) : ilc M ⊆ ilc N := by
   intro x hx
   obtain ⟨c, hc, l, hl, hx, hlne⟩ := hx
   refine ⟨c, ?_, l, ?_, hx, hlne⟩
-  apply C_mono M N h hc
-  apply L_mono M N h hl
+  apply Construction.C_mono M N h hc
+  apply Construction.L_mono M N h hl
 
 lemma icc_mono (M N : Set ℂ) (h: M ⊆ N) : icc M ⊆ icc N := by
   unfold icc
@@ -486,8 +486,8 @@ lemma icc_mono (M N : Set ℂ) (h: M ⊆ N) : icc M ⊆ icc N := by
   intro x hx
   obtain ⟨c₁, hc₁, c₂, hc₂, hx, hlne⟩ := hx
   refine ⟨c₁, ?_, c₂, ?_, hx, hlne⟩
-  apply C_mono M N h hc₁
-  apply C_mono M N h hc₂
+  apply Construction.C_mono M N h hc₁
+  apply Construction.C_mono M N h hc₂
 --! Move to here
 
 def K_root (K : IntermediateField E F): Set F := {x : F | x * x ∈ K}
@@ -531,13 +531,13 @@ lemma test' (M : Set ℂ) (_: 0 ∈ M) (_:1 ∈ M) (n : ℕ) : ∃ α: Fin n →
       refine ⟨?_, ?_, ?_, ?_⟩
       . apply le_trans h (by apply K_le_K_adjion)
       . have le1: ill (M_I M n) ⊆ ill (succ_adjion (K_zero M) n αn) := by
-          apply ill_mono _ _ h
+          apply Construction.ill_mono _ _ h
         have le2: ill (succ_adjion (K_zero M) n αn) ⊆ (succ_adjion (K_zero M) n αn) := by
           intro x hx
           exact @ConjClosed.ill_L' _ hc x hx
         apply le_trans le1 (by apply le_trans le2 (by apply K_le_K_adjion))
       . have : ilc (M_I M n) ⊆ ilc (succ_adjion (K_zero M) n αn) := by
-          apply ilc_mono _ _ h
+          apply Construction.ilc_mono _ _ h
         apply le_trans this ?_
         simp only [Set.le_eq_subset, Set.subset_def]
         intro z hz₁
@@ -552,7 +552,7 @@ lemma test' (M : Set ℂ) (_: 0 ∈ M) (_:1 ∈ M) (n : ℕ) : ∃ α: Fin n →
           simp only [Set.singleton_subset_iff, Set.mem_union, this, true_or]
         exact this hz
       . have : icc (M_I M n) ⊆ icc (succ_adjion (K_zero M) n αn) := by
-          apply icc_mono _ _ h
+          apply Construction.icc_mono _ _ h
         apply le_trans this ?_
         intro z hz₁
         have : ∃ ω ∈ ↑(succ_adjion (K_zero M) n αn),∃ x : ℂ, x * x = ω ∧ z ∈ ↑(succ_adjion (K_zero M) n αn)⟮x⟯ := by

@@ -3,8 +3,66 @@ import Construction.NotMyCode.PR14987
 
 open IntermediateField Construction
 
-lemma adjoin_in_MField' (M : Set ℂ) (h₀: 0 ∈ M) (h₁:1 ∈ M) (L : ℕ →  IntermediateField ℚ ℂ) (h: ∀i,  L i ≤ L (i + 1)) (hL₀: K_zero M = L 0) (n: ℕ) (h_deg: ∀ i < n, relfinrank (L i) (L (i+1)) = 2) : (L n).carrier ≤ MField M h₀ h₁ := by sorry
+section degree_two
 
+variable {F: Type*} [Field F] {E : Type*} [Field E] [Algebra F E]
+variable (K : IntermediateField F E) (L : IntermediateField K E)
+
+
+theorem dergree_two_eq_sqr :  FiniteDimensional.finrank K L = 2 ↔ ∃ x : E, x ^ 2 ∈ K ∧ ¬(x ∈ K) ∧ L = IntermediateField.adjoin K {x} := by sorry
+
+end degree_two
+
+lemma rat_mem_M_inf (M : Set ℂ) (h₀: 0 ∈ M) (h₁:1 ∈ M): ∀ x : ℚ, (algebraMap ℚ ℂ) x ∈ MField M h₀ h₁ := by
+  intro x
+  simp_all only [eq_ratCast]
+  apply SubfieldClass.ratCast_mem
+
+lemma adjoin_in_MField' (M : Set ℂ) (h₀: 0 ∈ M) (h₁:1 ∈ M) (L : ℕ →  IntermediateField ℚ ℂ)
+  (h: ∀i,  L i ≤ L (i + 1)) (hL₀: K_zero M = L 0) (n: ℕ)
+  (h_deg: ∀ i < n, relfinrank (L i) (L (i+1)) = 2) : (L n).carrier ≤ MField M h₀ h₁ := by
+  induction n
+  case zero =>
+    rw[←hL₀]
+    exact K_zero_in_MField M h₀ h₁
+  case succ n Ih =>
+    have hLn: (L n).carrier ≤ ↑(MField M h₀ h₁) := by
+      apply Ih
+      intro i hi
+      specialize h_deg i (by linarith)
+      exact h_deg
+    have : ∃ x, extendScalars (h n) = (adjoin (L n) {x}) ∧ x^2 ∈ L n:=by
+      have: relfinrank (L n) (L (n + 1)) = 2 := h_deg n Nat.le.refl
+      rw[relfinrank_eq_finrank_of_le (h n), dergree_two_eq_sqr] at this
+      obtain ⟨x, hx2, _, h⟩ := this
+      refine ⟨x, h, hx2⟩
+    obtain ⟨x, hx, hx2⟩ := this
+    have hx' : x ∈  (MField M h₀ h₁).toIntermediateField (rat_mem_M_inf M h₀ h₁) := by
+      have: x^2 ∈ (MField M h₀ h₁).toIntermediateField (rat_mem_M_inf M h₀ h₁) := by
+        exact hLn hx2
+      have : x ^ 2 ∈ (MField M h₀ h₁):= by
+        rw[←IntermediateField.mem_carrier] at this
+        exact this
+      have: ∃ y : (MField M h₀ h₁), y*y = x^2 := by
+        exact MField_QuadraticClosed_def M h₀ h₁ this
+      simp only [Subtype.exists, exists_prop] at this
+      obtain ⟨y, hy, hyx⟩ := this
+      rw [←sq, ←sub_eq_zero, pow_two_sub_pow_two, mul_eq_zero] at hyx
+      cases hyx with
+        | inl h => rw [add_eq_zero_iff_neg_eq] at h; rw[←h]; exact IntermediateField.neg_mem _ hy
+        | inr h => rw [sub_eq_zero] at h; rw [←h]; exact hy
+    have: L (n + 1) ≤ (MField M h₀ h₁).toIntermediateField (rat_mem_M_inf M h₀ h₁)  := by
+      have: restrictScalars ℚ (extendScalars (h n)) ≤ (MField M h₀ h₁).toIntermediateField (rat_mem_M_inf M h₀ h₁) := by
+        rw[hx]
+        simp only [coe_toSubfield, restrictScalars_adjoin, adjoin_le_iff, Set.le_eq_subset,
+          Set.union_subset_iff, SetLike.coe_subset_coe]
+        exact ⟨hLn, Set.singleton_subset_iff.mpr hx'⟩
+      exact this
+    simp only [Subsemiring.coe_carrier_toSubmonoid, Subalgebra.coe_toSubsemiring, coe_toSubalgebra,
+      Set.le_eq_subset, Set.subset_def, SetLike.mem_coe]
+    intro x hx
+    simp_all only [SetLike.mem_coe]
+    exact this hx
 
 section test
 

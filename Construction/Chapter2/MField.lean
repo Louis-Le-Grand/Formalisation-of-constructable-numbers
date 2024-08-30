@@ -482,7 +482,7 @@ lemma ill_L' (z : ℂ) (h : z ∈ ill L): z ∈ L := by
   -- sorry
 
 open IntermediateField Complex Polynomial
--- lemma ilc_L' (z : ℂ) (h : z ∈ ilc L): ∃ ω ∈ L, z ∈ L⟮ω^(1/2:ℂ)⟯ := by sorry
+
 lemma sq_add_sq_eq_zero (a b :ℝ) : a^2 + b^2 = 0 ↔ a = 0 ∧ b = 0 := by
   refine ⟨?_, ?_⟩ <;> intro h
   . rw [add_eq_zero_iff_eq_neg] at h
@@ -494,8 +494,13 @@ lemma sq_add_sq_eq_zero (a b :ℝ) : a^2 + b^2 = 0 ↔ a = 0 ∧ b = 0 := by
     exact h
   . simp only [h, ne_eq, OfNat.ofNat_ne_zero, not_false_eq_true, zero_pow, add_zero]
 
-lemma quadratic_formula (ι u v w : ℂ) (h:  u * ι ^ 2 +  v * ι + w = 0 ) (hu: u≠0): ι = - v/(2*u) + (v ^ 2 / (4 * u ^ 2) - w / u)^(1/2:ℂ) ∨ ι = - v/(2*u) - (v ^ 2 / (4 * u ^ 2) - w / u)^(1/2:ℂ):= by
-    sorry
+lemma quadratic_formula (x a b c : ℂ) (h:  a * x ^ 2 +  b * x + c = 0) (ha: a≠0): x = (-b + (b ^ 2 - 4 * c * a) ^ (1 / 2:ℂ)) / (2 * a) ∨ x = (-b - (b ^ 2 - 4 * c * a) ^ (1 / 2 :ℂ)) / (2 * a):= by
+  have:  discrim a b c = ((b ^ 2 - 4 * c * a)^(1/2:ℂ)) * ((b ^ 2 - 4 * c * a)^(1/2:ℂ)) := by
+    rw [← pow_two, ← Complex.cpow_nat_mul]
+    simp only [discrim, mul_assoc, mul_comm a c, Nat.cast_ofNat, one_div, isUnit_iff_ne_zero, ne_eq,
+      OfNat.ofNat_ne_zero, not_false_eq_true, IsUnit.mul_inv_cancel, Complex.cpow_one]
+  rw [pow_two, ←mul_assoc, quadratic_eq_zero_iff ha this] at h
+  exact h
 
 lemma ilc_L' (z : ℂ) (h : z ∈ ilc L): ∃ ω ∈ L, ∃ x : ℂ, x * x = ω ∧ z ∈ L⟮x⟯ := by
   obtain ⟨c, hc, l, hl, hz⟩ := h
@@ -548,24 +553,20 @@ lemma ilc_L' (z : ℂ) (h : z ∈ ilc L): ∃ ω ∈ L, ∃ x : ℂ, x * x = ω 
       . refine pow_mem ?_ 2
         exact sub_mem (im_L L l.z₂ hlz₂) (im_L L c.c hcc)
     . exact hcr
-  use (v^2 / (4 * u^2) - w / u)
-  refine ⟨?_, ⟨(v ^ 2 / (4 * u ^ 2) - w / u)^(1/2:ℂ), ?_, ?_⟩⟩
-  . refine sub_mem ?_ ?_
-    . refine div_mem ?_ ?_
-      exact pow_mem hv 2
-      exact mul_mem (ofNat_mem L 4) (pow_mem hu 2)
-    . exact div_mem hw hu
+  use (v ^ 2 -  4 * w * u)
+  refine ⟨?_, ⟨(v ^ 2 -  4 * w * u)^(1/2:ℂ), ?_, ?_⟩⟩
+  . exact sub_mem (pow_mem hv 2) (mul_mem (mul_mem (ofNat_mem _ 4) hw) hu)
   . rw[←pow_two, ← cpow_nat_mul, one_div,]
     norm_cast
     simp only [ne_eq, OfNat.ofNat_ne_zero, not_false_eq_true, mul_inv_cancel₀, cpow_one]
-  . have cast_L {x : ℂ}(h: x ∈ L): x ∈ (↥L)⟮(v ^ 2 / (4 * u ^ 2) - w / u) ^ (1 / 2:ℂ)⟯ := by
+  . have cast_L {x : ℂ}(h: x ∈ L): x ∈ (↥L)⟮(v ^ 2 -  4 * w * u)^(1/2:ℂ)⟯ := by
       unfold IntermediateField.adjoin
       apply Subfield.subset_closure
       apply Or.inl
       simp only [Set.mem_range, Subtype.exists]
       refine ⟨x, h, rfl⟩
     rw [←hz]
-    suffices (ι:ℂ) ∈ (↑L )⟮(v ^ 2 / (4 * u ^ 2) - w / u)^(1/2:ℂ)⟯ by{
+    suffices (ι:ℂ) ∈ (↑L )⟮(v ^ 2 -  4 * w * u)^(1/2:ℂ)⟯ by{
       refine add_mem (mul_mem this (cast_L hlz₁)) (mul_mem ?_ (cast_L hlz₂))
       exact sub_mem (by apply OneMemClass.one_mem) this
     }
@@ -575,13 +576,12 @@ lemma ilc_L' (z : ℂ) (h : z ∈ ilc L): ∃ ω ∈ L, ∃ x : ℂ, x * x = ω 
       rw [sq_add_sq_eq_zero, sub_eq_zero, sub_eq_zero, ← Complex.ext_iff]
       obtain ⟨_,_,_,_,_,_⟩ := hl
       simp_all only [one_div, SetLike.mem_coe, ne_eq, not_false_eq_true]
-    have h: ι = - v/(2*u) + (v ^ 2 / (4 * u ^ 2) - w / u)^(1/2:ℂ) ∨ ι = - v/(2*u) - (v ^ 2 / (4 * u ^ 2) - w / u)^(1/2:ℂ) := by
+    have h: ι = (- v + (v ^ 2 -  4 * w * u)^(1/2:ℂ))/ (2 * u) ∨ ι = (- v - (v ^ 2 -  4 * w * u)^(1/2:ℂ))/ (2 * u) := by
       have hι:  u * ι ^ 2 +  v * ι + w = 0 := by rw[←hι]; ring
       exact quadratic_formula ι u v w hι this
     cases h <;> rename_i h <;> rw[h]
-    exact add_mem (div_mem (neg_mem (cast_L hv)) (mul_mem (ofNat_mem _ 2) (cast_L hu))) (IntermediateField.mem_adjoin_simple_self _ _)
-    exact sub_mem (div_mem (neg_mem (cast_L hv)) (mul_mem (ofNat_mem _ 2) (cast_L hu))) (IntermediateField.mem_adjoin_simple_self _ _)
-
+    exact div_mem (add_mem (neg_mem (cast_L hv)) (IntermediateField.mem_adjoin_simple_self _ _)) (mul_mem (ofNat_mem _ 2) (cast_L hu))
+    exact div_mem (sub_mem (neg_mem (cast_L hv)) (IntermediateField.mem_adjoin_simple_self _ _)) (mul_mem (ofNat_mem _ 2) (cast_L hu))
 
 -- lemma icc_L' (z : ℂ) (h : z ∈ icc L): ∃ ω ∈ L, z ∈ L⟮ω^(1/2:ℂ)⟯ := by sorry
 

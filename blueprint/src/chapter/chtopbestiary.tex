@@ -62,8 +62,9 @@ In this (temporary, unorganised) appendix I list a whole host of definitions and
 \end{lemma}
 \begin{proof}
     \uses{re_im_in_L}
-    The proof is done in two steps we show that $z \in G_1 \cap G_2$ if and only if there are $\lambda, \mu \in \mathbb{R}$ such that the equations hold. \\
-    TODO \\%TODO: add proof
+    The proof is done in two steps we show that $z \in G_1 \cap G_2$ if and only if there are $\lambda, \mu \in \mathbb{R}$ such that the equations hold. 
+    
+    TODO %TODO: add proof
 
     Now we can show that $z \in L$.\\
     Since we now that z is equal to $\lambda z_1 + (1-\lambda)z_2$ and $z_1, z_2 \in L$ we only have to show that $\lambda \in L$. Here for we use the equations from the first part of the proof.
@@ -125,6 +126,12 @@ In this (temporary, unorganised) appendix I list a whole host of definitions and
 \end{lemma}
 
 \begin{proof}
+First we have to show $z \in G \cap C$ iff and only iff ther existe a $\lambda \in \mathbb{R}$ with $\lambda^2 a+ \lambda b + c = 0$ and $z = \lambda z_1 + (1-\lambda)z_2$.
+
+TODO Umstellen \\
+Now we can show that there existe a $w \in L$ such that $z \in L(\sqrt{w})$.\\
+Since we know that $z = \lambda z_1 + (1-\lambda)z_2$ and $z_1, z_2 \in L$ we only have to show that $\lambda \in L(\sqrt{w})$. Here for we use the equations from the first part of the proof. 
+Since Lambda is a solution of a quadratic equation we now that $\lambda$ is equal to $\frac{-b \pm \sqrt{b^2 - 4ac}}{2a}$. Since $a,b,c \in L$ we get $w = b^2 - 4ac \in L$ so $\lambda \in L(\sqrt{w})$. Therefore $z = \lambda z_1 + (1-\lambda)z_2$ is in $L(\sqrt{w})$.
 %TODO: add proof
 \end{proof}
 

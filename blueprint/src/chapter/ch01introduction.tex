@@ -8,9 +8,84 @@ We will use $\mathbb{C}$ as plane of drawing and $\mathcal{M} \subset \mathbb{C}
     \label{def:line}
     \lean{Construction.line}
     \leanok
-    A line $l$ through two points $x,y\in\mathbb{C}$ for $x\ne y$ is defined by the set: $$l:=\{\lambda x+(1-\lambda)y\mid\lambda\in\mathbb{R}\}.$$
+    A line $L := (x,y)$ is defined by two pionts $x,y\in\mathbb{C}$ with $x\ne y$ and a set $$l:=\{\lambda x+(1-\lambda)y\mid\lambda\in\mathbb{R}\}.$$
+    We say two lines are equal if ther generatet Set is equal.
+\end{definition}
+\begin{remark}
+ In lean I atateted lines with out the recquierment that $x\ne y$ and so I could have trivial lines and just added it i n lemmas if needed.
+\end{remark}
+
+
+\begin{definition}[Circle]
+    \label{def:circle}
+    \lean{Construction.circle}
+    \leanok
+    A circle $C := (c,r)$ is defined by a center $c$ with  $c\in\mathbb{C}$, a radius $r\in\mathbb{R}_{\ge 0}$ and the set: $$c:=\{z\in\mathbb{C} \mid\|z-c\|=r\}.$$ 
+    We say a circel is if the underling set is equal.
 \end{definition}
 
+\begin{lemma}
+    \label{lem:circel_not_eq_iff}
+    \lean{Construction.circel_not_eq_iff, Construction.circle_not_eq_iff_radius}
+    \leanok
+    \uses{def:circel}
+    If we have two circle $C_1 = (c_1,r_1)$, $C_2 = (c_1,r_1)$ and we have $c_1 \ne c_2$ or $r_1  \ne r_2 $ then the circels aren't equal. 
+\end{lemma}
+
+
+\begin{definition}[Set of lines]
+    \label{def:set_of_lines}
+    \lean{Construction.L, Construction.l_in_L_M}
+    \leanok
+    \uses{def:line}
+    $\mathcal{L(M)}$ is the set of all real straight lines $l$, with $| l\cap \mathcal{M} |\ge 2$. As set this is:
+    \begin{equation*}
+        \mathcal{L(M)} := \{l \mid l = \{x,y\} \text{ with }x,y \in \mathcal{M} \land x \neq y\}.
+    \end{equation*}
+\end{definition}
+
+\begin{definition}[Set of circles]
+    \label{def:set_of_circles}
+    \lean{Construction.C, Construction.c_in_C_M}
+    \leanok
+    \uses{def:circle}
+    $\mathcal{C(M)}$ is the set of all circles in $\mathbb{C}$, with center in $\mathcal{M}$ and radius of $\mathcal{C}$ which is the distence of two points in $\mathcal{M}$. As equation this is:
+    $$\mathcal{C(M)}:=\{c\mid c = \langle c, \dist r_1 r_2 \rangle \text{ with } c,r_1,r_2\in M\}.$$
+\end{definition}
+
+\begin{definition}[Ruels to construct a point]
+    \label{def:rules_to_constructed_a_point}
+    \lean{Construction.ill,Construction.ilc,Construction.icc,Construction.ICL_M}
+    \leanok
+    \uses{def:set_of_lines, def:set_of_circles}
+    We define operations that can be used to construct new points.
+    \begin{enumerate}
+        \item $(ILL)$ is the intersection of two different lines in $\mathcal{L(M)}$.
+        \item $(ILC)$ is the intersection of a line in $\mathcal{L(M)}$ and a circle in $\mathcal{C(M)}$.
+        \item $(ICC)$ is the intersection of two different circles in $\mathcal{C(M)}$.
+    \end{enumerate}
+    $ICL(\mathcal{M})$ is the set $\mathcal{M}$ combiened of all points that can be constructed using the operations $(ILL)$, $(ILC)$ and $(ICC)$ and $\mathcal{M}$.
+\end{definition}
+
+\begin{definition}[Set of constructable points]
+    \label{def:set_of_constructable_points}
+    \lean{Construction.M_I,Construction.M_inf}
+    \leanok
+    \uses{def:rules_to_constructed_a_point}
+    We define inductively the chain
+    \begin{equation*}
+        \mathcal{M}_0 \subseteq \mathcal{M}_1 \subseteq \mathcal{M}_2 \subseteq \dots
+    \end{equation*}
+    with $\mathcal{M}_0 = \mathcal{M}$ and $\mathcal{M}_{n+1} = ZL(\mathcal{M}_n)$.\newline
+    And call $\mathcal{M}_{\infty} = \bigcup_{n \in \mathbb{N}} \mathcal{M}_n$ the set of all constructable points.
+\end{definition}
+
+\begin{remark}
+    The set of lines, circels and there intersection $icc$, $ilc$, $icc$ are monoton, i.e. for $M\subseteq M$ is $\mathcal{L(N)}
+    \subseteq\mathcal{L(M)}$,\dots .
+\end{remark}
+
+\section{Properties of Lines}
 \begin{definition}[parallel]
     \label{def:parallel}
     \lean{Construction.parallel}
@@ -54,60 +129,6 @@ We will use $\mathbb{C}$ as plane of drawing and $\mathcal{M} \subset \mathbb{C}
     \end{align*}
     \end{proof}
 \end{proof}
-
-\begin{definition}[Circle]
-    \label{def:circle}
-    \lean{Construction.circle}
-    \leanok
-    A circle $c$ with center $z\in\mathbb{C}$ and radius $r\in\mathbb{R}_{\ge 0}$ is defined by the set: $$c:=\{z\in\mathbb{C} \mid\|z-c\|=r\}.$$
-\end{definition}
-
-\begin{definition}[Set of lines]
-    \label{def:set_of_lines}
-    \lean{Construction.L}
-    \leanok
-    \uses{def:line}
-    $\mathcal{L(M)}$ is the set of all real straight lines $l$, with $| l\cap \mathcal{M} |\ge 2$. As set this is:
-    \begin{equation*}
-        \mathcal{L(M)} := \{l \mid l = \{x,y\} \text{ with }x,y \in \mathcal{M} \land x \neq y\}.
-    \end{equation*}
-\end{definition}
-
-\begin{definition}[Set of circles]
-    \label{def:set_of_circles}
-    \lean{Construction.C}
-    \leanok
-    \uses{def:circle}
-    $\mathcal{C(M)}$ is the set of all circles in $\mathbb{C}$, with center in $\mathcal{M}$ and radius of $\mathcal{C}$ which is the distence of two points in $\mathcal{M}$. As equation this is:
-    $$\mathcal{C(M)}:=\{c\mid c = \langle c, \dist r_1 r_2 \rangle \text{ with } c,r_1,r_2\in M\}.$$
-\end{definition}
-
-\begin{definition}[Ruels to construct a point]
-    \label{def:rules_to_constructed_a_point}
-    \lean{Construction.ill,Construction.ilc,Construction.icc,Construction.ICL_M}
-    \leanok
-    \uses{def:set_of_lines, def:set_of_circles}
-    We define operations that can be used to construct new points.
-    \begin{enumerate}
-        \item $(ILL)$ is the intersection of two different lines in $\mathcal{L(M)}$.
-        \item $(ILC)$ is the intersection of a line in $\mathcal{L(M)}$ and a circle in $\mathcal{C(M)}$.
-        \item $(ICC)$ is the intersection of two different circles in $\mathcal{C(M)}$.
-    \end{enumerate}
-    $ICL(\mathcal{M})$ is the set $\mathcal{M}$ combiened of all points that can be constructed using the operations $(ILL)$, $(ILC)$ and $(ICC)$ and $\mathcal{M}$.
-\end{definition}
-
-\begin{definition}[Set of constructable points]
-    \label{def:set_of_constructable_points}
-    \lean{Construction.M_I,Construction.M_inf}
-    \leanok
-    \uses{def:rules_to_constructed_a_point}
-    We define inductively the chain
-    \begin{equation*}
-        \mathcal{M}_0 \subseteq \mathcal{M}_1 \subseteq \mathcal{M}_2 \subseteq \dots
-    \end{equation*}
-    with $\mathcal{M}_0 = \mathcal{M}$ and $\mathcal{M}_{n+1} = ZL(\mathcal{M}_n)$.\newline
-    And call $\mathcal{M}_{\infty} = \bigcup_{n \in \mathbb{N}} \mathcal{M}_n$ the set of all constructable points.
-\end{definition}
 
 \section[The set of constructable points]{The Set $M_{\infty}$}\label{set_of_constructable_points}
 When we want to work with the set of constructable points we need some basic lemmas.

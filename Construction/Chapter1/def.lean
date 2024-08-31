@@ -8,12 +8,14 @@ structure line where
 
 def line.points (l: line) : Set ℂ:= {(t : ℂ) * l.z₁ + (1-t) * l.z₂ | (t : ℝ)}
 
+--not bp
 lemma line_not_eq_if (l₁ l₂: line) (h: ∃ x, x ∈ l₁.points ∧ x ∉ l₂.points) :  l₁.points ≠ l₂.points := by
   obtain ⟨x, hx₁, hx₂⟩ := h
   rw [Ne.eq_def, Set.ext_iff, Mathlib.Tactic.PushNeg.not_forall_eq]
   use x
   simp only [hx₁, hx₂, iff_false, not_true_eq_false, not_false_eq_true]
 
+--not bp
 lemma line_not_eq_if' (l₁ l₂: line) (h: ∃ x, x ∈ l₂.points ∧ x ∉ l₁.points) :  l₁.points ≠ l₂.points := by
   symm
   exact line_not_eq_if l₂ l₁ h
@@ -33,20 +35,23 @@ lemma circle_not_eq_iff {c₁ c₂ : Construction.circle} (h: c₁.c ≠ c₂.c)
   left
   exact h
 
+lemma circle_not_eq_iff_radius {c₁ c₂ : Construction.circle} (h: c₁.r ≠ c₂.r): c₁.points' ≠ c₂.points' := by
+  rw[@EuclideanGeometry.Sphere.ne_iff ℂ _ c₁.points' c₂.points']
+  right
+  exact h
 
 def L (M:Set ℂ): Set line := {l |∃ z₁ z₂, l = {z₁ := z₁, z₂ := z₂} ∧ z₁ ∈  M ∧ z₂ ∈ M ∧ z₁ ≠ z₂}
 def C (M:Set ℂ): Set circle := {c |∃ z r₁ r₂, c = {c:=z, r:=(dist r₁ r₂)} ∧ z ∈ M ∧ r₁ ∈ M ∧ r₂ ∈ M}
 
---TODO: not in Blueprint
 lemma c_in_C_M (M:Set ℂ): c ∈ C M ↔  ∃ z r₁ r₂, c = {c:=z, r:=(dist r₁ r₂)} ∧ z ∈ M ∧ r₁ ∈ M ∧ r₂ ∈ M := by
   unfold C
   simp
 
---TODO: not in Blueprint
 lemma l_in_L_M (M:Set ℂ): l ∈ L M ↔ ∃ z₁ z₂, l = {z₁ := z₁, z₂ := z₂} ∧ z₁ ∈ M ∧ z₂ ∈ M ∧ z₁ ≠ z₂ := by
   unfold L
   simp
 
+--not bp
 lemma l_in_L_M_imp (M:Set ℂ)(l: line) (hl: l ∈ L M ): l.z₁ ∈ M ∧ l.z₂ ∈ M := by
   obtain ⟨z₁, z₂, hl, hz₁, hz₂, _⟩ := hl
   constructor
@@ -55,6 +60,7 @@ lemma l_in_L_M_imp (M:Set ℂ)(l: line) (hl: l ∈ L M ): l.z₁ ∈ M ∧ l.z�
   rw [hl]
   exact hz₂
 
+--not bp
 lemma l_in_L_M_imp' (M:Set ℂ)(l: line) (hl: l ∈ L M ): l.z₁ ≠ l.z₂ := by
   obtain ⟨z₁, z₂, hl, _, _, Noteq⟩ := hl
   rw[hl]

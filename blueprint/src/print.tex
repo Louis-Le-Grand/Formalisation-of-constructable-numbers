@@ -10,7 +10,7 @@
 % It is otherwise a very minimal preamble (you should probably at least
 % add cleveref and tikz-cd).
 
-\documentclass[a4paper]{article}
+\documentclass[a4paper]{report}
 
 \usepackage{geometry}
 
@@ -20,6 +20,16 @@
 \usepackage[unicode,colorlinks=true,linkcolor=blue,urlcolor=magenta, citecolor=blue]{hyperref}
 
 \usepackage[warnings-off={mathtools-colon,mathtools-overbracket}]{unicode-math}
+
+\usepackage{tikz-cd}
+\usepackage{etexcmds}
+\usepackage{thmtools}
+\usepackage{amsthm}
+\usepackage[nameinlink, capitalize]{cleveref}
+\usepackage{fontspec}
+\usepackage{enumitem}
+\usepackage{xfrac}
+\usepackage{polyglossia}
 
 \input{macros/common}
 \input{macros/print}

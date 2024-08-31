@@ -1,0 +1,303 @@
+\chapter{Appendix: A collection of results which are needed in the proof.}
+\label{ch_bestiary}
+In this (temporary, unorganised) appendix I list a whole host of definitions and theorems which were known to humanity by the end of the univers \cite{JAN_SCHRÖER:2023}. These definitions and theorems will find their way into more relevant sections of the blueprint once I have time. Note also that many of the \emph{definitions} here are yet to be formalised in Lean, and this needs to be done before we can start talking about formalising theorems.
+%We need the a debug placeholder for BibTex Stuff:
+
+
+\section*{Stuff I'm working on}
+
+
+
+
+%3.14
+\begin{lemma}
+    \label{re_im_in_L}
+    Let $L$ be a subfield of $\mathbb{C}$, with $L = conj(L)$. For all $z = x + \imath y \in L$ we have $x, \imath y \in L$.
+\end{lemma}
+\begin{proof}
+    Let $z = x + \imath y \in L$. According to prerequisite we have $\overline{Z}=x-\imath y \in L$. This implies
+    \begin{equation*}
+        \frac{z + \overline{z}}{2} = x \in L
+    \end{equation*}
+    and therfore also $\imath y = z - x \in L$.
+\end{proof}
+
+%3.15
+\begin{lemma}
+    \label{dist_sqard_in_L}
+    Let $L$ be a subfield of $\mathbb{C}$, with $L = conj(L)$, and $z_1, z_2 \in L$.
+    For $r := \|z_1-z_2\|$ we get that $r^2 \in L$.
+\end{lemma}
+\begin{proof}
+    \uses{re_im_in_L}
+    For $z_1 = x_1 + \imath y_1$ and $z_2 = x_2 + \imath y_2$ we have
+    \begin{equation*}
+        r = \|z_1 - z_2\| = \sqrt{(x_1 - x_2)^2 + (y_1 - y_2)^2}
+    \end{equation*}
+    and therefore
+    \begin{equation*}
+        r^2 = (x_1 - x_2)^2 + (y_1 - y_2)^2 
+    \end{equation*}
+    After applying Lemma \ref{re_im_in_L} we get $r^2 \in L$.
+\end{proof}
+
+%3.16
+\begin{lemma}
+    \label{Intersection_line_line}
+    Let $L$ be a subfield of $\mathbb{C}$, with $L = conj(L)$. For $i = 1,2,3,4$ let $z_i = x_i + \imath y_i \in L$ with $z_1 \ne z_2$ and $z_3 \ne z_4$. Define
+    %TODO: write in two lines
+    \begin{equation*}\begin{aligned}
+        G_1 := \{\lambda z_1 + (1-\lambda)z_2 \mid \lambda \in \mathbb{R}\},\\
+        G_2 := \{\mu z_3 + (1-\mu)z_4 \mid \mu \in \mathbb{R}\}.
+    \end{aligned} \end{equation*}
+    If $G_1 \cap G_2 \ne \emptyset$ and $G_1 \ne G_2$. It is equivalent 
+    \begin{itemize}
+        \item $z\in G_1 \cap G_2$.
+        \item Ther are $\lambda, \mu \in \mathbb{R}$ such that:
+        \subitem - $\lambda(x_1 - x_2)+\mu(x_4-x_3) = x_4-x_2$
+        \subitem - $\lambda(\imath y_1 - \imath y_2)+\mu(\imath y_4-\imath y_3) = \imath y_4-\imath y_2$
+        \subitem - $z = \lambda z_1 + (1-\lambda)z_2$
+    \end{itemize}
+    In this case $z \in L$.
+\end{lemma}
+\begin{proof}
+    \uses{re_im_in_L}
+    The proof is done in two steps we show that $z \in G_1 \cap G_2$ if and only if there are $\lambda, \mu \in \mathbb{R}$ such that the equations hold. 
+    
+    TODO %TODO: add proof
+
+    Now we can show that $z \in L$.\\
+    Since we now that z is equal to $\lambda z_1 + (1-\lambda)z_2$ and $z_1, z_2 \in L$ we only have to show that $\lambda \in L$. Here for we use the equations from the first part of the proof.
+    \begin{align*}
+        \RNum{1} &&\lambda(x_1 - x_2)+\mu(x_4-x_3) &= x_4-x_2\\
+        \RNum{2} &&\lambda(\imath y_1 - \imath y_2)+\mu(\imath y_4-\imath y_3) &= \imath y_4-\imath y_2
+    \end{align*}
+    Now we solve \RNum{2} for $\mu$ 
+    \begin{align*}
+        && \lambda(\imath y_1 - \imath y_2)+\mu(\imath y_4-\imath y_3) &= \imath y_4-\imath y_2 && \mid -\lambda(\imath y_1 - \imath y_2)\\
+        &\Leftrightarrow & \mu(\imath y_4-\imath y_3) &= \imath y_4-\imath y_2 - \lambda(\imath y_1 - \imath y_2) && \mid \div \imath(y_4-y_3)\\
+        &\Leftrightarrow & \mu &= \frac{\imath y_4-\imath y_2 - \lambda(\imath y_1 - \imath y_2)}{\imath y_4-\imath y_3}\\
+       %&\Leftrightarrow & \mu(y_4-y_3) &= y_4-y_2 - \lambda(y_1 - y_2) &&\mid \div \imath(y_4-y_3)\\
+        %&\Leftrightarrow & \mu &= \frac{y_4-y_2 - \lambda(y_1 - y_2)}{y_4-y_3}\\
+    \end{align*}
+    Since we divided by $\imath (y_4-y_3)$ we need to assume that $y_4 \ne y_3$, so we need to first handel the case $y_4 = y_3$.\\
+    If $y_4 = y_3$ we have $\lambda(\imath y_1 - \imath y_2) = \imath y_4-\imath y_2$ and since $y_4 = y_3$ $y_1 \ne y_2$, because otherwise boothe Lines would be parrale to the Rael line an therefore $G_1 = G_2$ or $G_1 \cap G_2 = \varnothing$. Therefore $\lambda = \frac{\imath y_4-\imath y_2}{\imath y_1 - \imath y_2}$. Using the fact that real part and the imaginary part times $\imath$ are in $L$ \ref{re_im_in_L} we have written $\lambda$ as a fraction of two elements in $L$. Therefore $\lambda$ is in $L$, wich implies that $z = \lambda z_1 + (1-\lambda)z_2$ is in $L$.\\
+   
+    Now we insert $\mu$ in \RNum{1} and solve for $\lambda$.\\
+    \resizebox{1\linewidth}{!}{
+    \begin{minipage}{\linewidth}
+    \begin{alignat*}{3}
+        && \lambda(x_1 - x_2)+\mu(x_4-x_3) &= x_4-x_2 && \mid \RNum{1} \leftarrow \RNum{2}\\
+        &\Leftrightarrow & \lambda(x_1 - x_2)+\frac{\imath y_4-\imath y_2 - \lambda(\imath y_1 - \imath y_2)}{\imath y_4-\imath y_3}(x_4-x_3) &= x_4-x_2 && \mid \cdot (\imath y_4-\imath y_3)\\
+        &\Leftrightarrow & \lambda(x_1 - x_2)(\imath y_4-\imath y_3)+(\imath y_4-\imath y_2 - \lambda(\imath y_1 - \imath y_2))(x_4-x_3) &= (x_4-x_2)(\imath y_4-\imath y_3) && \mid - (x_1 - x_2)(\imath y_4-\imath y_3)\\
+        %&\Leftrightarrow & \lambda(y_4-y_3)(x_1 - x_2)+(y_4-y_2)(x_4-x_3) - \lambda(y_1 - y_2)(x_4-x_3) &= (x_4-x_2)(y_4-y_3) && 
+        &\Leftrightarrow & \lambda((x_1 - x_2)(\imath y_4-\imath y_3) - (\imath y_4-\imath y_2)(x_4-x_3)) &= (x_4-x_2)(\imath y_4-\imath y_3) - (\imath y_4-\imath y_2)(x_4-x_3) && \mid \div ((\imath y_4-\imath y_3)(x_1 - x_2)- (\imath y_1 - \imath y_2)(x_4-x_3))\\
+        %&\Leftrightarrow & \lambda((y_4-y_3)(x_1 - x_2)- (y_1 - y_2)(x_4-x_3)) &= (x_4-x_2)(y_4-y_3) - (y_4-y_2)(x_4-x_3) && \mid \div ((y_4-y_3)(x_1 - x_2)- (y_1 - y_2)(x_4-x_3))\\
+        &\Leftrightarrow & \lambda &= \frac{(x_4-x_2)(\imath y_4-\imath y_3) - (\imath y_4-\imath y_2)(x_4-x_3)}{(\imath y_4-\imath y_3)(x_1 - x_2)- (\imath y_1 - \imath y_2)(x_4-x_3)}\\
+    \end{alignat*}
+    \end{minipage}
+    }\\
+    We need to check that the denominator $(y_4-y_3)(x_1 - x_2)- (y_1 - y_2)(x_4-x_3)$ is not zero.
+    If would be zero we would have $(y_4-y_3)(x_1 - x_2) = (y_1 - y_2)(x_4-x_3)$, wich is equivalent to $\frac{y_4-y_3}{x_4-x_3} = \frac{y_1 - y_2}{x_1 - x_2}$. This would mean that the two lines are parralel and therefore $G_1 = G_2$ or $G_1 \cup G_2 = \varnothing$.\\
+    So we can assume that the denominator is not zero and therefore we can write $\lambda$ as a fraction of two elements in $L$. Therefore $\lambda$ is in $L$, wich implies that $z = \lambda z_1 + (1-\lambda)z_2$ is in $L$.
+
+\end{proof}
+
+%3.17
+\begin{lemma}
+    \label{Intersection_line_circle}
+    Let $L$ be a subfield of $\mathbb{C}$, with $L = conj(L)$. For $i = 1,2,3$ let $z_i = x_i + \imath y_i \in L$ with $z_1 \ne z_2$, and let $r > 0$ in $\mathbb{R}$ with $r^2 \in L$. Define
+    \begin{equation*}\begin{aligned}
+        G := \{\lambda z_1 + (1-\lambda)z_2 \mid \lambda \in \mathbb{R}\},\\
+        C := \{z = x + \imath y \in \mathbb{C} \mid \|z - z_3\| = r\}.
+    \end{aligned} \end{equation*}
+    If $G \cap C \ne \emptyset$. Then the following is equivalent:
+    \begin{itemize}
+        \item $z\in G \cap C$.
+        \item There is a $\lambda \in \mathbb{R}$ with $\lambda^2 a+ \lambda b + c = 0$ where
+        \begin{align*}
+            a &:= (x_1 - x_2)^2 + (\imath y_1 - \imath y_2)^2,\\
+            b &:= 2(x_1 - x_2)(x_2 - x_3) - 2(\imath y_1 - \imath y_2)(\imath y_2 - \imath y_3),\\
+            c &:= (x_2 - x_3)^2 + (\imath y_2 - \imath y_3)^2 - r^2,
+        \end{align*}
+        and $z = \lambda z_1 + (1-\lambda)z_2$.
+    \end{itemize}
+    In this case $z \in L(\sqrt{w})$ for an $w \in L$.
+\end{lemma}
+
+\begin{proof}
+First we have to show $z \in G \cap C$ iff and only iff ther existe a $\lambda \in \mathbb{R}$ with $\lambda^2 a+ \lambda b + c = 0$ and $z = \lambda z_1 + (1-\lambda)z_2$.
+
+TODO Umstellen \\
+Now we can show that there existe a $w \in L$ such that $z \in L(\sqrt{w})$.\\
+Since we know that $z = \lambda z_1 + (1-\lambda)z_2$ and $z_1, z_2 \in L$ we only have to show that $\lambda \in L(\sqrt{w})$. Here for we use the equations from the first part of the proof. 
+Since Lambda is a solution of a quadratic equation we now that $\lambda$ is equal to $\frac{-b \pm \sqrt{b^2 - 4ac}}{2a}$. Since $a,b,c \in L$ we get $w = b^2 - 4ac \in L$ so $\lambda \in L(\sqrt{w})$. Therefore $z = \lambda z_1 + (1-\lambda)z_2$ is in $L(\sqrt{w})$.
+%TODO: add proof
+\end{proof}
+
+%3.18
+\begin{lemma}
+    \label{Intersection_circle_circle}
+    Let $L$ be a subfield of $\mathbb{C}$, with $L = conj(L)$. For $i = 1,2 $ let $z_i = x_i + \imath y_i \in L$ with $z_1 \ne z_2$ and let $r_i > 0$ in $\mathbb{R}$ with $r_i^2 \in L$. Define
+    \begin{equation*} \begin{aligned}
+        C_1 := \{z = x + \imath y \in \mathbb{C} \mid \|z - z_1\| = r_1\},\\
+        C_2 := \{z = x + \imath y \in \mathbb{C} \mid \|z - z_2\| = r_2\}.
+    \end{aligned} \end{equation*}
+    If $C_1 \cap C_2 \ne \emptyset$ and $C_1 \ne C_2$. Then 
+    $$G := \{x+\imath y \in \mathbb{C} \mid 2(x_2 - x_1)x - 2(\imath y_2 - \imath y_1)\imath y = r_1^2 - r_2^2 + x_2^2 - x_1^2 + (\imath y_2)^2 - (\imath y_1)^2\} $$
+    is a real line, and $$ C_1 \cap C_2 = G \cap C_1 = G \cap C_2. $$
+    For $z \in C_1 \cap C_2$ there is a $w \in L$ such that $z \in L(\sqrt{w})$.
+\end{lemma}
+\begin{proof}
+    %TODO: add proof
+\end{proof}
+
+
+\section{Kapitel 2 stuff for safekeeping}
+
+%\begin{remark}
+%    We know that $K_0$ is a field and $\mathcal{M} \subseteq K_0\subseteq \mathcal{M}_{\infty} \subseteq \mathbb{C}$.
+%\end{remark}
+\begin{theorem}
+\label{degree_of_constructable_points}
+    Let $\mathcal{M}\subseteq\mathbb{C}$ with $0,1 \in \mathcal{M}$ and $K_0 := \mathbb{Q}(\mathcal{M}\cup \overline{\mathcal{M}})$.
+    Then for $z \in \mathcal{M}_{\infty}$ is equvalent:
+    \begin{enumerate}
+        \item $z \in \mathcal{M}_{\infty}$
+        \item There is an $n \in \mathbb{N}$ and a chain \begin{equation*}
+            K_0 = L_0 \subset L_1 \subset \dots \subset L_n \subset \mathbb{C}
+        \end{equation*}
+        of subfields of $\mathbb{C}$ such that $z \in L_n$ and $[L_i:L_{i-1}] =2$ for $1\le i\le n$ %$L_{i+1}$ is obtained from $L_i$ by adjoining a square root.
+    \end{enumerate}
+    In this case $[K_0(z):K_0] = 2^m$ for some $0 \le m \le n$.
+\end{theorem}
+\begin{remark}
+    Theorem \ref{degree_of_constructable_points} tells us that it is sufficient to show that $[K_0(z):K_0] \ne 2^m$ for some $0 \le m $, witch we will use to show that $\sqrt[3]{2} \notin \mathcal{M}_{\infty}$ and $\exp(\textbf{i} \alpha/3) \notin \mathcal{M}_{\infty}$ for some $\alpha$.
+\end{remark}
+\begin{proof}[Proof of Theorem \ref{degree_of_constructable_points}]
+    TODO %TODO
+\end{proof}
+
+\section{Safekeeping constructions}
+
+%2.3.4
+\begin{lemma}[Mitpiont of two complex numbers]
+    \label{construction_midpoint}
+    For $z_1, z_2 \in M_{\infty}$ is $\frac{z_1 + z_2}{2} \in M_{\infty}$.
+\end{lemma}
+%TODO: add proof, and Construction Idea
+
+%2.3.5
+\begin{lemma}[Halving of Angle]
+    \label{lem:construction_halving_angle}
+    For $z = r \exp(\imath \alpha) \in M_{\infty}$ is $\exp(\imath \alpha / 2) \in M_{\infty}$.
+\end{lemma}
+
+%TODO: add proof, and Construction Idea
+
+%2.3.6
+%TODO: maybe write as \exp(\imath \alpha) + \exp(\imath \beta) = \exp(\imath \gamma) \in M_{\infty}
+\begin{lemma}[Addition of Angles]
+    \label{construction_add_angle}
+    For two given angle $\alpha$ (given by two streches $[a,b]$ and $[c,d]$) and $\beta$ (given by two streches $[e,f]$ and $[g,h]$), with $ a,b,c,d,e,f,g,h \in M_{\infty}$, the addition of the angles is constructable.
+\end{lemma}
+%TODO: add proof, and Construction Idea, 
+
+%2.3.7
+\begin{lemma}[multiplication of positive real numbers]
+    \label{construction_mult_pos_real}
+    For $r_1, r_2 > 0 \in \mathbb{R}\cup M_{\infty}$ is $r_1 r_2 \in M_{\infty}$.
+\end{lemma}
+%TODO: add proof, and Construction Idea
+
+%2.3.8
+\begin{lemma}[Inverse of positive real numbers]
+    \label{construction_inv_pos_real}
+    For $r > 0\in \mathbb{R}\cup M_{\infty}$ is $r^{-1} \in M_{\infty}$.
+\end{lemma}
+%TODO: add proof, and Construction Idea
+
+%2.3.9
+\begin{lemma}[Root of positive real numbers]
+    \label{construction_sqrt_pos_real}
+    For $r > 0 \in \mathbb{R}\cup M_{\infty}$ is $\sqrt{r} \in M_{\infty}$.
+\end{lemma}
+%TODO: add proof, and Construction Idea
+
+%2.3.10
+\begin{lemma}[Polarkoordinates of complex numbers]
+    \label{construction_polar}
+    For $z = r \exp(\imath \alpha) \in M_{\infty}$ is $r, \allowbreak \exp(\imath \alpha) \in M_{\infty}$.
+\end{lemma}
+%TODO: add proof, and Construction Idea
+
+%2.3.11
+\begin{lemma}[Real and Imaginary part of complex numbers]
+    \label{construction_re_im}
+    For $0 \ne z = x + \imath y \in M_{\infty}$ is $x, \imath y \in M_{\infty}$.
+\end{lemma}
+%TODO: add proof, and Construction Idea
+
+%2.3.12
+\begin{lemma}[Construction of $\imath$]
+    \label{construction_imath}
+    $\imath \in M_{\infty}$.
+\end{lemma}
+%TODO: add proof, and Construction Idea
+
+\section{Calssification}
+Now we want to find a critirum for a element of $\mathbb{C}$ to be constructable, i.e. to be in $\mathcal{M}_{\infty}$.
+
+\begin{theorem}
+    \label{thm:Z_in_Minf_imp}
+    For $z \in \mathbb{C}$. $z \in \mathcal{M}_{\infty}$ is equivalent to:\\
+    There is an $n\le 0$ and chain 
+    $$K_0 = L_1 \subset L_2 \subset \ldots \subset L_n \subset \mathbb{C}$$
+    of subfields of $\mathbb{C}$ so that $z \in L_n$ and 
+    $ [L_{i+1}:L_i] = 2 \quad \text{for} \quad i = 0, \ldots, n-1$.
+\end{theorem}
+
+\begin{lemma}
+    \label{lem:Z_in_Minf_imp_eq} 
+    For $z \in \mathbb{C}$. \\
+    The exists of an $n\le 0$ and chain 
+    $$K_0 = L_1 \subset L_2 \subset \ldots \subset L_n \subset \mathbb{C}$$
+    of subfields of $\mathbb{C}$ so that $z \in L_n$ and 
+    $ [L_{i+1}:L_i] = 2 \quad \text{for} \quad i = 0, \ldots, n-1$ is equivalent to:\\
+    There is an intermidiate field $L$ of $\mathbb{C}/K_0$ whit $z \in L$, so that $L$ aries from $K_0$ by a sequence of adjunctions of square roots.
+\end{lemma}
+
+\begin{lemma}
+    \label{lem:Mi_chain}
+    For $M_n$ existiert a chain of intermidiate Fields $K_0 \le K_1 \le \ldots \le K_n$ so that $M_i\subset K_i$ and $K_i:= K_{i-1}(X_i)$ for a set of square roots $X_i$ of elements of $K_{i-1}$.
+\end{lemma}
+
+\begin{proof}
+Induction over $n$
+
+\end{proof}
+
+\begin{lemma} 
+    \label{lem:Z_in_Minf_imp_eq2}
+    For $z \in \mathbb{C}$. $z \in \mathcal{M}_{\infty}$ is implies that there exists an $m \in \mathbb{N}$ such that $[z:K_0] = [K_0(z):K_0]= 2^m$.
+\end{lemma}
+
+\begin{proof} \uses{thm:Z_in_Minf_imp} %Todo add uses
+    Let $z \in \mathbb{C}$ be an element of  $\mathcal{M}_{\infty}$.\\
+    After theorem \ref{thm:Z_in_Minf_imp}, there exist an intermidiate field $L_n$ of $\Q$ $\C$ such that $z\in L_n$.\\
+    Clame 1: $[L_n:K_0]= 2^n$\\
+
+    Sinces ther is a chain \\
+    Since $z\in L_n$ $K_0(z)$ is a gdsiufos $2^n=[L_n : K_0] = [L_n : K_0(z)] \cdot [K_0(Z):K_0]$.
+    So $[K_0(Z):K_0] | 2^n$, since the only diversos of $2^n$ is $2^i$ for $\forall 0\le i \le n$ $[K_0(Z):K_0]$ is equal to $2^m$
+\end{proof}
+
+\begin{corollary}
+    \label{cor:not_in_M_inf}
+    For $z \in \mathbb{C}$, if ther is no $m$ such that $[z:K_0]=2^m$ then $z\notin \mathcal{M}_{\infty}$.
+\end{corollary}
+
+\begin{proof}
+    \uses{lem:Z_in_Minf_imp_eq2}
+    Follws diractly from \ref{lem:Z_in_Minf_imp_eq2}
+\end{proof}

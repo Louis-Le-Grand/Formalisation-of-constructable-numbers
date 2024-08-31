@@ -19,3 +19,4 @@ blueprint/print/
 *.fls
 *.fdb_latexmk
 *.synctex.gz
+*.xdv

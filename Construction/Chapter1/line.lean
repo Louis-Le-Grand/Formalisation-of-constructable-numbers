@@ -1,17 +1,34 @@
 import Construction.Chapter1.def
 -- import Mathlib.Analysis.SpecialFunctions.Complex.Arg --! For section safekeeping
 
-open Construction
+namespace Construction
+
+lemma line_pionts_iff (l : line) (α: ℂ) (hα: α ∈ l.points) : l.points = {z | ∃ t:ℝ, α + t * (l.z₁ - l.z₂) = z} := by
+  ext x
+  simp only [line.points, Set.mem_setOf_eq] at hα ⊢
+  obtain ⟨tα, htα⟩ := hα
+  refine ⟨?_,?_⟩ <;> intro h <;> obtain ⟨t, ht⟩ := h
+  . refine ⟨t - tα, ?_⟩
+    rw [←htα]
+    push_cast
+    ring_nf  at ht ⊢
+    exact ht
+  . refine ⟨t + tα, ?_⟩
+    push_cast
+    ring_nf  at htα ht ⊢
+    rw [add_sub, add_assoc, add_comm (l.z₁ * t), ←add_assoc, htα, ←add_sub, add_comm]
+    exact ht
 
 section parallel
 
 def parallel (l₁ l₂ : line) := ∃ z, l₁.points = {x + z | x ∈ l₂.points}
 
---TODO: not in Blueprint
+--not in Blueprint
 lemma parallel_self (l : line) : parallel l l := by
   use 0
   simp
---TODO: not in Blueprint
+
+--not in Blueprint
 lemma parallel_symm (l₁ l₂ : line) : parallel l₁ l₂ → parallel l₂ l₁ := by
   intro h
   obtain ⟨z, hz⟩ := h
@@ -54,11 +71,13 @@ variable (l : line)
 
 def direction_vector: ℂ := l.z₁ - l.z₂
 
+--not in Blueprint
 lemma direction_vector_not_zero (hl: l.z₁ ≠ l.z₂): direction_vector l ≠ 0 := by
   unfold direction_vector
   rw [sub_ne_zero]
   exact hl
 
+--not in Blueprint
 lemma line_piont_iff: l.points = {x | ∃ t:ℝ, l.z₂ + t * direction_vector l = x} := by
   simp only [line.points, sub_mul, one_mul, add_sub, add_comm _ l.z₂, direction_vector, mul_sub]
 
@@ -68,25 +87,37 @@ section DirectionVectorsOfLines_parallel
 
 variable (l₁ l₂ : line)
 
-lemma line_pionts_iff (l : line) (α: ℂ) (hα: α ∈ l.points) : l.points = {z | ∃ t:ℝ, α + t * (l.z₁ - l.z₂) = z} := by
-  ext x
-  simp only [line.points, Set.mem_setOf_eq] at hα ⊢
-  obtain ⟨tα, htα⟩ := hα
-  refine ⟨?_,?_⟩ <;> intro h <;> obtain ⟨t, ht⟩ := h
-  . refine ⟨t - tα, ?_⟩
-    rw [←htα]
-    push_cast
-    ring_nf  at ht ⊢
-    exact ht
-  . refine ⟨t + tα, ?_⟩
-    push_cast
-    ring_nf  at htα ht ⊢
-    rw [add_sub, add_assoc, add_comm (l.z₁ * t), ←add_assoc, htα, ←add_sub, add_comm]
-    exact ht
-
 def parallel' : Prop := ∃ k:ℝ, direction_vector l₁ = k * direction_vector l₂
 
-lemma parallel'_if_im_eq {hl₁_ne : l₁.z₁ ≠ l₁.z₂} {hl₂_ne : l₂.z₁ ≠ l₂.z₂} (hl₁: l₁.z₁.im - l₁.z₂.im = 0) (hl₂: l₂.z₁.im - l₂.z₂.im = 0): parallel' l₁ l₂ := by
+lemma parallel_iff_parllel' {hl₁_ne : l₁.z₁ ≠ l₁.z₂}: parallel' l₁ l₂ → parallel l₁ l₂ := by
+  unfold parallel parallel' direction_vector line.points
+  intro h
+  obtain ⟨k, hk⟩ := h
+  have: (k:ℂ) ≠ 0 := by
+    by_contra h
+    rw[h, zero_mul, sub_eq_zero] at hk
+    contradiction
+  use l₁.z₂ - l₂.z₂
+  ext x
+  refine ⟨?_,?_⟩ <;> intro h
+  . obtain ⟨t, ht⟩ := h
+    simp only [Set.mem_setOf_eq, exists_exists_eq_and]
+    refine ⟨t*k,?_⟩
+    ring_nf
+    push_cast
+    rw [←mul_sub,mul_assoc, ←hk, ←ht]
+    ring_nf
+  . simp only [Set.mem_setOf_eq, exists_exists_eq_and] at h ⊢
+    obtain ⟨t, ht⟩ := h
+    refine ⟨t/k,?_⟩
+    ring_nf
+    push_cast at hk ⊢
+    rw[←@invOf_mul_eq_iff_eq_mul_left _ _ _ _ (k:ℂ) (invertibleOfNonzero this), invOf_eq_inv] at hk
+    rw [←mul_sub, mul_assoc, hk, ←ht]
+    ring_nf
+
+--not in Blueprint for need in the proof of ilc_L'
+lemma parallel'_if_im_eq {hl₂_ne : l₂.z₁ ≠ l₂.z₂} (hl₁: l₁.z₁.im - l₁.z₂.im = 0) (hl₂: l₂.z₁.im - l₂.z₂.im = 0): parallel' l₁ l₂ := by
   simp only [parallel', direction_vector, Complex.ext_iff, Complex.sub_re, Complex.mul_re,
     Complex.ofReal_re, Complex.ofReal_im, Complex.sub_im, hl₂, mul_zero, sub_zero, hl₁,
     Complex.mul_im, zero_mul, add_zero, and_true]
@@ -98,6 +129,7 @@ lemma parallel'_if_im_eq {hl₁_ne : l₁.z₁ ≠ l₁.z₂} {hl₂_ne : l₂.z
     contradiction
   refine ⟨ (l₁.z₁.re - l₁.z₂.re) / (l₂.z₁.re - l₂.z₂.re), (div_mul_cancel₀ (l₁.z₁.re - l₁.z₂.re) this).symm⟩
 
+--not in Blueprint for need in the proof of ilc_L'
 lemma parallel'_if_im_eq' {hl₁_ne : l₁.z₁ ≠ l₁.z₂} {hl₂_ne : l₂.z₁ ≠ l₂.z₂} (h: ((l₂.z₂.im * Complex.I - l₂.z₁.im * Complex.I) * (l₁.z₁.re - l₁.z₂.re) - (l₁.z₁.im * Complex.I - l₁.z₂.im * Complex.I) * (l₂.z₂.re - l₂.z₁.re)) =  0): parallel' l₁ l₂ := by
   unfold parallel' direction_vector
   rw[←sub_mul, ←sub_mul,mul_comm _ Complex.I, mul_comm _ Complex.I, mul_assoc, mul_assoc, ←mul_sub Complex.I, mul_eq_zero, sub_eq_zero] at h
@@ -161,20 +193,6 @@ lemma eq_of_parallel {hl₁_ne : l₁.z₁ ≠ l₁.z₂} (h : parallel' l₁ l�
     ring_nf at hk ⊢
     rw[←sub_mul, hk, add_comm, mul_comm]
     exact ht
-
-
-  -- simp only [parallel', direction_vector] at h
-  -- obtain ⟨k, hk⟩ := h
-  -- ext x
-  -- simp only [line_piont_iff, Set.mem_setOf_eq]
-  -- refine ⟨?_,?_⟩ <;> intro h <;> obtain ⟨t, ht⟩ := h
-  -- . use (t * k)
-  --   push_cast
-  --   rw [mul_assoc, ←hk]
-  --   sorry
-  -- . use (t * k⁻¹)
-  --   sorry
-
 
 end DirectionVectorsOfLines_parallel
 

@@ -86,6 +86,25 @@ We will use $\mathbb{C}$ as plane of drawing and $\mathcal{M} \subset \mathbb{C}
 \end{remark}
 
 \section{Properties of Lines}
+
+\begin{lemma} 
+    \label{lem:line_pionts_iff}
+    \lean{Construction.line_points_iff}
+    \leanok
+    \uses{def:line}
+    The set of pionts of a line $l$ is not definded by its base, i.e. for every $\alpha\in l$  $\{\lambda x+(1-\lambda)y\mid\lambda\in\mathbb{R}\} = \{\lambda x+(\lambda)y+\alpha\mid\lambda\in\mathbb{R}\}$.
+\end{lemma}
+\begin{proof}
+    Two set are equal if they have the same elements. 
+    Since $\alpha$ is in ther exist a $\lambda_{\alpha}$ such that $\alpha = \lambda_{\alpha} x+(1-\lambda_{\alpha})y$.
+    
+    $\Rightarrow:$ Let $z=\lambda_0 x + (1-\lambda_0)y$ (i.e. $\{\lambda x+(1-\lambda)y\mid\lambda\in\mathbb{R}\}$), we have to show that $z\in \{\lambda x+(\lambda)y+\alpha\mid\lambda\in\mathbb{R}\}$,
+    wich is equivalent to ther exist a $\lambda$ such that $x = \lambda x+(\lambda)y+\alpha$. If we use $\lambda = \lambda_0 - \lambda_{\alpha} $ we get
+    $$(\lambda_0 - \lambda_{\alpha}) x + ((\lambda_0 - \lambda_{\alpha}))y + \alpha  \overset{\alpha = \lambda_{\alpha} x+(1-\lambda_{\alpha})y}{=} \lambda_0 x - \lambda_0 y + y = z$$ % \lambda_{\alpha} x+(1-\lambda_{\alpha})y + (\lambda_0 - \lambda_{\alpha}) x + ((\lambda_0 - \lambda_{\alpha}))y
+    $\Leftarrow:$ Let $z$ be in $\{\lambda x+(\lambda)y+\alpha\mid\lambda\in\mathbb{R}\}$, if we use $\lambda = \lambda_0 + \lambda_{\alpha} $ we get
+    $$(\lambda_0 + \lambda_{\alpha}) x + (1 -(\lambda_0 + \lambda_{\alpha}))y = \lambda_0 x - \lambda_0 y + \lambda_{\alpha} x - \lambda_{\alpha} y + y \overset{\alpha = \lambda_{\alpha} x+(1-\lambda_{\alpha})y}{=}  \lambda_0 (x - y) + \alpha = z$$
+\end{proof}
+
 \begin{definition}[parallel]
     \label{def:parallel}
     \lean{Construction.parallel}
@@ -129,6 +148,57 @@ We will use $\mathbb{C}$ as plane of drawing and $\mathcal{M} \subset \mathbb{C}
     \end{align*}
     \end{proof}
 \end{proof}
+
+\begin{definition}
+    \label{def:direction_vector}
+    \lean{Construction.direction_vector}
+    \leanok
+    \uses{def:line}
+    The direction vector of a line $l$ is the vector $l.z_1 - l.z_2$.
+\end{definition}
+
+\begin{definition}
+    \label{def:parallel'}
+    \lean{Construction.parallel'}
+    \leanok
+    \uses{def:line, def:direction_vector}
+    Two lines $l_1$ and $l_2$ are parallel if ther exist an $k$ such that $l_1.z_1 - l_1.z_2 = k \cdot (l_2.z_1 - l_2.z_2)$.
+\end{definition}
+
+\begin{lemma}[Parallel imp parallel']
+    \label{lem:parallel_iff_parallel'}
+    \lean{Construction.parallel_iff_parallel'}
+    \leanok
+    \uses{def:parallel, def:parallel'}
+    If two lines $l_1$ and $l_2$ are parallel' they are parallel.
+\end{lemma}
+\begin{remark}
+    The other direction holds as well, but is not needed.
+\end{remark}
+
+\begin{proof}
+    \uses{def:line, def:direction_vector, def:parallel, def:parallel'}
+    Let $l_1$ and $l_2$ be two lines with $l_1.z_1 - l_1.z_2 = k \cdot (l_2.z_1 - l_2.z_2)$.
+    We have to show that $l_1 = \{z + r \mid z\in l_2\}$, i.e. $\exists r: l_1 = \{z + r \mid z\in l_2\}$.\\
+    Frist remark that $k\ne 0$ since $l_1.z_1\ne l_1.z_2$. We define $r:= y_1 - y_2$ and show that $l_1 = \{z + r \mid z\in l_2\}$.
+    For $z$ to be in $l_1$ is equivalent to $z = \lambda x_1 + (1-\lambda)y_1$ for some $\lambda_0$. 
+    For $z$ to be in $\{x + y_1-y_2 \mid z\in l_2\}$  is equivlant to ther exist a $\lambda$ such that 
+    $$z = \lambda x_2 + (1-\lambda)y_2 + y_1 - y_2 = \lambda (x_2 - y_2) + y_1 \overset{\lambda = \lambda_0 * k}{=} \lambda_0 k (x_2-x_2)-y_1\overset{x_1-y_1=k(x_2-y_2)}{=}\lambda_0(x_1-y_1)+y_1.$$
+\end{proof}
+
+\begin{lemma}[Parallel imp equal]
+    \label{lem:eq_of_parallel}
+    \lean{Construction.eq_of_parallel}
+    \leanok
+    \uses{def:line, def:parallel'}
+    If two lines $l_1$ and $l_2$ are parallel' and intersect, then they are equal.
+\end{lemma}
+
+\begin{proof}
+    \uses{def:line, def:parallel', def:direction_vector, lem:line_pionts_iff}
+    Let $z\in l_1 \cap l_2$ then we use lemma \ref{lem:line_pionts_iff} to get $l_1 = l_2 \Leftrightarrow {\lambda (x_1-y_2)\mid\lambda\in\mathbb{R}} = {\lambda (x_2- y_2)+z\mid\lambda\in\mathbb{R}}$.
+    Since for every $\lambda$ we have $\lambda (x_1-y_2) + x = \lambda \cdot k(x_2- y_2)+z$ we get $l_1 = l_2$.
+ \end{proof}
 
 \section[The set of constructable points]{The Set $M_{\infty}$}\label{set_of_constructable_points}
 When we want to work with the set of constructable points we need some basic lemmas.

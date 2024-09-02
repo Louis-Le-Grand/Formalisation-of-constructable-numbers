@@ -1,0 +1,217 @@
+\documentclass[11pt, a4paper, german]{article}
+
+\usepackage[german]{babel}
+\usepackage{BA_Titelseite}
+
+
+%Namen des Verfassers der Arbeit
+\author{X Y}
+%Geburtsdatum des Verfassers
+\geburtsdatum{1. April 1900}
+%Gebortsort des Verfassers
+\geburtsort{Bonn}
+%Datum der Abgabe der Arbeit
+\date{\today}
+
+%Name des Betreuers
+% z.B.: Prof. Dr. Peter Koepke
+\betreuer{Betreuer: Prof. Dr. X Y}
+%Name des Zweitgutachters
+\zweitgutachter{Zweitgutachter: Prof. Dr. X Y}
+%Name des Instituts an dem der Betreuer der Arbeit tätig ist.
+%z.B.: Mathematisches Institut
+\institut{Institut XYZ}
+%\institut{Mathematisches Institut}
+%\institut{Institut f\"ur Angewandte Mathematik}
+%\institut{Institut f\"ur Numerische Simulation}
+%\institut{Forschungsinstitut f\"ur Diskrete Mathematik}
+%Titel der Bachelorarbeit
+\title{This is only an example}
+%Do not change!
+\ausarbeitungstyp{Bachelorarbeit Mathematik}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\theoremstyle{plain}
+\newtheorem{theorem}{Satz}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Korollar}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Bemerkung}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\numberwithin{equation}{section}
+\numberwithin{theorem}{section}
+
+\usepackage{mathtools}
+\DeclarePairedDelimiter\abs{\lvert}{\rvert}
+\DeclarePairedDelimiter\norm{\lVert}{\rVert}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[hidelinks]{hyperref}
+\usepackage[style=alphabetic]{biblatex}
+\addbibresource{Literatur.bib}
+
+\begin{document}
+
+\maketitle
+
+\section*{Zusammenfassung}
+Wir führen die Benutzung einiger \LaTeX-Befehle und -Pakete anhand von Beispielen vor.
+Die Verwendung der hier empfohlenen Lösungen ist, mit Ausnahme des Titelblatts, nicht verpflichtend, sollte Ihre Arbeit aber erheblich vereinfachen.
+
+Dieses Dokument spiegelt den Stand von 2021 wider; wenn Sie es im Jahr 2030 oder später noch lesen, sollten Sie sich vermutlich nach Alternativen für hier vorgestellte Lösungen umschauen.
+
+\begin{flushright}
+---Pavel Zorin-Kranich
+\end{flushright}
+
+\clearpage
+\tableofcontents
+
+\clearpage
+\section{Einrichtung Ihres \TeX-Systems}
+\subsection{Installation}
+Sie benötigen eine aktuelle Version von \TeX Live.
+Alle gängigen Linux-Distri\-bu\-ti\-onen stellen dafür Pakete bereit.
+Für andere Betriebssysteme ist \TeX Live unter
+\url{https://www.tug.org/texlive/}
+erhältlich.
+Bei der Installation von \TeX Live lassen sich verschiedene Bestandteile auswählen; wenn Sie unsicher sind, was Sie brauchen, können Sie alles installieren.
+
+\subsection{Dokumentation}
+Die Distribution \TeX Live beinhaltet Dokumentation für alle darin enthaltenen Pakete.
+Eine kurze Einführung in \LaTeX\ sehen Sie, wenn Sie in der Kommandozeile
+\begin{verbatim}
+$ texdoc lshort-german
+\end{verbatim}
+eingeben.
+Die Dokumentation für ein Paket können Sie sich mit
+\begin{verbatim}
+$ texdoc PAKETNAME
+\end{verbatim}
+anzeigen lassen, also z.B.\ \verb|texdoc tikz|.
+
+Wenn Sie ausgefallene mathematische Symbole suchen (die in der o.g.\ Kurzbeschreibung nicht auftauchen), werden Sie hier fündig:
+\begin{verbatim}
+$ texdoc comprehensive
+\end{verbatim}
+Es gibt viele Online-Ressourcen zu \LaTeX.
+Es kann aber schwierig sein, aktuelle Informationen von veralteten zu unterscheiden.
+Die aktivste, und deshalb aktuellste, Ressource ist zur Zeit \url{https://tex.stackexchange.com/}
+
+Es gibt auch Bücher über \LaTeX, wie z.B.\ \cite{More_Math_into_Latex}.
+
+\subsection{Editor}
+Wenn Sie noch keinen Lieblingseditor haben, empfehle ich aktuell \emph{Visual Studio Code} mit den Erweiterungen \emph{LaTeX Workshop} (IDE-Funktionen) und \emph{LTeX} (Rechtschreibprüfung).
+Spezialisierte \LaTeX-Editoren bieten dem gegenüber keine echten Vorteile, und diesen Editor können Sie auch für viele andere Zwecke einsetzen.
+
+Richten Sie ihren Editor so ein, dass er \verb|pdflatex| und \verb|biber| (und nicht \verb|latex|+\verb|dvipdf| bzw.\ \verb|bibtex|) benutzt.
+Qualitäts-Editoren sollten automatisch erkennen, was Sie benötigen.
+Wenn Sie keinen Editor mit integriertem Viewer verwenden, sollten Sie noch \verb|pdfsync| manuell einrichten.
+
+\clearpage
+\section{Paketempfehlungen}
+\label{sec:pakete}
+Ich stelle hier kurz die (nach meiner Meinung) für Mathematik wichtigsten Pakete vor.
+
+\subsection{\texttt{amsmath}}
+Stellt nummerierte Umgebungen für Gleichungen bereit, wie z.B.
+\begin{equation}
+\label{eq:1}
+F = ma.
+\end{equation}
+Wenn Sie auf das Display \eqref{eq:1} später verweisen wollen, müssen Sie ihm mit dem Befehl \verb|\label| einen Namen zuweisen, auf den Sie dann mit dem Befehl \verb|\eqref| verweisen können.
+Ähnliches (mit \verb|\ref| statt \verb|\eqref|) ist für Kapitel, wie z.B.\ Kapitel~\ref{sec:pakete}, und Sätze, wie z.B.\ Satz~\ref{thm:Cauchy-Schwarz}, möglich.
+
+\subsection{\texttt{amssymb}}
+Definiert wichtige Symbole, wie z.B. $\mathbb{R}$ mit dem Befehl \verb|\mathbb{R}|.
+
+\subsection{\texttt{amsthm}}
+Stellt den Befehl \verb|\newtheorem| bereit, der benutzt wird um Umgebungen für Sätze, Definitionen, und Ähnliches zu definieren.
+Hier einige Beispiele.
+
+\begin{definition}
+Ein \emph{metrischer Raum} besteht aus einer Menge $M$ und einer Abbildung $d : M \times M \to \mathbb{R}_{\geq 0}$, genannt \emph{Metrik}, sodass für alle $x,y,z\in M$ gilt
+\begin{enumerate}
+\item $x=y \iff d(x,y)=0$,
+\item $d(x,y)=d(y,x)$ (Symmetrie),
+\item $d(x,z) \leq d(x,y)+d(y,z)$ (Subadditivität oder Dreiecksungleichung).
+\end{enumerate}
+\end{definition}
+
+\begin{theorem}[Cauchy--Schwarz-Ungleichung]
+\label{thm:Cauchy-Schwarz}
+Sei $H$ ein Hilbertraum und $v,w \in H$.
+Dann gilt
+\[
+\abs{ \langle v,w \rangle }
+\leq
+\norm{v} \norm{w}.
+\]
+\end{theorem}
+\begin{proof}
+Wenn der Beweis mit einer Gleichung endet, können Sie \verb|\qedhere| verwenden, um das Symbol für Beweisende auf der gleichen Zeile anzuzeigen.
+\end{proof}
+\begin{remark}
+Diese Bemerkung ist nicht nötig um den Rest des Textes zu verstehen.
+\end{remark}
+
+\begin{proof}[Beweis von Satz~\ref{thm:Cauchy-Schwarz}]
+Wenn zwischen der Aussage eines Satzes und dem Beweis noch etwas steht, sollte man explizit sagen, was man gerade beweisen will.
+\end{proof}
+
+\subsection{\texttt{fontenc}}
+\TeX\ ist ein sehr altes System und benutzt standardmäßig Rasterschriftarten.
+Dieses Paket mit der Option \verb|T1| ersetzt sie durch Vektorschriftarten.
+
+\subsection{\texttt{inputenc}}
+\TeX\ ist ein sehr altes System und akzeptiert standardmäßig nur ASCII-Eingabe.
+Dieses Paket mit der Option \verb|utf8| erlaubt Unicode-Eingabe, bietet also insbesondere Unterstützung für Umlaute und andere Akzente.
+
+\subsection{\texttt{hyperref}}
+Erzeugt klickbare Hyperlinks innerhalb des Dokuments bei Benutzung von \verb|\ref| und  \verb|\eqref| und ins Internet mit \verb|\url| und \verb|\href|.
+
+\subsection{\texttt{biblatex}}
+Formatiert die Bibliographie aus Daten, die in einer \verb|.bib|-Datei vorliegen.
+Die Datei muss mit \verb|\addbibresource| eingebunden werden.
+Die Bibliographie wird mit dem Befehl \verb|\printbibliography| gesetzt.
+Es ist ein Zwischenschritt mit dem Programm \verb|biber| notwendig, der von Qualitäts-Editoren automatisch ausgeführt wird; Details entnehmen Sie der Paket-Dokumentation.
+
+Bibliographische Daten in dem passenden Format finden Sie in \emph{Math\-Sci\-Net} (\url{https://mathscinet.ams.org/}) oder \emph{zbMATH} (\url{https://zbmath.org/}).
+Wenn Sie eine Veröffentlichung, die Sie zitieren wollen, dort nicht finden, wie z.B.\ \cite{arxiv:1507.02515}, können Sie den Eintrag von Hand ausfüllen, oder Sie benutzen einen \verb|.bib|-Manager, wie z.B.\ \emph{KBibTeX} (dieser hat den Vorteil einer eingebauten MathSciNet-Suche).
+
+Wenn Sie aus einem Buch zitieren, benennen Sie immer den relevanten Abschnitt, also z.B.\ \cite[Satz III.2.2]{MR1232192} oder zumindest \cite[p.\ 107]{MR1232192} (die Seitenzahl-Variante ist schlechter, da eher von der Ausgabe abhängig), und nicht einfach \cite{MR1232192}.
+In diesem Beispiel ersparen Sie \emph{jedem} Leser Ihrer Arbeit den Aufwand, in einem 700-seitigen Buch etwas Bestimmtes zu suchen.
+
+\clearpage
+\section{Optionale Pakete}
+Die hier vorgestellten Pakete decken Aufgaben ab, die sich nicht in jeder Arbeit stellen, aber häufig genug vorkommen dürften, um sie an dieser Stelle erwähnenswert zu machen.
+
+\subsection{\texttt{mathtools}}
+Vereinfacht häufige Formatierungsaufgaben, wie z.B.\ Einrückung von Gleichungen in der \verb|align|-Umgebung mit dem Befehl \verb|\MoveEqLeft| oder hübsche Formatierung von Klammern, Beträgen, Normen, inneren Produkten, etc.\ mit dem Befehl \verb|\DeclarePairedDelimiter|.
+
+\subsection{\texttt{tikz}}
+Das umfangreiche Paket zur Erstellung von zweidimensionalen Grafiken aller Art.
+
+\subsection{\texttt{tikz-cd}}
+Eine auf \verb|tikz| aufbauende Lösung zur Erstellung von kommutativen Diagrammen.
+Komfortabler und flexibler als alle früheren Lösungen.
+
+Mit \emph{Quiver} (\url{https://q.uiver.app/}) existiert eine WYSIWYG-Ober\-fläche zur Erstellung von \verb|tikz-cd|-Diagrammen.
+
+\subsection{\texttt{graphicx}}
+Einbindung externer Grafiken.
+Empfehlenswerte Formate sind PDF (für Vektorgrafiken), PNG (für Rastergrafiken), oder JPG (für Fotos).
+
+\subsection{\texttt{booktabs}}
+Schönere Tabellen.
+
+\clearpage
+\addcontentsline{toc}{section}{Literatur}
+\printbibliography
+
+\end{document}

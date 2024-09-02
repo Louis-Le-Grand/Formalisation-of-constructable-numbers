@@ -386,7 +386,7 @@ lemma ill_L' (z : ℂ) (h : z ∈ ill L): z ∈ L := by
         have: l₂.z₁.im  - l₂.z₂.im  = 0 := by
           rw [sub_eq_zero, mul_eq_mul_right_iff] at h
           simp_all only [SetLike.mem_coe, ne_eq,Complex.ofReal_inj, Complex.I_ne_zero, or_false, sub_self, mul_zero, add_zero, Set.mem_inter_iff]
-        apply @parallel'_if_im_eq l₁ l₂ ?_ _ h' this
+        apply @parallel'_if_im_eq l₁ l₂ ?_ _ this
         simp_all only [SetLike.mem_coe, ne_eq, Set.mem_inter_iff, not_false_eq_true]
         simp_all only [SetLike.mem_coe, ne_eq, Set.mem_inter_iff, not_false_eq_true]
       have: l₁.points = l₂.points := by

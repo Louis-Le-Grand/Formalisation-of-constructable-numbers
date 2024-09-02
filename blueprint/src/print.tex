@@ -32,17 +32,48 @@
 
 \input{macros/print}
 
-\newcommand{\RNum}[1]{\uppercase\expandafter{\romannumeral #1\relax}}
+\usepackage{BA_Titelseite}
 
-\tikzset{
-            carc/.style args={#1:#2:#3}{
-              insert path={+(#1:#3) arc (#1:#2:#3)}
-            }
-          }
-\title{Formalisation-of-constructable-numbers}
+%Namen des Verfassers der Arbeit
 \author{Ludwig Monnerjahn}
+%Geburtsdatum des Verfassers
+\geburtsdatum{03.09.2002}
+%Gebortsort des Verfassers
+\geburtsort{Berlin}
+%Datum der Abgabe der Arbeit
+\date{12.09.2024}
+
+%Name des Betreuers
+% z.B.: Prof. Dr. Peter Koepke
+\betreuer{Betreuer: Prof. Dr. Floris van Door}
+%Name des Zweitgutachters
+\zweitgutachter{Zweitgutachter: Prof. Dr. Philipp Hieronymi}
+%Name des Instituts an dem der Betreuer der Arbeit t�tig ist.
+%z.B.: Mathematisches Institut
+\institut{Mathematisches Institut}
+%\institut{Institut f\"ur Angewandte Mathematik}
+%\institut{Institut f\"ur Numerische Simulation}
+%\institut{Forschungsinstitut f\"ur Diskrete Mathematik}
+%Titel der Bachelorarbeit
+\title{This is only an example}
+%Do not change!
+\ausarbeitungstyp{Bachelorarbeit Mathematik}
 
 \begin{document}
 \maketitle
+
+\input{chapter/Bachlorarbeit/Abstract}
+\clearpage
+\tableofcontents
+
+\clearpage
+\input{chapter/Bachlorarbeit/Acknowledgment}
+\clearpage
+\input{chapter/Bachlorarbeit/Introduction}
+
 \input{content}
+\input{chapter/Bachlorarbeit/lean}
+
+\input{chapter/biblio}
+\nocite{*}
 \end{document}

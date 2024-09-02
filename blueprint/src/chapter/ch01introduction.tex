@@ -250,7 +250,7 @@ When we want to work with the set of constructable points we need some basic lem
     Follows from the definition of $\mathcal{M}_{\infty}$.
 \end{proof}
 
-\begin{lemma}[$\mathcal{m}$ in $\mathcal{M}_{\infty}$]
+\begin{lemma}[$\mathcal{M}$ in $\mathcal{M}_{\infty}$]
     \label{lem:M_in_M_inf}
     \lean{M_M_inf}
     \leanok
@@ -398,8 +398,9 @@ This constrution is teken from \cite{JAN_SCHRÖER:2023}.\\
 One can construct the point $z_1 + z_2$ by drawing a circle with center $z_1$ and radius $\|z_2\|$ and a circle with center $z_2$ and radius $\|z_1\|$ and taking the intersection of the two circles.\ref{Fig.2}
 \begin{proof}
     \uses{def:line, def:circle,  lem:icc_M_inf, lem:M_in_M_inf}
+    First we have the case that $z_1 \ne z_2$.\\
     Define $c_1 = \{z_1,\dist (0\ z_2)\}$ and $c_2 = \{z_2,\dist (0\ z_1)\}$.\\
-    By assumption $0, z_1, z_2 \in M_{\infty}$, so $c_1, c_2 \in \mathcal{C(M_{\infty})}$.\\
+    By assumption $0, z_1, z_2 \in M_{\infty}$, so $c_1, c_2 \in \mathcal{C(M_{\infty})}$ and since $z_1 \ne z_2$ we get $c_1 \ne c_2$.\\
     \underline{Claim 1}: $z_1 + z_2$ is in $c_1$.
     \begin{proof}
         Unfolding the definition of $c_1:=\{x\in\mathbb{C} \mid\|x-z_1\|=\dist (0\ z_2)\}$.
@@ -411,6 +412,7 @@ One can construct the point $z_1 + z_2$ by drawing a circle with center $z_1$ an
         By the definition of the distence we get $\|z_2-(z_1+z_2)\| = \dist (0\ z_1)$.
     \end{proof}
     By claim 1 and 2 we get that $z_1 + z_2 \in c_1 \cap c_2$. Futhermore  $z_1 + z_2 $ is in $M_{\infty}$, after lemma \ref{lem:icc_M_inf}.
+    If we have $z_1 = z_2$ we get define $c_1 = \{z_1,\dist (0\ z_1)\}$ and $l = \{0,z_1\}$ and get that $z_1 + z_2 \in c_1 \cap l$.
 \end{proof}
 \begin{figure}[h]
     \centering
@@ -446,7 +448,7 @@ One can construct the point $z_1 + z_2$ by drawing a circle with center $z_1$ an
     \lean{parallel_lines_M_inf}
     \leanok
     \uses{def:set_of_constructable_points, def:set_of_lines, def:parallel}
-    For $l \in \mathcal{L(M_{\infty})}$ and $z \in M_{\infty}$ is $\exists l' \in \mathcal{L(M_{\infty}): z\in l' \text{ and } l\|l'}$.
+    For $l \in \mathcal{L(M_{\infty})}$ and $z \in M_{\infty}$ is $\exists l' \in \mathcal{L(M_{\infty})}$ with  $z\in l'$  and  $l\|l'$.
 \end{corollary}
 \begin{proof}
     \uses{def:line, def:set_of_lines, cor:construction_sub,lem:parallel_by_basis} 

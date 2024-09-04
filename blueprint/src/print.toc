@@ -1,21 +1,21 @@
 \selectlanguage *[]{english}
 \contentsline {chapter}{\numberline {1}Introduction}{4}{chapter.1}%
-\contentsline {section}{\numberline {1.1}Motivation}{4}{section.1.1}%
-\contentsline {section}{\numberline {1.2}Lean}{4}{section.1.2}%
-\contentsline {section}{\numberline {1.3}Construction Problems}{4}{section.1.3}%
-\contentsline {chapter}{\numberline {2}Introduction}{5}{chapter.2}%
-\contentsline {section}{\numberline {2.1}Defining lines, circles and the set of constructable points}{5}{section.2.1}%
-\contentsline {section}{\numberline {2.2}Properties of Lines}{6}{section.2.2}%
-\contentsline {section}{\numberline {2.3}The set of constructable points}{8}{section.2.3}%
-\contentsline {section}{\numberline {2.4}Basic constructions}{9}{section.2.4}%
-\contentsline {chapter}{\numberline {3}Field of constructable Numbers}{18}{chapter.3}%
-\contentsline {section}{\numberline {3.1}Filed of Constructable Numbers}{18}{section.3.1}%
-\contentsline {section}{\numberline {3.2}Joshuas Kapitel}{19}{section.3.2}%
-\contentsline {chapter}{\numberline {4}Ancient Construction Proplems}{22}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Doubling the cube}{22}{section.4.1}%
-\contentsline {section}{\numberline {4.2}Trisection of an angle}{22}{section.4.2}%
-\contentsline {chapter}{\numberline {5}Appendix: A collection of results which are needed in the proof.}{24}{chapter.5}%
-\contentsline {section}{\numberline {5.1}Kapitel 2 stuff for safekeeping}{27}{section.5.1}%
-\contentsline {section}{\numberline {5.2}Safekeeping constructions}{27}{section.5.2}%
-\contentsline {section}{\numberline {5.3}Calssification}{27}{section.5.3}%
-\contentsline {chapter}{\numberline {6}Lean}{29}{chapter.6}%
+\contentsline {section}{\numberline {1.1}Construction Problems}{4}{section.1.1}%
+\contentsline {section}{\numberline {1.2}Motivation}{5}{section.1.2}%
+\contentsline {section}{\numberline {1.3}Lean, Theorem Prover and Mathlib}{5}{section.1.3}%
+\contentsline {chapter}{\numberline {2}Basic Constructions with Ruler and Compass}{6}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Defining lines, circles and the set of constructable points}{6}{section.2.1}%
+\contentsline {section}{\numberline {2.2}Properties of Lines}{7}{section.2.2}%
+\contentsline {section}{\numberline {2.3}The set of constructable points}{9}{section.2.3}%
+\contentsline {section}{\numberline {2.4}Basic constructions}{11}{section.2.4}%
+\contentsline {chapter}{\numberline {3}Field of constructable Numbers}{20}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Filed of Constructable Numbers}{20}{section.3.1}%
+\contentsline {section}{\numberline {3.2}Joshuas Kapitel}{21}{section.3.2}%
+\contentsline {chapter}{\numberline {4}Ancient Construction Proplems}{24}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Doubling the cube}{24}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Trisection of an angle}{25}{section.4.2}%
+\contentsline {chapter}{\numberline {5}Appendix: A collection of results which are needed in the proof.}{27}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Kapitel 2 stuff for safekeeping}{30}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Safekeeping constructions}{30}{section.5.2}%
+\contentsline {section}{\numberline {5.3}Calssification}{31}{section.5.3}%
+\contentsline {chapter}{\numberline {6}Lean}{33}{chapter.6}%

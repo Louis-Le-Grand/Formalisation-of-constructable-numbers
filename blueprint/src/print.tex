@@ -1,6 +1,6 @@
 % This file makes a printable version of the blueprint
 
-\documentclass[a4paper]{report}
+\documentclass[11pt, a4paper]{report}
 
 \usepackage[textwidth=14cm]{geometry}
 \usepackage{xfrac}
@@ -9,7 +9,11 @@
 
 \usepackage{amsmath,amssymb}
 \usepackage{enumitem}
-\usepackage{hyperref}
+\usepackage[hidelinks]{hyperref}
+
+%\usepackage[T1]{fontenc}
+%\usepackage[utf8]{inputenc}
+%\usepackage[style=alphabetic]{biblatex}
 
 \usepackage{tikz-cd}
 
@@ -33,6 +37,7 @@
 \input{macros/print}
 
 \usepackage{BA_Titelseite}
+\usepackage{url}
 
 %Namen des Verfassers der Arbeit
 \author{Ludwig Monnerjahn}
@@ -55,7 +60,7 @@
 %\institut{Institut f\"ur Numerische Simulation}
 %\institut{Forschungsinstitut f\"ur Diskrete Mathematik}
 %Titel der Bachelorarbeit
-\title{This is only an example}
+\title{Formalsation of constructable numbers}
 %Do not change!
 \ausarbeitungstyp{Bachelorarbeit Mathematik}
 

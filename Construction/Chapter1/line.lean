@@ -89,7 +89,7 @@ variable (l₁ l₂ : line)
 
 def parallel' : Prop := ∃ k:ℝ, direction_vector l₁ = k * direction_vector l₂
 
-lemma parallel_iff_parllel' {hl₁_ne : l₁.z₁ ≠ l₁.z₂}: parallel' l₁ l₂ → parallel l₁ l₂ := by
+lemma parallel_iff_parallel' {hl₁_ne : l₁.z₁ ≠ l₁.z₂}: parallel' l₁ l₂ → parallel l₁ l₂ := by
   unfold parallel parallel' direction_vector line.points
   intro h
   obtain ⟨k, hk⟩ := h

@@ -25,8 +25,8 @@ We will use $\mathbb{C}$ as plane of drawing and $\mathcal{M} \subset \mathbb{C}
 \end{definition}
 
 \begin{lemma}
-    \label{lem:circel_not_eq_iff}
-    \lean{Construction.circel_not_eq_iff, Construction.circle_not_eq_iff_radius}
+    \label{lem:circle_not_eq_iff}
+    \lean{Construction.circle_not_eq_iff, Construction.circle_not_eq_iff_radius}
     \leanok
     \uses{def:circel}
     If we have two circle $C_1 = (c_1,r_1)$, $C_2 = (c_1,r_1)$ and we have $c_1 \ne c_2$ or $r_1  \ne r_2 $ then the circels aren't equal. 
@@ -89,7 +89,7 @@ We will use $\mathbb{C}$ as plane of drawing and $\mathcal{M} \subset \mathbb{C}
 
 \begin{lemma} 
     \label{lem:line_pionts_iff}
-    \lean{Construction.line_points_iff}
+    \lean{Construction.line_pionts_iff}
     \leanok
     \uses{def:line}
     The set of pionts of a line $l$ is not definded by its base, i.e. for every $\alpha\in l$  $\{\lambda x+(1-\lambda)y\mid\lambda\in\mathbb{R}\} = \{\lambda x+(\lambda)y+\alpha\mid\lambda\in\mathbb{R}\}$.
@@ -205,7 +205,7 @@ When we want to work with the set of constructable points we need some basic lem
 
 \begin{lemma}[$\mathcal{M}\subseteq ICL(\mathcal{M})$]
     \label{lem:M_in_ICL_M}
-    \lean{M_in_ICL_M}
+    \lean{Construction.M_in_ICL_M}
     \leanok
     \uses{def:rules_to_constructed_a_point}
     Every set $M$ is in include in the constructable points of $M$, i.e.
@@ -217,7 +217,7 @@ When we want to work with the set of constructable points we need some basic lem
 
 \begin{lemma}[$\mathcal{M}_i$ Monoton]
     \label{lem:M_i_monoton}
-    \lean{M_I_Monotone,M_I_Monotone_elm,M_I_Monotone', M_I_Monotone_elm'}
+    \lean{Construction.M_I_Monotone,Construction.M_I_Monotone_elm,Construction.M_I_Monotone', Construction.M_I_Monotone_elm'}
     \leanok
     \uses{def:set_of_constructable_points}
     The set $\mathcal{M}_i$ is monoton, i.e. $$\mathcal{M}_i \subseteq \mathcal{M}_{i+1}.$$
@@ -229,7 +229,7 @@ When we want to work with the set of constructable points we need some basic lem
 
 \begin{lemma}[$\mathcal{M}$ in $\mathcal{M}_i$]
     \label{lem:M_in_Mi}
-    \lean{M_in_M_I }
+    \lean{Construction.M_in_M_I }
     \leanok
     \uses{def:set_of_constructable_points}
     The set $\mathcal{M}$ is in $\mathcal{M}_i$, i.e. $$\mathcal{M} \subseteq \mathcal{M}_i.$$
@@ -241,7 +241,7 @@ When we want to work with the set of constructable points we need some basic lem
 
 \begin{lemma}[$\mathcal{M}_i$ in $\mathcal{M}_{\infty}$]
     \label{lem:M_i_in_M_inf}
-    \lean{M_I_in_M_inf,M_I_in_M_inf_elm}
+    \lean{Construction.M_I_in_M_inf,Construction.M_I_in_M_inf_elm}
     \leanok
     \uses{def:set_of_constructable_points}
     The set $\mathcal{M}_i$ is in $\mathcal{M}_{\infty}$, i.e. $$\mathcal{M}_i \subseteq \mathcal{M}_{\infty}.$$
@@ -252,7 +252,7 @@ When we want to work with the set of constructable points we need some basic lem
 
 \begin{lemma}[$\mathcal{M}$ in $\mathcal{M}_{\infty}$]
     \label{lem:M_in_M_inf}
-    \lean{M_M_inf}
+    \lean{Construction.M_M_inf}
     \leanok
     \uses{def:set_of_constructable_points}
     The set $\mathcal{M}$ is in $\mathcal{M}_{\infty}$.
@@ -264,7 +264,7 @@ When we want to work with the set of constructable points we need some basic lem
 
 \begin{lemma}[$\mathcal{M}_{\infty}$ iff $\mathcal{M}_i$]
     \label{lem:M_inf_iff_M_i}
-    \lean{M_inf_in_M_I, M_inf_in_M_I'}
+    \lean{Construction.M_inf_in_M_I, Construction.M_inf_in_M_I'}
     \leanok
     \uses{def:set_of_constructable_points}
     A point $z$ is in $\mathcal{M}_{\infty}$ if and only if $z$ is in $\mathcal{M}_i$ for some $i$.
@@ -275,7 +275,7 @@ When we want to work with the set of constructable points we need some basic lem
 
 \begin{corollary}[$L(\mathcal{M_{\infty}})$ iff $L(\mathcal{M_i})$]
     \label{cor:L_M_inf_iff_L_M_i}
-    \lean{L_M_inf_iff_M_M}
+    \lean{Construction.L_M_inf_iff_M_M}
     \leanok
     \uses{def:set_of_lines, def:set_of_constructable_points}
     A line $l$ is in $\mathcal{L(M_{\infty})}$ if and only if $l$ is in $\mathcal{L(M_i)}$ for some $i$.
@@ -287,7 +287,7 @@ When we want to work with the set of constructable points we need some basic lem
 
 \begin{corollary}[$C(\mathcal{M_{\infty}})$ iff $C(\mathcal{M_i})$]
     \label{cor:C_M_inf_iff_C_M_i}
-    \lean{C_M_inf_iff_M_M}
+    \lean{Construction.C_M_inf_iff_M_M}
     \leanok
     \uses{def:set_of_circles, def:set_of_constructable_points}
     A circle $c$ is in $\mathcal{C(M_{\infty})}$ if and only if $c$ is in $\mathcal{C(M_i)}$ for some $i$.
@@ -300,7 +300,7 @@ When we want to work with the set of constructable points we need some basic lem
 To construct new points in the next section\ref{basic_constructions} we still need to show that every intersection of lines and circles is in $\mathcal{M}_{\infty}$.
 \begin{lemma}[Intersection of lines in $\mathcal{M}_{\infty}$]
     \label{lem:ill_M_inf}
-    \lean{ill_M_inf}
+    \lean{Construction.ill_M_inf}
     \leanok
     \uses{def:set_of_constructable_points, def:set_of_lines}
     For two lines $l_1, l_2 \in \mathcal{L(M_{\infty})}$ is $l_1 \cap l_2 \in \mathcal{M}_{\infty}$.
@@ -317,7 +317,7 @@ To construct new points in the next section\ref{basic_constructions} we still ne
 
 \begin{lemma}[Intersection of line and circle in $\mathcal{M}_{\infty}$]
     \label{lem:ilc_M_inf}
-    \lean{ilc_M_inf}
+    \lean{Construction.ilc_M_inf}
     \leanok
     \uses{def:set_of_constructable_points, def:set_of_lines, def:set_of_circles}
     For a line $l \in \mathcal{L(M_{\infty})}$ and a circle $c \in \mathcal{C(M_{\infty})}$ is $l \cap c \in \mathcal{M}_{\infty}$.
@@ -330,7 +330,7 @@ To construct new points in the next section\ref{basic_constructions} we still ne
 
 \begin{lemma}[Intersection of circles in $\mathcal{M}_{\infty}$]
     \label{lem:icc_M_inf}
-    \lean{icc_M_inf}
+    \lean{Construction.icc_M_inf}
     \leanok
     \uses{def:set_of_constructable_points, def:set_of_circles}
     For two circles $c_1, c_2 \in \mathcal{C(M_{\infty})}$ is $c_1 \cap c_2 \in \mathcal{M}_{\infty}$.
@@ -348,7 +348,7 @@ For the following constructions we assume that $M\subseteq \mathbb{C}$ with $0,1
 %2.3.1
 \begin{lemma}[Negative complex numbers]
     \label{lem:construction_neg}
-    \lean{z_neg_M_inf}
+    \lean{Construction.z_neg_M_inf}
     \leanok
     \uses{def:set_of_constructable_points}
     For $z \in M_{\infty}$ is $-z \in M_{\infty}$.
@@ -389,7 +389,7 @@ To get the point $-z$ we can use the second intersection of the line through $0$
 %2.3.2
 \begin{lemma}[Addition of complex numbers]
     \label{lem:construction_add}
-    \lean{add_M_Inf}
+    \lean{Construction.add_M_Inf}
     \leanok
     \uses{def:set_of_constructable_points}
     For $z_1, z_2 \in M_{\infty}$ is $z_1 + z_2 \in M_{\infty}$.
@@ -433,7 +433,7 @@ One can construct the point $z_1 + z_2$ by drawing a circle with center $z_1$ an
 
 \begin{corollary}[Subtraction of complex numbers]
     \label{cor:construction_sub}
-    \lean{sub_M_Inf}
+    \lean{Construction.sub_M_Inf}
     \leanok
     \uses{def:set_of_constructable_points}
     For $z_1, z_2 \in M_{\infty}$ is $z_1 - z_2 \in M_{\infty}$.
@@ -445,7 +445,7 @@ One can construct the point $z_1 + z_2$ by drawing a circle with center $z_1$ an
 
 \begin{corollary}[Construction of parallel lines]
     \label{lem:construction_parallel_lines}
-    \lean{parallel_lines_M_inf}
+    \lean{Construction.parallel_lines_M_inf}
     \leanok
     \uses{def:set_of_constructable_points, def:set_of_lines, def:parallel}
     For $l \in \mathcal{L(M_{\infty})}$ and $z \in M_{\infty}$ is $\exists l' \in \mathcal{L(M_{\infty})}$ with  $z\in l'$  and  $l\|l'$.
@@ -460,7 +460,7 @@ One can construct the point $z_1 + z_2$ by drawing a circle with center $z_1$ an
 %TODO: Comper to mirrowed version
 \begin{lemma}[Complex conjugation]
     \label{lem:construction_conj}
-    \lean{conj_M_Inf}
+    \lean{Construction.conj_M_Inf}
     \leanok
     \uses{def:set_of_constructable_points}
     For $z \in M_{\infty}$ is $\overline{z} \in M_{\infty}$.
@@ -500,7 +500,7 @@ Draw two crircles one with center $0$ and radius $\|z\|$ and a second with cente
 
 \begin{lemma}[Construction $\imath r\in\mathcal{M}_{\infty}$ ]
     \label{lem:construction_imath_r}
-    \lean{ir_M_inf}
+    \lean{Construction.ir_M_inf}
     \leanok
     \uses{def:set_of_constructable_points}
     For $r \in \mathbb{R}\cap M_{\infty}$ is $\imath r \in M_{\infty}$.
@@ -553,7 +553,7 @@ First you need to construct the imaginary axis by drawing a line $l$ through two
 
 \begin{corollary}[Construction of $\imath$]
     \label{cor:construction_imath}
-    \lean{imath_M_inf}
+    \lean{Construction.imath_M_inf}
     \leanok
     \uses{def:set_of_constructable_points}
     $\imath \in M_{\infty}$.
@@ -565,7 +565,7 @@ First you need to construct the imaginary axis by drawing a line $l$ through two
 
 \begin{lemma}[Construction of real part]
     \label{lem:construction_real}
-    \lean{real_in_M_inf}
+    \lean{Construction.real_in_M_inf}
     \leanok
     \uses{def:set_of_constructable_points}
     For $z \in M_{\infty}$ is $z.re \in M_{\infty}$.
@@ -601,7 +601,7 @@ To get the point $z.re$ we draw a line through $z$ and $\overline{z}$. Then $z.r
 
 \begin{lemma}[Construction of imaginary part]
     \label{lem:construction_imag}
-    \lean{im_in_M_inf,i_z_imp_z_in_M_inf}
+    \lean{Construction.im_in_M_inf,Construction.i_z_imp_z_in_M_inf}
     \leanok
     \uses{def:set_of_constructable_points}
     For $z \in M_{\infty}$ is $z.im \in M_{\infty}$.
@@ -641,7 +641,7 @@ To get the point $z.im$ we draw a line through $z$ and $z-1$. Now we get $\imath
 
 \begin{corollary}[$z \in M_{\infty} \Rightarrow z.re, z.im \in M_{\infty}$]
     \label{cor:z_iff_re_im_M_inf}
-    \lean{z_iff_re_im_M_inf}
+    \lean{Construction.z_iff_re_im_M_inf}
     \leanok
     \uses{def:set_of_constructable_points}
     For $z \in \C$ $z$ is in $M_{\infty}$ if and only if $z.re, z.im \in M_{\infty}$.
@@ -654,7 +654,7 @@ To get the point $z.im$ we draw a line through $z$ and $z-1$. Now we get $\imath
 
 \begin{lemma}[Multiplication of positve real numbers]
     \label{lem:construction_mul}
-    \lean{ab_in_M_inf}
+    \lean{Construction.ab_in_M_inf}
     \leanok
     \uses{def:set_of_constructable_points}
     For $a, b \in M_{\infty}\cap\R$ is $a \cdot b \in M_{\infty}$.
@@ -712,7 +712,7 @@ To get the point $a\cdot b$ we draw a line trough $a$ and $\imath$ and a paralle
 
 \begin{lemma}[Invers of a pos real number]
     \label{lem:construction_inv}
-    \lean{ainv_in_M_inf}
+    \lean{Construction.ainv_in_M_inf}
     \leanok
     \uses{def:set_of_constructable_points}
     If $a \in M_{\infty}\cap\R$, then $a^{-1}$ is in  $M_{\infty}$.
@@ -749,7 +749,7 @@ This can be construceted analog to the multiplication of positve real numbers. U
 
 \begin{corollary}[Invers of a complex number]
     \label{cor:inv_M_inf}
-    \lean{inv_M_inf, z_inv_eq}
+    \lean{Construction.inv_M_inf, Construction.z_inv_eq}
     \leanok
     \uses{def:set_of_constructable_points}
     If $z \in M_{\infty}$, then $z^{-1}$ is in  $M_{\infty}$.
@@ -763,6 +763,8 @@ This can be construceted analog to the multiplication of positve real numbers. U
 
 \begin{lemma}[Root of pos real numerb]
     \label{lem:pos_real_root}
+    TODO lean stuff and prove?
+
     If $r \in M_{\infty}\cap\R_{\ge 1}$, then $\sqrt{r}$ is in  $M_{\infty}$.
 \end{lemma}
 
@@ -770,7 +772,7 @@ This constrution is teken from \cite{JAN_SCHRÖER:2023}.\\
 Draw a circle trough $0$ and $r$ and a line through $1$ parallel to the imaginary axis. Project the intersection to the real axis, using a circel with center $0$ and you get $\sqrt{r}$.\ref{Fig.root}
 \begin{proof}
     \uses{def:line, def:circle, lem:icc_M_inf, lem:M_in_M_inf} %TODO add rest of dependencies   
-Without loss of generality we can assume that $r \ge 1$. Otherwise we can use the fact that $\sqrt{r} = \frac{1}{\sqrt{r^{-1}}}$.\\
+Without loss of generality we can assume that $r \ge 1$. Otherwise we can use the fact that $\sqrt{r} = \frac{1}{\sqrt{r^{-1}}}$.
 
 \end{proof}
 \begin{figure}[h]
@@ -812,7 +814,7 @@ Without loss of generality we can assume that $r \ge 1$. Otherwise we can use th
 \begin{lemma}[Angle in $M_{\infty}$]
     \label{lem:angle_M_inf}
     \uses{def:set_of_constructable_points}
-    \lean{angle_M_inf}
+    \lean{Construction.angle_M_inf}
     \leanok
     If $z = r\cdot e^{\imath\alpha} \in M_{\infty}$, then $e^{\imath\alpha} \in  M_{\infty}$.
 \end{lemma}

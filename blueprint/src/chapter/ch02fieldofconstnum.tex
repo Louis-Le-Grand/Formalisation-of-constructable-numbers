@@ -374,68 +374,14 @@ Since $\Q$ is contained in every subfield of $\C$, it is therefore also containe
 Furthermore, since $M$ is contained in $M_{\infty}$ \ref{lem:M_in_M_inf} and $M$ is conjugate closed \ref{lem:conj_MField}, we can conclude that $M\cup Conj(M) \subseteq \Q$.
 \end{proof}
 
+\section{Classification of Constructable Numbers}
+The following section will employ the following lemma, which has not yet been proven in Lean.
 
-\section{Joshuas Kapitel}
-
-\begin{definition}
-    The degree of $x$ over $K$ is
-    \begin{equation*}
-        [x:K] :=\text{degree}(\mu_{x,K})
-        \end{equation*}
-        with $\mu_{x,K}$ the minimal polynomial of $x$ over $K$. \newline
-    The degree of $L/K$ is the dimension of $L$ as a $K$-vector space and is denoted by
-    \begin{equation*}
-        [L:K].
-    \end{equation*}
-\end{definition}
-
-\begin{theorem}
-\label{thm:degree_of_simple_field_extension}
-    Let $L/K$ be a simple field extension with $L = K(x)$. Then
-    \begin{equation*}
-        [L:K] = [x:K].
-    \end{equation*}
-\end{theorem}
-\begin{proof}
-    In Mathlib: theorem IntermediateField.adjoin.finrank
-\end{proof}
-
-\begin{definition}
-    %\label{def:K_M_0}
-    Let $\mathcal(M)\subseteq\mathbb{C}$ with $0,1 \in \mathcal{M}$
-    \begin{equation*}
-        K_0 := \mathbb{Q}(\mathcal{M}\cup \overline{\mathcal{M}})
-    \end{equation*}
-    with $\overline{\mathcal{M}} := \{ \overline{z} = x - \textbf{i}y \mid z = x+\textbf{i}y  \in \mathcal{M} \}$.
-\end{definition}
-
-TODO: Add $K_i$ and $K_{\infty}$ and a Lemma that states that $K_{\infty} = M_{\infty}$. But this is not needed for the project.
-
-%3.20
 \begin{lemma}
-    \label{lem:conj_of_adjoin}
-    Let $K$ be a subfield of $\mathbb{C}$ with $conj(K)=K$, and $ M \subset \mathbb{C}$ be a subset with $M = conj(M)$. Then holds
-    \begin{equation*}
-        conj(K(M)) = K(M).
-    \end{equation*}
-\end{lemma}
-\begin{proof}
-    We know that the complex conjugation is a field automorphism $\overline{\cdot }: \mathbb{C} \to \mathbb{C}$, whit $\overline{\overline{z}} = z$ for all $z \in \mathbb{C}$. Therefore we have
-    $conj(K(M))$ is a subfield of $\mathbb{C}$.\\
-    Since $K$ and $M$ are subsets of $K(m)$ we have $conj(K) = K$ and $conj(M) = M$ are subsets of $conj(K(M))$. Therefore $$K(M) \subset conj(K(M)).$$
-    If we know apply $conj$ to both sides we get
-    $$conj(K(M)) \subset conj(conj(K(M))) = K(M).$$
-    Therefore $conj(K(M)) = K(M)$.
-\end{proof}
-
-%3.19
-\begin{lemma}
-    \label{lem:dergee2_iff_adjoint_sqrt}
-    Let $K\subset L \subset \mathbb{C}$ be fields. Then the following is equivalent:
-    \begin{itemize}
-        \item $[L:K] = 2$.
-        \item There is a $w \in K$ with $\sqrt{w} \notin K$ and $L = K(\sqrt{w})$.
-    \end{itemize}
+    \label{lem:dergree_two_eq_sqr}
+    \lean{dergree_two_eq_sqr}
+    %For to abetory fields $E$ and $F$ with
+    Let $K, L$ be subfield of $\C$, with $K\le L$. Then $[L:K] = 2$ is equivalent to there exiast an $w*w \in K$ with $w \notin K$ and $L = K(w)$.
 \end{lemma}
 \begin{proof}
     $(ii)\implies (i)$: Let $w$ be as in $(ii)$.Then $\sqrt{w}$ is a root of $X^2 - w \in K[X]$. Since $\sqrt{w} \notin K$ this polynomial is irreducible in $K[X]$. Therefore $[L:K] = 2$.\\
@@ -446,38 +392,64 @@ TODO: Add $K_i$ and $K_{\infty}$ and a Lemma that states that $K_{\infty} = M_{\
     Now let $w := \frac{b^2}{4} - c \in K$ then we get $L = K(\alpha) = K(\sqrt{w})$.
 \end{proof}
 
-
-%TODO: add lemma wich $K_0 \subset M_{\infty}$
-
-%3.21
 \begin{theorem}[constructable iff chain dergee2]
-    \label{thm:Z_in_Minf_1}
-    For $z \in \mathbb{C}$ is equivalent:
-    \begin{itemize}
-        \item $z \in M_{\infty}$
-        \item There is an intermidiate field $L$ of $\mathbb{C}/K_0$ whit $z \in L$, so that $L$ aries from $K_0$ by a sequence of adjunctions of square roots.
-        \item There is an $n\le 0$ and chain 
-            $$K_0 = L_1 \subset L_2 \subset \ldots \subset L_n \subset \mathbb{C}$$
-            of subfields of $\mathbb{C}$ so that $z \in L_n$ and 
-            $$ [L_{i+1}:L_i] = 2 \quad \text{for} \quad i = 0, \ldots, n-1.$$
-    \end{itemize}
+    \label{thm:Classfication_z_in_M_inf}
+    \lean{Classfication_z_in_M_inf, adjoin_in_MField'}
+    For $z \in \mathbb{C}$, $z \in M_{\infty}$ is equivalent to:\\
+    There is an $n\le 0$ and chain 
+    $$K_0 = L_1 \subset L_2 \subset \ldots \subset L_n \subset \mathbb{C}$$
+    of subfields of $\mathbb{C}$ so that $z \in L_n$ and 
+    $$ [L_{i+1}:L_i] = 2 \quad \text{for} \quad i = 0, \ldots, n-1.$$
 \end{theorem}
 
-\begin{remark}
-    \label{rem:Z_in_Minf_1}
-    In this cases the $[K_0(z):K_0] = 2^m$ for some $0 \le m \le n$.
-\end{remark}
-\begin{proof}[Proof of Theorem \ref{thm:Z_in_Minf_1}]
-    \uses{ lem:dergee2_iff_adjoint_sqrt, Intersection_circle_circle, Intersection_line_circle, Intersection_line_line, lem:conj_of_adjoin, lem:M_inf_quad_closed}
-    $(ii) \iff (iii)$ Follows from the definition and Lemma \ref{lem:dergee2_iff_adjoint_sqrt}.\\
-    $(i) \implies (ii)$: We assume that $z$ is derived from $K_0$ by (ZL1), (ZL2) and (ZL3). %TODO: add ref
-    Lemma \ref{Intersection_circle_circle}, \ref{Intersection_line_circle} and \ref{Intersection_line_line} in combination with Lemma \ref{lem:conj_of_adjoin} 
-    imply that ther is an $w \in K_0$ so that $z \in K_0(\sqrt{w})$. Since $\overline{w} \in K_0$, by definition. We define
-    $$K_1 := K_0(\sqrt{w},\sqrt{\overline{w}}).$$
-    $K_1$ derives from $K_0$ sucsessively by adjunction of square roots. Note that $K_1 = conj(K_1)$, by Lemma \ref{lem:conj_of_adjoin} and the fact that $\sqrt{\overline{w}} = \overline{\sqrt{w}}$.
-    Because of the definition of $$M_{\infty} = \bigcup_{n=0}^{\infty} M_n,$$
-    he statement follows by induction.\\ %TODO: Elaborate on induction for lean
-    $(ii) \implies (i)$: We know that $M_{\infty}$ is an quadritc complet field \ref{lem:M_inf_quad_closed}, i.e. $\sqrt{z} \in M_{\infty}$ for all $z \in M_{\infty}$.
-    Futhermore we know that $K_0\subseteq M_{\infty} \subseteq \mathbb{C}$, %TODO: add ref
-    therefore every field $L\subseteq \mathbb{C}$ which is derived from $K_0$ by a sequence of adjunctions of square roots is contaianted in $M_{\infty}$.
+\begin{proof}
+    "$\Leftarrow:$"
+    It can be demonstrated by induction that $L_n$ is contained within $M_{\infty}$. 
+    Therefore, it can be inferred that $z$ is also contained within $M_{\infty}$.
+    \begin{itemize}
+        \item Base case $n=1$: \\
+            $L_1 = K_0 \subseteq M_{\infty}$ \ref{lem:K_zero_in_MField}.
+        
+        \item induction hypothesis: \\
+            Assume that for $n$: $\forall i < n: L_i \le L_{i+1} \land [L_{i+1}:L_i]=2$ imples $L_n \subseteq M_{\infty}$.
+        \item Inductive step $n \to n+1$: \\
+            Given that $[L_{n+1}:L_n] = 2$, it follows from the conclusions of Lemma \ref{lem:dergree_two_eq_sqr} that there exists a $w \in L_n$ with the property that $ \sqrt{w} \notin L_n$ and $L_{n+1} = L_n(w)$.
+            By the induction hypothesis, it can be inferred that $L_n \subseteq M_{\infty}$. Since $w \in L_n  \subseteq M_{\infty}$ and $ M_{\infty}$ is QuadraticClosed \ref{lem:M_inf_quad_closed} $L_n(w) = L_{n+1} \subseteq M_{\infty}$.
+    \end{itemize}
+    "$\Rightarrow:$"
+
+\end{proof}
+
+\begin{lemma}
+    \label{lem:Classfication_z_in_M_inf_2m}
+    \lean{Classfication_z_in_M_inf_2m}
+    For $z \in \mathbb{C}$, $z \in M_{\infty}$ imples there exists an $m$ such that $[z:K_0] = 2^m$.
+\end{lemma}
+
+\begin{proof}
+    By Theorem \ref{thm:Classfication_z_in_M_inf}, it can be inferred that there exists a chain of subfields, $K_0 = L_1 \subset L_2 \subset \dots \subset L_n \subset \mathbb{C}$, with $z \in L_n$ and $[L_i : L_{i+1}] = 2$ for $i = 0, 1, \dots, n-1$. 
+    Moreover, the multiplicativity formula for degrees indicates that the degree of the extension $[L_n : K_0]$ is equal to the product of the degrees of the extensions $[L_n : L_{n-1}] \cdot [L_{n-1} : L_{n-2}] \cdot \dots [L_2 : L_1]$.
+    Thus, we have that $[L_n : K_0] = 2^n$. 
+    The fact that $z\in L_n$ implies that $K_0(z)\subseteq L_n$. 
+    It thus follows that the index of the field extension $[L_n : K_0] = [L_n : K_0(z)]\cdot [K_0(z) : K_0]$, which implies that $[K_0(z) : K_0]$ is a divisor of $2^n$. 
+\end{proof}
+
+\begin{corollary}
+    \label{cor:Classfication_z_in_M_inf_2m_not}
+    \leanok
+    \lean{Classfication_z_in_M_inf_2m_not}
+    For $z \in \mathbb{C}$, if there is no $m$ such that $[z:K_0] = 2^m$ then $z \notin M_{\infty}$.
+\end{corollary}
+
+\begin{proof}
+    Contraposition of Lemma \ref{lem:Classfication_z_in_M_inf_2m}.
+\end{proof}
+
+\begin{corollary}
+    \label{cor:Classfication_z_in_M_inf_2m_rat}
+    For $z \in \mathbb{C}$, $z \in M_{\infty}$ with $[K_0:\Q] = 2^n$,  if there is no $m$ such that $[z:\Q] = 2^m$ then $z \notin M_{\infty}$.
+\end{corollary}
+
+\begin{proof}
+    A combination of the multiplicativity formula for degrees and corollary \ref{cor:Classfication_z_in_M_inf_2m_not}.
 \end{proof}

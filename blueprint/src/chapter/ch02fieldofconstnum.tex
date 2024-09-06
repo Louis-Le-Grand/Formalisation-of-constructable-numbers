@@ -329,9 +329,51 @@ Since Lambda is a solution of a quadratic equation we now that $\lambda$ is equa
     \label{def:K_M_0}
     Let $\mathcal(M)\subseteq\mathbb{C}$ with $0,1 \in \mathcal{M}$
     \begin{equation*}
-        K_0 := \mathbb{Q}(\mathcal{M}\cup \conj(\mathcal{M}))
+        K_0 := \mathbb{Q}(\mathcal{M}\cup Conj(\mathcal{M}))
     \end{equation*}
 \end{definition}
+
+\begin{lemma}
+    \label{lem:conj_adjion}
+    \leanok
+    \lean{conj_adjoin, conj_adjion'}
+    Let $K$ be an conjugation closed intermidiate field of $\Q$ $\C$ and $ M \subset \mathbb{C}$ be a subset with $M = conj(M)$. Then holds
+    $K(M)$ is conjugate closed.
+\end{lemma}
+\begin{proof}
+    In reference \ref{lem:ConjClosed.conj_field}, it was demonstrated that for a field F, the field of complex numbers, $Conj(F)$ is a field. 
+    It can thus be concluded that $Conj(K(M))$ is also a field.
+    As both $K$ and $M$ are subsets of $K(M)$, it can be inferred from lemma \ref{lem:ConjClosed.conj_inclusion} that $Conj(K) \overset{ConjClosed}{=} K$ and $Conj(M) \overset{ConjClosed}{=} M$ are subsets of $Conj(K(M))$. 
+    As $K(M)$ is the smallest subfield of $\C$ that includes it, it can be concluded that $$K(M) \subseteq Conj(K(M)).$$
+    Furthermore, if we apply $Conj$ to both sides and again infer \ref{lem:ConjClosed.conj_inclusion}, we obtain $$Conj(K(M)) \subseteq Conj(Conj(K(M))) = K(M),$$ 
+    which leads to the conclusion that $Conj(K(M)) = K(M)$.
+\end{proof}
+
+\begin{corollary}
+    \label{cor:K_zero_conjectClosed}
+    \leanok
+    \lean{K_zero_conjectClosed}
+    For $M\subseteq \mathbb{C}$ with $0,1 \in M$ is $K_0$ conjugate closed.
+\end{corollary}
+\begin{proof}
+    By employing the preceding lemma, it is sufficient to demonstrate that the $\Q$ and $M \cup Conj(M)$ are conjugate closed. 
+    Wich can be infered from \ref{lem:ConjClosed.Rat_ConjClosed} and \ref{lem:M_con_M}
+\end{proof}
+
+\begin{lemma}
+    \label{lem:K_zero_in_MField}
+    \leanok
+    \lean{K_zero_in_MField}
+    For $M\subseteq \mathbb{C}$ with $0,1 \in M$ is $K_0 \subseteq M_{\infty}$.
+\end{lemma}
+\begin{proof}
+From the definition of $K_0 := \Q(M\cup Conj(M))$, 
+it can be seen that this is the smallest subfield of $\C$ containing both $Q$ and $M\cup Conj(M)$. 
+Consequently, it is sufficient to demonstrate that both $\Q$ and $M\cup Conj(M)$ are contained within $M_{\infty}$. 
+Since $\Q$ is contained in every subfield of $\C$, it is therefore also contained in $M_{\infty}$. 
+Furthermore, since $M$ is contained in $M_{\infty}$ \ref{lem:M_in_M_inf} and $M$ is conjugate closed \ref{lem:conj_MField}, we can conclude that $M\cup Conj(M) \subseteq \Q$.
+\end{proof}
+
 
 \section{Joshuas Kapitel}
 

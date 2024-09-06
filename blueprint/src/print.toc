@@ -8,14 +8,11 @@
 \contentsline {section}{\numberline {2.2}Properties of Lines}{7}{section.2.2}%
 \contentsline {section}{\numberline {2.3}The set of constructable points}{9}{section.2.3}%
 \contentsline {section}{\numberline {2.4}Basic constructions}{11}{section.2.4}%
-\contentsline {chapter}{\numberline {3}Field of constructable Numbers}{20}{chapter.3}%
-\contentsline {section}{\numberline {3.1}Filed of Constructable Numbers}{20}{section.3.1}%
-\contentsline {section}{\numberline {3.2}Joshuas Kapitel}{21}{section.3.2}%
-\contentsline {chapter}{\numberline {4}Ancient Construction Proplems}{24}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Doubling the cube}{24}{section.4.1}%
-\contentsline {section}{\numberline {4.2}Trisection of an angle}{25}{section.4.2}%
-\contentsline {chapter}{\numberline {5}Appendix: A collection of results which are needed in the proof.}{27}{chapter.5}%
-\contentsline {section}{\numberline {5.1}Kapitel 2 stuff for safekeeping}{30}{section.5.1}%
-\contentsline {section}{\numberline {5.2}Safekeeping constructions}{30}{section.5.2}%
-\contentsline {section}{\numberline {5.3}Calssification}{31}{section.5.3}%
-\contentsline {chapter}{\numberline {6}Lean}{33}{chapter.6}%
+\contentsline {chapter}{\numberline {3}Field of constructable Numbers}{21}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Filed of Constructable Numbers}{21}{section.3.1}%
+\contentsline {section}{\numberline {3.2}K zero}{26}{section.3.2}%
+\contentsline {section}{\numberline {3.3}Joshuas Kapitel}{26}{section.3.3}%
+\contentsline {chapter}{\numberline {4}Ancient Construction Proplems}{29}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Doubling the cube}{29}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Trisection of an angle}{30}{section.4.2}%
+\contentsline {chapter}{\numberline {5}Lean}{32}{chapter.5}%

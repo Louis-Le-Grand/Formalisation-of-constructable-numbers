@@ -12,7 +12,7 @@ noncomputable def MField (M: Set ℂ)(h₀: 0 ∈ M)(h₁: 1∈ M): Subfield ℂ
   inv_mem' := by apply inv_M_inf M h₀ h₁
 }
 
---? TODO: Add to blueprint
+--? not in blueprint
 lemma MField_mem (M: Set ℂ)(h₀: 0 ∈ M)(h₁: 1∈ M): ∀ x : ℂ, x ∈ MField M h₀ h₁ ↔ x ∈ M_inf M := by
   intro x
   exact @Subfield.mem_carrier ℂ _ (MField M h₀ h₁) x
@@ -20,7 +20,7 @@ lemma MField_mem (M: Set ℂ)(h₀: 0 ∈ M)(h₁: 1∈ M): ∀ x : ℂ, x ∈ M
 lemma MField_i (M: Set ℂ)(h₀: 0 ∈ M)(h₁: 1∈ M): Complex.I ∈ MField M h₀ h₁ := by
   exact imath_M_inf M h₀ h₁
 
---? TODO: Add to blueprint
+--? not in blueprint
 lemma MField_i_mul (M: Set ℂ)(h₀: 0 ∈ M)(h₁: 1∈ M): ∀ x : ℝ, ↑x ∈ MField M h₀ h₁ ↔
     Complex.I * x ∈ MField M h₀ h₁ := by
   intro x
@@ -109,21 +109,15 @@ class ConjClosed (M : Set ℂ) : Prop where
 instance MField_conj (M: Set ℂ)(h₀: 0 ∈ M)(h₁: 1∈ M) : ConjClosed (MField M h₀ h₁) where
   equal := by
     unfold conj_set
-    rw [@Set.Subset.antisymm_iff]
-    constructor
-    . rw [@Set.subset_setOf]
-      intro x hx
-      use (starRingEnd ℂ) x
+    rw [Set.Subset.antisymm_iff]
+    refine ⟨?_, ?_⟩ <;> intro x hx
+    . use (starRingEnd ℂ) x
       constructor
-      . simp only [SetLike.mem_coe]
-        apply conj_M_Inf M h₀ h₁ x (by rw[←MField_mem M h₀ h₁ x]; norm_cast)
+      . exact conj_M_Inf M h₀ h₁ x (by rw[←MField_mem M h₀ h₁ x]; norm_cast)
       . simp only [RingHomCompTriple.comp_apply, RingHom.id_apply]
-    . rw [@Set.setOf_subset]
-      intro x hx
-      simp only [SetLike.mem_coe]
-      obtain ⟨y, hy, hx⟩ := hx
+    . obtain ⟨y, hy, hx⟩ := hx
       rw [←hx]
-      apply conj_M_Inf M h₀ h₁ y hy
+      exact (conj_M_Inf M h₀ h₁ y hy)
 namespace ConjClosed
 open ComplexConjugate
 

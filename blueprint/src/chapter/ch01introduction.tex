@@ -412,7 +412,9 @@ One can construct the point $z_1 + z_2$ by drawing a circle with center $z_1$ an
         By the definition of the distence we get $\|z_2-(z_1+z_2)\| = \dist (0\ z_1)$.
     \end{proof}
     By claim 1 and 2 we get that $z_1 + z_2 \in c_1 \cap c_2$. Futhermore  $z_1 + z_2 $ is in $M_{\infty}$, after lemma \ref{lem:icc_M_inf}.
-    If we have $z_1 = z_2$ we get define $c_1 = \{z_1,\dist (0\ z_1)\}$ and $l = \{0,z_1\}$ and get that $z_1 + z_2 \in c_1 \cap l$.
+    
+    If we have $z_1 = z_2$ we get define $c_1 = \{z_1,\dist (0\ z_1)\}$ and $l = \{0,z_1\}$ and get that $z_1 + z_2 = z_1 + z_1 \in c_1 \cap l$.
+
 \end{proof}
 \begin{figure}[h]
     \centering
@@ -498,12 +500,12 @@ Draw two crircles one with center $0$ and radius $\|z\|$ and a second with cente
 \end{figure}
 
 
-\begin{lemma}[Construction $\imath r\in\mathcal{M}_{\infty}$ ]
+\begin{lemma}[Construction $\imath r\in\mathcal{M}_{\infty}$]
     \label{lem:construction_imath_r}
     \lean{Construction.ir_M_inf}
     \leanok
     \uses{def:set_of_constructable_points}
-    For $r \in \mathbb{R}\cap M_{\infty}$ is $\imath r \in M_{\infty}$.
+    For $r \in \mathbb{R}\cap M_{\infty}$ is $\imath\cdot r \in M_{\infty}$.
 \end{lemma}
 First you need to construct the imaginary axis by drawing a line $l$ through two crircles with center $-1$ and $1$ and radius $2$. Then you can construct the point $\imath r$, by drawing a circle with center $0$ and radius $r$ and taking the intersection with the imaginary axis.\ref{Fig.4}
 \begin{proof}
@@ -611,7 +613,9 @@ To get the point $z.im$ we draw a line through $z$ and $z-1$. Now we get $\imath
 \begin{proof}
     \uses{def:line, def:circle,}%TODO c_in_C_M, ilc_M_inf, M_M_inf
     Define the lines $l = \{z, z-1\}$ and $l_{\Im} = \{\imath, 0\}$.\\
-    TODO%TODO
+    Now it is analog to the proof of lemma \ref{lem:construction_real}. That $z.im \cdot \imath  \in l \cap l_{\Im}$. 
+
+    Now we can project $z.im \cdot \imath$ on the real axis by drawing a circle with center $0$ and radius $\|z.im\|$ and taking the intersection with the real axis.
 \end{proof}
 \begin{figure}
     \centering
@@ -761,11 +765,88 @@ This can be construceted analog to the multiplication of positve real numbers. U
     Now we can again combiened the lemmas for addition\ref{lem:construction_add}, subtraction\ref{cor:construction_sub}, multiplication\ref{cor:construction_mul_complex} and the corollary for the invers of a positive real number\ref{lem:construction_inv} with the exists of real an imaginary\ref{construction_re_im} part to get that $z^{-1} \in M_{\infty}$.
 \end{proof}
 
-\begin{lemma}[Root of pos real numerb]
-    \label{lem:pos_real_root}
-    TODO lean stuff and prove?
 
-    If $r \in M_{\infty}\cap\R_{\ge 1}$, then $\sqrt{r}$ is in  $M_{\infty}$.
+\begin{lemma}[Angle in $M_{\infty}$]
+    \label{lem:angle_M_inf}
+    \uses{def:set_of_constructable_points}
+    \lean{Construction.angle_M_inf}
+    \leanok
+    If $0 \ne z = r\cdot e^{\imath\alpha} \in M_{\infty}$, then $e^{\imath\alpha} \in  M_{\infty}$.
+\end{lemma}
+To construct we draw a line through $0$ and $z$ and take the intersection with the unit circle. \ref{Fig.angle}
+
+\begin{proof}
+
+    Let $l$ be a line through $0$ and $z$ and $c$ be the unit circle. Then $l \cap c = \{e^{\imath\alpha}\}$.
+    The rest follows from the construction of the intersection of a line and a circle\ref{lem:icc_M_inf}.
+\end{proof}
+
+\begin{corollary}[Midpoint in $M_{\infty}$]
+    \label{cor:midpoint_M_inf}
+    \uses{def:set_of_constructable_points}
+    \lean{Construction.midpoint_M_inf}
+    \leanok
+    If $z_1, z_2 \in M_{\infty}$, then $\frac{z_1 + z_2}{2} \in  M_{\infty}$.
+    
+\end{corollary}
+
+\begin{proof}
+    \uses{lem:construction_add, lem:construction_mul, lem:construction_inv}
+    Combeing the lemmas for addition\ref{lem:construction_add}, multiplication\ref{cor:construction_mul_complex} and the invers of a complex number\ref{cor:inv_M_inf} we get that $\frac{z_1 + z_2}{1+1} \in M_{\infty}$.
+\end{proof}
+
+\begin{lemma}[Halving of an angle]
+    \label{lem:construction_halving_angle}
+    \uses{def:set_of_constructable_points}
+    \lean{Construction.halving_angle_M_inf}
+    \leanok
+    For $\alpha \in [0,2\pi)$, if $e^{\imath\alpha} \in M_{\infty}$, then $e^{\imath\frac{\alpha}{2}} \in  M_{\infty}$.
+\end{lemma}
+\begin{proof}
+    \uses{lem:angle_M_inf, lem:icc_M_inf}
+    For $\alpha \ne 0 \ne \pi$ we take the intersection of the unit circle with the line through $0$ and and the mipiont of $e^{\imath\alpha}$ and $1$. 
+    
+    For $\alpha = 0$ we get $e^{\imath\frac{\alpha}{2}} = 1$ and for $\alpha = \pi$ we get $e^{\imath\frac{\alpha}{2}} = \imath$.
+    
+\end{proof}
+
+\begin{lemma}[Construction of radius]
+    \label{lem:construction_radius}
+    \uses{def:set_of_constructable_points}
+    If $z = r\cdot e^{\imath\alpha} \in M_{\infty}$, then $r \in  M_{\infty}$.
+\end{lemma}
+\begin{remark}
+    The radius is the distence from $0$ to $z$, wich is the same as $\|z\|$.
+\end{remark}
+We get the radius by taking the intersection of the real axis with a circle in zero with radius $\dist (0,z)$. \ref{Fig.radius}
+\begin{proof}
+    We use the fact that $r = \|z\| = \sqrt{\Re(z)^2 + \Im(z)^2}$. Since we have spilt $r$ in already constructed parts, we get that $r \in M_{\infty}$.
+\end{proof}
+
+\begin{figure}[h]
+    \centering
+    \begin{tikzpicture}
+        \draw[->] (-0.5,0) -- (4,0) node[right] {$\Re$};
+        \draw[->] (0,-0.5) -- (0,4) node[above] {$\Im$};
+        \coordinate[label=-135:$0$] (zero) at (0,0);
+        \coordinate[label=-135:$1$] (one) at (1,0);
+        \coordinate[label=90:$z$] (z) at (3,2);
+        \coordinate[label=-135:$r$] (r) at (3.6056,0);
+        \fill[black] (zero) circle (2pt);
+        \fill[black] (one) circle (1pt);
+        \fill[black] (z) circle (2pt);
+        \fill[black] (r) circle (2pt);
+        \draw (zero) -- (z);
+        \draw (zero) [carc=-10:100:3.6056];
+    \end{tikzpicture}
+    \caption{Construction of $r = \|z\|$}
+    \label{Fig.radius}
+\end{figure}
+
+\begin{lemma}[Root of pos real numer]
+    \label{lem:pos_real_root}
+    \lean{Construction.one_real_root, Construction.zero_real_root_M_inf}
+    If $r \in M_{\infty}\cap\R_{\ge 0}$, then $\sqrt{r}$ is in  $M_{\infty}$.
 \end{lemma}
 
 This constrution is teken from \cite{JAN_SCHRÖER:2023}.\\
@@ -773,6 +854,8 @@ Draw a circle trough $0$ and $r$ and a line through $1$ parallel to the imaginar
 \begin{proof}
     \uses{def:line, def:circle, lem:icc_M_inf, lem:M_in_M_inf} %TODO add rest of dependencies   
 Without loss of generality we can assume that $r \ge 1$. Otherwise we can use the fact that $\sqrt{r} = \frac{1}{\sqrt{r^{-1}}}$.
+
+TODO
 
 \end{proof}
 \begin{figure}[h]
@@ -803,27 +886,12 @@ Without loss of generality we can assume that $r \ge 1$. Otherwise we can use th
 \begin{corollary}[Squarroot of a complexnumber]
     \label{cor:root_M_inf}
     \uses{def:set_of_constructable_points}
-    If $z \in M_{\infty}$, then $\sqrtsign{z}$ is in  $M_{\infty}$.
+    If $z \in M_{\infty}$, then $\sqrt{z}$ is in  $M_{\infty}$.
 \end{corollary}
 \begin{proof}
-    For $z = a +\imath b \in M_{\infty}$ we can write 
-    $$ \sqrt{z} = \sqrt{\frac{|z|+a}{2}}+\imath \frac{b}{|b|}\sqrt{\frac{|z|-a}{2}}.$$
-    Then we can combiene the construction of a rational root \ref{lem:pos_real_root} and the fact that multiplcation, \dots are in $M_\infty$.
-\end{proof}
+    $z = r \cdot e^{\imath \alpha}$ with $r \in \R_{\ge 0}$ and $\alpha \in \R$. Then $\sqrt{z} = \sqrt{r} \cdot e^{\imath \frac{\alpha}{2}}$.
+    Now we can use Lemma \ref{lem:construction_radius} and Lemma \ref{lem:pos_real_root} to get that $\sqrt{z} \in M_{\infty}$. For $e^{\imath \frac{\alpha}{2}}$ we can compbine Lemma \ref{lem:angle_M_inf} and Lemma \ref{lem:construction_halving_angle}. Now we get that $\sqrt{z} \in M_{\infty}$, after Lemma \ref{lem:construction_mul}.
 
-\begin{lemma}[Angle in $M_{\infty}$]
-    \label{lem:angle_M_inf}
-    \uses{def:set_of_constructable_points}
-    \lean{Construction.angle_M_inf}
-    \leanok
-    If $z = r\cdot e^{\imath\alpha} \in M_{\infty}$, then $e^{\imath\alpha} \in  M_{\infty}$.
-\end{lemma}
-To construct we draw a line through $0$ and $z$ and take the intersection with the unit circle. \ref{Fig.angle}
-
-\begin{proof}
-
-    Let $l$ be a line through $0$ and $z$ and $c$ be the unit circle. Then $l \cap c = \{e^{\imath\alpha}\}$.
-    The rest follows from the construction of the intersection of a line and a circle\ref{lem:icc_M_inf}.
 \end{proof}
 
 \begin{figure}[h]
@@ -846,38 +914,7 @@ To construct we draw a line through $0$ and $z$ and take the intersection with t
     \label{Fig.angle}
 \end{figure}
 
-\begin{lemma}[Construction of radius]
-    \label{lem:construction_radius}
-    \uses{def:set_of_constructable_points}
-    If $z = r\cdot e^{\imath\alpha} \in M_{\infty}$, then $r \in  M_{\infty}$.
-\end{lemma}
-\begin{remark}
-    The radius is the distence from $0$ to $z$, wich is the same as $\|z\|$.
-\end{remark}
-We get the radius by taking the intersection of the real axis with a circle in zero with radius $\dist (0,z)$. \ref{Fig.radius}
-\begin{proof}
-    We use the fact that $r = \|z\| = \sqrt{\Re(z)^2 + \Im(z)^2}$ and the root of a real number\ref{lem:pos_real_root}.
-\end{proof}
 
-\begin{figure}[h]
-    \centering
-    \begin{tikzpicture}
-        \draw[->] (-0.5,0) -- (4,0) node[right] {$\Re$};
-        \draw[->] (0,-0.5) -- (0,4) node[above] {$\Im$};
-        \coordinate[label=-135:$0$] (zero) at (0,0);
-        \coordinate[label=-135:$1$] (one) at (1,0);
-        \coordinate[label=90:$z$] (z) at (3,2);
-        \coordinate[label=-135:$r$] (r) at (3.6056,0);
-        \fill[black] (zero) circle (2pt);
-        \fill[black] (one) circle (1pt);
-        \fill[black] (z) circle (2pt);
-        \fill[black] (r) circle (2pt);
-        \draw (zero) -- (z);
-        \draw (zero) [carc=-10:100:3.6056];
-    \end{tikzpicture}
-    \caption{Construction of $r = \|z\|$}
-    \label{Fig.radius}
-\end{figure}
 
 %2.5
 % \begin{lemma}

@@ -8,34 +8,25 @@
     For $M\subseteq \mathbb{C}$ with $0,1 \in M$ is $M_{\infty}$ a subfield of $\mathbb{C}$.
 \end{theorem}
 \begin{proof}
-    %TODO: uses M_inf M_M_inf add_M_Inf z_neg_M_inf mul_M_inf inv_M_inf
-    %TODO: change proof from lean to latex 
-    Chose $z_1, z_2 \in M_{\infty}$,after construction \ref{lem:construction_add}
-    we have $z_1 + z_2 \in M_{\infty}$ and construction \ref{lem:construction_neg}
-    gives us that for every $z \in M_{\infty}$ we have $-z \in M_{\infty}$. Therefore $M_{\infty}$ is closed under addition, and contains the additive invers.\\
-    For multiplication let $z_1 = r_1 \exp(\imath \alpha_1)$ and $z_2 = r_2 \exp(\imath \alpha_2)$ be in $M_{\infty}$. Then we have 
-    $$z_1 z_2 = r_1 r_2 \exp(\imath (\alpha_1 + \alpha_2)) \in M_{\infty}$$. By combining the lemmas \ref{construction_add_angle}, \ref{construction_mult_pos_real} and \ref{construction_polar}
-    we obtain that $z_1 z_2 \in M_{\infty}$.\\
-    For the inverse of $0 \ne z = r \exp(\imath \alpha) \in M_{\infty}$ we know that $$z^{-1} = r^{-1} \exp(\imath(2\pi - \alpha)).$$ We know that $r, \exp(\imath \alpha) \in M_{\infty}$, see construction \ref{construction_polar}.
-    Now we can use construction \ref{construction_inv_pos_real} and \ref{lem:construction_conj} to show,
-    that $r^{-1}, \exp(\imath(2\pi - \alpha)) = \overline{\exp(\imath\alpha)} \in M_{\infty}$. By applying that $M_{\infty}$ is closed under multiplication, shown above, we get that $z^{-1} \in M_{\infty}$.\\
-    Therefore $M_{\infty}$ is a subfield of $\mathbb{C}$.
+    To show that $M_{\infty}$ is a subfield of $\mathbb{C}$ we have to show that $0,1\in M_{\infty}$ and $M_{\infty}$ is closed under addition, multiplication, subtraction and division.
+    \begin{itemize}
+        \item [$0,1$:] This follows from $0,1 \in M$ and Lemma \ref{lem:M_in_M_inf}.
+        \item [$+$:] For $z_1,z_2 \in M_{\infty}$ we can construct $z_1 + z_2 \in M_{\infty}$. \ref{lem:construction_add}
+        \item [$*$:] For $z_1,z_2 \in M_{\infty}$ we can construct $z_1 \cdot z_2 \in M_{\infty}$. \ref{cor:construction_mul_complex}
+        \item [$-$:] For $z \in M_{\infty}$ we can construct $-z \in M_{\infty}$. \ref{lem:construction_neg}
+        \item [$^{-1}$:] For $z \in M_{\infty}$ with $z \ne 0$ we can construct $z^{-1} \in M_{\infty}$. \ref{cor:inv_M_inf}
+    \end{itemize}
 \end{proof}
 
-\begin{corollary} 
-    %TODO make to remark
-    \label{cor:MField_field}
-    %\leanok
-    %\lean{MField_field}
-    For $M\subseteq \mathbb{C}$ with $0,1 \in M$ is $M_{\infty}$ a field.
-\end{corollary}
-\begin{proof}
-    \uses{thm:MField}
-    This is a direct consequence of Theorem \ref{thm:MField} and the fact that a subfield of a field is a field.
-\end{proof}
+\begin{remark}
+   To prove that $M_{\infty}$ is a subfield of $\mathbb{C}$ in Lean we have to creat a new instance with carrier $M_{\infty}$.
+\end{remark}
+\begin{remark}
+    \label{rem:MField_Field}
+    Since $M_{\infty}$ is a subfield of $\mathbb{C}$, $M_{\infty}$ is a field, wich is proof in Lean automatically.
+\end{remark}
 
 
-%2.4
 \begin{lemma}
     \label{lem:M_inf_properties}
     \leanok
@@ -62,44 +53,67 @@
     %TODO: \uses{} imath_M_inf z_iff_re_im_M_inf; (i_z_imp_z_in_M_inf/ MField_i_mul)
     This lemma is a dierct consequence of section \ref{basic_constructions}.
     \begin{itemize}
-        \item[(i):] We kan apply construction \ref{construction_imath}
-        \item[(ii):] We can apply construction \ref{construction_re_im} and \ref{construction_imath}.
-        \item[(iii):]  We can apply construction \ref{construction_polar}.
+        \item[(i):] We kan apply construction \ref{cor:construction_imath}
+        \item[(ii):] We can apply construction \ref{cor:z_iff_re_im_M_inf} and \ref{cor:construction_imath}.
+        \item[(iii):]  We can apply construction \ref{lem:construction_radius} and \ref{lem:angle_M_inf}.
     \end{itemize}
 \end{proof}
 
+\subsection*{Quadritc closed}
 \begin{definition}[quadritc closed field]
     \label{def:quadritc_closed_field}
     \leanok
     \lean{QuadraticClosed}
-    A field $K$ is called \emph{quadritc closed} if for all $z \in K$ we have $\sqrt{z} \in K$.
+    A field $F$ is called \emph{quadritc closed} if for all $x \in F$ there is a $y \in F$ so that $y^2 = x$.
 \end{definition}
 \begin{remark}
-    An equivalent definition is that $K$ is quadritc closed if $$K=\{a^2\mid a \in K\}.$$ 
+    An equivalent definition is that $F$ is quadritc closed if $F=\{a^2\mid a \in K\}$.
 \end{remark}
 
-%2.6
 \begin{lemma}
     \label{lem:M_inf_quad_closed}
-    %\leanok
-    %\lean{MField_quad_closed}
+    \leanok
+    \lean{MField_QuadraticClosed, MField_QuadraticClosed_def}
     \uses{def:set_of_constructable_points, def:quadritc_closed_field}
     For $M\subseteq \mathbb{C}$ with $0,1 \in M$ is $M_{\infty}$ quadritc closed.
 \end{lemma}
 \begin{proof}
-    \uses{cor:MField_field, cor:root_M_inf}
-    Combian theorem \ref{cor:MField_field} to get that $M_{\infty}$ is a field and Lemma \ref{cor:root_M_inf} to get that $M_{\infty}$ is a quadritc closed field.
+    \uses{thm:MField, cor:root_M_inf}
+    We know that $M_{\infty}$ is a field \ref{rem:MField_Field} and Lemma \ref{cor:root_M_inf} gives us for all $z \in M_{\infty}$ a $z^{\frac{1}{2}} \in M_{\infty}$.
+    $$ z^{\frac{1}{2}} * z^{\frac{1}{2}} = z^{\frac{1}{2}^2} = z^{2\cdot \frac{1}{2}} = z.$$
+    Therefore $M_{\infty}$ is quadritc closed.
 \end{proof}
 
+\subsection*{Conjugate closed}
 \begin{definition}
-    \label{def:conjugate_set}
+    \label{def:conj_set}
     \leanok
     \lean{conj_set}
-    For a Set $U \subset \mathbb{C}$ we define the \emph{conjugate set} of $U$ as 
+    For a Set $M \subset \mathbb{C}$ we define the \emph{conjugate set} of $M$ as 
     \begin{equation*}
-        Conj(U) = \{z\in \mathbb{C} \mid \exists w\in U: z = \overline{w}\}
+        Conj(M) = \{\overline{z}\mid z\in M\}
     \end{equation*}
 \end{definition}
+
+\begin{lemma}
+    \label{lem:conj_union}
+    \leanok
+    \lean{conj_union}
+    For two set $M,N \subset \mathbb{C}$ $$Conj(M\cup N) = Conj(M) \cup Conj(N).$$
+\end{lemma}
+\begin{proof}
+    For $z \in Conj(M\cup N)$ ther is a $w \in M\cup N$ so that $\overline{w} = z$, therefore $ z = \overline{w} \in Conj(M) \cup Conj(N)$. The other direction is analog.
+\end{proof}
+
+\begin{lemma}
+    \label{lem:conj_conj_id}
+    \leanok
+    \lean{conj_conj_id}
+    For a set $M \subset \mathbb{C}$ is $Conj(Conj(M)) = M$.
+\end{lemma}
+\begin{proof}
+    $$Conj(Conj(M)) = Conj(\{\overline{z}\mid z\in M\}) = \{\overline{\overline{z}}\mid z\in M\} = \{ z \mid z\in M\} = M.$$
+\end{proof}
 
 \begin{definition}
     \label{def:conj_closed}
@@ -107,6 +121,7 @@
     \lean{ConjClosed}
     We call a subset of $\C$ \emph{conjugate closed} if $M= Conj(M)$.
 \end{definition}
+
 
 \begin{lemma}
     \label{lem:conj_MField}
@@ -118,6 +133,205 @@
     We can apply construction \ref{lem:construction_conj} and the fact that $\overline{\overline z} = z$ for all $z \in\mathbb{C}$.
 \end{proof}
 
+\begin{lemma}
+    \label{lem:M_con_M}
+    \leanok
+    \lean{M_con_M}
+    For $M\subseteq \mathbb{C}$ $M\cup Conj(M)$ is conjugate closed.
+\end{lemma}
+\begin{proof}
+    We can apply Lemma \ref{lem:conj_union} and \ref{lem:conj_conj_id}.
+    $$Conj(M\cup Conj(M)) = Conj(M) \cup Conj(Conj(M)) = M \cup Conj(M).$$
+\end{proof}
+
+\begin{lemma}
+    \label{lem:ConjClosed.Rat_ConjClosed}
+    \leanok
+    \lean{ConjClosed.Rat_ConjClosed, ConjClosed.Rat_ConjClosed'}
+    The set of rational numbers is conjugate closed.
+\end{lemma}
+
+\begin{proof}
+    For every $r \in \mathbb{Q}$ we have $\overline{r} = r$.
+\end{proof}
+
+\begin{lemma}
+    \label{lem:ConjClosed.conj_inclusion}
+    \leanok
+    \lean{ConjClosed.conj_inclusion}
+    For $M,N \subseteq \mathbb{C}$ with $M \subseteq N$ is $Conj(M) \subseteq Conj(N)$.
+\end{lemma}
+\begin{proof}
+    For $z \in Conj(M)$ there is a $w \in M$ so that $\overline{w} = z$ and since $M \subseteq N$ we have $w \in N$ and therefore $z \in Conj(N)$.
+\end{proof}
+
+\begin{lemma}
+    \label{lem:ConjClosed.conj_field}
+    \leanok
+    \lean{ConjClosed.conj_field}
+    For a subfield $F$  of $mathbb{C}$ the conjugate set $Conj(F)$ is a subfield of $\mathbb{C}$.
+\end{lemma}
+\begin{proof}
+    We have to show that $0,1 \in Conj(F)$ and $Conj(F)$ is closed under addition, multiplication, subtraction and division.
+
+    TODO: Dicede if it is worth to write out the proof.
+\end{proof}
+
+\begin{lemma}
+    \label{lem:ConjClosed.re_im_in_L}
+    \leanok
+    \lean{ConjClosed.ir_L, ConjClosed.im_L}
+    Let $L$ be a subfield of $\mathbb{C}$, with $L = conj(L)$. For all $z = x + \imath y \in L$ we have $x, \imath y \in L$.
+\end{lemma}
+\begin{proof}
+    Let $z = x + \imath y \in L$. Since $L$ is conjugate closed we know that $\overline{z}=x-\imath y \in L$. This implies
+    \begin{equation*}
+        \frac{z + \overline{z}}{2} = x \in L
+    \end{equation*}
+    and therfore also $\imath y = z - x \in L$.
+\end{proof}
+
+
+\begin{lemma}
+    \label{lem:ConjClosed.dist_sqard_in_L}
+    \leanok
+    \lean{ConjClosed.dist_sqard_in_L}
+    Let $L$ be a subfield of $\mathbb{C}$, with $L = conj(L)$, and $z_1, z_2 \in L$.
+    For $r := \|z_1-z_2\|$ we get that $r^2 \in L$.
+\end{lemma}
+\begin{proof}
+    \uses{re_im_in_L}
+    For $z_1 = x_1 + \imath y_1$ and $z_2 = x_2 + \imath y_2$ we have
+    \begin{equation*}
+        r = \|z_1 - z_2\| = \sqrt{(x_1 - x_2)^2 + (y_1 - y_2)^2}
+    \end{equation*}
+    and therefore
+    \begin{equation*}
+        r^2 = (x_1 - x_2)^2 + (y_1 - y_2)^2 
+    \end{equation*}
+    After applying Lemma \ref{lem:ConjClosed.re_im_in_L} we get $r^2 \in L$.
+\end{proof}
+
+\begin{lemma}
+    \label{lem:ConjClosed.Intersection_line_line}
+    \leanok
+    \lean{ConjClosed.ill_L, ConjClosed.ill_L'}
+    Let $L$ be a subfield of $\mathbb{C}$, with $L = conj(L)$. For $i = 1,2,3,4$ let $z_i = x_i + \imath y_i \in L$ with $z_1 \ne z_2$ and $z_3 \ne z_4$. Define
+    %TODO: write in two lines
+    \begin{equation*}\begin{aligned}
+        G_1 := \{\lambda z_1 + (1-\lambda)z_2 \mid \lambda \in \mathbb{R}\},\\
+        G_2 := \{\mu z_3 + (1-\mu)z_4 \mid \mu \in \mathbb{R}\}.
+    \end{aligned} \end{equation*}
+    If $G_1 \cap G_2 \ne \emptyset$ and $G_1 \ne G_2$. It is equivalent 
+    \begin{itemize}
+        \item $z\in G_1 \cap G_2$.
+        \item Ther are $\lambda, \mu \in \mathbb{R}$ such that:
+        \subitem - $\lambda(x_1 - x_2)+\mu(x_4-x_3) = x_4-x_2$
+        \subitem - $\lambda(\imath y_1 - \imath y_2)+\mu(\imath y_4-\imath y_3) = \imath y_4-\imath y_2$
+        \subitem - $z = \lambda z_1 + (1-\lambda)z_2$
+    \end{itemize}
+    In this case $z \in L$.
+\end{lemma}
+\begin{proof}
+    \uses{re_im_in_L}
+    The proof is done in two steps we show that $z \in G_1 \cap G_2$ if and only if there are $\lambda, \mu \in \mathbb{R}$ such that the equations hold. \\
+    $\lambda(x_1 - x_2)+\mu(x_4-x_3) = x_4-x_2$ and $\lambda(\imath y_1 - \imath y_2)+\mu(\imath y_4-\imath y_3) = \imath y_4-\imath y_2$ 
+    are equivalent to $\lambda x_1 + (1-\lambda)x_2 = \mu x_3 + (1-\mu)x_4$ and $\lambda y_1 + (1-\lambda)y_2 = \mu y_3 + (1-\mu)y_4$. Wich is the definition of $z \in G_1 \cap G_2$, split in real and imaginary part.\\
+    The third equation is equivalent to $z = \lambda z_1 + (1-\lambda)z_2$ gives use that $z \in G_1$ at the piont wher $G_1$ and $G_2$ intersect, so we can assume that $z \in G_1 \cap G_2$.\\ \\
+    Now we can show that $z \in L$.\\
+    Since we now that z is equal to $\lambda z_1 + (1-\lambda)z_2$ and $z_1, z_2 \in L$ we only have to show that $\lambda \in L$. Here for we use the equations from the first part of the proof.
+    \begin{align*}
+        \RNum{1} &&\lambda(x_1 - x_2)+\mu(x_4-x_3) &= x_4-x_2\\
+        \RNum{2} &&\lambda(\imath y_1 - \imath y_2)+\mu(\imath y_4-\imath y_3) &= \imath y_4-\imath y_2
+    \end{align*}
+    Now we solve \RNum{2} for $\mu$ 
+    \begin{align*}
+        && \lambda(\imath y_1 - \imath y_2)+\mu(\imath y_4-\imath y_3) &= \imath y_4-\imath y_2 && \mid -\lambda(\imath y_1 - \imath y_2)\\
+        &\Leftrightarrow & \mu(\imath y_4-\imath y_3) &= \imath y_4-\imath y_2 - \lambda(\imath y_1 - \imath y_2) && \mid \div \imath(y_4-y_3)\\
+        &\Leftrightarrow & \mu &= \frac{\imath y_4-\imath y_2 - \lambda(\imath y_1 - \imath y_2)}{\imath y_4-\imath y_3}\\
+       %&\Leftrightarrow & \mu(y_4-y_3) &= y_4-y_2 - \lambda(y_1 - y_2) &&\mid \div \imath(y_4-y_3)\\
+        %&\Leftrightarrow & \mu &= \frac{y_4-y_2 - \lambda(y_1 - y_2)}{y_4-y_3}\\
+    \end{align*}
+    Since we divided by $\imath (y_4-y_3)$ we need to assume that $y_4 \ne y_3$, so we need to first handel the case $y_4 = y_3$.\\
+    If $y_4 = y_3$ we have $\lambda(\imath y_1 - \imath y_2) = \imath y_4-\imath y_2$ and since $y_4 = y_3$ $y_1 \ne y_2$, because otherwise boothe Lines would be parrale to the Rael line an therefore $G_1 = G_2$ or $G_1 \cap G_2 = \varnothing$. Therefore $\lambda = \frac{\imath y_4-\imath y_2}{\imath y_1 - \imath y_2}$. Using the fact that real part and the imaginary part times $\imath$ are in $L$ \ref{re_im_in_L} we have written $\lambda$ as a fraction of two elements in $L$. Therefore $\lambda$ is in $L$, wich implies that $z = \lambda z_1 + (1-\lambda)z_2$ is in $L$.\\
+   
+    Now we insert $\mu$ in \RNum{1} and solve for $\lambda$.\\
+    \resizebox{1\linewidth}{!}{
+    \begin{minipage}{\linewidth}
+    \begin{alignat*}{3}
+        && \lambda(x_1 - x_2)+\mu(x_4-x_3) &= x_4-x_2 && \mid \RNum{1} \leftarrow \RNum{2}\\
+        &\Leftrightarrow & \lambda(x_1 - x_2)+\frac{\imath y_4-\imath y_2 - \lambda(\imath y_1 - \imath y_2)}{\imath y_4-\imath y_3}(x_4-x_3) &= x_4-x_2 && \mid \cdot (\imath y_4-\imath y_3)\\
+        &\Leftrightarrow & \lambda(x_1 - x_2)(\imath y_4-\imath y_3)+(\imath y_4-\imath y_2 - \lambda(\imath y_1 - \imath y_2))(x_4-x_3) &= (x_4-x_2)(\imath y_4-\imath y_3) && \mid - (x_1 - x_2)(\imath y_4-\imath y_3)\\
+        %&\Leftrightarrow & \lambda(y_4-y_3)(x_1 - x_2)+(y_4-y_2)(x_4-x_3) - \lambda(y_1 - y_2)(x_4-x_3) &= (x_4-x_2)(y_4-y_3) && 
+        &\Leftrightarrow & \lambda((x_1 - x_2)(\imath y_4-\imath y_3) - (\imath y_4-\imath y_2)(x_4-x_3)) &= (x_4-x_2)(\imath y_4-\imath y_3) - (\imath y_4-\imath y_2)(x_4-x_3) && \mid \div ((\imath y_4-\imath y_3)(x_1 - x_2)- (\imath y_1 - \imath y_2)(x_4-x_3))\\
+        %&\Leftrightarrow & \lambda((y_4-y_3)(x_1 - x_2)- (y_1 - y_2)(x_4-x_3)) &= (x_4-x_2)(y_4-y_3) - (y_4-y_2)(x_4-x_3) && \mid \div ((y_4-y_3)(x_1 - x_2)- (y_1 - y_2)(x_4-x_3))\\
+        &\Leftrightarrow & \lambda &= \frac{(x_4-x_2)(\imath y_4-\imath y_3) - (\imath y_4-\imath y_2)(x_4-x_3)}{(\imath y_4-\imath y_3)(x_1 - x_2)- (\imath y_1 - \imath y_2)(x_4-x_3)}\\
+    \end{alignat*}
+    \end{minipage}
+    }\\
+    We need to check that the denominator $(y_4-y_3)(x_1 - x_2)- (y_1 - y_2)(x_4-x_3)$ is not zero.
+    If would be zero we would have $(y_4-y_3)(x_1 - x_2) = (y_1 - y_2)(x_4-x_3)$, wich is equivalent to $\frac{y_4-y_3}{x_4-x_3} = \frac{y_1 - y_2}{x_1 - x_2}$. This would mean that the two lines are parralel and therefore $G_1 = G_2$ or $G_1 \cup G_2 = \varnothing$.\\
+    So we can assume that the denominator is not zero and therefore we can write $\lambda$ as a fraction of two elements in $L$. Therefore $\lambda$ is in $L$, wich implies that $z = \lambda z_1 + (1-\lambda)z_2$ is in $L$.
+
+\end{proof}
+
+%3.17
+\begin{lemma}
+    \label{Intersection_line_circle}
+    Let $L$ be a subfield of $\mathbb{C}$, with $L = conj(L)$. For $i = 1,2,3$ let $z_i = x_i + \imath y_i \in L$ with $z_1 \ne z_2$, and let $r > 0$ in $\mathbb{R}$ with $r^2 \in L$. Define
+    \begin{equation*}\begin{aligned}
+        G := \{\lambda z_1 + (1-\lambda)z_2 \mid \lambda \in \mathbb{R}\},\\
+        C := \{z = x + \imath y \in \mathbb{C} \mid \|z - z_3\| = r\}.
+    \end{aligned} \end{equation*}
+    If $G \cap C \ne \emptyset$. Then the following is equivalent:
+    \begin{itemize}
+        \item $z\in G \cap C$.
+        \item There is a $\lambda \in \mathbb{R}$ with $\lambda^2 a+ \lambda b + c = 0$ where
+        \begin{align*}
+            a &:= (x_1 - x_2)^2 + (\imath y_1 - \imath y_2)^2,\\
+            b &:= 2(x_1 - x_2)(x_2 - x_3) - 2(\imath y_1 - \imath y_2)(\imath y_2 - \imath y_3),\\
+            c &:= (x_2 - x_3)^2 + (\imath y_2 - \imath y_3)^2 - r^2,
+        \end{align*}
+        and $z = \lambda z_1 + (1-\lambda)z_2$.
+    \end{itemize}
+    In this case $z \in L(\sqrt{w})$ for an $w \in L$.
+\end{lemma}
+
+\begin{proof}
+First we have to show $z \in G \cap C$ iff and only iff ther existe a $\lambda \in \mathbb{R}$ with $\lambda^2 a+ \lambda b + c = 0$ and $z = \lambda z_1 + (1-\lambda)z_2$.
+
+TODO Umstellen \\
+Now we can show that there existe a $w \in L$ such that $z \in L(\sqrt{w})$.\\
+Since we know that $z = \lambda z_1 + (1-\lambda)z_2$ and $z_1, z_2 \in L$ we only have to show that $\lambda \in L(\sqrt{w})$. Here for we use the equations from the first part of the proof. 
+Since Lambda is a solution of a quadratic equation we now that $\lambda$ is equal to $\frac{-b \pm \sqrt{b^2 - 4ac}}{2a}$. Since $a,b,c \in L$ we get $w = b^2 - 4ac \in L$ so $\lambda \in L(\sqrt{w})$. Therefore $z = \lambda z_1 + (1-\lambda)z_2$ is in $L(\sqrt{w})$.
+%TODO: add proof
+\end{proof}
+
+%3.18
+\begin{lemma}
+    \label{Intersection_circle_circle}
+    Let $L$ be a subfield of $\mathbb{C}$, with $L = conj(L)$. For $i = 1,2 $ let $z_i = x_i + \imath y_i \in L$ with $z_1 \ne z_2$ and let $r_i > 0$ in $\mathbb{R}$ with $r_i^2 \in L$. Define
+    \begin{equation*} \begin{aligned}
+        C_1 := \{z = x + \imath y \in \mathbb{C} \mid \|z - z_1\| = r_1\},\\
+        C_2 := \{z = x + \imath y \in \mathbb{C} \mid \|z - z_2\| = r_2\}.
+    \end{aligned} \end{equation*}
+    If $C_1 \cap C_2 \ne \emptyset$ and $C_1 \ne C_2$. Then 
+    $$G := \{x+\imath y \in \mathbb{C} \mid 2(x_2 - x_1)x - 2(\imath y_2 - \imath y_1)\imath y = r_1^2 - r_2^2 + x_2^2 - x_1^2 + (\imath y_2)^2 - (\imath y_1)^2\} $$
+    is a real line, and $$ C_1 \cap C_2 = G \cap C_1 = G \cap C_2. $$
+    For $z \in C_1 \cap C_2$ there is a $w \in L$ such that $z \in L(\sqrt{w})$.
+\end{lemma}
+\begin{proof}
+    Sorry,  like in lean %TODO: add proof
+\end{proof}
+
+\section[K zero]{The Field $\mathcal{K}_0$}
+\begin{definition}
+    \label{def:K_M_0}
+    Let $\mathcal(M)\subseteq\mathbb{C}$ with $0,1 \in \mathcal{M}$
+    \begin{equation*}
+        K_0 := \mathbb{Q}(\mathcal{M}\cup \conj(\mathcal{M}))
+    \end{equation*}
+\end{definition}
 
 \section{Joshuas Kapitel}
 
@@ -145,7 +359,7 @@
 \end{proof}
 
 \begin{definition}
-    \label{def:K_M_0}
+    %\label{def:K_M_0}
     Let $\mathcal(M)\subseteq\mathbb{C}$ with $0,1 \in \mathcal{M}$
     \begin{equation*}
         K_0 := \mathbb{Q}(\mathcal{M}\cup \overline{\mathcal{M}})

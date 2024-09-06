@@ -782,9 +782,9 @@ To construct we draw a line through $0$ and $z$ and take the intersection with t
 \end{proof}
 
 \begin{corollary}[Midpoint in $M_{\infty}$]
-    \label{cor:midpoint_M_inf}
+    \label{cor:Construction.midpoiont}
     \uses{def:set_of_constructable_points}
-    \lean{Construction.midpoint_M_inf}
+    \lean{Construction.midpoiont}
     \leanok
     If $z_1, z_2 \in M_{\infty}$, then $\frac{z_1 + z_2}{2} \in  M_{\infty}$.
     
@@ -796,9 +796,9 @@ To construct we draw a line through $0$ and $z$ and take the intersection with t
 \end{proof}
 
 \begin{lemma}[Halving of an angle]
-    \label{lem:construction_halving_angle}
+    \label{lem:Construction.angle_half_M_inf}
     \uses{def:set_of_constructable_points}
-    \lean{Construction.halving_angle_M_inf}
+    \lean{Construction.angle_half_M_inf}
     \leanok
     For $\alpha \in [0,2\pi)$, if $e^{\imath\alpha} \in M_{\infty}$, then $e^{\imath\frac{\alpha}{2}} \in  M_{\infty}$.
 \end{lemma}
@@ -890,7 +890,7 @@ TODO
 \end{corollary}
 \begin{proof}
     $z = r \cdot e^{\imath \alpha}$ with $r \in \R_{\ge 0}$ and $\alpha \in \R$. Then $\sqrt{z} = \sqrt{r} \cdot e^{\imath \frac{\alpha}{2}}$.
-    Now we can use Lemma \ref{lem:construction_radius} and Lemma \ref{lem:pos_real_root} to get that $\sqrt{z} \in M_{\infty}$. For $e^{\imath \frac{\alpha}{2}}$ we can compbine Lemma \ref{lem:angle_M_inf} and Lemma \ref{lem:construction_halving_angle}. Now we get that $\sqrt{z} \in M_{\infty}$, after Lemma \ref{lem:construction_mul}.
+    Now we can use Lemma \ref{lem:construction_radius} and Lemma \ref{lem:pos_real_root} to get that $\sqrt{z} \in M_{\infty}$. For $e^{\imath \frac{\alpha}{2}}$ we can compbine Lemma \ref{lem:angle_M_inf} and Lemma \ref{lem:Construction.angle_half_M_inf}. Now we get that $\sqrt{z} \in M_{\infty}$, after Lemma \ref{lem:construction_mul}.
 
 \end{proof}
 
@@ -923,7 +923,7 @@ TODO
 % \end{lemma}
 % \begin{proof}
 %    Let $z = r \exp(\imath \alpha) \in M_{\infty}$, whitout loss of generality we can assume that $r \ne 0$. 
-%    Lemma \ref{THM:M_inf_properties}(iv) implies that $r, \exp(\imath \alpha) \in M_{\infty}$. By combining construction \ref{lem:construction_halving_angle},
+%    Lemma \ref{THM:M_inf_properties}(iv) implies that $r, \exp(\imath \alpha) \in M_{\infty}$. By combining construction \ref{lem:Construction.angle_half_M_inf},
 %    which states that $\exp(\imath \alpha / 2) \in M_{\infty}$ and construction \ref{construction_sqrt_pos_real},
 %    that gives us that $\sqrt{r} \in M_{\infty}$, we get that $$\sqrt{z} = \sqrt{r} \exp(\imath \alpha / 2) \in M_{\infty}.$$
 % \end{proof}

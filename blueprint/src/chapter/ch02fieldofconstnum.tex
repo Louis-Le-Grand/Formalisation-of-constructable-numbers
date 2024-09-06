@@ -136,7 +136,7 @@
 \begin{lemma}
     \label{lem:M_con_M}
     \leanok
-    \lean{M_con_M}
+    \lean{ConjClosed.M_con_M}
     For $M\subseteq \mathbb{C}$ $M\cup Conj(M)$ is conjugate closed.
 \end{lemma}
 \begin{proof}
@@ -193,9 +193,9 @@
 
 
 \begin{lemma}
-    \label{lem:ConjClosed.dist_sqard_in_L}
+    \label{lem:ConjClosed.distSq_L}
     \leanok
-    \lean{ConjClosed.dist_sqard_in_L}
+    \lean{ConjClosed.distSq_L}
     Let $L$ be a subfield of $\mathbb{C}$, with $L = conj(L)$, and $z_1, z_2 \in L$.
     For $r := \|z_1-z_2\|$ we get that $r^2 \in L$.
 \end{lemma}
@@ -336,7 +336,7 @@ Since Lambda is a solution of a quadratic equation we now that $\lambda$ is equa
 \begin{lemma}
     \label{lem:conj_adjion}
     \leanok
-    \lean{conj_adjoin, conj_adjion'}
+    \lean{conj_adjion, conj_adjion'}
     Let $K$ be an conjugation closed intermidiate field of $\Q$ $\C$ and $ M \subset \mathbb{C}$ be a subset with $M = conj(M)$. Then holds
     $K(M)$ is conjugate closed.
 \end{lemma}

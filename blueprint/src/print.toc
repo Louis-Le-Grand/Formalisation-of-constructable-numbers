@@ -15,4 +15,6 @@
 \contentsline {chapter}{\numberline {4}Ancient Construction Proplems}{29}{chapter.4}%
 \contentsline {section}{\numberline {4.1}Doubling the cube}{29}{section.4.1}%
 \contentsline {section}{\numberline {4.2}Trisection of an angle}{30}{section.4.2}%
-\contentsline {chapter}{\numberline {5}Lean}{32}{chapter.5}%
+\contentsline {chapter}{\numberline {5}A sample of Lean}{32}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Working with Lean}{32}{section.5.1}%
+\contentsline {section}{\numberline {5.2}A sample of Lean code}{34}{section.5.2}%

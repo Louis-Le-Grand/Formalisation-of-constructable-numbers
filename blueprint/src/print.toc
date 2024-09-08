@@ -18,3 +18,4 @@
 \contentsline {chapter}{\numberline {5}A sample of Lean}{32}{chapter.5}%
 \contentsline {section}{\numberline {5.1}Working with Lean}{32}{section.5.1}%
 \contentsline {section}{\numberline {5.2}A sample of Lean code}{34}{section.5.2}%
+\contentsline {section}{\numberline {5.3}Fragen an Joshua}{34}{section.5.3}%

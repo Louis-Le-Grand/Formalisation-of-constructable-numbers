@@ -164,11 +164,15 @@ lemma real_component_in_M_inf (M : Set ℂ) (h₀ : 0 ∈ M) (h₁ : 1 ∈ M):  
 lemma not_mod_eq_imp_not_eq (a b n : ℕ ) (h : ¬ a % n = b % n) : ¬ a = b := by
   exact fun a_1 ↦ h (congrFun (congrArg HMod.hMod a_1) n)
 
+--lemma dim_k_zero_ang: ∃ j:ℕ, FiniteDimensional.finrank ℚ ↥(K_zero {0, 1, Complex.exp (Complex.I * ↑Real.pi / 3)}) = (2 ^ j) := by sorry
+
+
 lemma pi_third_not_in_M_inf :
   (Complex.exp (Complex.I * (Real.pi/3)/3) : ℂ) ∉ M_inf {(0:ℂ) ,1 ,  Complex.exp (Complex.I *Real.pi/3) } := by
   apply real_component_in_M_inf _ (by simp) (by simp)
-  apply Classfication_z_in_M_inf_2m_not (Set.mem_insert 0 {1, cexp (I * ↑Real.pi / 3)})
+  apply Classfication_z_in_M_inf_2m_rat (Set.mem_insert 0 {1, cexp (I * ↑Real.pi / 3)})
   . simp only [Set.mem_insert_iff, one_ne_zero, Set.mem_singleton_iff, true_or, or_true]
+  . sorry --exact dim_k_zero_ang
   simp
   intro x
   have h: ↑(Complex.exp (Complex.I * (↑Real.pi / 3) / 3)).re = (Real.cos ((Real.pi/3)/3): ℂ):= by sorry
@@ -182,9 +186,7 @@ lemma pi_third_not_in_M_inf :
         rw[pow_succ]
         apply not_mod_eq_imp_not_eq (n:= 2)
         norm_num
-  convert h
-  -- deggre of Complex.exp (Complex.I *Real.pi/3) over Q is 2^i => dgree over ℚ not 2^n imolies degree over K_zero is not 2^m
-  sorry
+  exact h
 
 variable (α : ℂ)
 lemma Angle_not_Trisectable :

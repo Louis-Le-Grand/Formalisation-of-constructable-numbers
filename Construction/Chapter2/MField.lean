@@ -579,7 +579,22 @@ lemma ilc_L' (z : ℂ) (h : z ∈ ilc L): ∃ ω ∈ L, ∃ x : ℂ, x * x = ω 
 
 -- lemma icc_L' (z : ℂ) (h : z ∈ icc L): ∃ ω ∈ L, z ∈ L⟮ω^(1/2:ℂ)⟯ := by sorry
 
-lemma icc_L (z : ℂ) (h : z ∈ icc L): ∃ ω ∈ L,∃ x : ℂ, x * x = ω ∧ z ∈ L⟮x⟯ := by sorry
+lemma icc_L' (z :ℂ) {c₁ c₂ : Construction.circle} (hc₁: c₁ ∈ C L) (hc₂: c₂ ∈ C L) (h_ne : c₁.points' ≠ c₂.points'): z ∈ c₁.points ∩ c₂.points ↔
+  ∃ l :line, l ∈ Construction.L L ∧  z ∈ l.points ∩ c₁.points ∧ z ∈ l.points ∩ c₂.points := by
+  refine ⟨?_,?_⟩ <;> intro h
+  . sorry
+  . obtain ⟨_, _ , h₁, h₂⟩ := h
+    exact ⟨Set.mem_of_mem_inter_right h₁,Set.mem_of_mem_inter_right h₂⟩
+
+
+lemma icc_L (z : ℂ) (h : z ∈ icc L): ∃ ω ∈ L,∃ x : ℂ, x * x = ω ∧ z ∈ L⟮x⟯ := by
+  obtain ⟨c₁, hc₁, c₂, hc₂, h_icc, h_ne⟩ := h
+  rw[icc_L' _ z hc₁ hc₂ h_ne] at h_icc
+  obtain ⟨l, hl, hl₁, _⟩ := h_icc
+  have h:  z ∈ ilc L := by
+    refine ⟨c₁, hc₁, l, hl, ?_⟩
+    simp_all only [ne_eq, Set.mem_inter_iff, true_and, and_self]
+  exact ilc_L' L z h
 
 end ConjClosed
 

@@ -277,7 +277,7 @@
 
 %3.17
 \begin{lemma}
-    \label{Intersection_line_circle}
+    \label{lem:ConjClosed.Intersection_line_circle}
     Let $L$ be a subfield of $\mathbb{C}$, with $L = conj(L)$. For $i = 1,2,3$ let $z_i = x_i + \imath y_i \in L$ with $z_1 \ne z_2$, and let $r > 0$ in $\mathbb{R}$ with $r^2 \in L$. Define
     \begin{equation*}\begin{aligned}
         G := \{\lambda z_1 + (1-\lambda)z_2 \mid \lambda \in \mathbb{R}\},\\
@@ -309,19 +309,27 @@ Since Lambda is a solution of a quadratic equation we now that $\lambda$ is equa
 
 %3.18
 \begin{lemma}
-    \label{Intersection_circle_circle}
+    \label{lem:ConjClosed.Intersection_circle_circle}
     Let $L$ be a subfield of $\mathbb{C}$, with $L = conj(L)$. For $i = 1,2 $ let $z_i = x_i + \imath y_i \in L$ with $z_1 \ne z_2$ and let $r_i > 0$ in $\mathbb{R}$ with $r_i^2 \in L$. Define
     \begin{equation*} \begin{aligned}
         C_1 := \{z = x + \imath y \in \mathbb{C} \mid \|z - z_1\| = r_1\},\\
         C_2 := \{z = x + \imath y \in \mathbb{C} \mid \|z - z_2\| = r_2\}.
     \end{aligned} \end{equation*}
-    If $C_1 \cap C_2 \ne \emptyset$ and $C_1 \ne C_2$. Then 
-    $$G := \{x+\imath y \in \mathbb{C} \mid 2(x_2 - x_1)x - 2(\imath y_2 - \imath y_1)\imath y = r_1^2 - r_2^2 + x_2^2 - x_1^2 + (\imath y_2)^2 - (\imath y_1)^2\} $$
+    If $C_1 \cap C_2 \ne \emptyset$ and $C_1 \ne C_2$. Then  ther  exists $z_1, z_2 \in L$ such that
+     $$G := \{ \lambda z_1 + (1-\lambda) z_2 \mid \lambda \in \R \}$$ % \{x+\imath y \in \mathbb{C} \mid 2(x_2 - x_1)x - 2(\imath y_2 - \imath y_1)\imath y = r_1^2 - r_2^2 + x_2^2 - x_1^2 + (\imath y_2)^2 - (\imath y_1)^2\} $$
     is a real line, and $$ C_1 \cap C_2 = G \cap C_1 = G \cap C_2. $$
     For $z \in C_1 \cap C_2$ there is a $w \in L$ such that $z \in L(\sqrt{w})$.
 \end{lemma}
 \begin{proof}
-    Sorry,  like in lean %TODO: add proof
+    The initial step is to demonstrate that $ z\in C_1 \cap C_2 \Leftrightarrow \exists G,  z\in G \cap C_1 \land z \in G \cap C_2$.\\
+    "$\Rightarrow$": If $z$ is to be in both $G \cap C_1$ and $G \cap C_2$, it must be the case that $z$ is in both $C_1$ and $C_2$. Consequently, it is also in $C_1 \cap C_2$. \\
+    "$\Leftarrow$": For $ x_1 \ne x_2$ and $y_1 \ne y_2$ chose 
+        \begin{align*}
+            z_1 &:= (\frac{r_1^2 - r_2^2 + x_2^2 - x_1^2 + (\imath y_2)^2 - (\imath y_1)^2-2(y_2-y_1)y_1}{2(x_2-x_1)}) + \imath y_1\\ % x_1 + \imath (\frac{r_1^2 - r_2^2 + x_2^2 - x_1^2 + (\imath y_2)^2 - (\imath y_1)^2-2(x_2-x_1)x_1}{2(y_2-y_1)})\\
+            z_2 &:= (\frac{r_1^2 - r_2^2 + x_2^2 - x_1^2 + (\imath y_2)^2 - (\imath y_1)^2-2(y_2-y_1)y_2}{2(x_2-x_1)}) + \imath y_2\\
+        \end{align*}
+
+    The fact that $z_1$ and $z_2$ are composed of elements from $L$ allows us to employ Lemma \ref{lem:ConjClosed.Intersection_line_circle} to obtain $w$, with the result that $z$ is contained within the set $L(w)$.
 \end{proof}
 
 \section[K zero]{The Field $\mathcal{K}_0$}

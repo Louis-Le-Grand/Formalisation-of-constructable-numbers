@@ -5,22 +5,23 @@ The Github repository with the code and bluebrint can be found here : \url{https
 \section{Construction Problems}
 The straightedge and compass constructions were developed by the ancient Greeks. 
 It consists of an initial set $\mathcal{M}$ of constructed points, a ruler that has no measurements and can draw indefinite lines through at least two existing points,
-and a compass, the centre of which is an already constructed point and the radius of which is the distance between two (not nesearly other) already constructed points. 
-To construct new points, take the intersection of two lines, circles or any of these. The set of all possible intersections is called $\mathcal{M}_{\infty}$. 
-Since we want our initial set to have at least two points, otherwise we cannot construct a line or a circle and therefore no new points, we can normalise our set and assume $0, 1 \in \mathcal{M}$.
+and a compass, the centre of which is an already constructed point and the radius of which is the distance between two already constructed points. 
+To construct new points, take the intersection of two lines, two circles or a line and a circle. The set of all possible intersections is called $\mathcal{M}_{\infty}$. 
+In order to construct a line or a circle, it is necessary that our initial set contain at least two points. Consequently, we can normalise our set and assume that $0, 1 \in \mathcal{M}$.
 
-We may now proceed to define the problem of doubling a cube, given that the volume of a cube is equal to the cube of the length of an edge, or $a^3$, where $a$ is the length of an edge.
-Consequently, a cube with a doubled volume, $2\cdot a^3$, has an edge length of $a$.
-If we now take the cube with a length of one, the problem is as follws:
+We may now proceed to define the problem of doubling a cube. 
+The volume of a cube is equal to the cube of the length of an edge, which may be expressed as $a^3$, where $a$ is the length of an edge. 
+Therefore, a cube with a doubled volume, $2\cdot a^3$, has an edge length of the cube root of two times the length of the original edge. 
+If we now take the cube with a length of one, the problem is as follows:
 \begin{problem}[Doubling the Cube]
-    Given the set $\mathcal{M} = \{0, 1\}$, can we construct the point $\sqrt[3]{2}$, i.e. $\sqrt[3]{2} \in \mathcal{M}_{\infty}$?
+    Given the set $\mathcal{M} = \{0, 1\}$, can we construct the point $\sqrt[3]{2}$, i.e. is $\sqrt[3]{2} \in \mathcal{M}_{\infty}$?
 \end{problem}
 
 A similar approach allows the problem of trisecting angles to be simplified. 
 If an angle is defined by the points $0$, $1$ and $e^{\imath\cdot\alpha}$, the problem can be described as follows:
 
 \begin{problem}[Trisecting the Angle]
-    Given the set $\mathcal{M} = \{0, 1, e^{\imath\cdot\alpha}\}$, can we construct the point $e^{\imath\cdot\frac{\alpha}{3}}$, i.e. $e^{\imath\cdot\frac{\alpha}{3}} \in \mathcal{M}_{\infty}$?
+    Given the set $\mathcal{M} = \{0, 1, e^{\imath\cdot\alpha}\}$, can we construct the point $e^{\imath\cdot\frac{\alpha}{3}}$, i.e. is $e^{\imath\cdot\frac{\alpha}{3}} \in \mathcal{M}_{\infty}$?
 \end{problem}
 
 \section{Motivation}

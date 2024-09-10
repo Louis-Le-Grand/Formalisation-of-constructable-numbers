@@ -44,8 +44,8 @@ Should i write about lean???
 The following is a representative sample of the Lean code, which is available in its entirety on the GitHub repository of this project. 
 \url{https://github.com/Louis-Le-Grand/Formalisation-of-constructable-numbers}
 
-I defined lines as a structure of two pionts $z_1$ and $z_2$. 
-For this structure I then define pionts by $\{\lambda z_1 + (1-\lambda)z_2\mid\lambda\in\R\}$ which are all the pionts then line goes through. 
+I defined lines as a structure of two points $z_1$ and $z_2$. 
+For this structure I then define points by $\{\lambda z_1 + (1-\lambda)z_2\mid\lambda\in\R\}$ which are all the points the line goes through. 
 I have omitted the condition $z_1\ne z_2$ because in some settings a line that consists of only one point makes sense.
 \begin{lstlisting}
     structure line where
@@ -80,8 +80,3 @@ This is because each object in Lean is a type, and you cannot switch between typ
         mul_mem' := by apply mul_M_inf M h₀ h₁
         inv_mem' := by apply inv_M_inf M h₀ h₁
 \end{lstlisting}
-
-\section{Fragen an Joshua}
-Soll ich noch ein schluss schreiben?? und wenn ja mit was??\\
-Soll ich was zu sachen in lena die mir schwer gefallen sind schreiben??\\
-Warum ist es so anstrengend, den Fluw zu schreiben? Ich hab ein tag gebraucht um 2 seiten zu schreiben. Und mir gefallen sie nicht mal.

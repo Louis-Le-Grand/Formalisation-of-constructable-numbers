@@ -5,7 +5,7 @@
     \label{thm:MField}
     \leanok
     \lean{MField}
-    For $M\subseteq \mathbb{C}$ with $0,1 \in M$ is $M_{\infty}$ a subfield of $\mathbb{C}$.
+    For $M\subseteq \mathbb{C}$ with $0,1 \in M$. $M_{\infty}$ is a subfield of $\mathbb{C}$.
 \end{theorem}
 \begin{proof}
     To show that $M_{\infty}$ is a subfield of $\mathbb{C}$ we have to show that $0,1\in M_{\infty}$ and $M_{\infty}$ is closed under addition, multiplication, subtraction and division.
@@ -19,11 +19,11 @@
 \end{proof}
 
 \begin{remark}
-   To prove that $M_{\infty}$ is a subfield of $\mathbb{C}$ in Lean we have to creat a new instance with carrier $M_{\infty}$.
+   To prove that $M_{\infty}$ is a subfield of $\mathbb{C}$ in Lean we have to create a new instance with carrier $M_{\infty}$.
 \end{remark}
 \begin{remark}
     \label{rem:MField_Field}
-    Since $M_{\infty}$ is a subfield of $\mathbb{C}$, $M_{\infty}$ is a field, wich is proof in Lean automatically.
+    Since $M_{\infty}$ is a subfield of $\mathbb{C}$, $M_{\infty}$ is a field which is automatically proved in Lean, by \lstinline{infer_instance}.
 \end{remark}
 
 
@@ -32,42 +32,42 @@
     \leanok
     \lean{MField_i, MField_re_im, MField_re_im', MField_polar}
     \uses{thm:MField}
-    For $M\subseteq \mathbb{C}$ with $0,1 \in M$ applies:
+    For $M\subseteq \mathbb{C}$ with $0,1 \in M$ it holds:
     \begin{itemize}
         \item[(i)] $\imath \in M_{\infty}$.
-        \item[(ii)] For $z = x + \imath y \in \mathbb{C}$ is equivalent:
-            \begin{itemize}
+        \item[(ii)] For $z = x + \imath y \in \mathbb{C}$ the following are equivalent:
+            \begin{enumerate}
                 \item $z \in M_{\infty}$.
                 \item $x, y \in M_{\infty}$.
                 \item $x, \imath y \in M_{\infty}$.
-            \end{itemize}
+            \end{enumerate}
         \item[(iii)] 
-            For $0 \ne z = r \exp(\imath \alpha) \in \mathbb{C}$ is equivalent:
-            \begin{itemize}
+            For $0 \ne z = r \exp(\imath \alpha) \in \mathbb{C}$ the following are equivalent:
+            \begin{enumerate}
                 \item $z \in M_{\infty}$.
                 \item $r,\exp(\imath \alpha) \in M_{\infty}$.
-            \end{itemize}
+            \end{enumerate}
     \end{itemize}
 \end{lemma}
 \begin{proof}
     %TODO: \uses{} imath_M_inf z_iff_re_im_M_inf; (i_z_imp_z_in_M_inf/ MField_i_mul)
-    This lemma is a dierct consequence of section \ref{basic_constructions}.
+    This lemma is a direct consequence of section \ref{basic_constructions}.
     \begin{itemize}
-        \item[(i):] We kan apply construction \ref{cor:construction_imath}
+        \item[(i):] We can apply construction \ref{cor:construction_imath}
         \item[(ii):] We can apply construction \ref{cor:z_iff_re_im_M_inf} and \ref{cor:construction_imath}.
         \item[(iii):]  We can apply construction \ref{lem:construction_radius} and \ref{lem:angle_M_inf}.
     \end{itemize}
 \end{proof}
 
-\subsection*{Quadritc closed}
-\begin{definition}[quadritc closed field]
+\subsection*{quadratic closed}
+\begin{definition}[quadratic closed field]
     \label{def:quadritc_closed_field}
     \leanok
     \lean{QuadraticClosed}
-    A field $F$ is called \emph{quadritc closed} if for all $x \in F$ there is a $y \in F$ so that $y^2 = x$.
+    A field $F$ is called \emph{quadratic closed} if for all $x \in F$ there is a $y \in F$ such that $y^2 = x$.
 \end{definition}
 \begin{remark}
-    An equivalent definition is that $F$ is quadritc closed if $F=\{a^2\mid a \in K\}$.
+    An equivalent definition is that $F$ is quadratic closed if $F=\{a^2\mid a \in F\}$.
 \end{remark}
 
 \begin{lemma}
@@ -75,13 +75,13 @@
     \leanok
     \lean{MField_QuadraticClosed, MField_QuadraticClosed_def}
     \uses{def:set_of_constructable_points, def:quadritc_closed_field}
-    For $M\subseteq \mathbb{C}$ with $0,1 \in M$ is $M_{\infty}$ quadritc closed.
+    For $M\subseteq \mathbb{C}$ with $0,1 \in M$, $M_{\infty}$ is quadratic closed.
 \end{lemma}
 \begin{proof}
     \uses{thm:MField, cor:root_M_inf}
-    We know that $M_{\infty}$ is a field \ref{rem:MField_Field} and Lemma \ref{cor:root_M_inf} gives us for all $z \in M_{\infty}$ a $z^{\frac{1}{2}} \in M_{\infty}$.
+    It is established that $M_{\infty}$ is a field (see remark \ref{rem:MField_Field}). Furthermore, the corollary \ref{cor:root_M_inf} provides a root $z^{\frac{1}{2}}$ of $z \in M_{\infty}$.    
     $$ z^{\frac{1}{2}} * z^{\frac{1}{2}} = z^{\frac{1}{2}^2} = z^{2\cdot \frac{1}{2}} = z.$$
-    Therefore $M_{\infty}$ is quadritc closed.
+    Therefore $M_{\infty}$ is quadratic closed.
 \end{proof}
 
 \subsection*{Conjugate closed}
@@ -99,17 +99,17 @@
     \label{lem:conj_union}
     \leanok
     \lean{conj_union}
-    For two set $M,N \subset \mathbb{C}$ $$Conj(M\cup N) = Conj(M) \cup Conj(N).$$
+    For two sets $M,N \subset \mathbb{C}$ $$Conj(M\cup N) = Conj(M) \cup Conj(N).$$
 \end{lemma}
 \begin{proof}
-    For $z \in Conj(M\cup N)$ ther is a $w \in M\cup N$ so that $\overline{w} = z$, therefore $ z = \overline{w} \in Conj(M) \cup Conj(N)$. The other direction is analog.
+    For $z \in Conj(M\cup N)$ there is a $w \in M\cup N$ such that $\overline{w} = z$, therefore $ z = \overline{w} \in Conj(M) \cup Conj(N)$. The other direction is analog.
 \end{proof}
 
 \begin{lemma}
     \label{lem:conj_conj_id}
     \leanok
     \lean{conj_conj_id}
-    For a set $M \subset \mathbb{C}$ is $Conj(Conj(M)) = M$.
+    For a set $M \subset \mathbb{C}$ it holds that $Conj(Conj(M)) = M$.
 \end{lemma}
 \begin{proof}
     $$Conj(Conj(M)) = Conj(\{\overline{z}\mid z\in M\}) = \{\overline{\overline{z}}\mid z\in M\} = \{ z \mid z\in M\} = M.$$
@@ -159,17 +159,17 @@
     \label{lem:ConjClosed.conj_inclusion}
     \leanok
     \lean{ConjClosed.conj_inclusion}
-    For $M,N \subseteq \mathbb{C}$ with $M \subseteq N$ is $Conj(M) \subseteq Conj(N)$.
+    For $M,N \subseteq \mathbb{C}$ with $M \subseteq N$ it holds that $Conj(M) \subseteq Conj(N)$.
 \end{lemma}
 \begin{proof}
-    For $z \in Conj(M)$ there is a $w \in M$ so that $\overline{w} = z$ and since $M \subseteq N$ we have $w \in N$ and therefore $z \in Conj(N)$.
+    For $z \in Conj(M)$ there is a $w \in M$ such that $\overline{w} = z$ and since $M \subseteq N$ we have $w \in N$ and therefore $z \in Conj(N)$.
 \end{proof}
 
 \begin{lemma}
     \label{lem:ConjClosed.conj_field}
     \leanok
     \lean{ConjClosed.conj_field}
-    For a subfield $F$  of $mathbb{C}$ the conjugate set $Conj(F)$ is a subfield of $\mathbb{C}$.
+    For a subfield $F$  of $\mathbb{C}$ the conjugate set $Conj(F)$ is a subfield of $\mathbb{C}$.
 \end{lemma}
 \begin{proof}
     We have to show that $0,1 \in Conj(F)$ and $Conj(F)$ is closed under addition, multiplication, subtraction and division.
@@ -188,7 +188,7 @@
     \begin{equation*}
         \frac{z + \overline{z}}{2} = x \in L
     \end{equation*}
-    and therfore also $\imath y = z - x \in L$.
+    and therefore also $\imath y = z - x \in L$.
 \end{proof}
 
 
@@ -222,24 +222,29 @@
         G_1 := \{\lambda z_1 + (1-\lambda)z_2 \mid \lambda \in \mathbb{R}\},\\
         G_2 := \{\mu z_3 + (1-\mu)z_4 \mid \mu \in \mathbb{R}\}.
     \end{aligned} \end{equation*}
-    If $G_1 \cap G_2 \ne \emptyset$ and $G_1 \ne G_2$. It is equivalent 
+    If $G_1 \cap G_2 \ne \emptyset$ and $G_1 \ne G_2$, it is equivalent 
     \begin{itemize}
         \item $z\in G_1 \cap G_2$.
-        \item Ther are $\lambda, \mu \in \mathbb{R}$ such that:
-        \subitem - $\lambda(x_1 - x_2)+\mu(x_4-x_3) = x_4-x_2$
-        \subitem - $\lambda(\imath y_1 - \imath y_2)+\mu(\imath y_4-\imath y_3) = \imath y_4-\imath y_2$
-        \subitem - $z = \lambda z_1 + (1-\lambda)z_2$
+        \item There are $\lambda, \mu \in \mathbb{R}$ such that:
+        \subitem 1. $\lambda(x_1 - x_2)+\mu(x_4-x_3) = x_4-x_2$
+        \subitem 2. $\lambda(\imath y_1 - \imath y_2)+\mu(\imath y_4-\imath y_3) = \imath y_4-\imath y_2$
+        \subitem 3. $z = \lambda z_1 + (1-\lambda)z_2$
     \end{itemize}
     In this case $z \in L$.
 \end{lemma}
 \begin{proof}
     \uses{re_im_in_L}
-    The proof is done in two steps we show that $z \in G_1 \cap G_2$ if and only if there are $\lambda, \mu \in \mathbb{R}$ such that the equations hold. \\
-    $\lambda(x_1 - x_2)+\mu(x_4-x_3) = x_4-x_2$ and $\lambda(\imath y_1 - \imath y_2)+\mu(\imath y_4-\imath y_3) = \imath y_4-\imath y_2$ 
-    are equivalent to $\lambda x_1 + (1-\lambda)x_2 = \mu x_3 + (1-\mu)x_4$ and $\lambda y_1 + (1-\lambda)y_2 = \mu y_3 + (1-\mu)y_4$. Wich is the definition of $z \in G_1 \cap G_2$, split in real and imaginary part.\\
-    The third equation is equivalent to $z = \lambda z_1 + (1-\lambda)z_2$ gives use that $z \in G_1$ at the piont wher $G_1$ and $G_2$ intersect, so we can assume that $z \in G_1 \cap G_2$.\\ \\
-    Now we can show that $z \in L$.\\
-    Since we now that z is equal to $\lambda z_1 + (1-\lambda)z_2$ and $z_1, z_2 \in L$ we only have to show that $\lambda \in L$. Here for we use the equations from the first part of the proof.
+    The proof is divided into two parts. Initially, it is demonstrated that $z$ belongs to the intersection of $G_1$ and $G_2$, if and only if there exist real numbers $\lambda, \mu \in \mathbb{R}$, such that the equations $1$, $2$ and $3$ are satisfied.
+    Subsequently, it follows that $z$ is an element of $L$.\\
+    Equations $1$ and $2$ are equivalent to the following:
+    $$ \lambda x_1 + (1 - \lambda)x_2 = \mu x_3 + (1 - \mu)x_4 $$
+    $$ \lambda y_1 + (1 - \lambda)y_2 = \mu y_3 + (1 - \mu)y_4 $$ 
+    This is the definition of $z \in G_1 \cap G_2$, expressed in terms of its real and imaginary parts.\\
+    The third equation is equivalent to $z = \lambda z_1 + (1 - \lambda)z_2$. This allows us to conclude that $z$ belongs to $G_1$ at the point where $G_1$ and $G_2$ intersect. 
+    Consequently, we can assume that $z$ belongs to the intersection of $G_1$ and $G_2$.
+
+    Now we can show that $z$ is an element of $L$.\\
+    Since we know that z is equal to $\lambda z_1 + (1-\lambda)z_2$ and $z_1, z_2 \in L$ we only have to show that $\lambda \in L$. Here for we use the equations from the first part of the proof.
     \begin{align*}
         \RNum{1} &&\lambda(x_1 - x_2)+\mu(x_4-x_3) &= x_4-x_2\\
         \RNum{2} &&\lambda(\imath y_1 - \imath y_2)+\mu(\imath y_4-\imath y_3) &= \imath y_4-\imath y_2
@@ -252,8 +257,10 @@
        %&\Leftrightarrow & \mu(y_4-y_3) &= y_4-y_2 - \lambda(y_1 - y_2) &&\mid \div \imath(y_4-y_3)\\
         %&\Leftrightarrow & \mu &= \frac{y_4-y_2 - \lambda(y_1 - y_2)}{y_4-y_3}\\
     \end{align*}
-    Since we divided by $\imath (y_4-y_3)$ we need to assume that $y_4 \ne y_3$, so we need to first handel the case $y_4 = y_3$.\\
-    If $y_4 = y_3$ we have $\lambda(\imath y_1 - \imath y_2) = \imath y_4-\imath y_2$ and since $y_4 = y_3$ $y_1 \ne y_2$, because otherwise boothe Lines would be parrale to the Rael line an therefore $G_1 = G_2$ or $G_1 \cap G_2 = \varnothing$. Therefore $\lambda = \frac{\imath y_4-\imath y_2}{\imath y_1 - \imath y_2}$. Using the fact that real part and the imaginary part times $\imath$ are in $L$ \ref{re_im_in_L} we have written $\lambda$ as a fraction of two elements in $L$. Therefore $\lambda$ is in $L$, wich implies that $z = \lambda z_1 + (1-\lambda)z_2$ is in $L$.\\
+    Since we divided by $\imath (y_4-y_3)$ we need to assume that $y_4 \ne y_3$, so we need to first handle the case $y_4 = y_3$.\\
+    If $y_4 = y_3$ we have $\lambda(\imath y_1 - \imath y_2) = \imath y_4-\imath y_2$ and since $y_4 = y_3$ $y_1 \ne y_2$, because otherwise both Lines would be parallel to the real line and therefore $G_1 = G_2$ or $G_1 \cap G_2 = \varnothing$. 
+    Therefore $\lambda = \frac{\imath y_4-\imath y_2}{\imath y_1 - \imath y_2}$. Using the fact that real part and the imaginary part times $\imath$ are in $L$ \ref{lem:ConjClosed.re_im_in_L} we have written $\lambda$ as a fraction of two elements in $L$. 
+    It can thus be concluded that $\lambda$ is in $L$, which implies that $z = \lambda z_1 + (1-\lambda)z_2$ is in $L$.\\
    
     Now we insert $\mu$ in \RNum{1} and solve for $\lambda$.\\
     \resizebox{1\linewidth}{!}{
@@ -270,8 +277,9 @@
     \end{minipage}
     }\\
     We need to check that the denominator $(y_4-y_3)(x_1 - x_2)- (y_1 - y_2)(x_4-x_3)$ is not zero.
-    If would be zero we would have $(y_4-y_3)(x_1 - x_2) = (y_1 - y_2)(x_4-x_3)$, wich is equivalent to $\frac{y_4-y_3}{x_4-x_3} = \frac{y_1 - y_2}{x_1 - x_2}$. This would mean that the two lines are parralel and therefore $G_1 = G_2$ or $G_1 \cup G_2 = \varnothing$.\\
-    So we can assume that the denominator is not zero and therefore we can write $\lambda$ as a fraction of two elements in $L$. Therefore $\lambda$ is in $L$, wich implies that $z = \lambda z_1 + (1-\lambda)z_2$ is in $L$.
+    Assume that its = then we would have $(y_4-y_3)(x_1 - x_2) = (y_1 - y_2)(x_4-x_3)$, which is equivalent to $\frac{y_4-y_3}{x_4-x_3} = \frac{y_1 - y_2}{x_1 - x_2}$. 
+    This would mean that the two lines are parallel and therefore $G_1 = G_2$ or $G_1 \cap G_2 = \varnothing$.\\
+    Thus we can assume that the denominator is not zero and therefore we can write $\lambda$ as a fraction of two elements in $L$. Therefore $\lambda$ is in $L$, wich implies that $z = \lambda z_1 + (1-\lambda)z_2$ is in $L$.
 
 \end{proof}
 
@@ -283,7 +291,7 @@
         G := \{\lambda z_1 + (1-\lambda)z_2 \mid \lambda \in \mathbb{R}\},\\
         C := \{z = x + \imath y \in \mathbb{C} \mid \|z - z_3\| = r\}.
     \end{aligned} \end{equation*}
-    If $G \cap C \ne \emptyset$. Then the following is equivalent:
+    Assume $G \cap C \ne \emptyset$; then the following are equivalent:
     \begin{itemize}
         \item $z\in G \cap C$.
         \item There is a $\lambda \in \mathbb{R}$ with $\lambda^2 a+ \lambda b + c = 0$ where
@@ -298,12 +306,13 @@
 \end{lemma}
 
 \begin{proof}
-First we have to show $z \in G \cap C$ iff and only iff ther existe a $\lambda \in \mathbb{R}$ with $\lambda^2 a+ \lambda b + c = 0$ and $z = \lambda z_1 + (1-\lambda)z_2$.
+First we have to show $z \in G \cap C$ iff and only iff there exists a $\lambda \in \mathbb{R}$ with $\lambda^2 a+ \lambda b + c = 0$ and $z = \lambda z_1 + (1-\lambda)z_2$.
 
 TODO Umstellen \\
-Now we can show that there existe a $w \in L$ such that $z \in L(\sqrt{w})$.\\
-Since we know that $z = \lambda z_1 + (1-\lambda)z_2$ and $z_1, z_2 \in L$ we only have to show that $\lambda \in L(\sqrt{w})$. Here for we use the equations from the first part of the proof. 
-Since Lambda is a solution of a quadratic equation we now that $\lambda$ is equal to $\frac{-b \pm \sqrt{b^2 - 4ac}}{2a}$. Since $a,b,c \in L$ we get $w = b^2 - 4ac \in L$ so $\lambda \in L(\sqrt{w})$. Therefore $z = \lambda z_1 + (1-\lambda)z_2$ is in $L(\sqrt{w})$.
+Now we can show that there exists a $w \in L$ such that $z \in L(\sqrt{w})$.\\
+Since we know that $z = \lambda z_1 + (1-\lambda)z_2$ and $z_1, z_2 \in L$ we only have to show that $\lambda \in L(\sqrt{w})$.
+To do this, we use the equations from the first part of the proof. 
+Since $\lambda$ is a solution of a quadratic equation we now get that $\lambda$ is equal to $\frac{-b \pm \sqrt{b^2 - 4ac}}{2a}$. Since $a,b,c \in L$ we get $w = b^2 - 4ac \in L$ so $\lambda \in L(\sqrt{w})$. Therefore $z = \lambda z_1 + (1-\lambda)z_2$ is in $L(\sqrt{w})$.
 %TODO: add proof
 \end{proof}
 
@@ -315,7 +324,7 @@ Since Lambda is a solution of a quadratic equation we now that $\lambda$ is equa
         C_1 := \{z = x + \imath y \in \mathbb{C} \mid \|z - z_1\| = r_1\},\\
         C_2 := \{z = x + \imath y \in \mathbb{C} \mid \|z - z_2\| = r_2\}.
     \end{aligned} \end{equation*}
-    If $C_1 \cap C_2 \ne \emptyset$ and $C_1 \ne C_2$. Then  ther  exists $z_1, z_2 \in L$ such that
+    Assume $C_1 \cap C_2 \ne \emptyset$ and $C_1 \ne C_2$. Then  ther  exists $z_1, z_2 \in L$ such that
      $$G := \{ \lambda z_1 + (1-\lambda) z_2 \mid \lambda \in \R \}$$ % \{x+\imath y \in \mathbb{C} \mid 2(x_2 - x_1)x - 2(\imath y_2 - \imath y_1)\imath y = r_1^2 - r_2^2 + x_2^2 - x_1^2 + (\imath y_2)^2 - (\imath y_1)^2\} $$
     is a real line, and $$ C_1 \cap C_2 = G \cap C_1 = G \cap C_2. $$
     For $z \in C_1 \cap C_2$ there is a $w \in L$ such that $z \in L(\sqrt{w})$.
@@ -335,7 +344,7 @@ Since Lambda is a solution of a quadratic equation we now that $\lambda$ is equa
 \section[K zero]{The Field $\mathcal{K}_0$}
 \begin{definition}
     \label{def:K_M_0}
-    Let $\mathcal(M)\subseteq\mathbb{C}$ with $0,1 \in \mathcal{M}$
+    Let $\mathcal(M)\subseteq\mathbb{C}$ with $0,1 \in \mathcal{M}$. Define:
     \begin{equation*}
         K_0 := \mathbb{Q}(\mathcal{M}\cup Conj(\mathcal{M}))
     \end{equation*}
@@ -345,14 +354,14 @@ Since Lambda is a solution of a quadratic equation we now that $\lambda$ is equa
     \label{lem:conj_adjion}
     \leanok
     \lean{conj_adjion, conj_adjion'}
-    Let $K$ be an conjugation closed intermidiate field of $\Q$ $\C$ and $ M \subset \mathbb{C}$ be a subset with $M = conj(M)$. Then holds
+    Let $K$ be an conjugation closed intermidiate field of $\Q$ and $\C$ and $ M \subset \mathbb{C}$ be a subset with $M = conj(M)$. Then
     $K(M)$ is conjugate closed.
 \end{lemma}
 \begin{proof}
     In reference \ref{lem:ConjClosed.conj_field}, it was demonstrated that for a field F, the field of complex numbers, $Conj(F)$ is a field. 
     It can thus be concluded that $Conj(K(M))$ is also a field.
     As both $K$ and $M$ are subsets of $K(M)$, it can be inferred from lemma \ref{lem:ConjClosed.conj_inclusion} that $Conj(K) \overset{ConjClosed}{=} K$ and $Conj(M) \overset{ConjClosed}{=} M$ are subsets of $Conj(K(M))$. 
-    As $K(M)$ is the smallest subfield of $\C$ that includes it, it can be concluded that $$K(M) \subseteq Conj(K(M)).$$
+    As $K(M)$ is the smallest subfield of $\C$ that includes $K$ and $M$, it can be concluded that $$K(M) \subseteq Conj(K(M)).$$
     Furthermore, if we apply $Conj$ to both sides and again infer \ref{lem:ConjClosed.conj_inclusion}, we obtain $$Conj(K(M)) \subseteq Conj(Conj(K(M))) = K(M),$$ 
     which leads to the conclusion that $Conj(K(M)) = K(M)$.
 \end{proof}
@@ -361,25 +370,25 @@ Since Lambda is a solution of a quadratic equation we now that $\lambda$ is equa
     \label{cor:K_zero_conjectClosed}
     \leanok
     \lean{K_zero_conjectClosed}
-    For $M\subseteq \mathbb{C}$ with $0,1 \in M$ is $K_0$ conjugate closed.
+    For $M\subseteq \mathbb{C}$ with $0,1 \in M$, $K_0$ is conjugate closed.
 \end{corollary}
 \begin{proof}
-    By employing the preceding lemma, it is sufficient to demonstrate that the $\Q$ and $M \cup Conj(M)$ are conjugate closed. 
-    Wich can be infered from \ref{lem:ConjClosed.Rat_ConjClosed} and \ref{lem:M_con_M}
+    By employing the preceding lemma, it is sufficient to demonstrate that $\Q$ and $M \cup Conj(M)$ are conjugate closed,
+    which can be infered from \ref{lem:ConjClosed.Rat_ConjClosed} and \ref{lem:M_con_M}
 \end{proof}
 
 \begin{lemma}
     \label{lem:K_zero_in_MField}
     \leanok
     \lean{K_zero_in_MField}
-    For $M\subseteq \mathbb{C}$ with $0,1 \in M$ is $K_0 \subseteq M_{\infty}$.
+    For $M\subseteq \mathbb{C}$ with $0,1 \in M$ it holds that $K_0 \subseteq M_{\infty}$.
 \end{lemma}
 \begin{proof}
 From the definition of $K_0 := \Q(M\cup Conj(M))$, 
 it can be seen that this is the smallest subfield of $\C$ containing both $Q$ and $M\cup Conj(M)$. 
 Consequently, it is sufficient to demonstrate that both $\Q$ and $M\cup Conj(M)$ are contained within $M_{\infty}$. 
 Since $\Q$ is contained in every subfield of $\C$, it is therefore also contained in $M_{\infty}$. 
-Furthermore, since $M$ is contained in $M_{\infty}$ \ref{lem:M_in_M_inf} and $M$ is conjugate closed \ref{lem:conj_MField}, we can conclude that $M\cup Conj(M) \subseteq \Q$.
+Furthermore, since $M$ is contained in $M_{\infty}$ (see \ref{lem:M_in_M_inf}) and $M$ is conjugate closed (\ref{lem:conj_MField}), we can conclude that $M\cup Conj(M) \subseteq \Q$.
 \end{proof}
 
 \section{Classification of Constructable Numbers}
@@ -389,11 +398,11 @@ The following section will employ the following lemma, which has not yet been pr
     \label{lem:dergree_two_eq_sqr}
     \lean{dergree_two_eq_sqr}
     %For to abetory fields $E$ and $F$ with
-    Let $K, L$ be subfield of $\C$, with $K\le L$. Then $[L:K] = 2$ is equivalent to there exiast an $w*w \in K$ with $w \notin K$ and $L = K(w)$.
+    Let $K, L$ be subfield of $\C$, with $K\le L$. Then $[L:K] = 2$ is equivalent to the existence of a $w*w \in K$ with $w \notin K$ and $L = K(w)$.
 \end{lemma}
 \begin{proof}
     $(ii)\implies (i)$: Let $w$ be as in $(ii)$.Then $\sqrt{w}$ is a root of $X^2 - w \in K[X]$. Since $\sqrt{w} \notin K$ this polynomial is irreducible in $K[X]$. Therefore $[L:K] = 2$.\\
-    $(i)\implies (ii)$: Let $[L:K] = 2$ and $a \in L \setminus K$. Then $K(\alpha) = L$ and 
+    $(i)\implies (ii)$: Let $[L:K] = 2$ and $\alpha \in L \setminus K$. Then $K(\alpha) = L$ and 
     $$\mu_{\alpha, K}=X^2 + bX + c \quad b,c \in K$$
     This implies 
     $$\alpha = -\frac{b}{2} \pm \sqrt{\frac{b^2}{4} - c} $$
@@ -404,9 +413,9 @@ The following section will employ the following lemma, which has not yet been pr
     \label{thm:Classfication_z_in_M_inf}
     \lean{Classfication_z_in_M_inf, adjoin_in_MField'}
     For $z \in \mathbb{C}$, $z \in M_{\infty}$ is equivalent to:\\
-    There is an $n\le 0$ and chain 
+    There is a $0\le n$ and a chain 
     $$K_0 = L_1 \subset L_2 \subset \ldots \subset L_n \subset \mathbb{C}$$
-    of subfields of $\mathbb{C}$ so that $z \in L_n$ and 
+    of subfields of $\mathbb{C}$ such that $z \in L_n$ and 
     $$ [L_{i+1}:L_i] = 2 \quad \text{for} \quad i = 0, \ldots, n-1.$$
 \end{theorem}
 
@@ -419,10 +428,10 @@ The following section will employ the following lemma, which has not yet been pr
             $L_1 = K_0 \subseteq M_{\infty}$ \ref{lem:K_zero_in_MField}.
         
         \item induction hypothesis: \\
-            Assume that for $n$: $\forall i < n: L_i \le L_{i+1} \land [L_{i+1}:L_i]=2$ imples $L_n \subseteq M_{\infty}$.
+            Assume that for $n$: $\forall i < n: L_i \le L_{i+1} \land [L_{i+1}:L_i]=2$ implies $L_n \subseteq M_{\infty}$.
         \item Inductive step $n \to n+1$: \\
             Given that $[L_{n+1}:L_n] = 2$, it follows from the conclusions of Lemma \ref{lem:dergree_two_eq_sqr} that there exists a $w \in L_n$ with the property that $ \sqrt{w} \notin L_n$ and $L_{n+1} = L_n(w)$.
-            By the induction hypothesis, it can be inferred that $L_n \subseteq M_{\infty}$. Since $w \in L_n  \subseteq M_{\infty}$ and $ M_{\infty}$ is QuadraticClosed \ref{lem:M_inf_quad_closed} $L_n(w) = L_{n+1} \subseteq M_{\infty}$.
+            By the induction hypothesis, it can be inferred that $L_n \subseteq M_{\infty}$. Since $w \in L_n  \subseteq M_{\infty}$ and $ M_{\infty}$ is quadratic closed (\ref{lem:M_inf_quad_closed}) $L_n(w) = L_{n+1} \subseteq M_{\infty}$.
     \end{itemize}
     "$\Rightarrow:$"
 
@@ -431,7 +440,7 @@ The following section will employ the following lemma, which has not yet been pr
 \begin{lemma}
     \label{lem:Classfication_z_in_M_inf_2m}
     \lean{Classfication_z_in_M_inf_2m}
-    For $z \in \mathbb{C}$, $z \in M_{\infty}$ imples there exists an $m$ such that $[z:K_0] = 2^m$.
+    For $z \in \mathbb{C}$, $z \in M_{\infty}$ implies there exists a $m$ such that $[z:K_0] = 2^m$.
 \end{lemma}
 
 \begin{proof}

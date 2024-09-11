@@ -8,13 +8,14 @@
 \contentsline {section}{\numberline {2.2}Properties of Lines}{7}{section.2.2}%
 \contentsline {section}{\numberline {2.3}The set of constructable points}{9}{section.2.3}%
 \contentsline {section}{\numberline {2.4}Basic constructions}{11}{section.2.4}%
-\contentsline {chapter}{\numberline {3}Field of constructable Numbers}{21}{chapter.3}%
-\contentsline {section}{\numberline {3.1}Filed of Constructable Numbers}{21}{section.3.1}%
-\contentsline {section}{\numberline {3.2}K zero}{27}{section.3.2}%
-\contentsline {section}{\numberline {3.3}Classification of Constructable Numbers}{27}{section.3.3}%
-\contentsline {chapter}{\numberline {4}Ancient Construction Problems}{30}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Doubling the cube}{30}{section.4.1}%
-\contentsline {section}{\numberline {4.2}Trisection of an angle}{31}{section.4.2}%
-\contentsline {chapter}{\numberline {5}A sample of Lean}{33}{chapter.5}%
-\contentsline {section}{\numberline {5.1}Working with Lean}{33}{section.5.1}%
-\contentsline {section}{\numberline {5.2}A sample of Lean code}{35}{section.5.2}%
+\contentsline {chapter}{\numberline {3}Field of constructable Numbers}{22}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Filed of Constructable Numbers}{22}{section.3.1}%
+\contentsline {section}{\numberline {3.2}K zero}{28}{section.3.2}%
+\contentsline {section}{\numberline {3.3}Classification of Constructable Numbers}{29}{section.3.3}%
+\contentsline {chapter}{\numberline {4}Ancient Construction Problems}{31}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Doubling the cube}{31}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Trisection of an angle}{32}{section.4.2}%
+\contentsline {chapter}{\numberline {5}A sample of Lean}{34}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Blueprint}{34}{section.5.1}%
+\contentsline {section}{\numberline {5.2}A sample of Lean code}{36}{section.5.2}%
+\contentsline {section}{\numberline {5.3}Conclusion}{36}{section.5.3}%

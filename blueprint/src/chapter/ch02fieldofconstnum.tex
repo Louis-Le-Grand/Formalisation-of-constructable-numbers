@@ -1,6 +1,8 @@
 \chapter{Field of constructable Numbers}
+This chapter develops the field structure on $M_{\infty}$ and establishes a set of properties that are utilized to establish a criterion for determining the constructability of a point.
 \section[Filed of Constructable Numbers]{Field $M_{\infty}$}
-%2.3
+In this section, we will utilise the constructed points from sectoion \ref{basic_constructions} in order to demonstrate that $M_{\infty}$ forms a conjugate (\ref{def:conj_closed}) and quartic (\ref{def:quadritc_closed_field}) closed field.
+
 \begin{theorem}
     \label{thm:MField}
     \leanok
@@ -172,9 +174,14 @@
     For a subfield $F$  of $\mathbb{C}$ the conjugate set $Conj(F)$ is a subfield of $\mathbb{C}$.
 \end{lemma}
 \begin{proof}
-    We have to show that $0,1 \in Conj(F)$ and $Conj(F)$ is closed under addition, multiplication, subtraction and division.
-
-    TODO: Dicede if it is worth to write out the proof.
+    We have to show that $0,1 \in Conj(F)$ and $Conj(F)$ is closed under addition, multiplication, negation and inversion.
+    \begin{itemize}
+        \item [$0,1$:] Since $0,1 \in F$ and $\overline{0} = 0, \overline{1} = 1$ we have $0,1 \in Conj(F)$.
+        \item [$+$:] For $z_1,z_2 \in F$ we have $\overline{z_1 + z_2} =  \Re(z_1 + z_2)  - \imath\cdot \Im(z_1 + z_2) = \Re(z_1) + \Re(z_2) - \imath\cdot (\Im(z_1) + \Im(z_2)) = \overline{z_1} + \overline{z_2}$. Therefore $Conj(F)$ is closed under addition.
+        \item [$-$:] For $z \in F$ we have $\overline{-z} = \Re(-z) - \imath\cdot \Im(-z) = -(\Re(z) - \imath\cdot (\Im(z))) = -\overline{z}$. Therefore $Conj(F)$ is closed under negation.
+        \item [$*$:] Since $\overline{z_1 \cdot z_2} = \overline{z_1} \cdot \overline{z_2}$ we have $Conj(F)$ is closed under multiplication.
+        \item [$^{-1}$:] Since $\overline{z^{-1}} = \overline{z}^{-1}$ we have $Conj(F)$ is closed under inversion.
+    \end{itemize}
 \end{proof}
 
 \begin{lemma}
@@ -308,14 +315,26 @@
 \begin{proof}
 First we have to show $z \in G \cap C$ iff and only iff there exists a $\lambda \in \mathbb{R}$ with $\lambda^2 a+ \lambda b + c = 0$ and $z = \lambda z_1 + (1-\lambda)z_2$.
 
-TODO Umstellen \\
+"$\Rightarrow:$"  If z belongs to the intersection of G and C, then z satisfies the equations of C and G. Consequently
+\begin{align*}
+    &&\|z - z_3\| &= r &&\mid 0\le \|\cdot\|\text{ and }0\le r\\
+    &\Leftrightarrow& \|z - z_3\|^2 &= r^2\\
+    &\Leftrightarrow& (x - x_3)^2 + (\imath y - \imath y_3)^2 &= r^2 &&\mid x = \lambda x_1 - \lambda x_2 + x_2 \text{ and }\\ 
+    &&&&&\mid y = \lambda y_1 - \lambda y_2 + y_2\\
+    &\Leftrightarrow& (\lambda x_1 - \lambda x_2 + x_2 - x_3)^2 + \\
+    &&(\imath (\lambda y_1 - \lambda y_2 + y_2 - y_3))^2 &= r^2\\
+    &\Leftrightarrow& \lambda ^2 ((x_1 - x_2)^2 + (\imath y_1 - \imath y_2)^2) + \\
+    &&\lambda (2(x_1 - x_2)(x_2 - x_3) - 2(\imath y_1 - \imath y_2)(\imath y_2 - \imath y_3)) + \\
+    &&(x_2 - x_3)^2 + (\imath y_2 - \imath y_3)^2 &= r^2\\
+\end{align*}
+"$\Leftarrow:$" Since $z = \lambda z_1 + (1-\lambda)z_2$ we get $z$ in $G$ and can use the equations from the first part of the proof to show that $z$ is in $C$.
+
 Now we can show that there exists a $w \in L$ such that $z \in L(\sqrt{w})$.\\
 Since we know that $z = \lambda z_1 + (1-\lambda)z_2$ and $z_1, z_2 \in L$ we only have to show that $\lambda \in L(\sqrt{w})$.
 To do this, we use the equations from the first part of the proof. 
 Since $\lambda$ is a solution of a quadratic equation we now get that $\lambda$ is equal to $\frac{-b \pm \sqrt{b^2 - 4ac}}{2a}$. Since $a,b,c \in L$ we get $w = b^2 - 4ac \in L$ so $\lambda \in L(\sqrt{w})$. Therefore $z = \lambda z_1 + (1-\lambda)z_2$ is in $L(\sqrt{w})$.
 %TODO: add proof
 \end{proof}
-
 %3.18
 \begin{lemma}
     \label{lem:ConjClosed.Intersection_circle_circle}
@@ -334,14 +353,15 @@ Since $\lambda$ is a solution of a quadratic equation we now get that $\lambda$ 
     "$\Rightarrow$": If $z$ is to be in both $G \cap C_1$ and $G \cap C_2$, it must be the case that $z$ is in both $C_1$ and $C_2$. Consequently, it is also in $C_1 \cap C_2$. \\
     "$\Leftarrow$": For $ x_1 \ne x_2$ and $y_1 \ne y_2$ chose 
         \begin{align*}
-            z_1 &:= (\frac{r_1^2 - r_2^2 + x_2^2 - x_1^2 + (\imath y_2)^2 - (\imath y_1)^2-2(y_2-y_1)y_1}{2(x_2-x_1)}) + \imath y_1\\ % x_1 + \imath (\frac{r_1^2 - r_2^2 + x_2^2 - x_1^2 + (\imath y_2)^2 - (\imath y_1)^2-2(x_2-x_1)x_1}{2(y_2-y_1)})\\
-            z_2 &:= (\frac{r_1^2 - r_2^2 + x_2^2 - x_1^2 + (\imath y_2)^2 - (\imath y_1)^2-2(y_2-y_1)y_2}{2(x_2-x_1)}) + \imath y_2\\
+            z_1 &:= (\frac{r_1^2 - r_2^2 + x_2^2 - x_1^2 + (\imath y_2)^2 - (\imath y_1)^2+2(\imath (y_2)-(\imath y_1))(\imath y_1)}{2(x_2-x_1)}) + \imath y_1\\ % x_1 + \imath (\frac{r_1^2 - r_2^2 + x_2^2 - x_1^2 + (\imath y_2)^2 - (\imath y_1)^2-2(x_2-x_1)x_1}{2(y_2-y_1)})\\
+            z_2 &:= (\frac{r_1^2 - r_2^2 + x_2^2 - x_1^2 + (\imath y_2)^2 - (\imath y_1)^2+2(\imath (y_2)-(\imath y_1))(\imath y_2)}{2(x_2-x_1)}) + \imath y_2\\
         \end{align*}
 
     The fact that $z_1$ and $z_2$ are composed of elements from $L$ allows us to employ Lemma \ref{lem:ConjClosed.Intersection_line_circle} to obtain $w$, with the result that $z$ is contained within the set $L(w)$.
 \end{proof}
 
 \section[K zero]{The Field $\mathcal{K}_0$}
+This section develops a conjugation-closed field that depends on the set $\mathcal{M}$.
 \begin{definition}
     \label{def:K_M_0}
     Let $\mathcal(M)\subseteq\mathbb{C}$ with $0,1 \in \mathcal{M}$. Define:
@@ -392,7 +412,8 @@ Furthermore, since $M$ is contained in $M_{\infty}$ (see \ref{lem:M_in_M_inf}) a
 \end{proof}
 
 \section{Classification of Constructable Numbers}
-The following section will employ the following lemma, which has not yet been proven in Lean.
+The following section will demonstrate that for an element to be constructible, the degree over $K_0$ must be equal to $2^m$ for some natural number $m$.
+%The following section will employ the following lemma, which has not yet been proven in Lean.
 
 \begin{lemma}
     \label{lem:dergree_two_eq_sqr}
@@ -421,7 +442,7 @@ The following section will employ the following lemma, which has not yet been pr
 
 \begin{proof}
     "$\Leftarrow:$"
-    It can be demonstrated by induction that $L_n$ is contained within $M_{\infty}$. 
+    It can be shown by induction that $L_n$ is contained within $M_{\infty}$. 
     Therefore, it can be inferred that $z$ is also contained within $M_{\infty}$.
     \begin{itemize}
         \item Base case $n=1$: \\

@@ -1369,10 +1369,6 @@ lemma angle_half_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (z : ℂ) (h
         exact h
      _ = (z.arg / 2 * I ).exp := by ring_nf
 
---TODO add
--- lemma exp_root (α: ℝ) (n:ℕ): exp (α/(n:ℂ) * I) = (exp (α * I)) ^ (n:ℂ)⁻¹ := by
---   sorry
--- --Complex.exp_int_mul
 
 --! Währe schöner min  z ^ (1/2:ℂ) ∈ M_inf M
 lemma root_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (z : ℂ) (hz: z ∈ M_inf M):

@@ -4,8 +4,7 @@ The following chapter provides a concise overview of the author's experience wit
 However, it will not explain the operational logic of lean nor serve as a guide to learning lean, as this is beyond the scope of this thesis.
  For those interested in learning more about lean, I recommend consulting the following resources: \url{https://leanprover-community.github.io/learn.html}
 
-\section{Working with Lean}
-\subsection*{Blueprint}
+\section{Blueprint}
 \begin{wrapfigure}{r}{0.5\textwidth}
     \centering
     \includegraphics[angle=0, width=0.5\textwidth]{Blueprint}
@@ -30,8 +29,6 @@ The presented approach is particularly beneficial for larger-scale projects invo
 
 
 
-\subsection*{Lean}
-Should i write about lean???
 \clearpage
 \begin{figure}[h]
     \centering
@@ -80,3 +77,10 @@ This is because each object in Lean is a type, and you cannot switch between typ
         mul_mem' := by apply mul_M_inf M h₀ h₁
         inv_mem' := by apply inv_M_inf M h₀ h₁
 \end{lstlisting}
+
+\section{Conclusion}
+The proceeding was an account of the process by which the formalisation of "The Impossibility of Trisecting the Angle and Doubling the Cube" was reached. 
+On the one hand, working with lean demonstrates which aspects have not yet been resolved, during the formalisation process and ensures that all outcomes will be accurate. 
+However, it requires a more complex proof structure  than is typically required, rendering processes that are otherwise straightforward challenging to demonstrate.
+Consequently, this approach is inherently time-consuming. 
+This has resulted in the following aspects not being completed in time.

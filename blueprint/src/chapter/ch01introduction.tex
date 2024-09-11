@@ -87,6 +87,8 @@ We will use $\mathbb{C}$ as plane of drawing and $\mathcal{M} \subset \mathbb{C}
 \end{remark}
 
 \section{Properties of Lines}
+In light of the fact that a considerable proportion of the forthcoming project will entail the manipulation of lines and the absence of an existing formalisation from MathLib, 
+it is imperative to illustrate the fundamental properties that will be utilised throughout the remainder of the project.
 
 \begin{lemma} 
     \label{lem:line_pionts_iff}
@@ -345,8 +347,8 @@ To construct new points in the next section\ref{basic_constructions} we still ne
 
 
 \section{Basic constructions}\label{basic_constructions}
-For the following constructions we assume that $M\subseteq \mathbb{C}$ with $0,1 \in M$.
-
+It is now possible to construct fundamental points in $M_{\infty}$ using a compass and ruler, which can subsequently be employed to create a field structure and special properties on $M_{\infty}$. 
+Consequently, the following constructions are based on the assumption that $M\subseteq \mathbb{C}$ with $0,1 \in M$.
 %2.3.1
 \begin{lemma}[Negative complex numbers]
     \label{lem:construction_neg}
@@ -609,12 +611,12 @@ To get the point $z.re$ we draw a line through $z$ and $\overline{z}$. Then $z.r
     \uses{def:set_of_constructable_points}
     For $z \in M_{\infty}$ it follows that $z.im \in M_{\infty}$.
 \end{lemma}
-To get the point $z.im$ we draw a line through $z$ and $z-1$. Now we get $\imath \cdot z.im$ by taking the intersection with the imaginary line, defined by $0$ and $/imath$. To get $z.im$ draw a circle trough $\imath \cdot z.im$ and take the intersection with the real line.\ref{Fig z.im}
+To get the point $z.im$ we draw a line through $z$ and $z-1$. Now we get $\imath \cdot z.im$ by taking the intersection with the imaginary line, defined by $0$ and $\imath$. To get $z.im$ draw a circle trough $\imath \cdot z.im$ and take the intersection with the real line.\ref{Fig z.im}
 
 \begin{proof}
     \uses{def:line, def:circle,}%TODO c_in_C_M, ilc_M_inf, M_M_inf
     Define the lines $l = \{z, z-1\}$ and $l_{\Im} = \{\imath, 0\}$.\\
-    Now it is analog to the proof of lemma \ref{lem:construction_real}. That $z.im \cdot \imath  \in l \cap l_{\Im}$. 
+    Now it is analog to the proof of lemma \ref{lem:construction_real}, that $z.im \cdot \imath  \in l \cap l_{\Im}$. 
 
     Now we can project $z.im \cdot \imath$ on the real axis by drawing a circle with center $0$ and radius $\|z.im\|$ and taking the intersection with the real axis.
 \end{proof}
@@ -786,6 +788,26 @@ For the constrution we draw a line through $0$ and $z$ and take the intersection
     The rest follows from the construction of the intersection of a line and a circle\ref{lem:icc_M_inf}.
 \end{proof}
 
+\begin{figure}[h]
+    \centering
+    \begin{tikzpicture}
+        \draw[->] (-0.5,0) -- (4,0) node[right] {$\Re$};
+        \draw[->] (0,-0.5) -- (0,3) node[above] {$\Im$};
+        \coordinate[label=-135:$0$] (zero) at (0,0);
+        \coordinate[label=-135:$1$] (one) at (1,0);
+        \coordinate[label=135:$z$] (z) at (3,2);
+        \coordinate[label=90:$e^{\imath\alpha}$] (ea) at (0.8321,0.5547);
+        \fill[black] (zero) circle (1pt);
+        \fill[black] (one) circle (2pt);
+        \fill[black] (z) circle (2pt);
+        \fill[black] (ea) circle (2pt);
+        \draw (zero) -- (z);
+        \draw (zero) [carc=-20:110:1];
+    \end{tikzpicture}
+    \caption{Construction of $e^{\imath\alpha}$}
+    \label{Fig.angle}
+\end{figure}
+
 \begin{corollary}[Midpoint in $M_{\infty}$]
     \label{cor:Construction.midpoiont}
     \uses{def:set_of_constructable_points}
@@ -860,8 +882,24 @@ Draw a circle trough $0$ and $r$ and a line through $1$ parallel to the imaginar
     \uses{def:line, def:circle, lem:icc_M_inf, lem:M_in_M_inf} %TODO add rest of dependencies   
 Without loss of generality we can assume that $r \ge 1$. 
 Otherwise we can use the fact that $\sqrt{r} = \frac{1}{\sqrt{r^{-1}}}$.
-
-TODO
+The initial step is to define the following lines and circles:
+\begin{itemize}
+    \item [$l_1$] $:= \{z_1 :=1; z_2 := \imath + 1\}$
+    \item [$l_{\Re}$] $:= \{z_1:=0; z_2:= 1\}$
+    \item [$c_1$] $:= \{\text{center}:= \frac{r}{2}; \text{radius} := \dist (0,\frac{r}{2})\}$
+    \item [$c_2$] $:= \{\text{center}:= 0; \text{radius} := \dist (0,\sqrt{r})\}$
+\end{itemize}
+It can be observed that both $l_1$ and $l_{\Re}$ are elements of $L(M)$, and that $c_1$ is an element of $C(M)$. 
+Furthermore, it can be demonstrated that the $\sqrt{r}$  is an element of $l_{\Re} \cap c_2$. 
+Consequently, the only remaining step is to show that $c_2$ is an element of $C(M)$, which is equivalent to proving that there exists a $z$ in $M_{\infty}$ that is also an element of $c_2$. 
+This is possible since $0$ is an element of $M_{\infty}$.\\
+\underline{Claim}: There exists a $z \in l_1 \cap c_1$, such that $z \in c_2$.
+\begin{proof}
+    In accordance with the theorem of Pythagoras, it can be demonstrated that$z= 1 \pm \imath \sqrt{r-1}$.
+    A further application of the Pythagorean theorem yields the following result: 
+    $$\dist (0,z) \overset{z= 1 + \imath \sqrt{r-1}}{=} \sqrt{1^2 + (\sqrt{r-1})^2} = \sqrt{1 + r - 1} = \sqrt{r} = \dist (0,\sqrt{r}).$$
+\end{proof}
+Therefore, it can be concluded that $\sqrt{r}$ is also constructible.
 
 \end{proof}
 \begin{figure}[h]
@@ -900,25 +938,6 @@ TODO
 
 \end{proof}
 
-\begin{figure}[h]
-    \centering
-    \begin{tikzpicture}
-        \draw[->] (-0.5,0) -- (4,0) node[right] {$\Re$};
-        \draw[->] (0,-0.5) -- (0,3) node[above] {$\Im$};
-        \coordinate[label=-135:$0$] (zero) at (0,0);
-        \coordinate[label=-135:$1$] (one) at (1,0);
-        \coordinate[label=135:$z$] (z) at (3,2);
-        \coordinate[label=90:$e^{\imath\alpha}$] (ea) at (0.8321,0.5547);
-        \fill[black] (zero) circle (1pt);
-        \fill[black] (one) circle (2pt);
-        \fill[black] (z) circle (2pt);
-        \fill[black] (ea) circle (2pt);
-        \draw (zero) -- (z);
-        \draw (zero) [carc=-20:110:1];
-    \end{tikzpicture}
-    \caption{Construction of $e^{\imath\alpha}$}
-    \label{Fig.angle}
-\end{figure}
 
 
 

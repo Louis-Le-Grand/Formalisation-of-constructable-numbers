@@ -62,6 +62,30 @@ lemma div_two_2pown' (a n : ℕ) (h: a ∣ 2^ n) :  ∃m : ℕ, a = 2^m:= by
   obtain ⟨m, hm⟩ := div_two_2pown a n h
   exact ⟨m, Eq.symm hm⟩
 
+
+lemma degree_of_Ln (n : ℕ) (L : ℕ →  IntermediateField ℚ ℂ) (h:  ∃   (_: ∀i,  L i ≤ L (i + 1)),
+    K_zero M = L 0 ∧ (∀ i < n, relfinrank (L i) (L (i+1)) = 2)): relfinrank (K_zero M) (L n) = 2^n := by
+  obtain ⟨hL, hL0, h_degree⟩ := h
+  have: K_zero M ≤ L n := by
+    rw[hL0]
+    exact monotone_nat_of_le_succ (fun n ↦ hL n) (Nat.zero_le n)
+  induction n
+  case zero => simp only [hL0, relfinrank_self, pow_zero]
+  case succ n Ih =>
+    rw[relfinrank_eq_finrank_of_le this]
+    have hn: K_zero M ≤ L n := by
+      rw[hL0]
+      exact monotone_nat_of_le_succ (fun n ↦ hL n) (Nat.zero_le n)
+    obtain h_degree' := h_degree n (by linarith)
+    specialize hL n
+    rw[pow_succ, ←Ih ?_ hn, relfinrank_eq_finrank_of_le hn, ←h_degree', relfinrank_eq_finrank_of_le hL]
+    symm
+    --apply @FiniteDimensional.finrank_mul_finrank (K_zero M) (L n) (extendScalars this) _ _ _ ?_ ?_ ?_ ?_ ?_ ?_ ?_ ?_
+    sorry
+    . intro i hi
+      exact h_degree i (by linarith)
+
+
 lemma Classfication_z_in_M_inf_2m {M : Set ℂ} (h₀: 0 ∈ M) (h₁:1 ∈ M) (z : ℂ) :
   z ∈ M_inf M →  ∃ (m : ℕ) ,((2  : ℕ) ^ m) = Polynomial.degree (minpoly (K_zero M) z)  := by
   intro h
@@ -71,18 +95,7 @@ lemma Classfication_z_in_M_inf_2m {M : Set ℂ} (h₀: 0 ∈ M) (h₁:1 ∈ M) (
     rw[hL0]
     exact monotone_nat_of_le_succ (fun n ↦ hL n) (Nat.zero_le n)
   have hn: relfinrank (K_zero M) (L n) = 2^n := by
-    induction n
-    case zero => simp only [hL0, relfinrank_self, pow_zero]
-    case succ n Ih =>
-      rw[relfinrank_eq_finrank_of_le this]
-      have hn: K_zero M ≤ L n := by
-        rw[hL0]
-        exact monotone_nat_of_le_succ (fun n ↦ hL n) (Nat.zero_le n)
-      specialize h_degree n (by linarith)
-      specialize hL n
-      --rw[pow_succ, ←Ih, relfinrank_eq_finrank_of_le hn, ←h_degree, relfinrank_eq_finrank_of_le hL]
-      --rw [FiniteDimensional.finrank_mul_finrank]
-      sorry
+    exact degree_of_Ln n L ⟨hL, hL0, h_degree⟩
   rw[relfinrank_eq_finrank_of_le this] at hn
   have hm: ∃m, FiniteDimensional.finrank (K_zero M) ((K_zero M) ⟮z⟯) = 2^m := by
     have : FiniteDimensional.finrank (K_zero M) ((K_zero M) ⟮z⟯) ∣ 2^n := by

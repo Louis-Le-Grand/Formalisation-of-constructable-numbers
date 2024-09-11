@@ -18,7 +18,8 @@ If we now take the cube with a length of one, the problem is as follows:
 \end{problem}
 
 A similar approach allows the problem of trisecting angles to be simplified. 
-If an angle is defined by the points $0$, $1$ and $e^{\imath\cdot\alpha}$, the problem can be described as follows:
+If we take two points on the real axis and a third point on the unit circle. This defines an angle. Thus we need the points $0$, $1$ and $e^{i\alpha}$. 
+The trisection intersects the unit circle at $e^{i\alpha/3}$. Therefore the problem can be described as follows:
 
 \begin{problem}[Trisecting the Angle]
     Given the set $\mathcal{M} = \{0, 1, e^{\imath\cdot\alpha}\}$, can we construct the point $e^{\imath\cdot\frac{\alpha}{3}}$, i.e. is $e^{\imath\cdot\frac{\alpha}{3}} \in \mathcal{M}_{\infty}$?
@@ -43,3 +44,10 @@ It is an interactive theorem prover, but it incorporates automated tools and met
 
 
 Mathlib is a library of mathematical content for the Lean programming language. It is a community-developed project, created by a large number of contributors and covering a substantial breadth of mathematical topics. To ascertain which areas are encompassed by MathLib, one may refer to the following link: \url{https://leanprover-community.github.io/mathlib-overview.html}. 
+
+
+\section*{Outline of the Thesis}
+The following three chapters present the blueprint for my formalisation.
+Consequently, the document includes a number of elementary lemmas and details that are not typically documented in such a manner. 
+However, a few statements and most of the auxiliary lemmas are not included in the blueprint.
+The structure of this formalisation is based on the lecture "Einführung in die Algebra" by Jan Schröer (WS 22/23).

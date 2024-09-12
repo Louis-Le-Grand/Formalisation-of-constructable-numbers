@@ -549,6 +549,7 @@ Draw two circles one with center $0$ and radius $\|z\|$ and a second with center
 The first step is to construct the imaginary axis, which is achieved by drawing a line, designated as $l$, that passes through two circles with centres at $-1$ and $1$ and radii of $2$. 
 The second step is to construct the point, designated as $\imath r$, which is achieved by drawing a circle with a centre at $0$ and a radius of $r$, and taking the intersection with the imaginary axis. (Fig\ref{Fig.4})
 \begin{proof}
+    \leanok
     \uses{def:line, def:circle, lem:construction_neg, lem:icc_M_inf, lem:ilc_M_inf, lem:M_in_M_inf}
     First we construct the imaginary axis. Define $c_1 = \{-1,2\}$ and $c_2 = \{1,2\}$.\\
     \underline{Claim 1}: $c_1, c_2 \in \mathcal{C(M_{\infty})}$
@@ -601,6 +602,7 @@ The second step is to construct the point, designated as $\imath r$, which is ac
     $\imath \in M_{\infty}$.
 \end{corollary}
 \begin{proof}
+    \leanok
     \uses{lem:construction_imath_r, lem:M_in_M_inf}
     By lemma \ref{lem:construction_imath_r} with $r = 1$ and the definition of $\mathcal{M}$ we get $\imath \in M_{\infty}$.
 \end{proof}
@@ -650,7 +652,6 @@ To get the point $z.re$ we draw a line through $z$ and $\overline{z}$. Then $z.r
     For $z \in M_{\infty}$ it follows that $z.im \in M_{\infty}$.
 \end{lemma}
 To get the point $z.im$ we draw a line through $z$ and $z-1$. Now we get $\imath \cdot z.im$ by taking the intersection with the imaginary line, defined by $0$ and $\imath$. To get $z.im$ draw a circle trough $\imath \cdot z.im$ and take the intersection with the real line.\ref{Fig z.im}
-
 \begin{proof}
     \leanok
     \uses{def:line, def:circle,}%TODO c_in_C_M, ilc_M_inf, M_M_inf
@@ -887,7 +888,7 @@ For the construction we draw a line through $0$ and $z$ and take the intersectio
 \begin{lemma}[Construction of radius]
     \label{lem:construction_radius}
     \uses{def:set_of_constructable_points}
-    \lean{abs_M_Inf}
+    \lean{Construction.abs_M_Inf}
     \leanok
     If $z = r\cdot e^{\imath\alpha} \in M_{\infty}$, then $r \in  M_{\infty}$.
 \end{lemma}

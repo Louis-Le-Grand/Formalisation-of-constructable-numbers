@@ -221,7 +221,7 @@ def K_root (K : IntermediateField E F): Set F := {x : F | x * x ∈ K}
 
 end test
 
-lemma test' (M : Set ℂ) (_: 0 ∈ M) (_:1 ∈ M) (n : ℕ) : ∃ α: Fin n → Set ℂ, M_I M n ≤ (succ_adjion (K_zero M) n α) ∧ succ_adjion_root (K_zero M) n α ∧ ConjClosed (succ_adjion (K_zero M) n α) := by
+lemma M_i_in_K_i (M : Set ℂ) (_: 0 ∈ M) (_:1 ∈ M) (n : ℕ) : ∃ α: Fin n → Set ℂ, M_I M n ≤ (succ_adjion (K_zero M) n α) ∧ succ_adjion_root (K_zero M) n α ∧ ConjClosed (succ_adjion (K_zero M) n α) := by
   induction n
   case zero =>
     refine ⟨λ _ ↦ ∅, ?_, ?_⟩
@@ -334,7 +334,7 @@ theorem Classfication_z_in_M_inf  (M : Set ℂ) (z : ℂ) (h₀: 0 ∈ M) (h₁:
     rw[ M_inf_in_M_I] at h
     obtain ⟨n, h ⟩ := h
     have: ∃ α,  M_I M n ≤ succ_adjion (K_zero M) n α ∧ succ_adjion_root (K_zero M) n α  ∧ ConjClosed (succ_adjion (K_zero M) n α) := by
-      apply test' _ h₀ h₁
+      apply M_i_in_K_i _ h₀ h₁
     obtain ⟨α, h', hr, _⟩ := this
     refine ⟨n, α,  h' h, hr⟩
   intro h
@@ -397,8 +397,65 @@ lemma div_two_2pown' (a n : ℕ) (h: a ∣ 2^ n) :  ∃m : ℕ, a = 2^m:= by
   obtain ⟨m, hm⟩ := div_two_2pown a n h
   exact ⟨m, Eq.symm hm⟩
 
+lemma mulfinrank_help (R K L: IntermediateField ℚ ℂ) (h₁: R ≤ K) (h₂: K ≤ L) : FiniteDimensional.finrank R (extendScalars h₁) *
+    FiniteDimensional.finrank (extendScalars h₁) (extendScalars h₂) = FiniteDimensional.finrank R (extendScalars (Trans.trans h₁ h₂)) := by
+    --apply FiniteDimensional.finrank_mul_finrank R (extendScalars h₁) (extendScalars h₂)
+    sorry
+
+lemma degree_of_Ln (n : ℕ) (L : ℕ →  IntermediateField ℚ ℂ) (h:  ∃   (_: ∀i,  L i ≤ L (i + 1)),
+    K_zero M = L 0 ∧ (∀ i < n, relfinrank (L i) (L (i+1)) = 2)): relfinrank (K_zero M) (L n) = 2^n := by
+  obtain ⟨hL, hL0, h_degree⟩ := h
+  have: K_zero M ≤ L n := by
+    rw[hL0]
+    exact monotone_nat_of_le_succ (fun n ↦ hL n) (Nat.zero_le n)
+  induction n
+  case zero => simp only [hL0, relfinrank_self, pow_zero]
+  case succ n Ih =>
+    rw[relfinrank_eq_finrank_of_le this]
+    have hn: K_zero M ≤ L n := by
+      rw[hL0]
+      exact monotone_nat_of_le_succ (fun n ↦ hL n) (Nat.zero_le n)
+    obtain h_degree' := h_degree n (by linarith)
+    specialize hL n
+    rw[pow_succ, ←Ih ?_ hn, relfinrank_eq_finrank_of_le hn, ←h_degree', relfinrank_eq_finrank_of_le hL]
+    symm
+    have: FiniteDimensional.finrank ↥(L n) ↥(extendScalars hL) = FiniteDimensional.finrank ↥(extendScalars hn) ↥(extendScalars hL) := by norm_cast
+    rw[this]
+    apply mulfinrank_help (K_zero M) (L n) (L (n+1)) _ _
+    . intro i hi
+      exact h_degree i (by linarith)
+
 lemma Classfication_z_in_M_inf_2m {M : Set ℂ} (h₀: 0 ∈ M) (h₁:1 ∈ M) (z : ℂ) :
-  z ∈ M_inf M →  ∃ m ,2 ^ m = (minpoly (K_zero M) z).degree := by sorry
+  z ∈ M_inf M →  ∃ (m : ℕ) ,((2  : ℕ) ^ m) = Polynomial.degree (minpoly (K_zero M) z)  := by
+  intro h
+  rw[Classfication_z_in_M_inf M z h₀ h₁] at h
+  obtain ⟨n, L, hL, hLn, hL0, h_degree⟩ := h
+  have: K_zero M ≤ L n := by
+    rw[hL0]
+    exact monotone_nat_of_le_succ (fun n ↦ hL n) (Nat.zero_le n)
+  have hn: relfinrank (K_zero M) (L n) = 2^n := by
+    exact degree_of_Ln n L ⟨hL, hL0, h_degree⟩
+  rw[relfinrank_eq_finrank_of_le this] at hn
+  have hm: ∃m, FiniteDimensional.finrank (K_zero M) ((K_zero M) ⟮z⟯) = 2^m := by
+    have : FiniteDimensional.finrank (K_zero M) ((K_zero M) ⟮z⟯) ∣ 2^n := by
+      rw[←hn]
+      apply finrank_div
+      simp only [adjoin_le_iff, coe_extendScalars, Set.le_eq_subset, Set.singleton_subset_iff,
+        SetLike.mem_coe, hLn]
+    apply div_two_2pown' _  _ this
+  have: IsIntegral (↥(K_zero M)) z := by
+    have _: FiniteDimensional (↥(K_zero M)) (extendScalars this) := by
+      apply FiniteDimensional.of_finrank_pos
+      rw[hn]
+      simp only [Nat.ofNat_pos, pow_pos]
+    have: z ∈ (extendScalars this) := by
+      simp_all only [mem_extendScalars]
+    apply IsIntegral_of_mem_finte z this
+  obtain ⟨m, hm⟩ := hm
+  use m
+  rw[Polynomial.degree_eq_natDegree (minpoly.ne_zero this), ← IntermediateField.adjoin.finrank this]
+  symm
+  norm_cast at hm ⊢
 
 lemma Classfication_z_in_M_inf_2m_not {M : Set ℂ} (h₀: 0 ∈ M) (h₁:1 ∈ M) (z : ℂ) :
     ¬ (∃ m ,2 ^ m = (minpoly (K_zero M) z).degree) → z ∉ M_inf M := by

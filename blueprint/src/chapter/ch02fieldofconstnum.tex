@@ -7,9 +7,12 @@ In this section, we will utilise the constructed points from sectoion \ref{basic
     \label{thm:MField}
     \leanok
     \lean{MField}
+    \uses{def:set_of_constructable_points}
     For $M\subseteq \mathbb{C}$ with $0,1 \in M$. $M_{\infty}$ is a subfield of $\mathbb{C}$.
 \end{theorem}
 \begin{proof}
+    \leanok
+    \uses{lem:M_in_M_inf, cor:construction_add, cor:construction_mul_complex, lem:construction_neg, cor:inv_M_inf}
     To show that $M_{\infty}$ is a subfield of $\mathbb{C}$ we have to show that $0,1\in M_{\infty}$ and $M_{\infty}$ is closed under addition, multiplication, subtraction and division.
     \begin{itemize}
         \item [$0,1$:] This follows from $0,1 \in M$ and Lemma \ref{lem:M_in_M_inf}.
@@ -52,7 +55,8 @@ In this section, we will utilise the constructed points from sectoion \ref{basic
     \end{itemize}
 \end{lemma}
 \begin{proof}
-    %TODO: \uses{} imath_M_inf z_iff_re_im_M_inf; (i_z_imp_z_in_M_inf/ MField_i_mul)
+    \leanok
+    \uses{cor:construction_imath, cor:z_iff_re_im_M_inf, cor:construction_imath, cor:construction_radius, lem:angle_M_inf}
     This lemma is a direct consequence of section \ref{basic_constructions}.
     \begin{itemize}
         \item[(i):] We can apply construction \ref{cor:construction_imath}
@@ -81,6 +85,7 @@ In this section, we will utilise the constructed points from sectoion \ref{basic
 \end{lemma}
 \begin{proof}
     \uses{thm:MField, cor:root_M_inf}
+    \leanok
     It is established that $M_{\infty}$ is a field (see remark \ref{rem:MField_Field}). Furthermore, the corollary \ref{cor:root_M_inf} provides a root $z^{\frac{1}{2}}$ of $z \in M_{\infty}$.    
     $$ z^{\frac{1}{2}} * z^{\frac{1}{2}} = z^{\frac{1}{2}^2} = z^{2\cdot \frac{1}{2}} = z.$$
     Therefore $M_{\infty}$ is quadratic closed.
@@ -101,9 +106,11 @@ In this section, we will utilise the constructed points from sectoion \ref{basic
     \label{lem:conj_union}
     \leanok
     \lean{conj_union}
+    \uses{def:conj_set}
     For two sets $M,N \subset \mathbb{C}$ $$Conj(M\cup N) = Conj(M) \cup Conj(N).$$
 \end{lemma}
 \begin{proof}
+    \leanok
     For $z \in Conj(M\cup N)$ there is a $w \in M\cup N$ such that $\overline{w} = z$, therefore $ z = \overline{w} \in Conj(M) \cup Conj(N)$. The other direction is analog.
 \end{proof}
 
@@ -111,9 +118,11 @@ In this section, we will utilise the constructed points from sectoion \ref{basic
     \label{lem:conj_conj_id}
     \leanok
     \lean{conj_conj_id}
+    \uses{def:conj_set}
     For a set $M \subset \mathbb{C}$ it holds that $Conj(Conj(M)) = M$.
 \end{lemma}
 \begin{proof}
+    \leanok
     $$Conj(Conj(M)) = Conj(\{\overline{z}\mid z\in M\}) = \{\overline{\overline{z}}\mid z\in M\} = \{ z \mid z\in M\} = M.$$
 \end{proof}
 
@@ -121,6 +130,7 @@ In this section, we will utilise the constructed points from sectoion \ref{basic
     \label{def:conj_closed}
     \leanok
     \lean{ConjClosed}
+    \uses{def:conj_set}
     We call a subset of $\C$ \emph{conjugate closed} if $M= Conj(M)$.
 \end{definition}
 
@@ -129,9 +139,13 @@ In this section, we will utilise the constructed points from sectoion \ref{basic
     \label{lem:conj_MField}
     \leanok
     \lean{MField_conj}
+    \uses{def:conj_closed, thm:MField}
+
     $M_{\infty}$ is conjugate closed.
 \end{lemma}
 \begin{proof}
+    \leanok
+    \uses{def:conj_set, lem:construction_conj}
     We can apply construction \ref{lem:construction_conj} and the fact that $\overline{\overline z} = z$ for all $z \in\mathbb{C}$.
 \end{proof}
 
@@ -139,9 +153,12 @@ In this section, we will utilise the constructed points from sectoion \ref{basic
     \label{lem:M_con_M}
     \leanok
     \lean{ConjClosed.M_con_M}
+    \uses{def:conj_closed}
     For $M\subseteq \mathbb{C}$ $M\cup Conj(M)$ is conjugate closed.
 \end{lemma}
 \begin{proof}
+    \leanok
+    \uses{def:conj_set}
     We can apply Lemma \ref{lem:conj_union} and \ref{lem:conj_conj_id}.
     $$Conj(M\cup Conj(M)) = Conj(M) \cup Conj(Conj(M)) = M \cup Conj(M).$$
 \end{proof}
@@ -150,10 +167,13 @@ In this section, we will utilise the constructed points from sectoion \ref{basic
     \label{lem:ConjClosed.Rat_ConjClosed}
     \leanok
     \lean{ConjClosed.Rat_ConjClosed, ConjClosed.Rat_ConjClosed'}
+    \uses{def:conj_closed}
     The set of rational numbers is conjugate closed.
 \end{lemma}
 
 \begin{proof}
+    \leanok
+    \uses{def:conj_set}
     For every $r \in \mathbb{Q}$ we have $\overline{r} = r$.
 \end{proof}
 
@@ -161,9 +181,12 @@ In this section, we will utilise the constructed points from sectoion \ref{basic
     \label{lem:ConjClosed.conj_inclusion}
     \leanok
     \lean{ConjClosed.conj_inclusion}
+    \uses{def:conj_closed}
     For $M,N \subseteq \mathbb{C}$ with $M \subseteq N$ it holds that $Conj(M) \subseteq Conj(N)$.
 \end{lemma}
 \begin{proof}
+    \leanok
+    \uses{def:conj_set}
     For $z \in Conj(M)$ there is a $w \in M$ such that $\overline{w} = z$ and since $M \subseteq N$ we have $w \in N$ and therefore $z \in Conj(N)$.
 \end{proof}
 
@@ -171,9 +194,12 @@ In this section, we will utilise the constructed points from sectoion \ref{basic
     \label{lem:ConjClosed.conj_field}
     \leanok
     \lean{ConjClosed.conj_field}
+    \uses{def:conj_closed}
     For a subfield $F$  of $\mathbb{C}$ the conjugate set $Conj(F)$ is a subfield of $\mathbb{C}$.
 \end{lemma}
 \begin{proof}
+    \leanok
+    \uses{def:conj_set}
     We have to show that $0,1 \in Conj(F)$ and $Conj(F)$ is closed under addition, multiplication, negation and inversion.
     \begin{itemize}
         \item [$0,1$:] Since $0,1 \in F$ and $\overline{0} = 0, \overline{1} = 1$ we have $0,1 \in Conj(F)$.
@@ -188,9 +214,11 @@ In this section, we will utilise the constructed points from sectoion \ref{basic
     \label{lem:ConjClosed.re_im_in_L}
     \leanok
     \lean{ConjClosed.ir_L, ConjClosed.im_L}
+    \uses{def:conj_closed}
     Let $L$ be a subfield of $\mathbb{C}$, with $L = conj(L)$. For all $z = x + \imath y \in L$ we have $x, \imath y \in L$.
 \end{lemma}
 \begin{proof}
+    \leanok
     Let $z = x + \imath y \in L$. Since $L$ is conjugate closed we know that $\overline{z}=x-\imath y \in L$. This implies
     \begin{equation*}
         \frac{z + \overline{z}}{2} = x \in L
@@ -203,11 +231,13 @@ In this section, we will utilise the constructed points from sectoion \ref{basic
     \label{lem:ConjClosed.distSq_L}
     \leanok
     \lean{ConjClosed.distSq_L}
+    \uses{def:conj_closed}
     Let $L$ be a subfield of $\mathbb{C}$, with $L = conj(L)$, and $z_1, z_2 \in L$.
     For $r := \|z_1-z_2\|$ we get that $r^2 \in L$.
 \end{lemma}
 \begin{proof}
-    \uses{re_im_in_L}
+    \leanok
+    \uses{lem:ConjClosed.re_im_in_L}
     For $z_1 = x_1 + \imath y_1$ and $z_2 = x_2 + \imath y_2$ we have
     \begin{equation*}
         r = \|z_1 - z_2\| = \sqrt{(x_1 - x_2)^2 + (y_1 - y_2)^2}
@@ -223,6 +253,7 @@ In this section, we will utilise the constructed points from sectoion \ref{basic
     \label{lem:ConjClosed.Intersection_line_line}
     \leanok
     \lean{ConjClosed.ill_L, ConjClosed.ill_L'}
+    \uses{def:conj_closed}
     Let $L$ be a subfield of $\mathbb{C}$, with $L = conj(L)$. For $i = 1,2,3,4$ let $z_i = x_i + \imath y_i \in L$ with $z_1 \ne z_2$ and $z_3 \ne z_4$. Define
     %TODO: write in two lines
     \begin{equation*}\begin{aligned}
@@ -240,7 +271,8 @@ In this section, we will utilise the constructed points from sectoion \ref{basic
     In this case $z \in L$.
 \end{lemma}
 \begin{proof}
-    \uses{re_im_in_L}
+    \leanok
+    \uses{lem:ConjClosed.re_im_in_L}
     The proof is divided into two parts. Initially, it is demonstrated that $z$ belongs to the intersection of $G_1$ and $G_2$, if and only if there exist real numbers $\lambda, \mu \in \mathbb{R}$, such that the equations $1$, $2$ and $3$ are satisfied.
     Subsequently, it follows that $z$ is an element of $L$.\\
     Equations $1$ and $2$ are equivalent to the following:
@@ -293,6 +325,8 @@ In this section, we will utilise the constructed points from sectoion \ref{basic
 %3.17
 \begin{lemma}
     \label{lem:ConjClosed.Intersection_line_circle}
+    \leanok
+    \uses{def:conj_closed}
     Let $L$ be a subfield of $\mathbb{C}$, with $L = conj(L)$. For $i = 1,2,3$ let $z_i = x_i + \imath y_i \in L$ with $z_1 \ne z_2$, and let $r > 0$ in $\mathbb{R}$ with $r^2 \in L$. Define
     \begin{equation*}\begin{aligned}
         G := \{\lambda z_1 + (1-\lambda)z_2 \mid \lambda \in \mathbb{R}\},\\
@@ -313,6 +347,8 @@ In this section, we will utilise the constructed points from sectoion \ref{basic
 \end{lemma}
 
 \begin{proof}
+    \leanok
+    \uses{lem:ConjClosed.distSq_L, lem:ConjClosed.re_im_in_L}
 First we have to show $z \in G \cap C$ iff and only iff there exists a $\lambda \in \mathbb{R}$ with $\lambda^2 a+ \lambda b + c = 0$ and $z = \lambda z_1 + (1-\lambda)z_2$.
 
 "$\Rightarrow:$"  If z belongs to the intersection of G and C, then z satisfies the equations of C and G. Consequently
@@ -336,8 +372,11 @@ Since $\lambda$ is a solution of a quadratic equation we now get that $\lambda$ 
 %TODO: add proof
 \end{proof}
 %3.18
-\begin{lemma}
+\begin{lemma} 
     \label{lem:ConjClosed.Intersection_circle_circle}
+    \lean{ConjClosed.icc_L, ConjClosed.icc_L'}
+    \leanok
+    \uses{def:conj_closed}
     Let $L$ be a subfield of $\mathbb{C}$, with $L = conj(L)$. For $i = 1,2 $ let $z_i = x_i + \imath y_i \in L$ with $z_1 \ne z_2$ and let $r_i > 0$ in $\mathbb{R}$ with $r_i^2 \in L$. Define
     \begin{equation*} \begin{aligned}
         C_1 := \{z = x + \imath y \in \mathbb{C} \mid \|z - z_1\| = r_1\},\\
@@ -349,21 +388,40 @@ Since $\lambda$ is a solution of a quadratic equation we now get that $\lambda$ 
     For $z \in C_1 \cap C_2$ there is a $w \in L$ such that $z \in L(\sqrt{w})$.
 \end{lemma}
 \begin{proof}
+    \uses{lem:ConjClosed.distSq, lem:ConjClosed.Intersection_line_circle}
     The initial step is to demonstrate that $ z\in C_1 \cap C_2 \Leftrightarrow \exists G,  z\in G \cap C_1 \land z \in G \cap C_2$.\\
     "$\Rightarrow$": If $z$ is to be in both $G \cap C_1$ and $G \cap C_2$, it must be the case that $z$ is in both $C_1$ and $C_2$. Consequently, it is also in $C_1 \cap C_2$. \\
-    "$\Leftarrow$": For $ x_1 \ne x_2$ and $y_1 \ne y_2$ chose 
+    "$\Leftarrow$": We begin by establishing that $z=x + iy\in C_1\cap C_2$ is equivalent to:
+        $$\|z-z_1\| = r_1 \land \|z - z_2\| = r_2 \Leftrightarrow 2(x_2-x_1)x-2(\imath y_2-\imath y_1)\imath y = r_1^2-r_2^2-x_1^2+x_2^2+(\imath y_1)^2-(\imath y_2)^2$$
+        The remaining task is to identify two elements in $L$ that satisfy the given equation. This can be achieved by considering three cases:
+        In the initial case, where $x_1 = x_2$, it can be demonstrated that $y_1 \ne y_2$, as otherwise it would follow that $C_1=C_2$. Here, we can choose
+        \begin{align*}
+            z_1 &:= 1 + \imath (\frac{r_1^2 - r_2^2 + (\imath y_2)^2 - (\imath y_1)^2}{-2(y_2-y_1)})\\
+            z_2 &:= 0 + \imath (\frac{r_1^2 - r_2^2 + (\imath y_2)^2 - (\imath y_1)^2}{-2(y_2-y_1)})
+        \end{align*}
+        In the second case we have $y_1 = y_2$ and $x_1 \ne x_2$. Here we can choose 
+        \footnote[1]{During the process of formalising this proof, it became evident that for $y_1=y_2=0$ and $L\subseteq\R$, there does not exist a line $G$ with the property that $G\cap C_1=G\cap C_2=C_1\cap C_2$.
+            This error can also be found in the source \cite{JAN_SCHRÖER:2023} and was noticed too late, so it could not be corrected in time. The existence of an $w$ such that $z\in L(\sqrt{w})$ is still correct and is the result we are interested in.}
+        \begin{align*}
+            z_1 &:= (\frac{r_1^2 - r_2^2 + x_2^2 - x_1^2}{2(x_2-x_1)}) + \imath y_1\\
+            z_2 &:= (\frac{r_1^2 - r_2^2 + x_2^2 - x_1^2}{2(x_2-x_1)}) - \imath y_1
+        \end{align*}
+    %$$\|z - z_1\| = r_1 \land \|z - z_2\| = r_2 \Leftrightarrow 2(x_2-x_1)x-2(\imath y_2-\imath y_1)\imath y = r_1^2-r_2^2-x_^2+x_2^2+(\imath y_1)^2-(\imath y_2)^2$$ % \overset{0\le\|\cdot\|\land0\le r}{\Leftrightarrow}
+        For $ x_1 \ne x_2$ and $y_1 \ne y_2$ chose 
         \begin{align*}
             z_1 &:= (\frac{r_1^2 - r_2^2 + x_2^2 - x_1^2 + (\imath y_2)^2 - (\imath y_1)^2+2(\imath (y_2)-(\imath y_1))(\imath y_1)}{2(x_2-x_1)}) + \imath y_1\\ % x_1 + \imath (\frac{r_1^2 - r_2^2 + x_2^2 - x_1^2 + (\imath y_2)^2 - (\imath y_1)^2-2(x_2-x_1)x_1}{2(y_2-y_1)})\\
             z_2 &:= (\frac{r_1^2 - r_2^2 + x_2^2 - x_1^2 + (\imath y_2)^2 - (\imath y_1)^2+2(\imath (y_2)-(\imath y_1))(\imath y_2)}{2(x_2-x_1)}) + \imath y_2\\
         \end{align*}
-
-    The fact that $z_1$ and $z_2$ are composed of elements from $L$ allows us to employ Lemma \ref{lem:ConjClosed.Intersection_line_circle} to obtain $w$, with the result that $z$ is contained within the set $L(w)$.
+    
+        Since the points $z_1$ and $z_2$ lie in $L$, we can conclude that the line $G$ lies in the set of lines of $L$. This allows us to apply the results stated in lemma \ref{lem:ConjClosed.Intersection_line_circle} to obtain $w$, with the result that $z$ is contained within the set $L(w)$.
 \end{proof}
 
 \section[K zero]{The Field $\mathcal{K}_0$}
 This section develops a conjugation-closed field that depends on the set $\mathcal{M}$.
 \begin{definition}
     \label{def:K_M_0}
+    \lean{K_zero}
+    \leanok
     Let $\mathcal(M)\subseteq\mathbb{C}$ with $0,1 \in \mathcal{M}$. Define:
     \begin{equation*}
         K_0 := \mathbb{Q}(\mathcal{M}\cup Conj(\mathcal{M}))
@@ -374,10 +432,13 @@ This section develops a conjugation-closed field that depends on the set $\mathc
     \label{lem:conj_adjion}
     \leanok
     \lean{conj_adjion, conj_adjion'}
-    Let $K$ be an conjugation closed intermidiate field of $\Q$ and $\C$ and $ M \subset \mathbb{C}$ be a subset with $M = conj(M)$. Then
+    \uses{def:K_M_0}
+    Let $K$ be an conjugation closed intermediate field of $\Q$ and $\C$ and $ M \subset \mathbb{C}$ be a subset with $M = conj(M)$. Then
     $K(M)$ is conjugate closed.
 \end{lemma}
 \begin{proof}
+    \leanok
+    \uses{lem:ConjClosed.conj_inclusion, lem:ConjClosed.conj_field}
     In reference \ref{lem:ConjClosed.conj_field}, it was demonstrated that for a field F, the field of complex numbers, $Conj(F)$ is a field. 
     It can thus be concluded that $Conj(K(M))$ is also a field.
     As both $K$ and $M$ are subsets of $K(M)$, it can be inferred from lemma \ref{lem:ConjClosed.conj_inclusion} that $Conj(K) \overset{ConjClosed}{=} K$ and $Conj(M) \overset{ConjClosed}{=} M$ are subsets of $Conj(K(M))$. 
@@ -390,11 +451,14 @@ This section develops a conjugation-closed field that depends on the set $\mathc
     \label{cor:K_zero_conjectClosed}
     \leanok
     \lean{K_zero_conjectClosed}
+    \uses{def:K_M_0}
     For $M\subseteq \mathbb{C}$ with $0,1 \in M$, $K_0$ is conjugate closed.
 \end{corollary}
 \begin{proof}
+    \leanok
+    \uses{lem:conj_adjion, lem:ConjClosed.Rat_ConjClosed, lem:M_con_M}
     By employing the preceding lemma, it is sufficient to demonstrate that $\Q$ and $M \cup Conj(M)$ are conjugate closed,
-    which can be infered from \ref{lem:ConjClosed.Rat_ConjClosed} and \ref{lem:M_con_M}
+    which can be inferred from \ref{lem:ConjClosed.Rat_ConjClosed} and \ref{lem:M_con_M}
 \end{proof}
 
 \begin{lemma}
@@ -404,6 +468,7 @@ This section develops a conjugation-closed field that depends on the set $\mathc
     For $M\subseteq \mathbb{C}$ with $0,1 \in M$ it holds that $K_0 \subseteq M_{\infty}$.
 \end{lemma}
 \begin{proof}
+    \uses{lem:M_M_inf, lem:conj_M_Inf, def:K_M_0}
 From the definition of $K_0 := \Q(M\cup Conj(M))$, 
 it can be seen that this is the smallest subfield of $\C$ containing both $Q$ and $M\cup Conj(M)$. 
 Consequently, it is sufficient to demonstrate that both $\Q$ and $M\cup Conj(M)$ are contained within $M_{\infty}$. 
@@ -418,6 +483,7 @@ The following section will demonstrate that for an element to be constructible, 
 \begin{lemma}
     \label{lem:dergree_two_eq_sqr}
     \lean{dergree_two_eq_sqr}
+    \leanok
     %For to abetory fields $E$ and $F$ with
     Let $K, L$ be subfield of $\C$, with $K\le L$. Then $[L:K] = 2$ is equivalent to the existence of a $w*w \in K$ with $w \notin K$ and $L = K(w)$.
 \end{lemma}
@@ -430,9 +496,55 @@ The following section will demonstrate that for an element to be constructible, 
     Now let $w := \frac{b^2}{4} - c \in K$ then we get $L = K(\alpha) = K(\sqrt{w})$.
 \end{proof}
 
+
+\begin{lemma}
+    \label{lem:Z_in_Minf_imp_eq} 
+    \leanok
+    \lean{chain_iff_adjion_roots}
+    For $z \in \mathbb{C}$
+    there exists an $n\ge 0$ and a chain 
+    $$K_0 = L_1 \subset L_2 \subset \ldots \subset L_n \subset \mathbb{C}$$
+    of subfields of $\mathbb{C}$ such that $z \in L_n$ and 
+    $ [L_{i+1}:L_i] = 2 $ for $i = 0, \ldots, n-1$. This is equivalent to:\\
+    There is an intermediate field $L$ of $\mathbb{C}/K_0$ with $z \in L$, so that $L$ arises from $K_0$ by a finite sequence of adjunctions of square roots.
+\end{lemma}
+\begin{proof}
+    \uses{lem:dergree_two_eq_sqr}
+    "$\Rightarrow:$" Let $n$ be the smallest natural number such that there exists a chain of subfields $L_1 \subset L_2 \subset \ldots \subset L_n$ with $z \in L_n$ and $[L_{i+1}:L_i] = 2$ for $i = 0, \ldots, n-1$. Now lemma \ref{lem:dergree_two_eq_sqr} gives us that there exists a $w \in L_{n-1}$ such that $L_n$ arises from $L_{n-1}$ by adjoining $\sqrt{w}$.\\
+    "$\Leftarrow:$" Let $L$ be an intermediate field of $\mathbb{C}/K_0$ with $z \in L$ and $L$ arises from $K_0$ by a finte sequence of adjunctions of square roots. Then there exists a chain of subfields $L_1 \subset L_2 \subset \ldots \subset L_n$ with $z \in L_n$ and $L_{i+1}:= L_i(\sqrt{w_i})$ for $i = 0, \ldots, n-1$.
+\end{proof}
+
+\begin{lemma}
+    \label{lem:Mi_chain}
+    \leanok
+    \lean{M_i_in_K_i}
+    For $M_n$ exists a chain of intermediate fields $K_0 \le K_1 \le \ldots \le K_n$ such that $M_i\subset K_i$ and $K_i:= K_{i-1}(X_i)$ for a set of square roots $X_i$ of elements of $K_{i-1}$.
+\end{lemma}
+
+\begin{proof}
+\leanok
+\uses{cor:K_zero_conjectClosed, lem:ConjClosed.Intersection_line_line, lem:ConjClosed.Intersection_line_circle, lem:ConjClosed.Intersection_circle_circle, lem:ConjClosed.conj_inclusion}
+Induction over $n$
+\begin{itemize}
+    \item Base case $n=1$: \\
+        $K_0 \le K_0$ and $K_0$ is conjugation closed \ref{cor:K_zero_conjectClosed}.
+    \item induction hypothesis: \\
+        Assume that for $n$ there is a chain of conjugation closed  intermediate fields $K_0 \le K_1 \le \ldots \le K_n$ such that $M_i\subset K_i$ and $K_i:= K_{i-1}(X_i)$ for a set of square roots $X_i$ of elements of $K_{i-1}$.
+    \item Inductive step $n \to n+1$: \\
+        For $z\in M_{n+1}$ there are four cases: 
+        \begin{itemize}
+            \item [$z \in M_n$:] By the induction hypothesis $z \in K_n$ and $K_n$ is conjugation closed and arises from $K_0$ by a sequence of adjunctinos of square roots.
+            \item [$z \in ILL (M_n)$:] By the induction hypothesis $z \in ILL (K_n)$ and using \ref{lem:ConjClosed.Intersection_line_line} we get that $z \in K_{n}$.
+            \item [$z \in ILC (M_n)$:] By the induction hypothesis $z \in ILC (K_n)$ and using \ref{lem:ConjClosed.Intersection_line_circle} there is a $w \in K_n$ such that $z \in K_n(\sqrt{w})$ insert  $\sqrt{w}, \overline{\sqrt{w}}$ to $X_n$.
+            \item [$z \in ICC (M_n)$:] By the induction hypothesis $z \in ICC (K_n)$ and using \ref{lem:ConjClosed.Intersection_circle_circle} there is a $w \in K_n$ such that $z \in K_n(\sqrt{w})$ insert $\sqrt{w}, \overline{\sqrt{w}}$ to $X_n$.
+        \end{itemize}
+\end{itemize}
+\end{proof}
+
 \begin{theorem}[constructable iff chain dergee2]
     \label{thm:Classfication_z_in_M_inf}
     \lean{Classfication_z_in_M_inf, adjoin_in_MField'}
+    \leanok
     For $z \in \mathbb{C}$, $z \in M_{\infty}$ is equivalent to:\\
     There is a $0\le n$ and a chain 
     $$K_0 = L_1 \subset L_2 \subset \ldots \subset L_n \subset \mathbb{C}$$
@@ -441,6 +553,8 @@ The following section will demonstrate that for an element to be constructible, 
 \end{theorem}
 
 \begin{proof}
+    \leanok
+    \uses{lem:Mi_chain, lem:Z_in_Minf_imp_eq, lem:M_inf_quad_closed}
     "$\Leftarrow:$"
     It can be shown by induction that $L_n$ is contained within $M_{\infty}$. 
     Therefore, it can be inferred that $z$ is also contained within $M_{\infty}$.
@@ -454,17 +568,22 @@ The following section will demonstrate that for an element to be constructible, 
             Given that $[L_{n+1}:L_n] = 2$, it follows from the conclusions of Lemma \ref{lem:dergree_two_eq_sqr} that there exists a $w \in L_n$ with the property that $ \sqrt{w} \notin L_n$ and $L_{n+1} = L_n(w)$.
             By the induction hypothesis, it can be inferred that $L_n \subseteq M_{\infty}$. Since $w \in L_n  \subseteq M_{\infty}$ and $ M_{\infty}$ is quadratic closed (\ref{lem:M_inf_quad_closed}) $L_n(w) = L_{n+1} \subseteq M_{\infty}$.
     \end{itemize}
-    "$\Rightarrow:$"
+    "$\Rightarrow:$" There exists a $n$ such that $z\in M_n$, and we know that there exists a $K_n$ with $M_n \subseteq K_n$ which is derived from $K_0$ by successive adjoing square roots \ref{lem:Mi_chain}. 
+    We can conclude that there is a $K$, which is derived from $K_0$ by successive adjoining square roots, and that $z\in K$. 
+    Since $M_i$ is finite, we get that we adjoin finitely many square roots and so we evoke \ref{lem:Z_in_Minf_imp_eq}. 
 
 \end{proof}
 
 \begin{lemma}
     \label{lem:Classfication_z_in_M_inf_2m}
     \lean{Classfication_z_in_M_inf_2m}
+    \leanok
     For $z \in \mathbb{C}$, $z \in M_{\infty}$ implies there exists a $m$ such that $[z:K_0] = 2^m$.
 \end{lemma}
 
 \begin{proof}
+    \leanok
+    \uses{thm:Classfication_z_in_M_inf}
     By Theorem \ref{thm:Classfication_z_in_M_inf}, it can be inferred that there exists a chain of subfields, $K_0 = L_1 \subset L_2 \subset \dots \subset L_n \subset \mathbb{C}$, with $z \in L_n$ and $[L_i : L_{i+1}] = 2$ for $i = 0, 1, \dots, n-1$. 
     Moreover, the multiplicativity formula for degrees indicates that the degree of the extension $[L_n : K_0]$ is equal to the product of the degrees of the extensions $[L_n : L_{n-1}] \cdot [L_{n-1} : L_{n-2}] \cdot \dots [L_2 : L_1]$.
     Thus, we have that $[L_n : K_0] = 2^n$. 
@@ -480,14 +599,20 @@ The following section will demonstrate that for an element to be constructible, 
 \end{corollary}
 
 \begin{proof}
+    \leanok
+    \uses{lem:Classfication_z_in_M_inf_2m, lem:dergree_two_eq_sqr}
     Contraposition of Lemma \ref{lem:Classfication_z_in_M_inf_2m}.
 \end{proof}
 
 \begin{corollary}
     \label{cor:Classfication_z_in_M_inf_2m_rat}
+    \lean{Classfication_z_in_M_inf_2m_rat}
+    \leanok
     For $z \in \mathbb{C}$, $z \in M_{\infty}$ with $[K_0:\Q] = 2^n$,  if there is no $m$ such that $[z:\Q] = 2^m$ then $z \notin M_{\infty}$.
 \end{corollary}
 
 \begin{proof}
+    \leanok
+    \uses{cor:Classfication_z_in_M_inf_2m_not}
     A combination of the multiplicativity formula for degrees and corollary \ref{cor:Classfication_z_in_M_inf_2m_not}.
 \end{proof}

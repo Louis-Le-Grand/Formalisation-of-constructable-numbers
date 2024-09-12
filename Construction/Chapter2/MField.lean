@@ -579,6 +579,8 @@ lemma ilc_L' (z : ℂ) (h : z ∈ ilc L): ∃ ω ∈ L, ∃ x : ℂ, x * x = ω 
 
 -- lemma icc_L' (z : ℂ) (h : z ∈ icc L): ∃ ω ∈ L, z ∈ L⟮ω^(1/2:ℂ)⟯ := by sorry
 
+
+--Work in progress in Minex\icc_L
 lemma icc_L' (z :ℂ) {c₁ c₂ : Construction.circle} (hc₁: c₁ ∈ C L) (hc₂: c₂ ∈ C L) (h_ne : c₁.points' ≠ c₂.points'): z ∈ c₁.points ∩ c₂.points ↔
   ∃ l :line, l ∈ Construction.L L ∧  z ∈ l.points ∩ c₁.points ∧ z ∈ l.points ∩ c₂.points := by
   refine ⟨?_,?_⟩ <;> intro h

@@ -166,16 +166,142 @@ lemma not_mod_eq_imp_not_eq (a b n : ℕ ) (h : ¬ a % n = b % n) : ¬ a = b := 
 
 --lemma dim_k_zero_ang: ∃ j:ℕ, FiniteDimensional.finrank ℚ ↥(K_zero {0, 1, Complex.exp (Complex.I * ↑Real.pi / 3)}) = (2 ^ j) := by sorry
 
+lemma h: (K_zero ({0, 1, Complex.exp (Complex.I * ↑Real.pi / 3)} : Set ℂ)) = (IntermediateField.adjoin ℚ
+    {Complex.exp (Complex.I * ↑Real.pi / 3), (starRingEnd ℂ) (Complex.exp (Complex.I * ↑Real.pi / 3))}) := by
+  simp only [K_zero, conj_set, pow_one]
+  have: ({0, 1, Complex.exp (Complex.I * ↑Real.pi / 3)} ∪ {x | ∃ z ∈ ({0, 1, Complex.exp (Complex.I * ↑Real.pi / 3)} : Set ℂ), (starRingEnd ℂ) z = x}) = {0, (1:ℂ)} ∪ {Complex.exp (Complex.I * ↑Real.pi / 3), (starRingEnd ℂ) (Complex.exp (Complex.I * ↑Real.pi / 3))} := by
+    simp only [Set.mem_insert_iff, Set.mem_singleton_iff, exists_eq_or_imp, map_zero, map_one,
+      exists_eq_left, Set.union_insert, Set.union_singleton]
+    ext x
+    simp_all only [Set.mem_union, Set.mem_insert_iff, Set.mem_singleton_iff, Set.mem_setOf_eq, or_assoc]
+    rw[@eq_comm _ 0, @eq_comm _ 1, @or_comm (x = Complex.exp (Complex.I * ↑Real.pi / 3)), or_assoc,
+      or_assoc, ←or_assoc, ←@or_assoc (x=0), or_self_left, or_assoc, ←or_assoc, or_comm,
+      @or_comm ((starRingEnd ℂ) (Complex.exp (Complex.I * ↑Real.pi / 3)) = x), @eq_comm _ _ x, or_assoc]
+  rw[this, ←IntermediateField.adjoin_adjoin_left]
+  have: IntermediateField.adjoin ℚ {(0:ℂ), 1} = (⊥: IntermediateField ℚ ℂ) := le_antisymm (IntermediateField.adjoin_le_iff.mpr
+    (Set.pair_subset_iff.mpr ⟨(zero_mem ⊥),(one_mem ⊥)⟩)) (by exact OrderBot.bot_le (IntermediateField.adjoin ℚ {0, 1}))
+  sorry
+  -- rw[this]
+  -- norm_cast
+  -- rw [IntermediateField.restrictScalars_adjoin]
+  -- rw[←IntermediateField.adjoin_adjoin_left]
+
+--lemma X: 1 < FiniteDimensional.finrank ℚ  (IntermediateField.adjoin ℚ {Complex.exp (Complex.I * ↑Real.pi / 3), (starRingEnd ℂ) (Complex.exp (Complex.I * ↑Real.pi / 3))}) := by sorry
+
+example: x = 2 ↔ 1 < x ∧ x ≤ 2 := by
+  rw [Nat.le_antisymm_iff, and_comm, Nat.succ_le_iff]
+
+
+lemma le_adjion_root_three:  Complex.exp (Complex.I * ↑Real.pi / 3) ∈ IntermediateField.adjoin ℚ {Real.sqrt 3 * Complex.I} := by
+  rw[←mul_div, mul_comm, ←Complex.cos_add_sin_I]
+  norm_cast
+  rw [Real.cos_pi_div_three, Real.sin_pi_div_three]
+  push_cast
+  rw[mul_comm, mul_div, mul_comm]
+  refine add_mem (div_mem (OneMemClass.one_mem _ ) (ofNat_mem _ 2)) ?_
+  exact (div_mem (IntermediateField.mem_adjoin_simple_self _ _) (ofNat_mem _ 2))
+
+lemma le_adjion_root_three': (starRingEnd ℂ) (Complex.exp (Complex.I * ↑Real.pi / 3)) ∈ IntermediateField.adjoin ℚ {Real.sqrt 3 * Complex.I} := by
+  rw[←mul_div, mul_comm, ←Complex.cos_add_sin_I]
+  norm_cast
+  rw [Real.cos_pi_div_three, Real.sin_pi_div_three, map_add, conj_ofReal, map_mul, conj_ofReal,
+    Complex.conj_I, mul_comm, neg_mul, Mathlib.Tactic.RingNF.add_neg]
+  push_cast
+  rw[mul_div, mul_comm]
+  refine sub_mem (div_mem (OneMemClass.one_mem _ ) (ofNat_mem _ 2)) ?_
+  exact (div_mem (IntermediateField.mem_adjoin_simple_self _ _) (ofNat_mem _ 2))
+
+
+noncomputable def P : Polynomial ℚ := Polynomial.X ^ 2 +Polynomial.C 3
+
+lemma P_degree : natDegree P = 2 := by
+  simp only [natDegree_add_C, natDegree_pow, natDegree_X, mul_one, P]
+
+lemma P_eval: (aeval (↑√3 * I)) P = 0 := by
+  simp only [map_add, map_pow, aeval_X, mul_pow, I_sq, mul_neg, mul_one, aeval_C,
+    eq_ratCast, Rat.cast_ofNat, P]
+  norm_cast
+  rw[Real.sq_sqrt]
+  ring_nf
+  linarith
+
+
+lemma degrre_root_three: natDegree (minpoly ℚ (Real.sqrt 3 * Complex.I)) = 2 := by
+  have : P = minpoly ℚ (Real.sqrt 3 * Complex.I) := by
+    refine minpoly.eq_of_irreducible_of_monic ?_ ?_ ?_
+    . simp only [P]
+      rw[irreducible_iff_roots_eq_zero_of_degree_le_three]
+      . refine Multiset.eq_zero_of_forall_not_mem ?_
+        simp only [mem_roots', ne_eq, IsRoot.def, eval_add, eval_pow, eval_X, eval_C, not_and]
+        intros a _
+        by_contra h
+        rw[add_eq_zero_iff_eq_neg] at h
+        have: 0 ≤  a ^ 2  := sq_nonneg a
+        have: ¬ 0 ≤ a^2 := by
+          rw[h]
+          linarith
+        contradiction
+      . exact Nat.le_of_eq (id (Eq.symm P_degree))
+      . simp only [natDegree_add_C, natDegree_pow, natDegree_X, mul_one, Nat.reduceLeDiff]
+    . exact P_eval
+    . refine monic_X_pow_add_C 3 (Ne.symm (Nat.zero_ne_add_one 1))
+  rw[← this]
+  simp only [P, natDegree_add_C, natDegree_pow, natDegree_X, mul_one]
+
+lemma z_in_bot_Q(z : ℂ) : z ∈ (⊥ : IntermediateField ℚ ℂ) →  z.im = 0 := by
+  rw [IntermediateField.mem_bot, Set.mem_range]
+  intro h
+  obtain ⟨x, h⟩ := h
+  rw [←h]
+  simp only [eq_ratCast, ratCast_im]
+
+lemma z_in_bot_Q_not (z : ℂ):  ¬ (z.im = 0) → z ∉ (⊥ : IntermediateField ℚ ℂ) := by
+  apply  Not.imp_symm
+  rw [Mathlib.Tactic.PushNeg.not_not_eq]
+  exact z_in_bot_Q z
+
+lemma finrank_zero (L : IntermediateField ℚ ℂ): (¬ FiniteDimensional ℚ L) → FiniteDimensional.finrank ℚ L = 0 := by
+  intro h
+  exact FiniteDimensional.finrank_of_not_finite h
+
+lemma eaual_adjion_root_three: IntermediateField.adjoin ℚ {Real.sqrt 3 * Complex.I} = IntermediateField.adjoin ℚ {cexp (I * ↑Real.pi / 3), (starRingEnd ℂ) (cexp (I * ↑Real.pi / 3))} := by
+  apply le_antisymm
+  . simp only [IntermediateField.adjoin_le_iff, Set.le_eq_subset, Set.singleton_subset_iff,
+      SetLike.mem_coe]
+    have: (1 / 2) + (√3 * I / 2) ∈ IntermediateField.adjoin ℚ {cexp (I * ↑Real.pi / 3), (starRingEnd ℂ) (cexp (I * ↑Real.pi / 3))} := by
+      apply IntermediateField.subset_adjoin
+      simp only [Set.mem_insert_iff, Set.mem_singleton_iff]
+      left
+      rw[←mul_div I , mul_comm I, ←Complex.cos_add_sin_I]
+      norm_cast
+      rw [Real.cos_pi_div_three, Real.sin_pi_div_three]
+      push_cast
+      ring
+    have: 2 * ((1 / 2) + (√3 * I / 2)) - 1 ∈ IntermediateField.adjoin ℚ {cexp (I * ↑Real.pi / 3), (starRingEnd ℂ) (cexp (I * ↑Real.pi / 3))} := by
+      exact sub_mem (mul_mem (ofNat_mem _ 2) this) (IntermediateField.one_mem _)--(ofNat_mem _ 1)
+    ring_nf at this ⊢
+    exact this
+
+  . simp only [IntermediateField.adjoin_le_iff, Set.le_eq_subset]
+    rw[Set.pair_subset_iff]
+    exact ⟨le_adjion_root_three, le_adjion_root_three'⟩
 
 lemma pi_third_not_in_M_inf :
   (Complex.exp (Complex.I * (Real.pi/3)/3) : ℂ) ∉ M_inf {(0:ℂ) ,1 ,  Complex.exp (Complex.I *Real.pi/3) } := by
   apply real_component_in_M_inf _ (by simp) (by simp)
   apply Classfication_z_in_M_inf_2m_rat (Set.mem_insert 0 {1, cexp (I * ↑Real.pi / 3)})
   . simp only [Set.mem_insert_iff, one_ne_zero, Set.mem_singleton_iff, true_or, or_true]
-  . sorry --exact dim_k_zero_ang
+  . rw[h]
+    refine ⟨1, ?_⟩
+    rw[←eaual_adjion_root_three, pow_one, ←degrre_root_three, IntermediateField.adjoin.finrank]
+    . exact ⟨P, (monic_X_pow_add_C 3 (Ne.symm (Nat.zero_ne_add_one 1))), P_eval⟩
   simp
   intro x
-  have h: ↑(Complex.exp (Complex.I * (↑Real.pi / 3) / 3)).re = (Real.cos ((Real.pi/3)/3): ℂ):= by sorry
+  have h: ↑(Complex.exp (Complex.I * (↑Real.pi / 3) / 3)).re = (Real.cos ((Real.pi/3)/3): ℂ):= by
+    rw[←mul_div I , mul_comm I, ←Complex.cos_add_sin_I]
+    norm_cast
+    simp only [ofReal_ofNat, add_re, mul_re, I_re, mul_zero,
+      I_im, mul_one, zero_sub, ofReal_re, ofReal_im, neg_zero, add_zero]
   rw[h]
   have h: ¬ 2 ^ x =  Polynomial.degree (minpoly ℚ ((Real.cos ((Real.pi/3)/3)): ℂ)) := by
     rw[exp_pi_ninth]

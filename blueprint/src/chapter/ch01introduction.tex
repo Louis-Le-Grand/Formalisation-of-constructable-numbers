@@ -22,7 +22,7 @@ We will use $\mathbb{C}$ as plane of drawing and $\mathcal{M} \subset \mathbb{C}
     \lean{Construction.circle}
     \leanok
     A circle $C := (c,r)$ is defined by a center $c$ with  $c\in\mathbb{C}$, a radius $r\in\mathbb{R}_{\ge 0}$ and the set: $$c:=\{z\in\mathbb{C} \mid\|z-c\|=r\}.$$ 
-    We say a circle is if the underlying set is equal.
+    We say two circles are equal if their underlying sets are equal.
 \end{definition}
 
 \begin{lemma}
@@ -98,6 +98,7 @@ it is imperative to illustrate the fundamental properties that will be utilised 
     The set of points of a line $l$ is not defined by one position vector, i.e. for every $\alpha\in l$  $\{\lambda x+(1-\lambda)y\mid\lambda\in\mathbb{R}\} = \{\lambda x+\lambda y+\alpha\mid\lambda\in\mathbb{R}\}$.
 \end{lemma}
 \begin{proof}
+    \leanok
     Two sets are equal if they have the same elements. 
     Since $\alpha$ is in $l$, there exists a $\lambda_{\alpha}$ such that $\alpha = \lambda_{\alpha} x+(1-\lambda_{\alpha})y$.
     
@@ -124,6 +125,7 @@ it is imperative to illustrate the fundamental properties that will be utilised 
    If the basis of two lines is moved by the same amount, i.e $l_1.z_1 - l_2.z_1 = l_1.z_2- l_2.z_2$, then they are parallel.
 \end{lemma}
 \begin{proof}
+    \leanok
     \uses{def:line, def:parallel}
     We have to lines $l_1, l_2$ with basis $z_1, z_2$ and $l_1.z_1 - l_2.z_1 = l_1.z_2- l_2.z_2$. To show that they are parallel we have to show that $$\exists r: l_1 = \{z + r \mid z\in l_2\}.$$
     To make it easier to read we define $a := l_1.z_1$, $b:= l_1.z_2$, $x:= l_2.z_1$ and $y:= l_2.z_2$.\\
@@ -180,6 +182,7 @@ it is imperative to illustrate the fundamental properties that will be utilised 
 \end{remark}
 
 \begin{proof}
+    \leanok
     \uses{def:line, def:direction_vector, def:parallel, def:parallel'}
     Let $l_1$ and $l_2$ be two lines with $l_1.z_1 - l_1.z_2 = k \cdot (l_2.z_1 - l_2.z_2)$.
     We have to show that $l_1 = \{z + r \mid z\in l_2\}$, i.e. $\exists r: l_1 = \{z + r \mid z\in l_2\}$.\\
@@ -198,6 +201,7 @@ it is imperative to illustrate the fundamental properties that will be utilised 
 \end{lemma}
 
 \begin{proof}
+    \leanok
     \uses{def:line, def:parallel', def:direction_vector, lem:line_pionts_iff}
     Let $z\in l_1 \cap l_2$. Then we use lemma \ref{lem:line_pionts_iff} to get $l_1 = l_2 \Leftrightarrow \{\lambda (x_1-y_1)\mid\lambda\in\mathbb{R}\} = \{\lambda (x_2- y_2)+z\mid\lambda\in\mathbb{R}\}$.
     Since for every $\lambda$ we have $\lambda (x_1-y_2) + x = \lambda \cdot k(x_2- y_2)+z$ we get $l_1 = l_2$.
@@ -216,6 +220,7 @@ While these may appear to be trivial on paper, they are invaluable when undertak
     \[M \subseteq ICL(M)\]
 \end{lemma}
 \begin{proof}
+    \leanok
     Follows from the definition of $ICL(M)$.
 \end{proof}
 
@@ -228,6 +233,7 @@ While these may appear to be trivial on paper, they are invaluable when undertak
     This can be generalised to $$\forall m :\forall n\le m : \mathcal{M}_n \subseteq \mathcal{M}_m.$$
 \end{lemma}
 \begin{proof}
+    \leanok
     Follows from the definition of $\mathcal{M}_i$.
 \end{proof}
 
@@ -239,6 +245,7 @@ While these may appear to be trivial on paper, they are invaluable when undertak
     The set $\mathcal{M}$ is in $\mathcal{M}_i$, i.e. $$\mathcal{M} \subseteq \mathcal{M}_i.$$
 \end{lemma}
 \begin{proof}
+    \leanok
     \uses{lem:M_i_monoton}
     Combining the fact that $\mathcal{M}_0 = \mathcal{M}$ \ref{def:set_of_constructable_points} and the monotonity of $\mathcal{M}_i$ \ref{lem:M_i_monoton} we get the result.
 \end{proof}
@@ -251,6 +258,7 @@ While these may appear to be trivial on paper, they are invaluable when undertak
     The set $\mathcal{M}_i$ is in $\mathcal{M}_{\infty}$, i.e. $$\mathcal{M}_i \subseteq \mathcal{M}_{\infty}.$$
 \end{lemma}
 \begin{proof}
+    \leanok
     Follows from the definition of $\mathcal{M}_{\infty}$.
 \end{proof}
 
@@ -262,6 +270,7 @@ While these may appear to be trivial on paper, they are invaluable when undertak
     The set $\mathcal{M}$ is in $\mathcal{M}_{\infty}$.
 \end{lemma}
 \begin{proof}
+    \leanok
     \uses{lem:M_i_in_M_inf, lem:M_in_Mi}
     Combining $\mathcal{M} \subseteq \mathcal{M}_i$ \ref{lem:M_in_Mi} and $\mathcal{M}_i \subseteq \mathcal{M}_{\infty}$ \ref{lem:M_i_in_M_inf} we get the result.
 \end{proof}
@@ -274,6 +283,7 @@ While these may appear to be trivial on paper, they are invaluable when undertak
     A point $z$ is in $\mathcal{M}_{\infty}$ if and only if $z$ is in $\mathcal{M}_i$ for some $i$.
 \end{lemma}
 \begin{proof}
+    \leanok
     Follows from the definition of $\mathcal{M}_{\infty}$.
 \end{proof}
 
@@ -285,6 +295,7 @@ While these may appear to be trivial on paper, they are invaluable when undertak
     A line $l$ is in $\mathcal{L(M_{\infty})}$ if and only if $l$ is in $\mathcal{L(M_i)}$ for some $i$.
 \end{corollary}
 \begin{proof}
+    \leanok
     \uses{lem:M_inf_iff_M_i}
     Follows from \ref{lem:M_inf_iff_M_i} and the fact that every line in $\mathcal{L(M_{\infty})}$ is defined by two points in $\mathcal{M_{\infty}}$.
 \end{proof}
@@ -297,6 +308,7 @@ While these may appear to be trivial on paper, they are invaluable when undertak
     A circle $c$ is in $\mathcal{C(M_{\infty})}$ if and only if $c$ is in $\mathcal{C(M_i)}$ for some $i$.
 \end{corollary}
 \begin{proof}
+    \leanok
     \uses{lem:M_inf_iff_M_i}
     Follows from \ref{lem:M_inf_iff_M_i} and the fact that every circle in $\mathcal{C(M_{\infty})}$ is defined by three points in $\mathcal{M_{\infty}}$.
 \end{proof}
@@ -310,6 +322,7 @@ To construct new points in the next section\ref{basic_constructions} we still ne
     For two lines $l_1, l_2 \in \mathcal{L(M_{\infty})}$ is $l_1 \cap l_2 \in \mathcal{M}_{\infty}$.
 \end{lemma}
 \begin{proof}
+    \leanok
     \uses{cor:L_M_inf_iff_L_M_i, lem:M_i_monoton, lem:M_i_in_M_inf}
     By corollary \ref{cor:L_M_inf_iff_L_M_i} and the monotonity of $\mathcal{M}_i$ \ref{lem:M_i_monoton} we get that there exists an $n$ such that $l_1, l_2 \in \mathcal{L(M_n)}$.
     Therfore $l_1 \cap l_2 \in \mathcal{M}_{n+1} \stackrel{\ref{lem:M_i_in_M_inf}}{\subseteq} \mathcal{M}_{\infty}$.
@@ -327,6 +340,7 @@ To construct new points in the next section\ref{basic_constructions} we still ne
     For a line $l \in \mathcal{L(M_{\infty})}$ and a circle $c \in \mathcal{C(M_{\infty})}$ is $l \cap c \in \mathcal{M}_{\infty}$.
 \end{lemma}
 \begin{proof}
+    \leanok
     \uses{cor:L_M_inf_iff_L_M_i, cor:C_M_inf_iff_C_M_i, lem:M_i_monoton, lem:M_i_in_M_inf}
     By corollary \ref{cor:L_M_inf_iff_L_M_i} and \ref{cor:C_M_inf_iff_C_M_i} we get that there exists an $n$ such that $l \in \mathcal{L(M_n)}$ and $c \in \mathcal{C(M_n)}$.
     Therfore $l \cap c \in \mathcal{M}_{n+1} \stackrel{\text{\ref{lem:M_i_in_M_inf}}}{\subseteq} \mathcal{M}_{\infty}$.
@@ -340,6 +354,7 @@ To construct new points in the next section\ref{basic_constructions} we still ne
     For two circles $c_1, c_2 \in \mathcal{C(M_{\infty})}$ it follows that $c_1 \cap c_2 \in \mathcal{M}_{\infty}$.
 \end{lemma}
 \begin{proof}
+    \leanok
     \uses{cor:C_M_inf_iff_C_M_i, lem:M_i_monoton, lem:M_i_in_M_inf}
     By corollary \ref{cor:C_M_inf_iff_C_M_i} we get that there exists an $n$ such that $c_1, c_2 \in \mathcal{C(M_n)}$.
     Therfore $c_1 \cap c_2 \in \mathcal{M}_{n+1} \stackrel{\ref{lem:M_i_in_M_inf}}{\subseteq} \mathcal{M}_{\infty}$.
@@ -361,6 +376,7 @@ This construction is taken from \cite{JAN_SCHRÖER:2023}.\\
 To get the point $-z$ we can use the second intersection of the line through $0$ and $z$ with the circle with center $0$ and radius $\|z\|$.\ref{Fig.1}
 
 \begin{proof}
+    \leanok
     \uses{def:line, def:circle, lem:ilc_M_inf, lem:M_in_M_inf}
     Define $l = \{0,z\}$ and $c = \{0,\dist (0, z)\}$.\\
     By assumption $0, z \in M_{\infty}$, so $l \in \mathcal{L(M_{\infty})}$ and $c \in \mathcal{C(M_{\infty})}$.\\
@@ -400,6 +416,7 @@ To get the point $-z$ we can use the second intersection of the line through $0$
 This construction is taken from \cite{JAN_SCHRÖER:2023}.\\
 One can construct the point $z_1 + z_2$ by drawing a circle with center $z_1$ and radius $\|z_2\|$ and a circle with center $z_2$ and radius $\|z_1\|$ and taking the intersection of the two circles.\ref{Fig.2}
 \begin{proof}
+    \leanok
     \uses{def:line, def:circle,  lem:icc_M_inf, lem:M_in_M_inf}
     First we have the case that $z_1 \ne z_2$.\\
     Define $c_1 = \{z_1,\dist (0\ z_2)\}$ and $c_2 = \{z_2,\dist (0\ z_1)\}$.\\
@@ -418,17 +435,34 @@ One can construct the point $z_1 + z_2$ by drawing a circle with center $z_1$ an
     If we have $z_1 = z_2$ we can define $c_1 = \{z_1,\dist (0\ z_1)\}$ and $l = \{0,z_1\}$ and get that $z_1 + z_2 = z_1 + z_1 \in c_1 \cap l$.
 
 \end{proof}
+% \begin{figure}[h]
+%     \centering
+%     \begin{tikzpicture}
+%         \draw[->] (-1,0) -- (3,0) node[right] {$\Re$};
+%         \draw[->] (0,-1) -- (0,3) node[above] {$\Im$};
+%         \draw (0,0) -- (1,2) node[above] {$z_1$}[red];
+%         \draw (0,0) -- (2,1) node[right] {$z_2$}[blue];
+%         \draw (1,2) circle (2.2360679775)[red];
+%         \draw (2,1) circle (2.2360679775)[blue];
+%         \draw[dashed,->] (1,2) -- (3,3)[blue];
+%         \draw[dashed,->] (2,1) -- (3,3)[red];
+%         \draw (0,0) -- (3,3) node[right] {$z_1 + z_2$};
+%     \end{tikzpicture}
+%     \caption{Construction of $z_1 + z_2$}
+%     \label{Fig.2}
+% \end{figure}
+
 \begin{figure}[h]
     \centering
     \begin{tikzpicture}
         \draw[->] (-1,0) -- (3,0) node[right] {$\Re$};
         \draw[->] (0,-1) -- (0,3) node[above] {$\Im$};
-        \draw (0,0) -- (1,2) node[above] {$z_1$}[red];
-        \draw (0,0) -- (2,1) node[right] {$z_2$}[blue];
-        \draw (1,2) circle (2.2360679775)[red];
-        \draw (2,1) circle (2.2360679775)[blue];
-        \draw[dashed,->] (1,2) -- (3,3)[blue];
-        \draw[dashed,->] (2,1) -- (3,3)[red];
+        \draw (0,0) -- (1,2) node[above] {$z_1$};
+        \draw (0,0) -- (2,1) node[right] {$z_2$};
+        \draw (1,2) circle (2.2360679775);
+        \draw (2,1) circle (2.2360679775);
+        \draw[dashed,->] (1,2) -- (3,3);
+        \draw[dashed,->] (2,1) -- (3,3);
         \draw (0,0) -- (3,3) node[right] {$z_1 + z_2$};
     \end{tikzpicture}
     \caption{Construction of $z_1 + z_2$}
@@ -443,6 +477,7 @@ One can construct the point $z_1 + z_2$ by drawing a circle with center $z_1$ an
     For $z_1, z_2 \in M_{\infty}$ it follows that $z_1 - z_2 \in M_{\infty}$.
 \end{corollary}
 \begin{proof}
+    \leanok
     \uses{lem:construction_neg, lem:construction_add}
     By lemma \ref{lem:construction_neg} and \ref{lem:construction_add} we get $z_1 - z_2 = z_1 + (-z_2) \in M_{\infty}$.
 \end{proof}
@@ -455,6 +490,7 @@ One can construct the point $z_1 + z_2$ by drawing a circle with center $z_1$ an
     For $l \in \mathcal{L(M_{\infty})}$ and $z \in M_{\infty}$ it follows that $\exists l' \in \mathcal{L(M_{\infty})}$ with  $z\in l'$  and  $l\|l'$.
 \end{corollary}
 \begin{proof}
+    \leanok
     \uses{def:line, def:set_of_lines, cor:construction_sub,lem:parallel_by_basis} 
     Let $l$ be a line through $x,y \in \mathcal{M_{\infty}}$ and $z \in \mathcal{M_{\infty}}$.\\
     After corollary \ref{cor:construction_sub} we get $z - x \in \mathcal{M_{\infty}}$ and therfore $z-x + y \in \mathcal{M_{\infty}}$\ref{lem:construction_add}.\\
@@ -472,6 +508,7 @@ One can construct the point $z_1 + z_2$ by drawing a circle with center $z_1$ an
 This construction is taken from \cite{JAN_SCHRÖER:2023}.\\
 Draw two circles one with center $0$ and radius $\|z\|$ and a second with center $1$ and radius $\|z-1\|$ and take the intersection of the two circles.\ref{Fig.3}
 \begin{proof}
+    \leanok
     \uses{def:line, def:circle, lem:icc_M_inf, lem:M_in_M_inf}
     Define $c_1 = \{0,\dist (0, z)\}$ and $c_2 = \{1,\dist (1, z)\}$.\\
     By assumption $0, 1, z \in M_{\infty}$, so $c_1, c_2 \in \mathcal{C(M_{\infty})}$.\\
@@ -577,6 +614,7 @@ The second step is to construct the point, designated as $\imath r$, which is ac
 \end{lemma}
 To get the point $z.re$ we draw a line through $z$ and $\overline{z}$. Then $z.re$ is the intersection with the real line, defined by $0$ and $1$.\ref{Fig z.re}
 \begin{proof}
+    \leanok
     \uses{def:line, } %TODO c_in_C_M, ilc_M_inf, M_M_inf
     Without loss of generality we can assume that $z \in \C\setminus\R$.\\
     Define the lines $l = \{z, \overline{z}\}$ and $l_{\Re} = \{1, 0\}$.\\
@@ -614,6 +652,7 @@ To get the point $z.re$ we draw a line through $z$ and $\overline{z}$. Then $z.r
 To get the point $z.im$ we draw a line through $z$ and $z-1$. Now we get $\imath \cdot z.im$ by taking the intersection with the imaginary line, defined by $0$ and $\imath$. To get $z.im$ draw a circle trough $\imath \cdot z.im$ and take the intersection with the real line.\ref{Fig z.im}
 
 \begin{proof}
+    \leanok
     \uses{def:line, def:circle,}%TODO c_in_C_M, ilc_M_inf, M_M_inf
     Define the lines $l = \{z, z-1\}$ and $l_{\Im} = \{\imath, 0\}$.\\
     Now it is analog to the proof of lemma \ref{lem:construction_real}, that $z.im \cdot \imath  \in l \cap l_{\Im}$. 
@@ -654,6 +693,7 @@ To get the point $z.im$ we draw a line through $z$ and $z-1$. Now we get $\imath
     For $z \in \C$. $z$ is in $M_{\infty}$ if and only if $z.re, z.im \in M_{\infty}$.
 \end{corollary}
 \begin{proof}
+    \leanok
     \uses{lem:construction_real, lem:construction_imag, lem:construction_add, lem:construction_imath_r}
     "$\Rightarrow$:" If $z \in M_{\infty}$ then $z.re, z.im \in M_{\infty}$ after lemma \ref{lem:construction_real} and \ref{lem:construction_imag}.\\
     "$\Leftarrow$:" If $z.re, z.im \in M_{\infty}$ then $z.re + \imath z.im \in M_{\infty}$ after lemma \ref{lem:construction_add} and lemma \ref{lem:construction_imath_r}.
@@ -669,6 +709,7 @@ To get the point $z.im$ we draw a line through $z$ and $z-1$. Now we get $\imath
 This construction is taken from \cite{cox2012galois}.\\
 To get the point $a\cdot b$ we draw a line trough $a$ and $\imath$ and a parallel line through $\imath b$. The intersection of the second line with the real axis is $a\cdot b$.\ref{Fig.5} 
 \begin{proof}
+    \leanok
     \uses{def:line, def:set_of_lines, lem:ill_M_inf, lem:construction_imath_r, cor:construction_imath, lem:construction_add, cor:construction_sub}
     Define the three lines $l = \{a+\imath b - \imath, \imath b\}$ and $l_{\Re} = \{1,0\}$.\\
     \underline{Claim 1}: $l \in \mathcal{L(M_{\infty})}$
@@ -684,7 +725,7 @@ To get the point $a\cdot b$ we draw a line trough $a$ and $\imath$ and a paralle
 \begin{remark}
     This construction uses parallel lines, but it is not needed for the proof of the lemma.
 \end{remark}
-\begin{figure}
+\begin{figure}[!h]
     \centering
     \begin{tikzpicture}
         \draw[->] (-0.5,0) -- (5,0) node[right] {$\Re$};
@@ -706,12 +747,13 @@ To get the point $a\cdot b$ we draw a line trough $a$ and $\imath$ and a paralle
 
 \begin{corollary}[Multiplication of complex numbers]
     \label{cor:construction_mul_complex}
-    %\lean{mul_in_M_inf}
-    %\leanok
+    \lean{Construction.mul_M_inf} 
+    \leanok
     \uses{def:set_of_constructable_points}
     For $z_1, z_2 \in M_{\infty}$ it follows that $z_1 \cdot z_2$ in $M_{\infty}$.
 \end{corollary}
 \begin{proof}
+    \leanok
     \uses{lem:construction_mul, lem:construction_add, cor:construction_sub, lem:construction_real, lem:construction_imag}
     Let $z_1 = a + \imath b$ and $z_2 = c + \imath d$. Then $$z_1 \cdot z_2 = (a + \imath b) \cdot (c + \imath d) = (a \cdot c - b \cdot d) + \imath (a \cdot d + b \cdot c).$$
     By combining the Lemmas \ref{lem:construction_mul}, \ref{lem:construction_add}, \ref{cor:construction_sub}, \ref{lem:construction_real} and \ref{lem:construction_imag} we get that $z_1 \cdot z_2 \in M_{\infty}$.
@@ -730,6 +772,7 @@ Using the fact that $a\cdot a^{-1} = 1$.
 Draw a line through $1$ and $\imath a$ and a parallel line through $\imath$. 
 The intersection of the second line with the real axis is $a^{-1}$. (Fig. \ref{Fig.6})
 \begin{proof}
+    \leanok
     \uses{def:line, def:set_of_lines, lem:ill_M_inf, lem:construction_imath_r, cor:construction_imath, lem:construction_add, cor:construction_sub}
     The proof is analogous to that of Lemma \ref{lem:construction_mul}. It requires only two lines: $l = \{1 - \imath z + \imath, \imath\}$ and $l_{\Re} = \{1,0\}$.\\
     With  out loss of generality we can assume that $a \ne 0$.\\
@@ -757,7 +800,7 @@ The intersection of the second line with the real axis is $a^{-1}$. (Fig. \ref{F
     \label{Fig.6}
 \end{figure}
 
-\begin{corollary}[Invers of a complex number]
+\begin{corollary}[Inverse of a complex number]
     \label{cor:inv_M_inf}
     \lean{Construction.inv_M_inf, Construction.z_inv_eq}
     \leanok
@@ -765,6 +808,7 @@ The intersection of the second line with the real axis is $a^{-1}$. (Fig. \ref{F
     If $z \in M_{\infty}$, then $z^{-1}$ is in  $M_{\infty}$.
 \end{corollary}
 \begin{proof}
+    \leanok
     \uses{lem:construction_inv, lem:construction_mul, cor:construction_sub, lem:construction_real, lem:construction_imag, lem:construction_add}
     For $z \in M_{\infty}$ we can write $z = a + \imath b$ with $a, b \in \R$. Then
     $$z^{-1} = \frac{1}{z} = \frac{\overline{z}}{z\overline{z}} = \frac{a - \imath b}{a^2+b^2}= (a - \imath b) \cdot (aa+bb)^{-1}.$$
@@ -780,10 +824,11 @@ The intersection of the second line with the real axis is $a^{-1}$. (Fig. \ref{F
     \leanok
     If $0 \ne z = r\cdot e^{\imath\alpha} \in M_{\infty}$, then $e^{\imath\alpha} \in  M_{\infty}$.
 \end{lemma}
-For the constrution we draw a line through $0$ and $z$ and take the intersection with the unit circle. \ref{Fig.angle}
+For the construction we draw a line through $0$ and $z$ and take the intersection with the unit circle. \ref{Fig.angle}
 
 \begin{proof}
-
+    \leanok
+    \uses{lem:icc_M_inf}
     Let $l$ be a line through $0$ and $z$ and $c$ be the unit circle. Then $l \cap c = \{e^{\imath\alpha}\}$.
     The rest follows from the construction of the intersection of a line and a circle\ref{lem:icc_M_inf}.
 \end{proof}
@@ -819,7 +864,8 @@ For the constrution we draw a line through $0$ and $z$ and take the intersection
 
 \begin{proof}
     \uses{lem:construction_add, lem:construction_mul, lem:construction_inv}
-    Combeing the lemmas for addition\ref{lem:construction_add}, multiplication\ref{cor:construction_mul_complex} and the invers of a complex number\ref{cor:inv_M_inf} we get that $\frac{z_1 + z_2}{1+1} \in M_{\infty}$.
+    \leanok
+    Combining the lemmas for addition\ref{lem:construction_add}, multiplication\ref{cor:construction_mul_complex} and the invers of a complex number\ref{cor:inv_M_inf} we get that $\frac{z_1 + z_2}{1+1} \in M_{\infty}$.
 \end{proof}
 
 \begin{lemma}[Halving of an angle]
@@ -830,6 +876,7 @@ For the constrution we draw a line through $0$ and $z$ and take the intersection
     For $\alpha \in [0,2\pi)$, if $e^{\imath\alpha} \in M_{\infty}$, then $e^{\imath\frac{\alpha}{2}} \in  M_{\infty}$.
 \end{lemma}
 \begin{proof}
+    \leanok
     \uses{lem:angle_M_inf, lem:icc_M_inf}
     For $\alpha \ne 0 \ne \pi$ we take the intersection of the unit circle with the line through $0$ and and the mipiont of $e^{\imath\alpha}$ and $1$. 
     
@@ -840,6 +887,8 @@ For the constrution we draw a line through $0$ and $z$ and take the intersection
 \begin{lemma}[Construction of radius]
     \label{lem:construction_radius}
     \uses{def:set_of_constructable_points}
+    \lean{abs_M_Inf}
+    \leanok
     If $z = r\cdot e^{\imath\alpha} \in M_{\infty}$, then $r \in  M_{\infty}$.
 \end{lemma}
 \begin{remark}
@@ -847,6 +896,8 @@ For the constrution we draw a line through $0$ and $z$ and take the intersection
 \end{remark}
 We get the radius by taking the intersection of the real axis with a circle in zero with radius $\dist (0,z)$. \ref{Fig.radius}
 \begin{proof}
+    \leanok
+    \uses{lem:Construction.zero_real_root_M_inf, lem:Construction.mul_M_inf, lem:Construction.add_M_Inf, lem:Construction.real_in_M_inf, lem:Construction.im_in_M_inf}  
     We use the fact that $r = \|z\| = \sqrt{\Re(z)^2 + \Im(z)^2}$. Since we have spilt $r$ in already constructed parts, we get that $r \in M_{\infty}$.
 \end{proof}
 
@@ -870,8 +921,9 @@ We get the radius by taking the intersection of the real axis with a circle in z
     \label{Fig.radius}
 \end{figure}
 
-\begin{lemma}[Root of pos real numer]
+\begin{lemma}[Root of pos real number]
     \label{lem:pos_real_root}
+    \leanok
     \lean{Construction.one_real_root, Construction.zero_real_root_M_inf}
     If $r \in M_{\infty}\cap\R_{\ge 0}$, then $\sqrt{r}$ is in  $M_{\infty}$.
 \end{lemma}
@@ -879,6 +931,7 @@ We get the radius by taking the intersection of the real axis with a circle in z
 This construction is taken from  \cite{JAN_SCHRÖER:2023}.\\
 Draw a circle trough $0$ and $r$ and a line through $1$ parallel to the imaginary axis. Project the intersection to the real axis, using a circle with center $0$ and you get $\sqrt{r}$. (Fig. \ref{Fig.root})
 \begin{proof}
+    \leanok
     \uses{def:line, def:circle, lem:icc_M_inf, lem:M_in_M_inf} %TODO add rest of dependencies   
 Without loss of generality we can assume that $r \ge 1$. 
 Otherwise we can use the fact that $\sqrt{r} = \frac{1}{\sqrt{r^{-1}}}$.
@@ -930,9 +983,12 @@ Therefore, it can be concluded that $\sqrt{r}$ is also constructible.
 \begin{corollary}[Square root of a complexnumber]
     \label{cor:root_M_inf}
     \uses{def:set_of_constructable_points}
+    \leanok
     If $z \in M_{\infty}$, then $\sqrt{z}$ is in  $M_{\infty}$.
 \end{corollary}
 \begin{proof}
+    \leanok
+    \uses{lem:construction_radius, lem:pos_real_root, lem:angle_M_inf, lem:Construction.angle_half_M_inf}
     $z = r \cdot e^{\imath \alpha}$ with $r \in \R_{\ge 0}$ and $\alpha \in \R$. Then $\sqrt{z} = \sqrt{r} \cdot e^{\imath \frac{\alpha}{2}}$.
     Now we can use Lemma \ref{lem:construction_radius} and Lemma \ref{lem:pos_real_root} to get that $\sqrt{z} \in M_{\infty}$. For $e^{\imath \frac{\alpha}{2}}$ we can combine Lemma \ref{lem:angle_M_inf} and Lemma \ref{lem:Construction.angle_half_M_inf}. Now we get that $\sqrt{z} \in M_{\infty}$, after Lemma \ref{lem:construction_mul}.
 

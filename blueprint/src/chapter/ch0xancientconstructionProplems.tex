@@ -21,6 +21,7 @@ If we now take the unit cube and reduce $\mathcal{M}$, the problem is as follows
     The third root of $2$ is an irrational number.
 \end{lemma}
 \begin{proof}
+    \leanok
     The following theorem will be used without proof, as it is already available in MathLib:
     \begin{theorem*}
         For any $x\in(\R\setminus\Z)$ if there exist an $n\in \N_{>0}$ and $m\in\Z$ such that $m = x^n$, then $x$ is rational. 
@@ -35,9 +36,13 @@ If we now take the unit cube and reduce $\mathcal{M}$, the problem is as follows
 
 \begin{lemma}
     $P := X^3 - 2$ is irreducible over $\mathbb{Q}$.
-\label{thm:irreducible_over_Q}
+\label{lem:irreducible_over_Q}
+\leanok
+\lean{P_irreducible}
 \end{lemma}
 \begin{proof}
+    \leanok
+    \uses{lem:irrational_thirdroot_two}
     Since $\mathbb{Q}$ is $a$ subfield of $\mathbb{C} [X]$, we know that
     \begin{equation*}
         X^3 - 2 = (X - \sqrt[3]{2})(X -\zeta_3 \sqrt[3]{2})(X -\zeta_3^2 \sqrt[3]{2})
@@ -52,9 +57,14 @@ If we now take the unit cube and reduce $\mathcal{M}$, the problem is as follows
 \end{proof}
 
 \begin{theorem}
+    \label{thm:third_root_of_two_not_in_M_inf}
+    \leanok
+    \lean{third_root_of_two_not_in_M_inf}
     The cube can't be doubled using a compass and straightedge.
 \end{theorem}
 \begin{proof}
+    \leanok
+    \uses{lem:irrational_thirdroot_two, lem:irreducible_over_Q, cor:Classfication_z_in_M_inf_2m_not}
     By applying the corollary \ref{cor:Classfication_z_in_M_inf_2m_not}, it is sufficient to proof that no $m\in \N$ exists such that
     $$2^m\overset{?}{=}[\sqrt[3]{2}:\Q({0,1})]\overset{0,1\in\Q}{=} [\sqrt[3]{2}:\Q] = \text{degree}(\mu_{\Q,\sqrt[3]{2}}).$$
     Since $P$ is irreducible over $\mathbb{Q}$ \ref{thm:irreducible_over_Q}, monic and has $\sqrt[3]{2}$ as a zero, we know that $[\mathbb{Q}(\sqrt[3]{2}):\mathbb{Q}] = 3$.
@@ -83,19 +93,20 @@ The following section will demonstrate that the angle of $\frac{\pi}{3}=60°$  i
 
 \begin{lemma}
     \label{lem:degree_K0_angel}
-
-    The degree of $K_0 = \mathbb{Q}(e^{\imath\frac{\pi}{3}},\overline{e^{\imath\frac{\pi}{3}}})$ is equal  to $2^n$ for $n\in \mathbb{N}$. 
+    \leanok
+    \lean{degrre_root_three, eaual_adjion_root_three}
+    The degree of $K_0 = \mathbb{Q}(e^{\imath\frac{\pi}{3}},\overline{e^{\imath\frac{\pi}{3}}})$ is equal  to $2$. 
 \end{lemma}
 \begin{proof}
-    Mising proof this will be a fun sunday afternoon task.
-    % We know
-    % \begin{equation*}
-    %     \exp(\textbf{i}x) = \cos(x) + \textbf{i} \sin(x) \quad \forall x \in \mathbb{R}
-    % \end{equation*}
-    % For $\alpha = \pi / 3$ we get
-    % \begin{equation*}
-    %     \cos(\alpha) = \frac{1}{2}\qquad \text{and}\qquad \sin(\alpha) = \frac{\sqrt{3}}{2}
-    % \end{equation*}
+    \uses{def:K_M_0}
+    For all real numbers $\alpha$, we have that  $$ \exp(\imath \alpha) = \cos(\alpha) + \imath \sin(\alpha).$$
+    For $\alpha = \pi / 3$ we get
+    \begin{equation*}
+        \cos(\alpha) = \frac{1}{2}\qquad \text{and}\qquad \sin(\alpha) = \frac{\sqrt{3}}{2}
+    \end{equation*}
+    Therefore $\mathbb{Q}(e^{\imath\frac{\pi}{3}},\overline{e^{\imath\frac{\pi}{3}}})$ is in $\mathbb{Q}(\imath\sqrt{3})$.
+    And since $\imath\sqrt{3}$ is a zero of $X^2 + 3$, we know that the degree of $K_0$ less then $2$.
+    To show that the degree is not $1$, we apply the fact that $\imath\sqrt{3} \notin \mathbb{Q}$.
     % Since we know that $\sqrt{r} \in \mathcal{M}_{\infty}$ for $r \in \mathcal{M}_n$
     % we see that $\exp(\textbf{i} \alpha) \in \mathcal{M}_{\infty}$ for $\mathcal{M} = \{0,1\}$. \newline
     % So we will work with $K_0 = \mathbb{Q}$.
@@ -108,6 +119,8 @@ The following section will demonstrate that the angle of $\frac{\pi}{3}=60°$  i
     The angle $\pi / 3 = 60^{\circ}$ can't be trisected using a compass and straightedge.
 \end{lemma}
 \begin{proof}
+    \leanok 
+    \uses{lem:degree_K0_angel, cor:Classfication_z_in_M_inf_2m_rat}
     By utilising the aforementioned lemma \ref{lem:degree_K0_angel} to apply the corresponding corollary \ref{cor:Classfication_z_in_M_inf_2m_rat}, we can narrow our focus to the degree over $\Q$.
     Now we use the fact that if $x\in \mathcal{M}_{\infty}$, then $x.real, x.imag \in \mathcal{M}_{\infty}$ \ref{lem:M_inf_properties}. 
     Thus we focus on $\cos(\alpha/3)$, which the real part $e^{\imath \frac{\pi}{3}}$ and a zero of
@@ -135,5 +148,6 @@ The following section will demonstrate that the angle of $\frac{\pi}{3}=60°$  i
 \end{theorem}
 \begin{proof}
     \leanok
+    \uses{lem:pi_third_not_in_M_inf, }
     Employ the previous lemma with the angle $\pi / 3$.
 \end{proof}

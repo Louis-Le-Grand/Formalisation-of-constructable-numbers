@@ -212,14 +212,14 @@ lemma le_adjion_root_three': (starRingEnd ℂ) (Complex.exp (Complex.I * ↑Real
   exact (div_mem (IntermediateField.mem_adjoin_simple_self _ _) (ofNat_mem _ 2))
 
 
-noncomputable def P : Polynomial ℚ := Polynomial.X ^ 2 +Polynomial.C 3
+noncomputable def P_ang : Polynomial ℚ := Polynomial.X ^ 2 +Polynomial.C 3
 
-lemma P_degree : natDegree P = 2 := by
-  simp only [natDegree_add_C, natDegree_pow, natDegree_X, mul_one, P]
+lemma P_degree : natDegree P_ang = 2 := by
+  simp only [natDegree_add_C, natDegree_pow, natDegree_X, mul_one, P_ang]
 
-lemma P_eval: (aeval (↑√3 * I)) P = 0 := by
+lemma P_eval: (aeval (↑√3 * I)) P_ang = 0 := by
   simp only [map_add, map_pow, aeval_X, mul_pow, I_sq, mul_neg, mul_one, aeval_C,
-    eq_ratCast, Rat.cast_ofNat, P]
+    eq_ratCast, Rat.cast_ofNat, P_ang]
   norm_cast
   rw[Real.sq_sqrt]
   ring_nf
@@ -227,9 +227,9 @@ lemma P_eval: (aeval (↑√3 * I)) P = 0 := by
 
 
 lemma degrre_root_three: natDegree (minpoly ℚ (Real.sqrt 3 * Complex.I)) = 2 := by
-  have : P = minpoly ℚ (Real.sqrt 3 * Complex.I) := by
+  have : P_ang = minpoly ℚ (Real.sqrt 3 * Complex.I) := by
     refine minpoly.eq_of_irreducible_of_monic ?_ ?_ ?_
-    . simp only [P]
+    . simp only [P_ang]
       rw[irreducible_iff_roots_eq_zero_of_degree_le_three]
       . refine Multiset.eq_zero_of_forall_not_mem ?_
         simp only [mem_roots', ne_eq, IsRoot.def, eval_add, eval_pow, eval_X, eval_C, not_and]
@@ -246,7 +246,7 @@ lemma degrre_root_three: natDegree (minpoly ℚ (Real.sqrt 3 * Complex.I)) = 2 :
     . exact P_eval
     . refine monic_X_pow_add_C 3 (Ne.symm (Nat.zero_ne_add_one 1))
   rw[← this]
-  simp only [P, natDegree_add_C, natDegree_pow, natDegree_X, mul_one]
+  simp only [P_ang, natDegree_add_C, natDegree_pow, natDegree_X, mul_one]
 
 lemma z_in_bot_Q(z : ℂ) : z ∈ (⊥ : IntermediateField ℚ ℂ) →  z.im = 0 := by
   rw [IntermediateField.mem_bot, Set.mem_range]
@@ -294,7 +294,7 @@ lemma pi_third_not_in_M_inf :
   . rw[h]
     refine ⟨1, ?_⟩
     rw[←eaual_adjion_root_three, pow_one, ←degrre_root_three, IntermediateField.adjoin.finrank]
-    . exact ⟨P, (monic_X_pow_add_C 3 (Ne.symm (Nat.zero_ne_add_one 1))), P_eval⟩
+    . exact ⟨P_ang, (monic_X_pow_add_C 3 (Ne.symm (Nat.zero_ne_add_one 1))), P_eval⟩
   simp
   intro x
   have h: ↑(Complex.exp (Complex.I * (↑Real.pi / 3) / 3)).re = (Real.cos ((Real.pi/3)/3): ℂ):= by

@@ -1,0 +1,37 @@
+\begin{frame}
+    \begin{definition}
+        \label{def:K_M_0}
+        \lean{K_zero}
+        \leanok
+        Let $\mathcal(M)\subseteq\mathbb{C}$ with $0,1 \in \mathcal{M}$. Define:
+        \begin{equation*}
+            K_0 := \mathbb{Q}(\mathcal{M}\cup Conj(\mathcal{M}))
+        \end{equation*}
+    \end{definition}
+\end{frame}
+
+\begin{frame}
+    \begin{theorem}[constructable iff chain dergee2]
+        \label{thm:Classfication_z_in_M_inf}
+        \lean{Classfication_z_in_M_inf, adjoin_in_MField'}
+        \leanok
+        For $z \in \mathbb{C}$, $z \in M_{\infty}$ is equivalent to:\\
+        There is a $0\le n$ and a chain 
+        $$K_0 = L_1 \subset L_2 \subset \ldots \subset L_n \subset \mathbb{C}$$
+        of subfields of $\mathbb{C}$ such that $z \in L_n$ and 
+        $$ [L_{i+1}:L_i] = 2 \quad \text{for} \quad i = 0, \ldots, n-1.$$
+    \end{theorem}
+
+    
+\end{frame}
+
+\begin{frame}
+    \begin{corollary}
+        If $z \in M_{\infty}$, then there exists an $m\in \N$ such that $[z:\mathcal{K}_0] = 2^m$.
+    \end{corollary}
+
+\begin{corollary}[Classfication]
+    If there is no $m\in \N$ such that $[z:\mathcal{K}_0] = 2^m$, then $z \notin M_{\infty}$.
+\end{corollary}
+
+\end{frame}

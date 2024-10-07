@@ -1,0 +1,96 @@
+\begin{frame}[fragile]
+    \begin{definition}[Line]
+        \label{def:line}
+        A line $l$ through two points $x,y\in\mathbb{C}$ with $x\ne y$ is defined by the set: $$l:=\{\lambda x+(1-\lambda)y\mid\lambda\in\mathbb{R}\}.$$
+    \end{definition}
+
+    \begin{lstlisting}
+        structure line where
+            (z₁ z₂ : ℂ)
+    
+        def line.points (l: line) : Set ℂ:= 
+            {(t : ℂ) * l.z₁ + (1-t) * l.z₂ | (t : ℝ)}
+    \end{lstlisting}
+
+\end{frame}
+
+\begin{frame}[fragile]
+    \begin{definition}[Circle]
+        \label{def:circle}
+        A circle $c$ with center $z\in\mathbb{C}$ and radius $r\in\mathbb{R}_{\ge 0}$ is defined by the set: $$c:=\{z\in\mathbb{C} \mid\|z-c\|=r\}.$$
+    \end{definition}
+    
+    \begin{lstlisting}
+        structure circle where
+            (c : ℂ)
+            (r : ℝ)
+    
+        def circle.points (c: circle) := Metric.sphere c.c c.r
+        noncomputable def circle.points' (c: circle) := 
+            (⟨c.c, c.r⟩ : EuclideanGeometry.Sphere ℂ)
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]    
+    \begin{definition}[Set of lines and circles]
+        \label{def:set_of_lines_and_circles}
+        $\mathcal{L(M)}$ is the set of all real straight lines defined by two points in $\mathcal{M}$.\\
+        And $\mathcal{C(M)}$ is the set of all circles defined by a center in $\mathcal{M}$ and a radius equal to the distance between two points in $\mathcal{M}$.
+    \end{definition}
+
+    \begin{lstlisting}
+    def L (M:Set ℂ): Set line := 
+        {l |∃ z₁ z₂, l = {z₁ := z₁, z₂ := z₂} ∧ z₁ ∈  M ∧ z₂ ∈ M ∧ z₁ ≠ z₂}
+    def C (M:Set ℂ): Set circle := 
+        {c |∃ z r₁ r₂, c = {c:=z, r:=(dist r₁ r₂)} ∧ z ∈ M ∧ 
+        r₁ ∈ M ∧ r₂ ∈ M}
+    \end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[fragile]
+    \begin{definition}[Rules to construct a point]
+        \label{def:rules_to_constructed_a_point}
+        We define operations that can be used to construct new points.
+        \begin{enumerate}
+            \item $(ILL)$ is the intersection of two different lines in $\mathcal{L(M)}$.
+            \item $(ILC)$ is the intersection of a line in $\mathcal{L(M)}$ and a circle in $\mathcal{C(M)}$.
+            \item $(ICC)$ is the intersection of two different circles in $\mathcal{C(M)}$.
+        \end{enumerate}
+        $ICL(\mathcal{M})$ is the set $\mathcal{M}$ combined with all points that can be constructed using the operations $(ILL)$, $(ILC)$ and $(ICC)$.
+    \end{definition}
+    
+    \begin{lstlisting}
+    def ill (M:Set ℂ): Set ℂ := 
+        { z  |∃l₁ ∈ L M, ∃ l₂ ∈ L M,  z ∈ l₁.points ∩ l₂.points ∧ 
+        l₁.points ≠ l₂.points}
+    def ilc (M:Set ℂ): Set ℂ := 
+        { z  |∃c ∈ C M, ∃ l ∈ L M,  z ∈ c.points ∩ l.points}
+    def icc (M:Set ℂ): Set ℂ := 
+        { z  |∃c₁ ∈ C M, ∃ c₂ ∈ C M,  z ∈ c₁.points ∩ c₂.points ∧ 
+        c₁.points' ≠ c₂.points'}    
+    
+    def ICL_M (M : Set ℂ) : Set ℂ := M ∪ ill M ∪ ilc M ∪ icc M
+    \end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[fragile]
+    \begin{definition}[Set of constructible points]
+        \label{def:set_of_constructable_points}
+        We define inductively the chain
+        \begin{equation*}
+            \mathcal{M}_0 \subseteq \mathcal{M}_1 \subseteq \mathcal{M}_2 \subseteq \dots
+        \end{equation*}
+        with $\mathcal{M}_0 = \mathcal{M}$ and $\mathcal{M}_{n+1} = ICL(\mathcal{M}_n)$.\newline
+        And call $\mathcal{M}_{\infty} = \bigcup_{n \in \mathbb{N}} \mathcal{M}_n$ the set of all constructable points.
+    \end{definition}
+    
+    \begin{lstlisting}
+        def M_I (M : Set ℂ) : ℕ → Set ℂ
+            | 0 => M
+            | (Nat.succ n) => ICL_M (M_I M n)
+    
+        def M_inf (M : Set ℂ) : Set ℂ :=  ⋃ (n : ℕ), M_I M n
+    \end{lstlisting}    
+\end{frame}

@@ -1,0 +1,119 @@
+\documentclass[10pt]{beamer}
+
+
+\usetheme[progressbar=frametitle]{metropolis}
+\usepackage{appendixnumberbeamer}
+
+\usepackage{animate}
+\usepackage{beamerbaseoverlay}
+\usepackage{booktabs}
+\usepackage[scale=2]{ccicons}
+
+\usepackage{pgfplots}
+\usepgfplotslibrary{dateplot}
+
+\usepackage{xspace}
+\newcommand{\themename}{\textbf{\textsc{metropolis}}\xspace}
+
+\title{Formalisation of constructable numbers}
+\subtitle{Third lecture regarding the Bachelor thesis}
+% \date{\today}
+\date{}
+\author{Ludwig Monnerjahn}
+%\institute{Center for modern beamer themes}
+% \titlegraphic{\hfill\includegraphics[height=1.5cm]{logo.pdf}}
+
+% % Remove navigation bar
+% \setbeamertemplate{navigation symbols}{}
+
+% % Tikz package
+% \usepackage{tikz}
+% \usetikzlibrary{positioning}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{listings}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{hyperref}
+\usepackage{etexcmds}
+\usepackage{thmtools}
+\usepackage{tikz-cd}
+\usepackage{wrapfig}
+\usepackage{graphicx}
+
+%tikz 
+\definecolor{Acolor}{RGB}{104,129,174}
+\definecolor{Bcolor}{RGB}{227,118,59}
+\definecolor{Ccolor}{RGB}{169,183,209}
+\definecolor{medgrey}{RGB}{150,150,150}
+
+
+%lean highlight
+\usepackage{color}
+\definecolor{keywordcolor}{rgb}{0.7, 0.1, 0.1}   % red
+\definecolor{tacticcolor}{rgb}{0.0, 0.1, 0.6}    % blue
+\definecolor{commentcolor}{rgb}{0.4, 0.4, 0.4}   % grey
+\definecolor{symbolcolor}{rgb}{0.0, 0.1, 0.6}    % blue
+\definecolor{sortcolor}{rgb}{0.1, 0.5, 0.1}      % green
+\definecolor{attributecolor}{rgb}{0.7, 0.1, 0.1} % red
+
+\def\lstlanguagefiles{lstlean.tex}
+% set default language
+\lstset{language=lean}
+
+% % theorem style
+% \theoremstyle{definition}
+% \newtheorem*{theorem*}{Theorem}
+% \newtheorem{proposition}[theorem]{Proposition}
+% \newtheorem{problem}[theorem]{Problem}
+
+% Remove blueprint commands
+\newcommand{\uses}[1]{}
+\newcommand{\proves}[1]{}
+\newcommand{\discussion}[1]{}
+\newcommand{\lean}[1]{}
+\newcommand{\leanok}{}
+\newcommand{\mathlibok}{}
+\newcommand{\notready}{}
+
+%Notaion
+\newcommand{\dist}{\text{ dist }}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Z}{\mathbb{Z}}
+
+\tikzset{
+            carc/.style args={#1:#2:#3}{
+              insert path={+(#1:#3) arc (#1:#2:#3)}
+            }
+          }
+
+\begin{document}
+\maketitle
+
+\begin{frame}{Table of contents}
+  \setbeamertemplate{section in toc}[sections numbered]
+  \tableofcontents%[hideallsubsections]
+\end{frame}
+
+\section{Defintions}
+\input{slides/dp.tex}
+\input{slides/lines_circle.tex}
+\section{Field of constructable numbers}
+\input{slides/dp.tex}
+\input{slides/field.tex}
+\input{slides/dp.tex}
+\section{Classification}
+\input{slides/classification.tex}
+\section{Impossibility of doubling the cube}
+\input{slides/problem.tex}
+\begin{frame}[allowframebreaks]{References}
+    \bibliography{construct}
+    \bibliographystyle{plainurl}
+  \end{frame}
+\nocite{*}
+\end{document}

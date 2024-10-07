@@ -1,0 +1,45 @@
+\begin{columns}
+    \begin{column}{0.5\textwidth}
+\begin{figure}
+
+
+\begin{tikzpicture}
+    \draw[dotted, very thick,medgrey] (1,-1,-1)--(-1,-1,-1)--(-1,1,-1);
+    \draw[dotted, very thick,medgrey] (-1,-1,-1)--(-1,-1,1);
+
+
+    \draw[thick,opacity=0.2,fill=Ccolor]  (1,1,1)--(1,-1,1)--(-1,-1,1)--(-1,1,1)--cycle; % top
+    \draw[thick,opacity=0.2,fill=Ccolor] (1,1,1)--(1,1,-1)--(-1,1,-1)--(-1,1,1)--cycle; % front
+    \draw[thick,opacity=0.2,fill=Ccolor] (1,1,-1)--(1,1,1)--(1,-1,1)--(1,-1,-1)--cycle;
+    \draw[thick, style={ |-|}] (1.2,-1,-1) -- (1.2,0,-1)  node[right] {$a$} -- (1.2,1,-1);
+\end{tikzpicture}
+
+\end{figure}
+This cube has volume $a^3$
+\end{column}
+
+\pause
+
+\begin{column}{0.5\textwidth}
+    If we have cube width volume $2a^3$
+    \newline
+    \newline
+    \scalebox{1.2}{\begin{minipage}{0.80\textwidth}
+    \begin{figure}
+    \centering
+    \begin{tikzpicture}
+        \draw[dotted, very thick,medgrey] (1,-1,-1)--(-1,-1,-1)--(-1,1,-1);
+        \draw[dotted, very thick,medgrey] (-1,-1,-1)--(-1,-1,1);
+
+
+        \draw[thick,opacity=0.2,fill=Ccolor]  (1,1,1)--(1,-1,1)--(-1,-1,1)--(-1,1,1)--cycle; % top
+        \draw[thick,opacity=0.2,fill=Ccolor] (1,1,1)--(1,1,-1)--(-1,1,-1)--(-1,1,1)--cycle; % front
+        \draw[thick,opacity=0.2,fill=Ccolor] (1,1,-1)--(1,1,1)--(1,-1,1)--(1,-1,-1)--cycle;
+        \pause
+        \draw[thick, style={ |-|}] (1.2,-1,-1) -- (1.2,0,-1)  node[right] {$\sqrt[3]{2}a$} -- (1.2,1,-1);
+    \end{tikzpicture}
+    %\label{Cube with Volume $2a^3$}
+    \end{figure}
+    \end{minipage}}
+\end{column}
+\end{columns}

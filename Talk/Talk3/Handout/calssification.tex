@@ -1,0 +1,158 @@
+\section{Classfication}
+Now we want to classify the points in $M_{\infty}$. First we are showing that $M_{\infty}$ is a field. 
+And define new properties for fields, which are quadratic closed and conjugate closed. 
+Finally we use them to show that a point $z\in M_{\infty}$ is constructable if and only if there is a chain of subfields of $\mathbb{C}$ with degree 2 between them.
+
+\begin{theorem}
+    \label{thm:MField}
+    \leanok
+    \lean{MField}
+    \uses{def:set_of_constructable_points}
+    For $M\subseteq \mathbb{C}$ with $0,1 \in M$. $M_{\infty}$ is a subfield of $\mathbb{C}$.
+\end{theorem}
+\begin{proof}
+    \leanok
+    \uses{lem:M_in_M_inf, cor:construction_add, cor:construction_mul_complex, lem:construction_neg, cor:inv_M_inf}
+    To show that $M_{\infty}$ is a subfield of $\mathbb{C}$ we have to show that $0,1\in M_{\infty}$ and $M_{\infty}$ is closed under addition, multiplication, subtraction and division.
+    \begin{itemize}
+        \item [$0,1$:] This follows from $0,1 \in M$ and Lemma \ref{lem:M_in_M_inf}.
+        \item [$+$:] For $z_1,z_2 \in M_{\infty}$ we can construct $z_1 + z_2 \in M_{\infty}$. \ref{lem:construction_add}
+        \item [$*$:] For $z_1,z_2 \in M_{\infty}$ we can construct $z_1 \cdot z_2 \in M_{\infty}$. \ref{cor:construction_mul_complex}
+        \item [$-$:] For $z \in M_{\infty}$ we can construct $-z \in M_{\infty}$. \ref{lem:construction_neg}
+        \item [$^{-1}$:] For $z \in M_{\infty}$ with $z \ne 0$ we can construct $z^{-1} \in M_{\infty}$. \ref{cor:inv_M_inf}
+    \end{itemize}
+\end{proof}
+
+
+\begin{definition}[quadratic closed field]
+    \label{def:quadritc_closed_field}
+    \leanok
+    \lean{QuadraticClosed}
+    A field $F$ is called \emph{quadratic closed} if for all $x \in F$ there is a $y \in F$ such that $y^2 = x$.
+\end{definition}
+
+\begin{lemma}
+    \label{lem:M_inf_quad_closed}
+    \leanok
+    \lean{MField_QuadraticClosed, MField_QuadraticClosed_def}
+    \uses{def:set_of_constructable_points, def:quadritc_closed_field}
+    For $M\subseteq \mathbb{C}$ with $0,1 \in M$, $M_{\infty}$ is quadratic closed.
+\end{lemma}
+\begin{proof}
+    \uses{thm:MField, cor:root_M_inf}
+    \leanok
+    It is established that $M_{\infty}$ is a field (see remark \ref{rem:MField_Field}). Furthermore, the corollary \ref{cor:root_M_inf} provides a root $z^{\frac{1}{2}}$ of $z \in M_{\infty}$.    
+    $$ z^{\frac{1}{2}} * z^{\frac{1}{2}} = z^{\frac{1}{2}^2} = z^{2\cdot \frac{1}{2}} = z.$$
+    Therefore $M_{\infty}$ is quadratic closed.
+\end{proof}
+
+\begin{definition}
+    \label{def:conj_set}
+    \leanok
+    \lean{conj_set}
+    For a Set $M \subset \mathbb{C}$ we define the \emph{conjugate set} of $M$ as 
+    \begin{equation*}
+        Conj(M) = \{\overline{z}\mid z\in M\}
+    \end{equation*}
+\end{definition}
+
+\begin{definition}
+    \label{def:conj_closed}
+    \leanok
+    \lean{ConjClosed}
+    \uses{def:conj_set}
+    We call a subset of $\C$ \emph{conjugate closed} if $M= Conj(M)$.
+\end{definition}
+
+For conjugate closed fields we can show theorem, which helps to work with constructable numbers.
+\begin{theorem}
+    Let $K$ be an conjugation closed intermediate field of $\mathbb{Q}$ and $\mathbb{C}$.
+    \begin{itemize}
+        \item If $z\in ill(K)$ then $z\in K$.
+        \item If $z\in ilc(K)$ then there exist $w^2 \in K$ such that $z\in K(w)$.
+        \item If $z\in icc(K)$ then there exist $w^2 \in K$ such that $z\in K(w)$.
+    \end{itemize}
+\end{theorem}
+The proof excedes the scope of this talk, but can be found in the blueprint.
+
+
+\begin{definition}
+    \label{def:K_M_0}
+    \lean{K_zero}
+    \leanok
+    Let $\mathcal(M)\subseteq\mathbb{C}$ with $0,1 \in \mathcal{M}$. Define:
+    \begin{equation*}
+        K_0 := \mathbb{Q}(\mathcal{M}\cup Conj(\mathcal{M}))
+    \end{equation*}
+\end{definition}
+
+% \begin{lemma}
+%     \label{lem:conj_adjion}
+%     \leanok
+%     \lean{conj_adjion, conj_adjion'}
+%     \uses{def:K_M_0}
+%     Let $K$ be an conjugation closed intermediate field of $\mathbb{Q}$ and $\mathbb{C}$ and $ M \subset \mathbb{C}$ be a subset with $M = conj(M)$. Then
+%     $K(M)$ is conjugate closed.
+% \end{lemma}
+
+
+% \begin{proof}
+%     \leanok
+%     \uses{lem:ConjClosed.conj_inclusion, lem:ConjClosed.conj_field}
+%     In reference \ref{lem:ConjClosed.conj_field}, it was demonstrated that for a field F, the field of complex numbers, $Conj(F)$ is a field. 
+%     It can thus be concluded that $Conj(K(M))$ is also a field.
+%     As both $K$ and $M$ are subsets of $K(M)$, it can be inferred from lemma \ref{lem:ConjClosed.conj_inclusion} that $Conj(K) \overset{ConjClosed}{=} K$ and $Conj(M) \overset{ConjClosed}{=} M$ are subsets of $Conj(K(M))$. 
+%     As $K(M)$ is the smallest subfield of $\C$ that includes $K$ and $M$, it can be concluded that $$K(M) \subseteq Conj(K(M)).$$
+%     Furthermore, if we apply $Conj$ to both sides and again infer \ref{lem:ConjClosed.conj_inclusion}, we obtain $$Conj(K(M)) \subseteq Conj(Conj(K(M))) = K(M),$$ 
+%     which leads to the conclusion that $Conj(K(M)) = K(M)$.
+% \end{proof}
+
+% \begin{lemma}
+%     \label{lem:M_inf_quad_closed}
+%     \leanok
+%     \lean{MField_QuadraticClosed, MField_QuadraticClosed_def}
+%     \uses{def:set_of_constructable_points, def:quadritc_closed_field}
+%     For $M\subseteq \mathbb{C}$ with $0,1 \in M$, $M_{\infty}$ is quadratic closed.
+% \end{lemma}
+% \begin{proof}
+%     \uses{thm:MField, cor:root_M_inf}
+%     \leanok
+%     It is established that $M_{\infty}$ is a field (see remark \ref{rem:MField_Field}). Furthermore, the corollary \ref{cor:root_M_inf} provides a root $z^{\frac{1}{2}}$ of $z \in M_{\infty}$.    
+%     $$ z^{\frac{1}{2}} * z^{\frac{1}{2}} = z^{\frac{1}{2}^2} = z^{2\cdot \frac{1}{2}} = z.$$
+%     Therefore $M_{\infty}$ is quadratic closed.
+% \end{proof}
+
+Now we can use the properties of quadratic closed and conjugate closed fields to classify the points in $M_{\infty}$.
+
+\begin{theorem}[constructable iff chain dergee2]
+    \label{thm:Classfication_z_in_M_inf}
+    \lean{Classfication_z_in_M_inf, adjoin_in_MField'}
+    \leanok
+    For $z \in \mathbb{C}$, $z \in M_{\infty}$ is equivalent to:\\
+    There is a $0\le n$ and a chain 
+    $$K_0 = L_1 \subset L_2 \subset \ldots \subset L_n \subset \mathbb{C}$$
+    of subfields of $\mathbb{C}$ such that $z \in L_n$ and 
+    $$ [L_{i+1}:L_i] = 2 \quad \text{for} \quad i = 0, \ldots, n-1.$$
+\end{theorem}
+
+% \begin{proof}
+%     \leanok
+%     \uses{lem:Mi_chain, lem:Z_in_Minf_imp_eq, lem:M_inf_quad_closed}
+%     "$\Leftarrow:$"
+%     It can be shown by induction that $L_n$ is contained within $M_{\infty}$. 
+%     Therefore, it can be inferred that $z$ is also contained within $M_{\infty}$.
+%     \begin{itemize}
+%         \item Base case $n=1$: \\
+%             $L_1 = K_0 \subseteq M_{\infty}$ \ref{lem:K_zero_in_MField}.
+        
+%         \item induction hypothesis: \\
+%             Assume that for $n$: $\forall i < n: L_i \le L_{i+1} \land [L_{i+1}:L_i]=2$ implies $L_n \subseteq M_{\infty}$.
+%         \item Inductive step $n \to n+1$: \\
+%             Given that $[L_{n+1}:L_n] = 2$, it follows from the conclusions of Lemma \ref{lem:dergree_two_eq_sqr} that there exists a $w \in L_n$ with the property that $ \sqrt{w} \notin L_n$ and $L_{n+1} = L_n(w)$.
+%             By the induction hypothesis, it can be inferred that $L_n \subseteq M_{\infty}$. Since $w \in L_n  \subseteq M_{\infty}$ and $ M_{\infty}$ is quadratic closed (\ref{lem:M_inf_quad_closed}) $L_n(w) = L_{n+1} \subseteq M_{\infty}$.
+%     \end{itemize}
+%     "$\Rightarrow:$" There exists a $n$ such that $z\in M_n$, and we know that there exists a $K_n$ with $M_n \subseteq K_n$ which is derived from $K_0$ by successive adjoing square roots \ref{lem:Mi_chain}. 
+%     We can conclude that there is a $K$, which is derived from $K_0$ by successive adjoining square roots, and that $z\in K$. 
+%     Since $M_i$ is finite, we get that we adjoin finitely many square roots and so we evoke \ref{lem:Z_in_Minf_imp_eq}. 
+
+% \end{proof}

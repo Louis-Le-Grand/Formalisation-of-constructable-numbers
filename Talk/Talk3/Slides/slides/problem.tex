@@ -1,0 +1,108 @@
+\begin{frame}[fragile]
+\begin{columns}
+    \begin{column}{0.5\textwidth}
+\begin{figure}
+    
+
+\begin{tikzpicture}
+    \draw[dotted, very thick,medgrey] (1,-1,-1)--(-1,-1,-1)--(-1,1,-1);
+    \draw[dotted, very thick,medgrey] (-1,-1,-1)--(-1,-1,1);
+
+
+    \draw[thick,opacity=0.2,fill=Ccolor]  (1,1,1)--(1,-1,1)--(-1,-1,1)--(-1,1,1)--cycle; % top
+    \draw[thick,opacity=0.2,fill=Ccolor] (1,1,1)--(1,1,-1)--(-1,1,-1)--(-1,1,1)--cycle; % front
+    \draw[thick,opacity=0.2,fill=Ccolor] (1,1,-1)--(1,1,1)--(1,-1,1)--(1,-1,-1)--cycle;
+    \draw[thick, style={ |-|}] (1.2,-1,-1) -- (1.2,0,-1)  node[right] {$a$} -- (1.2,1,-1);
+\end{tikzpicture}
+
+\end{figure}
+This cube has volume $a^3$
+\end{column}
+
+\pause
+
+\begin{column}{0.5\textwidth}
+    If we have cube width volume $2a^3$
+    \newline
+    \newline
+    \scalebox{1.2}{\begin{minipage}{0.80\textwidth}
+    \begin{figure}
+    \centering
+    \begin{tikzpicture}
+        \draw[dotted, very thick,medgrey] (1,-1,-1)--(-1,-1,-1)--(-1,1,-1);
+        \draw[dotted, very thick,medgrey] (-1,-1,-1)--(-1,-1,1);
+
+
+        \draw[thick,opacity=0.2,fill=Ccolor]  (1,1,1)--(1,-1,1)--(-1,-1,1)--(-1,1,1)--cycle; % top
+        \draw[thick,opacity=0.2,fill=Ccolor] (1,1,1)--(1,1,-1)--(-1,1,-1)--(-1,1,1)--cycle; % front
+        \draw[thick,opacity=0.2,fill=Ccolor] (1,1,-1)--(1,1,1)--(1,-1,1)--(1,-1,-1)--cycle;
+        \pause
+        \draw[thick, style={ |-|}] (1.2,-1,-1) -- (1.2,0,-1)  node[right] {$\sqrt[3]{2}a$} -- (1.2,1,-1);
+    \end{tikzpicture}
+    %\label{Cube with Volume $2a^3$}
+    \end{figure}
+    \end{minipage}}
+\end{column}
+\end{columns}
+\end{frame}
+
+% \begin{frame}
+%     \begin{tikzpicture}
+%         \pgfmathsetmacro{\cubex}{3}
+%         \pgfmathsetmacro{\cubey}{3}
+%         \pgfmathsetmacro{\cubez}{3}
+%         \draw[thick, opacity=0.2, fill=grey] (0,0,0) -- ++(-\cubex,0,0) -- ++(0,-\cubey,0) -- ++(\cubex,0,0) -- cycle;
+%         \draw[thick, opacity=0.2, fill=grey] (0,0,0) -- ++(0,0,-\cubez) -- ++(0,-\cubey,0) -- ++(0,0,\cubez) -- cycle;
+%         \draw[thick, opacity=0.2, fill=grey] (0,0,0) -- ++(-\cubex,0,0) -- ++(0,0,-\cubez) -- ++(\cubex,0,0) -- cycle;
+%     \end{tikzpicture}
+% \end{frame}
+
+\begin{frame}
+    \begin{problem}
+        Let $\mathcal{M} = \{0,1\}$.  
+        $$\text{Is }\sqrt[3]{2} \overset{?}{\in} \mathcal{M}_{\infty}?$$
+    \end{problem}
+\end{frame}
+
+\begin{frame}
+    \begin{lemma}
+        $P := X^3 - 2$ is irreducible over $\mathbb{Q}$.
+    \label{lem:irreducible_over_Q}
+    \leanok
+    \lean{P_irreducible}
+    \end{lemma}
+    \begin{proof}
+        \leanok
+        \uses{lem:irrational_thirdroot_two}
+        Since $\mathbb{Q}$ is $a$ subfield of $\mathbb{C} [X]$, we know that
+        \begin{equation*}
+            X^3 - 2 = (X - \sqrt[3]{2})(X -\zeta_3 \sqrt[3]{2})(X -\zeta_3^2 \sqrt[3]{2})
+        \end{equation*}
+        Suppose $P$ is reducible, then
+        \begin{equation*}
+            X^3 - 2 = (X - a)(X^2 + bX + c)\text{, with } a, b, c \in \mathbb{Q}
+        \end{equation*}
+        In particular it has a zero in $\mathbb{Q}$, so there is a rational number $a$ such that $a^3 = 2$.\newline
+        But we know that $\zeta_3 \sqrt[3]{2}$ and $\zeta_3^2 \sqrt[3]{2}$ are not real numbers and $\sqrt[3]{2}$ is not rational.
+        So $P$ is irreducible over $\mathbb{Q}$.
+    \end{proof}
+\end{frame}
+
+\begin{frame}
+    \begin{theorem}
+        \label{thm:third_root_of_two_not_in_M_inf}
+        \leanok
+        \lean{third_root_of_two_not_in_M_inf}
+        The cube can't be doubled using a compass and straightedge.
+    \end{theorem}
+    \begin{proof}
+        \leanok
+        \uses{lem:irrational_thirdroot_two, lem:irreducible_over_Q, cor:Classfication_z_in_M_inf_2m_not}
+        By applying the corollary classification, it is sufficient to proof that no $m\in \N$ exists such that
+        $$2^m\overset{?}{=}[\sqrt[3]{2}:\mathcal{K}_0]\overset{0,1\in\Q}{=} [\sqrt[3]{2}:\Q] = \text{degree}(\mu_{\Q,\sqrt[3]{2}}).$$
+        Since $P$ is irreducible over $\mathbb{Q}$, monic and has $\sqrt[3]{2}$ as a zero, we know that $[\mathbb{Q}(\sqrt[3]{2}):\mathbb{Q}] = 3$.
+        And since $3 \ne 1$ and  $$ 3  \equiv_2 1 \neq 0  \equiv_2 = 2^m \qquad\forall m \in \N_{\ge 1}$$
+        we can conclude that the cube can't be doubled using a compass and straightedge.
+        
+    \end{proof}
+\end{frame}

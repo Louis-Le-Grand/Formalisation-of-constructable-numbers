@@ -1,0 +1,82 @@
+\documentclass[12pt]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{listings}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{hyperref}
+\usepackage{etexcmds}
+\usepackage{thmtools}
+\usepackage{tikz-cd}
+
+%lean highlight
+\usepackage{color}
+\definecolor{keywordcolor}{rgb}{0.7, 0.1, 0.1}   % red
+\definecolor{tacticcolor}{rgb}{0.0, 0.1, 0.6}    % blue
+\definecolor{commentcolor}{rgb}{0.4, 0.4, 0.4}   % grey
+\definecolor{symbolcolor}{rgb}{0.0, 0.1, 0.6}    % blue
+\definecolor{sortcolor}{rgb}{0.1, 0.5, 0.1}      % green
+\definecolor{attributecolor}{rgb}{0.7, 0.1, 0.1} % red
+
+\def\lstlanguagefiles{lstlean.tex}
+% set default language
+\lstset{language=lean}
+
+% theorem style
+\theoremstyle{definition}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem*{theorem*}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\newtheorem{problem}[theorem]{Problem}
+
+% Remove blueprint commands
+\newcommand{\uses}[1]{}
+\newcommand{\proves}[1]{}
+\newcommand{\discussion}[1]{}
+\newcommand{\lean}[1]{}
+\newcommand{\leanok}{}
+\newcommand{\mathlibok}{}
+\newcommand{\notready}{}
+
+%Notaion
+\newcommand{\dist}{\text{ dist }}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Z}{\mathbb{Z}}
+
+
+%Tikz arc 
+\tikzset{
+            carc/.style args={#1:#2:#3}{
+              insert path={+(#1:#3) arc (#1:#2:#3)}
+            }
+          }
+
+\title{Formalisation of constructible numbers}
+\author{Ludwig Monnerjahn}
+%\date{\time}
+
+\begin{document}
+
+\maketitle
+
+\input{intro}
+\input{def.tex}
+\input{calssification.tex}
+\input{problem.tex}
+
+\bibliographystyle{plain}
+\bibliography{construct}
+
+\nocite{*}
+
+\end{document}

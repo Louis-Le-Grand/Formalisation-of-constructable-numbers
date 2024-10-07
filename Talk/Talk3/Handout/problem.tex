@@ -1,0 +1,149 @@
+\section{Doubling the cube}
+The doubling of the cube, also known as the Delian problem, represents an ancient geometric problem.
+The objective is to construct the edge of a second cube whose volume is double that of the first, using only a ruler and compass, given the edge of a cube.
+The construction of a second cube with double the volume of the original cube begins with a cube of volume $a^3$, where $a$ is the length of an edge. 
+Thus, a cube with double the volume ($2\cdot a^3$) has an edge length of the cube root of two times the length of the original edge.
+If we now take the unit cube and reduce $\mathcal{M}$, the problem is as follows:
+\begin{problem}
+    Let $\mathcal{M} = \{0,1\}$.  
+    $$\text{Is }\sqrt[3]{2} \overset{?}{\in} \mathcal{M}_{\infty}?$$
+\end{problem}
+
+\begin{lemma}($\sqrt[3]{2}$ is irrational)
+    \label{lem:irrational_thirdroot_two}
+    \leanok
+    \lean{irrational_thirdroot_two}
+    The third root of $2$ is an irrational number.
+\end{lemma}
+\begin{proof}
+    \leanok
+    The following theorem will be used without proof, as it is already available in MathLib:
+    \begin{theorem*}
+        For any $x\in(\R\setminus\Z)$ if there exist an $n\in \N_{>0}$ and $m\in\Z$ such that $m = x^n$, then $x$ is rational. 
+    \end{theorem*}
+    The fact that $(\sqrt[3]{2})^3=2$, allows us to deduce that the only remaining task is to prove that it  is not an integer. 
+    This can be observed trough two relations.
+    \begin{align}
+        2^{\frac{1}{3}} &< 2 \\
+        2^{\frac{1}{3}} &> 1
+    \end{align}
+\end{proof}
+
+\begin{lemma}
+    $P := X^3 - 2$ is irreducible over $\mathbb{Q}$.
+\label{lem:irreducible_over_Q}
+\leanok
+\lean{P_irreducible}
+\end{lemma}
+\begin{proof}
+    \leanok
+    \uses{lem:irrational_thirdroot_two}
+    Since $\mathbb{Q}$ is $a$ subfield of $\mathbb{C} [X]$, we know that
+    \begin{equation*}
+        X^3 - 2 = (X - \sqrt[3]{2})(X -\zeta_3 \sqrt[3]{2})(X -\zeta_3^2 \sqrt[3]{2})
+    \end{equation*}
+    Suppose $P$ is reducible, then
+    \begin{equation*}
+        X^3 - 2 = (X - a)(X^2 + bX + c)\text{, with } a, b, c \in \mathbb{Q}
+    \end{equation*}
+    In particular it has a zero in $\mathbb{Q}$, so there is a rational number $a$ such that $a^3 = 2$.\newline
+    But we know that $\zeta_3 \sqrt[3]{2}$ and $\zeta_3^2 \sqrt[3]{2}$ are not real numbers and $\sqrt[3]{2}$ is not rational \ref{lem:irrational_thirdroot_two}.
+    So $P$ is irreducible over $\mathbb{Q}$.
+\end{proof}
+
+\begin{theorem}
+    \label{thm:third_root_of_two_not_in_M_inf}
+    \leanok
+    \lean{third_root_of_two_not_in_M_inf}
+    The cube can't be doubled using a compass and straightedge.
+\end{theorem}
+\begin{proof}
+    \leanok
+    \uses{lem:irrational_thirdroot_two, lem:irreducible_over_Q, cor:Classfication_z_in_M_inf_2m_not}
+    By applying the corollary \ref{cor:Classfication_z_in_M_inf_2m_not}, it is sufficient to proof that no $m\in \N$ exists such that
+    $$2^m\overset{?}{=}[\sqrt[3]{2}:\Q({0,1})]\overset{0,1\in\Q}{=} [\sqrt[3]{2}:\Q] = \text{degree}(\mu_{\Q,\sqrt[3]{2}}).$$
+    Since $P$ is irreducible over $\mathbb{Q}$ \ref{thm:irreducible_over_Q}, monic and has $\sqrt[3]{2}$ as a zero, we know that $[\mathbb{Q}(\sqrt[3]{2}):\mathbb{Q}] = 3$.
+    And since $$ 3  \equiv_2 1 \neq 0  \equiv_2 = 2^m \qquad\forall m \in \N$$
+    we can conclude that the cube can't be doubled using a compass and straightedge.
+    
+\end{proof}
+
+\section{Trisection of an angle}
+The trisection of an angle with a compass and ruler can be reduced to the following problem:\\
+Let $\mathcal{M} = \{a, b, c\}$ with $a, b, c$ not on a line and $\alpha := \angle (b - a, c - a)$ be the resulting angle.
+Then $\alpha$ can be trisected if and only if there is a point $d\in \mathcal{M}_{\infty}$ such that $\angle (b - a, d - a) = \alpha/3$. 
+The use of a normed set $\mathcal{M} = \{0,1,e^{i\alpha}\}$ leads to the following problem:
+\begin{problem}
+    Let $\mathcal{M} = \{0,1,\exp(\textbf{i} \alpha)\}$. $$\text{Is }\exp(\textbf{i} \alpha/3) \overset{?}{\in} \mathcal{M}_{\infty}?$$
+\end{problem}
+In this context, since the numbers zero and one are rational numbers, it can be concluded that $K_0$ is equal to
+$$ K_0 = \mathbb{Q}(\mathcal{M}\cup Conj(\mathcal{M})) = \mathbb{Q}(e^{\imath\alpha},\overline{e^{\imath\alpha}}). $$
+Given the corollary reference and the fact that $e^{\imath\alpha/3}$ is a zero of $X^3 - e^{\imath\alpha}\in \mathbb{Q}(e^{\imath\alpha},\overline{e^{\imath\alpha}})[X]$, the following is  equivalent: 
+\begin{itemize}
+    \item $\exp(\textbf{i} \alpha/3) \notin \mathcal{M}_{\infty}$
+    \item $\text{degree}(\mu_{e^{\imath\alpha/3},K_0}) = 3$
+    \item $X^3 - e^{\imath\alpha}$ is irreducible over $\mathbb{Q}(e^{\imath\alpha},\overline{e^{\imath\alpha}})$
+\end{itemize}
+The following section will demonstrate that the angle of $\frac{\pi}{3}=60°$  is not trisectable.
+
+\begin{lemma}
+    \label{lem:degree_K0_angel}
+    \leanok
+    \lean{degrre_root_three, eaual_adjion_root_three}
+    The degree of $K_0 = \mathbb{Q}(e^{\imath\frac{\pi}{3}},\overline{e^{\imath\frac{\pi}{3}}})$ is equal  to $2$. 
+\end{lemma}
+\begin{proof}
+    \leanok
+    \uses{def:K_M_0}
+    For all real numbers $\alpha$, we have that  $$ \exp(\imath \alpha) = \cos(\alpha) + \imath \sin(\alpha).$$
+    For $\alpha = \pi / 3$ we get
+    \begin{equation*}
+        \cos(\alpha) = \frac{1}{2}\qquad \text{and}\qquad \sin(\alpha) = \frac{\sqrt{3}}{2}
+    \end{equation*}
+    Therefore $\mathbb{Q}(e^{\imath\frac{\pi}{3}},\overline{e^{\imath\frac{\pi}{3}}})$ is in $\mathbb{Q}(\imath\sqrt{3})$.
+    And since $\imath\sqrt{3}$ is a zero of $X^2 + 3$, we know that the degree of $K_0$ less then $2$.
+    To show that the degree is not $1$, we apply the fact that $\imath\sqrt{3} \notin \mathbb{Q}$.
+    % Since we know that $\sqrt{r} \in \mathcal{M}_{\infty}$ for $r \in \mathcal{M}_n$
+    % we see that $\exp(\textbf{i} \alpha) \in \mathcal{M}_{\infty}$ for $\mathcal{M} = \{0,1\}$. \newline
+    % So we will work with $K_0 = \mathbb{Q}$.
+\end{proof}
+
+\begin{lemma}
+    \label{lem:pi_third_not_in_M_inf}
+    \leanok
+    \lean{pi_third_not_in_M_inf}
+    The angle $\pi / 3 = 60^{\circ}$ can't be trisected using a compass and straightedge.
+\end{lemma}
+\begin{proof}
+    \leanok 
+    \uses{lem:degree_K0_angel, cor:Classfication_z_in_M_inf_2m_rat}
+    By utilising the aforementioned lemma \ref{lem:degree_K0_angel} to apply the corresponding corollary \ref{cor:Classfication_z_in_M_inf_2m_rat}, we can narrow our focus to the degree over $\Q$.
+    Now we use the fact that if $x\in \mathcal{M}_{\infty}$, then $x.real, x.imag \in \mathcal{M}_{\infty}$ \ref{lem:M_inf_properties}. 
+    Thus we focus on $\cos(\alpha/3)$, which the real part $e^{\imath \frac{\pi}{3}}$ and a zero of
+    \begin{equation*}
+        f := 8 X^3 - 6 X - 1 \in \mathbb{Q}[X]
+    \end{equation*}
+    Suppose $f$ is reducible over $\mathbb{Q}$, then $f$ has a rational zero $a$, since $f$ is of degree $3$. According to the rational root theorem, a root rational root of $f$ is of the form $\pm \frac{p}{q}$ with $p$ a factor of the constant term and $q$ a factor of the leading coefficient. So the only possible rational zeros of $f$ are
+     \begin{equation*}
+        \{ \pm 1, \pm \frac{1}{2}, \pm \frac{1}{4}, \pm \frac{1}{8} \}.
+     \end{equation*}
+     One can check that none of these numbers are a zero of $f$.
+     So $f$ is irreducible over $\mathbb{Q}$ and $\cos(\alpha/3) \notin \mathcal{M}_{\infty}$.
+     Therefore
+        \begin{equation*}
+            \exp(\textbf{i} \alpha/3) \notin \mathcal{M}_{\infty}
+        \end{equation*}
+    So the angle $\pi / 3 = 60^{\circ}$ can't be trisected using a compass and straightedge.
+\end{proof}
+
+\begin{theorem}
+    \label{thm:Angle_not_Trisectable}
+    \leanok
+    \lean{Angle_not_Trisectable}
+    A general angle can't be trisected using a compass and straightedge.
+\end{theorem}
+\begin{proof}
+    \leanok
+    \uses{lem:pi_third_not_in_M_inf, }
+    Employ the previous lemma with the angle $\pi / 3$.
+\end{proof}

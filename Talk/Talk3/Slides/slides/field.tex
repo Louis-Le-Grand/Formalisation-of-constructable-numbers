@@ -1,0 +1,76 @@
+\begin{frame}[fragile]
+    \begin{definition}[quadratic closed field]
+        \label{def:quadritc_closed_field}
+        \leanok
+        \lean{QuadraticClosed}
+        A field $F$ is called \emph{quadratic closed} if for all $x \in F$ there is a $y \in F$ such that $y^2 = x$.
+    \end{definition}
+
+    \begin{lemma}
+        \label{lem:M_inf_quad_closed}
+        \leanok
+        \lean{MField_QuadraticClosed, MField_QuadraticClosed_def}
+        \uses{def:set_of_constructable_points, def:quadritc_closed_field}
+        For $M\subseteq \mathbb{C}$ with $0,1 \in M$, $M_{\infty}$ is quadratic closed.
+    \end{lemma}
+    \scalebox{0.8}{\begin{minipage}{1.20\textwidth}
+
+    \begin{figure}
+    \centering
+    \begin{tikzpicture}
+        \draw[->] (-1,0) -- (7,0) node[right] {$\Re$};
+        \draw[->] (0,-1) -- (0,4) node[above] {$\Im$};
+        \coordinate[label=-135:$0$] (zero) at (0,0);
+        \coordinate[label=-90:$1$] (one) at (1,0);
+        \coordinate[label=-45:$r$] (r) at (6,0);
+        \coordinate[label=-90:$\frac{r}{2}$] (r2) at (3,0);
+        \coordinate[label=135:] (sqrt1) at (1,2.2360679775);
+        \coordinate[label=135:$\sqrt{r}$] (sqrt) at (2.4494897428,0);
+        \fill[black] (zero) circle (1pt);
+        \fill[black] (one) circle (2pt);
+        \fill[black] (r) circle (2pt);
+        \fill[black] (r2) circle (2pt);
+        \fill[black] (sqrt1) circle (2pt);
+        \draw (r2) [carc=-10:190:3];
+        \draw (zero) [carc=-10:80:2.4494897428];
+        \draw (one) -- (sqrt1);
+        \fill[red] (sqrt) circle (3pt);
+    \end{tikzpicture}
+    \caption{Construction of $\sqrt{r}$}
+    \label{Fig.root}
+    \end{figure}
+
+    \end{minipage}}
+\end{frame}
+
+\begin{frame}
+    \begin{definition}
+        \label{def:conj_set}
+        \leanok
+        \lean{conj_set}
+        For a Set $M \subset \mathbb{C}$ we define the \emph{conjugate set} of $M$ as 
+        \begin{equation*}
+            Conj(M) = \{\overline{z}\mid z\in M\}
+        \end{equation*}
+    \end{definition}
+    
+    \begin{definition}
+        \label{def:conj_closed}
+        \leanok
+        \lean{ConjClosed}
+        \uses{def:conj_set}
+        We call a subset of $\C$ \emph{conjugate closed} if $M= Conj(M)$.
+    \end{definition}
+\end{frame}
+
+\begin{frame}
+    \begin{theorem}
+        Let $K$ be an conjugation closed intermediate field of $\mathbb{Q}$ and $\mathbb{C}$.
+        \begin{itemize}
+            \item If $z\in ill(K)$ then $z\in K$.
+            \item If $z\in ilc(K)$ then there exist $w^2 \in K$ such that $z\in K(w)$.
+            \item If $z\in icc(K)$ then there exist $w^2 \in K$ such that $z\in K(w)$.
+        \end{itemize}
+    \end{theorem}
+\end{frame}
+

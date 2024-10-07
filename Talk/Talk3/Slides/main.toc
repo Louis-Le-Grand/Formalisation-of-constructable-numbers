@@ -1,0 +1,4 @@
+\beamer@sectionintoc {1}{Defintions}{3}{0}{1}
+\beamer@sectionintoc {2}{Field of constructable numbers}{10}{0}{2}
+\beamer@sectionintoc {3}{Classification}{16}{0}{3}
+\beamer@sectionintoc {4}{Impossibility of doubling the cube}{20}{0}{4}

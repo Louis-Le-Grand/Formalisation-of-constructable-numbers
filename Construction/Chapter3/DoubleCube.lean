@@ -6,7 +6,7 @@ import Mathlib.Data.Real.Irrational
 
 open Construction Polynomial
 
-noncomputable def P : (Polynomial ℚ) := X ^ 3 - Polynomial.C 2 -- x^3 - 2
+noncomputable def P : (Polynomial ℚ) := X ^ 3 - Polynomial.C 2
 
 lemma P_monic: Monic P := by
   refine monic_of_natDegree_le_of_coeff_eq_one 3 (Eq.le Polynomial.natDegree_X_pow_sub_C) ?_
@@ -68,7 +68,6 @@ lemma degree_third_root_of_two : Polynomial.degree (minpoly ℚ ((2:ℂ ) ^ (1/3
   norm_cast
   exact natDegree_X_pow_sub_C
 
---TODO: Tidy Up
 lemma not_mod_eq_imp_not_eq (a b n : ℕ ) (h : ¬ a % n = b % n) : ¬ a = b := by
   exact fun a_1 ↦ h (congrFun (congrArg HMod.hMod a_1) n)
 

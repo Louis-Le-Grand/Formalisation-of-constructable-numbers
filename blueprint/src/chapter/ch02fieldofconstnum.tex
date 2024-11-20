@@ -271,6 +271,7 @@ In this section, we will utilise the constructed points from sectoion \ref{basic
     In this case $z \in L$.
 \end{lemma}
 \begin{proof}
+    \proves{lem:ConjClosed.Intersection_line_line}
     \leanok
     \uses{lem:ConjClosed.re_im_in_L}
     The proof is divided into two parts. Initially, it is demonstrated that $z$ belongs to the intersection of $G_1$ and $G_2$, if and only if there exist real numbers $\lambda, \mu \in \mathbb{R}$, such that the equations $1$, $2$ and $3$ are satisfied.
@@ -298,10 +299,12 @@ In this section, we will utilise the constructed points from sectoion \ref{basic
     \end{align*}
     Since we divided by $\imath (y_4-y_3)$ we need to assume that $y_4 \ne y_3$, so we need to first handle the case $y_4 = y_3$.\\
     If $y_4 = y_3$ we have $\lambda(\imath y_1 - \imath y_2) = \imath y_4-\imath y_2$ and since $y_4 = y_3$ $y_1 \ne y_2$, because otherwise both Lines would be parallel to the real line and therefore $G_1 = G_2$ or $G_1 \cap G_2 = \varnothing$. 
-    Therefore $\lambda = \frac{\imath y_4-\imath y_2}{\imath y_1 - \imath y_2}$. Using the fact that real part and the imaginary part times $\imath$ are in $L$ \ref{lem:ConjClosed.re_im_in_L} we have written $\lambda$ as a fraction of two elements in $L$. 
+    %Todo: Remove + 0 after the issue is solved
+    Therefore $\lambda = \frac{\imath y_4-\imath y_2}{\imath y_1 - \imath y_2}$. Using the fact that real part and the imaginary part times $\imath + 0$ are in $L$ \ref{lem:ConjClosed.re_im_in_L} we have written $\lambda$ as a fraction of two elements in $L$. 
     It can thus be concluded that $\lambda$ is in $L$, which implies that $z = \lambda z_1 + (1-\lambda)z_2$ is in $L$.\\
    
     Now we insert $\mu$ in \RNum{1} and solve for $\lambda$.\\
+    %TODO: Change block such that it will be also shown in the Web version 
     \resizebox{1\linewidth}{!}{
     \begin{minipage}{\linewidth}
     \begin{alignat*}{3}
@@ -319,7 +322,6 @@ In this section, we will utilise the constructed points from sectoion \ref{basic
     Assume that its = then we would have $(y_4-y_3)(x_1 - x_2) = (y_1 - y_2)(x_4-x_3)$, which is equivalent to $\frac{y_4-y_3}{x_4-x_3} = \frac{y_1 - y_2}{x_1 - x_2}$. 
     This would mean that the two lines are parallel and therefore $G_1 = G_2$ or $G_1 \cap G_2 = \varnothing$.\\
     Thus we can assume that the denominator is not zero and therefore we can write $\lambda$ as a fraction of two elements in $L$. Therefore $\lambda$ is in $L$, wich implies that $z = \lambda z_1 + (1-\lambda)z_2$ is in $L$.
-
 \end{proof}
 
 %3.17

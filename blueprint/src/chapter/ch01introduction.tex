@@ -32,6 +32,11 @@ We will use $\mathbb{C}$ as plane of drawing and $\mathcal{M} \subset \mathbb{C}
     \uses{def:circel}
     If we have two circles $C_1 = (c_1,r_1)$, $C_2 = (c_2,r_2)$ and we have $c_1 \ne c_2$ or $r_1  \ne r_2 $ then the circles aren't equal. 
 \end{lemma}
+\begin{proof}
+    \leanok
+    \uses{def:circle}
+    Uses the proof of Eucliden speheres from MathLib.
+\end{proof}
 
 
 \begin{definition}[Set of lines]
@@ -183,6 +188,7 @@ it is imperative to illustrate the fundamental properties that will be utilised 
 
 \begin{proof}
     \leanok
+    \proves{lem:parallel_iff_parallel'}
     \uses{def:line, def:direction_vector, def:parallel, def:parallel'}
     Let $l_1$ and $l_2$ be two lines with $l_1.z_1 - l_1.z_2 = k \cdot (l_2.z_1 - l_2.z_2)$.
     We have to show that $l_1 = \{z + r \mid z\in l_2\}$, i.e. $\exists r: l_1 = \{z + r \mid z\in l_2\}$.\\
@@ -654,11 +660,12 @@ To get the point $z.re$ we draw a line through $z$ and $\overline{z}$. Then $z.r
 To get the point $z.im$ we draw a line through $z$ and $z-1$. Now we get $\imath \cdot z.im$ by taking the intersection with the imaginary line, defined by $0$ and $\imath$. To get $z.im$ draw a circle trough $\imath \cdot z.im$ and take the intersection with the real line.\ref{Fig z.im}
 \begin{proof}
     \leanok
-    \uses{def:line, def:circle,}%TODO c_in_C_M, ilc_M_inf, M_M_inf
+    \proves{lem:construction_imag}
+    \uses{def:line, def:circle, c_in_C_M, ilc_M_inf, M_M_inf}%TODO 
     Define the lines $l = \{z, z-1\}$ and $l_{\Im} = \{\imath, 0\}$.\\
     Now it is analog to the proof of lemma \ref{lem:construction_real}, that $z.im \cdot \imath  \in l \cap l_{\Im}$. 
-
-    Now we can project $z.im \cdot \imath$ on the real axis by drawing a circle with center $0$ and radius $\|z.im\|$ and taking the intersection with the real axis.
+    %TODO: Remove +0 if issue is fixed
+    Now we can project $z.im \cdot \imath + 0$ on the real axis by drawing a circle with center $0$ and radius $\|z.im\|$ and taking the intersection with the real axis.
 \end{proof}
 \begin{figure}
     \centering
@@ -867,6 +874,7 @@ For the construction we draw a line through $0$ and $z$ and take the intersectio
     \uses{lem:construction_add, lem:construction_mul, lem:construction_inv}
     \leanok
     Combining the lemmas for addition\ref{lem:construction_add}, multiplication\ref{cor:construction_mul_complex} and the invers of a complex number\ref{cor:inv_M_inf} we get that $\frac{z_1 + z_2}{1+1} \in M_{\infty}$.
+    
 \end{proof}
 
 \begin{lemma}[Halving of an angle]
@@ -880,9 +888,8 @@ For the construction we draw a line through $0$ and $z$ and take the intersectio
     \leanok
     \uses{lem:angle_M_inf, lem:icc_M_inf}
     For $\alpha \ne 0 \ne \pi$ we take the intersection of the unit circle with the line through $0$ and and the mipiont of $e^{\imath\alpha}$ and $1$. 
-    
-    For $\alpha = 0$ we get $e^{\imath\frac{\alpha}{2}} = 1$ and for $\alpha = \pi$ we get $e^{\imath\frac{\alpha}{2}} = \imath$.
-    
+    %TODO: Remove +0 if issue is fixed
+    For $\alpha = 0$ we get $e^{\imath\frac{\alpha}{2}} = 1$ and for $\alpha = \pi$ we get $e^{\imath\frac{\alpha}{2}} =\imath + 0$.
 \end{proof}
 
 \begin{lemma}[Construction of radius]
@@ -897,6 +904,7 @@ For the construction we draw a line through $0$ and $z$ and take the intersectio
 \end{remark}
 We get the radius by taking the intersection of the real axis with a circle in zero with radius $\dist (0,z)$. \ref{Fig.radius}
 \begin{proof}
+    \proves{lem:construction_radius}
     \leanok
     \uses{lem:Construction.zero_real_root_M_inf, lem:Construction.mul_M_inf, lem:Construction.add_M_Inf, lem:Construction.real_in_M_inf, lem:Construction.im_in_M_inf}  
     We use the fact that $r = \|z\| = \sqrt{\Re(z)^2 + \Im(z)^2}$. Since we have spilt $r$ in already constructed parts, we get that $r \in M_{\infty}$.

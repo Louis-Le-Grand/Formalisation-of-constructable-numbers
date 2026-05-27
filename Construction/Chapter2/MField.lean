@@ -584,7 +584,29 @@ lemma ilc_L' (z : ℂ) (h : z ∈ ilc L): ∃ ω ∈ L, ∃ x : ℂ, x * x = ω 
 lemma icc_L' (z :ℂ) {c₁ c₂ : Construction.circle} (hc₁: c₁ ∈ C L) (hc₂: c₂ ∈ C L) (h_ne : c₁.points' ≠ c₂.points'): z ∈ c₁.points ∩ c₂.points ↔
   ∃ l :line, l ∈ Construction.L L ∧  z ∈ l.points ∩ c₁.points ∧ z ∈ l.points ∩ c₂.points := by
   refine ⟨?_,?_⟩ <;> intro h
-  . sorry
+  . have h₁: z ∈ c₁.points := by
+      exact Set.mem_of_mem_inter_left h
+    have h₂: z ∈ c₂.points := by
+      exact Set.mem_of_mem_inter_right h
+
+    sorry
+    -- let l: line := {z₁ := c₁.c, z₂ := c₂.c}
+    -- have hz': z ∈ icc L := by
+    --     unfold icc
+    --     refine ⟨c₁, hc₁, c₂, hc₂, h, h_ne⟩
+    -- have hl: l ∈ Construction.L L := by
+    --   refine (l_in_L_M ↑L).mpr ⟨c₁.c, c₂.c, rfl, ?_, ?_, ?_⟩
+    --   . rw [@c_in_C_M] at hc₁
+    --     obtain ⟨z, _, _, hc₁, hz, _⟩ := hc₁
+    --     simp_all only
+    --   . rw [@c_in_C_M] at hc₂
+    --     obtain ⟨z, _, _, hc₂, hz, _⟩ := hc₂
+    --     simp_all only
+    --   . sorry
+    -- have hlz: z ∈ l.points := by
+    --   sorry
+    -- use l, hl
+    -- refine ⟨Set.mem_inter hlz h₁, Set.mem_inter hlz h₂⟩
   . obtain ⟨_, _ , h₁, h₂⟩ := h
     exact ⟨Set.mem_of_mem_inter_right h₁,Set.mem_of_mem_inter_right h₂⟩
 

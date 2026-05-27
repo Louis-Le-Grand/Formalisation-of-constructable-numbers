@@ -9,7 +9,11 @@ variable {F: Type*} [Field F] {E : Type*} [Field E] [Algebra F E]
 variable (K : IntermediateField F E) (L : IntermediateField K E)
 
 
-theorem dergree_two_eq_sqr :  FiniteDimensional.finrank K L = 2 ↔ ∃ x : E, x ^ 2 ∈ K ∧ ¬(x ∈ K) ∧ L = IntermediateField.adjoin K {x} := by sorry
+
+theorem dergree_two_eq_sqr :  FiniteDimensional.finrank K L = 2 ↔ ∃ x : E, x ^ 2 ∈ K ∧ ¬(x ∈ K) ∧ L = IntermediateField.adjoin K {x} := by
+  sorry
+
+
 
 end degree_two
 
@@ -397,10 +401,15 @@ lemma div_two_2pown' (a n : ℕ) (h: a ∣ 2^ n) :  ∃m : ℕ, a = 2^m:= by
   obtain ⟨m, hm⟩ := div_two_2pown a n h
   exact ⟨m, Eq.symm hm⟩
 
+
 lemma mulfinrank_help (R K L: IntermediateField ℚ ℂ) (h₁: R ≤ K) (h₂: K ≤ L) : FiniteDimensional.finrank R (extendScalars h₁) *
     FiniteDimensional.finrank (extendScalars h₁) (extendScalars h₂) = FiniteDimensional.finrank R (extendScalars (Trans.trans h₁ h₂)) := by
-    --apply FiniteDimensional.finrank_mul_finrank R (extendScalars h₁) (extendScalars h₂)
-    sorry
+  rw [←IntermediateField.relfinrank_eq_finrank_of_le h₁,
+  ←IntermediateField.relfinrank_eq_finrank_of_le (Trans.trans h₁ h₂),
+  ←IntermediateField.relfinrank_mul_relfinrank h₁ h₂]
+  have: FiniteDimensional.finrank ↥(extendScalars h₁) ↥(extendScalars h₂) = K.relfinrank L := by
+    exact Eq.symm (relfinrank_eq_finrank_of_le h₂)
+  simp only [mul_eq_mul_left_iff, this]
 
 lemma degree_of_Ln (n : ℕ) (L : ℕ →  IntermediateField ℚ ℂ) (h:  ∃   (_: ∀i,  L i ≤ L (i + 1)),
     K_zero M = L 0 ∧ (∀ i < n, relfinrank (L i) (L (i+1)) = 2)): relfinrank (K_zero M) (L n) = 2^n := by
@@ -421,9 +430,11 @@ lemma degree_of_Ln (n : ℕ) (L : ℕ →  IntermediateField ℚ ℂ) (h:  ∃  
     symm
     have: FiniteDimensional.finrank ↥(L n) ↥(extendScalars hL) = FiniteDimensional.finrank ↥(extendScalars hn) ↥(extendScalars hL) := by norm_cast
     rw[this]
-    apply mulfinrank_help (K_zero M) (L n) (L (n+1)) _ _
-    . intro i hi
-      exact h_degree i (by linarith)
+    exact mulfinrank_help (K_zero M) (L n) (L (n + 1)) hn hL
+    intro i hi
+    rw[h_degree i ]
+    exact Nat.lt_add_right 1 hi
+
 
 lemma Classfication_z_in_M_inf_2m {M : Set ℂ} (h₀: 0 ∈ M) (h₁:1 ∈ M) (z : ℂ) :
   z ∈ M_inf M →  ∃ (m : ℕ) ,((2  : ℕ) ^ m) = Polynomial.degree (minpoly (K_zero M) z)  := by

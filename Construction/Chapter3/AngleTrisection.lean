@@ -166,6 +166,31 @@ lemma not_mod_eq_imp_not_eq (a b n : ℕ ) (h : ¬ a % n = b % n) : ¬ a = b := 
 
 --lemma dim_k_zero_ang: ∃ j:ℕ, FiniteDimensional.finrank ℚ ↥(K_zero {0, 1, Complex.exp (Complex.I * ↑Real.pi / 3)}) = (2 ^ j) := by sorry
 
+namespace IntermediateField --! add to 'mathlib'?
+lemma adjoin_le  (K : Type*) (E : Type*) [Field K] [Field E] [Algebra K E] {S : IntermediateField K E}  (s : Set E) (H : s ⊆ S): adjoin K s ≤ S := adjoin_le_iff.mpr H
+
+lemma adjoin_eq_sInf (K : Type*) (E : Type*) [Field K] [Field E] [Algebra K E] (s : Set E) :
+  IntermediateField.adjoin K s = (sInf { p : IntermediateField K E | s ⊆ p }) := by
+  apply le_antisymm ?_ (sInf_le (by apply IntermediateField.subset_adjoin ))
+  · apply IntermediateField.adjoin_le
+    intro x hx
+    refine SetLike.mem_coe.mpr ?_
+    have: s ≤ (sInf { p : IntermediateField K E | s ⊆ p }) := by
+      simp only [coe_sInf, Set.sInf_eq_sInter, Set.sInter_image, Set.mem_setOf_eq, Set.le_eq_subset,
+        Set.subset_iInter_iff, imp_self, implies_true]
+    exact this hx
+
+
+lemma adjoin_union (K : Type*) (E : Type*) [Field K] [Field E] [Algebra K E] (s t : Set E) :
+  IntermediateField.adjoin K (s ∪ t) = IntermediateField.adjoin K s ⊔ IntermediateField.adjoin K t := (@IntermediateField.gc K _ E).l_sup
+
+
+lemma bot_union_adjoin (K : Type*) (E : Type*) [Field K] [Field E] [Algebra K E] (A : Set E) :
+  IntermediateField.adjoin K A = IntermediateField.adjoin K (⊥ ∪ A) := by
+  simp only [IntermediateField.adjoin_union, Set.bot_eq_empty, adjoin_empty, bot_le, sup_of_le_right]
+
+end IntermediateField
+
 lemma h: (K_zero ({0, 1, Complex.exp (Complex.I * ↑Real.pi / 3)} : Set ℂ)) = (IntermediateField.adjoin ℚ
     {Complex.exp (Complex.I * ↑Real.pi / 3), (starRingEnd ℂ) (Complex.exp (Complex.I * ↑Real.pi / 3))}) := by
   simp only [K_zero, conj_set, pow_one]
@@ -180,11 +205,13 @@ lemma h: (K_zero ({0, 1, Complex.exp (Complex.I * ↑Real.pi / 3)} : Set ℂ)) =
   rw[this, ←IntermediateField.adjoin_adjoin_left]
   have: IntermediateField.adjoin ℚ {(0:ℂ), 1} = (⊥: IntermediateField ℚ ℂ) := le_antisymm (IntermediateField.adjoin_le_iff.mpr
     (Set.pair_subset_iff.mpr ⟨(zero_mem ⊥),(one_mem ⊥)⟩)) (by exact OrderBot.bot_le (IntermediateField.adjoin ℚ {0, 1}))
-  sorry
-  -- rw[this]
-  -- norm_cast
-  -- rw [IntermediateField.restrictScalars_adjoin]
-  -- rw[←IntermediateField.adjoin_adjoin_left]
+  rw[this]
+  simp_rw[IntermediateField.restrictScalars_adjoin] --IntermediateField.lift_bot
+  rw [IntermediateField.bot_union_adjoin ℚ ℂ {Complex.exp (Complex.I * ↑Real.pi / 3), (starRingEnd ℂ) (Complex.exp (Complex.I * ↑Real.pi / 3))}]
+  rw[IntermediateField.adjoin_union, IntermediateField.adjoin_union]
+  simp only [IntermediateField.adjoin_self, bot_le, sup_of_le_right, Set.bot_eq_empty,
+    IntermediateField.adjoin_empty]
+
 
 --lemma X: 1 < FiniteDimensional.finrank ℚ  (IntermediateField.adjoin ℚ {Complex.exp (Complex.I * ↑Real.pi / 3), (starRingEnd ℂ) (Complex.exp (Complex.I * ↑Real.pi / 3))}) := by sorry
 

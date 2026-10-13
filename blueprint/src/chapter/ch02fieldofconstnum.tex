@@ -1,7 +1,7 @@
 \chapter{Field of constructable Numbers}
 This chapter develops the field structure on $M_{\infty}$ and establishes a set of properties that are utilized to establish a criterion for determining the constructability of a point.
 \section[Filed of Constructable Numbers]{Field $M_{\infty}$}
-In this section, we will utilise the constructed points from sectoion \ref{basic_constructions} in order to demonstrate that $M_{\infty}$ forms a conjugate (\ref{def:conj_closed}) and quartic (\ref{def:quadritc_closed_field}) closed field.
+In this section, we will utilize the constructed points from section \ref{basic_constructions} in order to demonstrate that $M_{\infty}$ forms a conjugate (\ref{def:conj_closed}) and quartic (\ref{def:quadritc_closed_field}) closed field.
 
 \begin{theorem}
     \label{thm:MField}
@@ -384,7 +384,7 @@ Since $\lambda$ is a solution of a quadratic equation we now get that $\lambda$ 
         C_1 := \{z = x + \imath y \in \mathbb{C} \mid \|z - z_1\| = r_1\},\\
         C_2 := \{z = x + \imath y \in \mathbb{C} \mid \|z - z_2\| = r_2\}.
     \end{aligned} \end{equation*}
-    Assume $C_1 \cap C_2 \ne \emptyset$ and $C_1 \ne C_2$. Then  ther  exists $z_1, z_2 \in L$ such that
+    Assume $C_1 \cap C_2 \ne \emptyset$ and $C_1 \ne C_2$. Then  there  exists $z_1, z_2 \in L$ such that
      $$G := \{ \lambda z_1 + (1-\lambda) z_2 \mid \lambda \in \R \}$$ % \{x+\imath y \in \mathbb{C} \mid 2(x_2 - x_1)x - 2(\imath y_2 - \imath y_1)\imath y = r_1^2 - r_2^2 + x_2^2 - x_1^2 + (\imath y_2)^2 - (\imath y_1)^2\} $$
     is a real line, and $$ C_1 \cap C_2 = G \cap C_1 = G \cap C_2. $$
     For $z \in C_1 \cap C_2$ there is a $w \in L$ such that $z \in L(\sqrt{w})$.
@@ -501,7 +501,7 @@ The following section will demonstrate that for an element to be constructible, 
     \label{lem:dergree_two_eq_sqr}
     \lean{dergree_two_eq_sqr}
     \leanok
-    %For to abetory fields $E$ and $F$ with
+    %For to arbitrarily fields $E$ and $F$ with
     Let $K, L$ be subfield of $\C$, with $K\le L$. Then $[L:K] = 2$ is equivalent to the existence of a $w*w \in K$ with $w \notin K$ and $L = K(w)$.
 \end{lemma}
 \begin{proof}
@@ -531,7 +531,7 @@ The following section will demonstrate that for an element to be constructible, 
     \leanok
     \uses{lem:dergree_two_eq_sqr}
     "$\Rightarrow:$" Let $n$ be the smallest natural number such that there exists a chain of subfields $L_1 \subset L_2 \subset \ldots \subset L_n$ with $z \in L_n$ and $[L_{i+1}:L_i] = 2$ for $i = 0, \ldots, n-1$. Now lemma \ref{lem:dergree_two_eq_sqr} gives us that there exists a $w \in L_{n-1}$ such that $L_n$ arises from $L_{n-1}$ by adjoining $\sqrt{w}$.\\
-    "$\Leftarrow:$" Let $L$ be an intermediate field of $\mathbb{C}/K_0$ with $z \in L$ and $L$ arises from $K_0$ by a finte sequence of adjunctions of square roots. Then there exists a chain of subfields $L_1 \subset L_2 \subset \ldots \subset L_n$ with $z \in L_n$ and $L_{i+1}:= L_i(\sqrt{w_i})$ for $i = 0, \ldots, n-1$.
+    "$\Leftarrow:$" Let $L$ be an intermediate field of $\mathbb{C}/K_0$ with $z \in L$ and $L$ arises from $K_0$ by a finite sequence of adjunctions of square roots. Then there exists a chain of subfields $L_1 \subset L_2 \subset \ldots \subset L_n$ with $z \in L_n$ and $L_{i+1}:= L_i(\sqrt{w_i})$ for $i = 0, \ldots, n-1$.
 \end{proof}
 
 \begin{lemma}
@@ -553,7 +553,7 @@ The following section will demonstrate that for an element to be constructible, 
         \item Inductive step $n \to n+1$: \\
             For $z\in M_{n+1}$ there are four cases: 
             \begin{itemize}
-                \item [$z \in M_n$:] By the induction hypothesis $z \in K_n$ and $K_n$ is conjugation closed and arises from $K_0$ by a sequence of adjunctinos of square roots.
+                \item [$z \in M_n$:] By the induction hypothesis $z \in K_n$ and $K_n$ is conjugation closed and arises from $K_0$ by a sequence of adjunctions of square roots.
                 \item [$z \in ILL (M_n)$:] By the induction hypothesis $z \in ILL (K_n)$ and using \ref{lem:ConjClosed.Intersection_line_line} we get that $z \in K_{n}$.
                 \item [$z \in ILC (M_n)$:] By the induction hypothesis $z \in ILC (K_n)$ and using \ref{lem:ConjClosed.Intersection_line_circle} there is a $w \in K_n$ such that $z \in K_n(\sqrt{w})$ insert  $\sqrt{w}, \overline{\sqrt{w}}$ to $X_n$.
                 \item [$z \in ICC (M_n)$:] By the induction hypothesis $z \in ICC (K_n)$ and using \ref{lem:ConjClosed.Intersection_circle_circle} there is a $w \in K_n$ such that $z \in K_n(\sqrt{w})$ insert $\sqrt{w}, \overline{\sqrt{w}}$ to $X_n$.
@@ -588,7 +588,7 @@ The following section will demonstrate that for an element to be constructible, 
             Given that $[L_{n+1}:L_n] = 2$, it follows from the conclusions of Lemma \ref{lem:dergree_two_eq_sqr} that there exists a $w \in L_n$ with the property that $ \sqrt{w} \notin L_n$ and $L_{n+1} = L_n(w)$.
             By the induction hypothesis, it can be inferred that $L_n \subseteq M_{\infty}$. Since $w \in L_n  \subseteq M_{\infty}$ and $ M_{\infty}$ is quadratic closed (\ref{lem:M_inf_quad_closed}) $L_n(w) = L_{n+1} \subseteq M_{\infty}$.
     \end{itemize}
-    "$\Rightarrow:$" There exists a $n$ such that $z\in M_n$, and we know that there exists a $K_n$ with $M_n \subseteq K_n$ which is derived from $K_0$ by successive adjoing square roots \ref{lem:Mi_chain}. 
+    "$\Rightarrow:$" There exists a $n$ such that $z\in M_n$, and we know that there exists a $K_n$ with $M_n \subseteq K_n$ which is derived from $K_0$ by successive adjoin square roots \ref{lem:Mi_chain}. 
     We can conclude that there is a $K$, which is derived from $K_0$ by successive adjoining square roots, and that $z\in K$. 
     Since $M_i$ is finite, we get that we adjoin finitely many square roots and so we evoke \ref{lem:Z_in_Minf_imp_eq}. 
 

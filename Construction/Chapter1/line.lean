@@ -15,9 +15,8 @@ lemma line_pionts_iff (l : line) (α: ℂ) (hα: α ∈ l.points) : l.points = {
     exact ht
   . refine ⟨t + tα, ?_⟩
     push_cast
-    ring_nf  at htα ht ⊢
-    rw [add_sub, add_assoc, add_comm (l.z₁ * t), ←add_assoc, htα, ←add_sub, add_comm]
-    exact ht
+    linear_combination ht + htα
+
 
 section parallel
 
@@ -224,7 +223,7 @@ end DirectionVectorsOfLines_parallel
 --     }
 --     rw [add_right_cancel_iff, Complex.ext_abs_arg_iff]
 --     refine ⟨?_,?_⟩
---     . simp only [Complex.ofReal_inv, map_mul, Complex.abs_ofReal, Complex.abs_abs, map_inv₀]
+--     . simp only [Complex.ofReal_inv, map_mul, Complex.norm_real, Complex.abs_abs, map_inv₀]
 --       exact inv_mul_cancel_right₀ div (|t| * Complex.abs (l₁.z₁ - l₁.z₂))
 --     . by_cases ht: t = 0
 --       . rw[ht]
@@ -397,7 +396,7 @@ end DirectionVectorsOfLines_parallel
 --       use (t * Complex.abs (l₂.z₁ - l₂.z₂) / Complex.abs (l₁.z₁ - l₁.z₂))
 --       rw[←ht, add_right_cancel_iff, ←mul_sub, ←mul_sub, div_eq_mul_inv,  Complex.ext_abs_arg_iff]
 --       refine ⟨?_, ?_ ⟩
---       . simp  only [Complex.ofReal_mul, Complex.ofReal_inv, map_mul, Complex.abs_ofReal,
+--       . simp  only [Complex.ofReal_mul, Complex.ofReal_inv, map_mul, Complex.norm_real,
 --         Complex.abs_abs, map_inv₀]
 --         rw [inv_mul_cancel_right₀ div (|t| * Complex.abs (l₂.z₁ - l₂.z₂))]
 --       . have: 0 < t * Complex.abs (l₂.z₁ - l₂.z₂) * (Complex.abs (l₁.z₁ - l₁.z₂))⁻¹ := by
@@ -423,7 +422,7 @@ end DirectionVectorsOfLines_parallel
 --       rw[←ht, add_right_cancel_iff, ←mul_sub, ←mul_sub, div_eq_mul_inv,  Complex.ext_abs_arg_iff]
 --       refine ⟨?_, ?_ ⟩
 --       . simp only [neg_mul, Complex.ofReal_neg, Complex.ofReal_mul, Complex.ofReal_inv,
---         map_neg_eq_map, map_mul, Complex.abs_ofReal, Complex.abs_abs, map_inv₀]
+--         map_neg_eq_map, map_mul, Complex.norm_real, Complex.abs_abs, map_inv₀]
 --         rw [inv_mul_cancel_right₀ div (|t| * Complex.abs (l₂.z₁ - l₂.z₂))]
 --       . have: 0 < -t * Complex.abs (l₂.z₁ - l₂.z₂) * (Complex.abs (l₁.z₁ - l₁.z₂))⁻¹ := by
 --           rw [mul_pos_iff]

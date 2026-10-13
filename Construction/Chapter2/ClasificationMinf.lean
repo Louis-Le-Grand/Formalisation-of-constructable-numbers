@@ -1,9 +1,10 @@
 import Construction.Chapter2.KZero
 import Construction.NotMyCode.PR14987
-import Construction.Chapter2.DegreeTwo
-import Construction.Chapter2.RootTower
-import Construction.Chapter2.RootTower
+import Construction.NotMyCode.DegreeTwo
+import Construction.NotMyCode.RootTower
 
+
+set_option backward.isDefEq.respectTransparency false
 
 open IntermediateField Construction
 
@@ -82,134 +83,49 @@ def SetOfRoots (K : IntermediateField E F) (M : Set F) := ∀ x : F, x ∈ M →
 def succ_adjion_root  (K: IntermediateField E F) (n : ℕ) (α: Fin n → Set F) := ∀ i, SetOfRoots (IntermediateField.adjoin K (⋃ (j : Fin n), ⋃ (_ : j < i), α j)) (α i)
 
 lemma succ_adjion_root_split  (K: IntermediateField E F) (n : ℕ) (α: Fin n → Set F) (h : succ_adjion_root K n α) (α₁: Fin 1 → Set F) : SetOfRoots (IntermediateField.adjoin K (⋃  i, α i)) (α₁ 1) →  succ_adjion_root K (n+1) (Fin.append α α₁) := by
-  intro h1 i
-  by_cases hin: ↑i <  n
-  . unfold succ_adjion_root at h
-    specialize h (Fin.castLE hin (Fin.last ↑i))
-    have: (Fin.append α α₁ i) = α (Fin.castLE hin (Fin.last ↑i)) := by
-      simp only [Fin.append, Fin.castLE, hin, Fin.last, Fin.addCases]
-      rfl
-    rw[←this] at h
-    have (j: Fin n) (_: j < Fin.castLE hin (Fin.last ↑i)): α j = (Fin.append α α₁) j := by
-      simp only [Fin.append, Fin.addCases, Fin.coe_eq_castSucc, Fin.coe_castSucc, Fin.is_lt,
-        ↓reduceDIte, Fin.castLT_castSucc]
-    have (j: Fin (n)) : ⋃ (_ : j < Fin.castLE hin (Fin.last ↑i)), α j = ⋃ (_ : j < i), Fin.append α α₁ j := by
-      simp_all only [Nat.succ_eq_add_one, Fin.coe_eq_castSucc, Fin.isValue, Nat.succ_eq_add_one, Fin.coe_eq_castSucc]
-      apply Eq.refl
-    have: (⋃ j, ⋃ (_ : j < Fin.castLE hin (Fin.last ↑i)), α j) = (⋃ j, ⋃ (_ : j < i), Fin.append α α₁ j) := by
-      simp_all only [Nat.succ_eq_add_one]
-      norm_cast
-      rw [Set.ext_iff]
-      intro x
-      refine ⟨?_, ?_⟩<;> intro h
-      . simp_all only [Fin.coe_eq_castSucc, Set.mem_iUnion, exists_prop]
-        obtain ⟨w, h⟩ := h
-        obtain ⟨left, right⟩ := h
-        apply Exists.intro
-        · apply And.intro
-          on_goal 2 => {exact right}
-          simp_all only [Fin.isValue]
-      . obtain ⟨sj,⟨j, hsj⟩, hj'⟩ := h
-        by_cases h: j < n
-        . simp_all only [Fin.coe_eq_castSucc, Nat.succ_eq_add_one, Fin.natCast_eq_last, Set.mem_iUnion, exists_prop]
-          rw [←hsj] at hj'
-          refine ⟨Fin.castLE h j, ?_, ?_⟩
-          . aesop
-          . aesop
-        . have: i < (j:ℕ) := by aesop
-          have: ¬ (j < i) := by
-            rw [not_lt_iff_eq_or_lt]
-            right
-            aesop
-          simp only [this, Set.iUnion_of_empty] at hsj
-          rw[←hsj] at hj'
-          exfalso
-          exact hj'
-    rw[this] at h
-    exact h
-  . have: i = n := by
-      rw [@Fin.le_antisymm_iff]
-      refine ⟨?_, ?_ ⟩
-      . apply Nat.le_of_lt_succ
-        simp only [Fin.natCast_eq_last, Fin.val_last, Nat.succ_eq_add_one, Fin.is_lt]
-      . rw [Nat.not_lt_eq] at hin
-        unfold instLEFin
-        simp only [Fin.natCast_eq_last, Fin.val_last, hin]
-    rw[this]
-    have: (Fin.append α α₁ ↑n) = (α₁ 1) := by
-      have (x : Fin 1): x = 1:= by exact Subsingleton.eq_one x
-      simp only [Fin.append, Fin.addCases, Fin.natCast_eq_last, Fin.val_last, lt_self_iff_false,
-        ↓reduceDIte, Fin.val_natCast, this, Fin.isValue, eq_rec_constant]
-    rw[this]
-    have: (⋃ i, α i) = (⋃ j, ⋃ (_ : j < ↑n), Fin.append α α₁ j) := by
-      simp_all only [Nat.succ_eq_add_one]
-      rw [Set.ext_iff]
-      intro x
-      refine ⟨?_, ?_⟩<;> intro h
-      . obtain ⟨sj, ⟨j, hsj⟩, hj'⟩ := h
-        simp only [Fin.natCast_eq_last, Set.mem_iUnion, exists_prop]
-        refine ⟨j, ?_, ?_⟩
-        . norm_cast
-          exact Fin.castSucc_lt_last j
-        . rw[←hsj] at hj'
-          simp only [Fin.natCast_eq_last, Fin.val_last] at hj'
-          have: j < n := by exact Fin.castSucc_lt_last j
-          unfold Fin.append Fin.addCases
-          simp only [Fin.coe_eq_castSucc, Fin.coe_castSucc, this, ↓reduceDIte, Fin.castLT_castSucc, hj']
-      . simp only [Fin.natCast_eq_last, Set.mem_iUnion, exists_prop] at h
-        obtain ⟨j, hj, hj'⟩ := h
-        simp only [Set.mem_iUnion]
-        refine ⟨Fin.castLE hj j, ?_⟩
-        have: ↑j < n := by aesop
-        simp [this, Fin.append, Fin.addCases] at hj'
-        simp_all only [Fin.isValue, Fin.natCast_eq_last, Fin.val_last, lt_self_iff_false, not_false_eq_true, Nat.succ_eq_add_one]
-        exact hj'
-    rw[←this]
-    exact h1
+  intro h1 i x hx
+  by_cases hin : i.val < n
+  · let k : Fin n := i.castLT hin
+    have hx' : x ∈ α k := by
+      simpa [Fin.append, Fin.addCases, hin, k] using hx
+    apply (IntermediateField.adjoin.mono K _ _ ?_) (h k x hx')
+    intro y hy
+    obtain ⟨j, hy⟩ := Set.mem_iUnion.mp hy
+    obtain ⟨hj, hy⟩ := Set.mem_iUnion.mp hy
+    apply Set.mem_iUnion.mpr ⟨j.castSucc, ?_⟩
+    apply Set.mem_iUnion.mpr ⟨?_, ?_⟩
+    · exact hj
+    · simpa [Fin.append, Fin.addCases] using hy
+  · have hi : i = Fin.last n := Fin.ext (by simp only [Fin.val_last]; omega)
+    subst i
+    have hx' : x ∈ α₁ 1 := by
+      have happ : Fin.append α α₁ (Fin.last n) = α₁ 1 := by
+        rw [show Fin.last n = Fin.natAdd n (0 : Fin 1) by ext; simp]
+        rw [Fin.append_right]
+        rfl
+      rwa [happ] at hx
+    apply (IntermediateField.adjoin.mono K _ _ ?_) (h1 x hx')
+    intro y hy
+    obtain ⟨j, hy⟩ := Set.mem_iUnion.mp hy
+    apply Set.mem_iUnion.mpr ⟨j.castSucc, ?_⟩
+    exact Set.mem_iUnion.mpr ⟨Fin.castSucc_lt_last j, by simpa [Fin.append, Fin.addCases] using hy⟩
 
 
 --! Should be in Lean
 lemma split_union_fin (n m: ℕ) (α₁ : Fin n → Set ℂ) (α₂ : Fin m → Set ℂ): ⋃ i, Fin.append α₁ α₂ i = (⋃ i, α₁ i) ∪ ⋃ i, α₂ i := by
   ext x
-  refine ⟨?_, ?_⟩
-  . intro h
-    obtain ⟨M, hM, hx⟩ := h
-    obtain ⟨i, hi⟩ := hM
-    simp_all only [Set.mem_iUnion, Set.mem_union]
-    by_cases h: i < n
-    . left
-      use Fin.castLE h (Fin.last ↑i)
-      rw [←hi] at hx
-      have : α₁ (Fin.castLE h (Fin.last ↑i)) = Fin.append α₁ α₂ i := by
-        simp only [h, ↓reduceDIte, Fin.append, Fin.castLE, Fin.last, Fin.addCases]
-        rfl
-      rw[this]
-      exact hx
-    . right
-      have h' : i - n < m := by
-        rw [Nat.not_lt_eq] at h
-        rw [Nat.sub_eq_max_sub]
-        simp only [ge_iff_le, h, max_eq_left]
-        rw [propext (Nat.sub_lt_iff_lt_add' h), add_comm m n]
-        exact i.2
-      use Fin.castLE h' (Fin.last (i-n))
-      have : α₂ (Fin.castLE h' (Fin.last (i-n))) = Fin.append α₁ α₂ i := by
-        simp only [Fin.castLE, Nat.succ_eq_add_one, Fin.last, Fin.append, Fin.addCases, h,
-          ↓reduceDIte, eq_rec_constant]
-        rfl
-      rw[← hi, ← this] at hx
-      apply hx
-  . intro h
-    simp_all only [Set.mem_iUnion, Set.mem_union, exists_or]
-    cases h
-    . rename_i h
-      obtain ⟨i, hi⟩ := h
-      use Fin.castAdd m i
-      simp only [Fin.append_left, hi]
-    . rename_i h
-      obtain ⟨i, hi⟩ := h
-      use Fin.natAddEmb n i
-      simp only [Fin.natAddEmb_apply, Fin.append_right, hi]
+  simp only [Set.mem_iUnion, Set.mem_union]
+  constructor
+  · rintro ⟨i, hi⟩
+    by_cases h : i.val < n
+    · left
+      exact ⟨i.castLT h, by simpa [Fin.append, Fin.addCases, h] using hi⟩
+    · right
+      refine ⟨Fin.subNat n (Fin.cast (Nat.add_comm n m) i) (by simpa using Nat.le_of_not_gt h), ?_⟩
+      simpa [Fin.append, Fin.addCases, h] using hi
+  · rintro (⟨i, hi⟩ | ⟨i, hi⟩)
+    · exact ⟨Fin.castAdd m i, by simpa only [Fin.append_left] using hi⟩
+    · exact ⟨Fin.natAdd n i, by simpa only [Fin.append_right] using hi⟩
 
 def K_root (K : IntermediateField E F): Set F := {x : F | x * x ∈ K}
 
@@ -343,7 +259,7 @@ lemma Tower.exists_layers {K P : QuadraticChain.Field} (h : Tower K P) :
       have hx' : x ^ 2 ∈ succ_adjion K n α := by
         rw [he] at hx
         exact hx
-      simpa only [sq] using hx'
+      simpa only [sq, succ_adjion] using hx'
 
 lemma layers_le_closure (K : QuadraticChain.Field) (n : ℕ) (α : Fin n → Set ℂ)
     (hr : succ_adjion_root K n α) :
@@ -362,7 +278,7 @@ lemma layers_le_closure (K : QuadraticChain.Field) (n : ℕ) (α : Fin n → Set
       obtain ⟨k, hy⟩ := Set.mem_iUnion.mp hy
       obtain ⟨hk, hy⟩ := Set.mem_iUnion.mp hy
       exact ih k hk hy
-    exact hp (by simpa only [sq] using hr j x hx)
+    exact hp (by simpa only [sq, mem_restrictScalars] using hr j x hx)
   rw [succ_adjion, restrict_adjoin]
   exact sup_le (le_closure K) (adjoin_le_iff.mpr (Set.iUnion_subset hα))
 
@@ -425,7 +341,7 @@ lemma IsIntegral_of_mem_finte (x : F) (hx : x ∈ L) : IsIntegral E x := by
 end
 
 section  --! Should be in Mathlib
-open FiniteDimensional
+open Module
 variable {E : Type*} [Field E] {F : Type*} [Field F] [Algebra E F]
 variable {L K : IntermediateField E F}
 lemma finrank_div  (h: L ≤ K): finrank E L ∣ finrank E K := by
@@ -442,7 +358,8 @@ lemma div_two_2pown (a n : ℕ) (h: a ∣ 2^ n) :  ∃m : ℕ, 2^m  = a:= by
   rw[h'] at h''
   have: a ≠ 0 := by
     intro ha
-    simp_all only [zero_dvd_iff, pow_eq_zero_iff']
+    subst a
+    simpa using h
   use (a.primeFactorsList.length)
   symm
   apply Nat.eq_prime_pow_of_unique_prime_dvd this
@@ -457,38 +374,25 @@ lemma div_two_2pown' (a n : ℕ) (h: a ∣ 2^ n) :  ∃m : ℕ, a = 2^m:= by
   exact ⟨m, Eq.symm hm⟩
 
 
-lemma mulfinrank_help (R K L: IntermediateField ℚ ℂ) (h₁: R ≤ K) (h₂: K ≤ L) : FiniteDimensional.finrank R (extendScalars h₁) *
-    FiniteDimensional.finrank (extendScalars h₁) (extendScalars h₂) = FiniteDimensional.finrank R (extendScalars (Trans.trans h₁ h₂)) := by
+lemma mulfinrank_help (R K L: IntermediateField ℚ ℂ) (h₁: R ≤ K) (h₂: K ≤ L) : Module.finrank R (extendScalars h₁) *
+    Module.finrank K (extendScalars h₂) = Module.finrank R (extendScalars (Trans.trans h₁ h₂)) := by
   rw [←IntermediateField.relfinrank_eq_finrank_of_le h₁,
   ←IntermediateField.relfinrank_eq_finrank_of_le (Trans.trans h₁ h₂),
   ←IntermediateField.relfinrank_mul_relfinrank h₁ h₂]
-  have: FiniteDimensional.finrank ↥(extendScalars h₁) ↥(extendScalars h₂) = K.relfinrank L := by
+  have: Module.finrank K (extendScalars h₂) = K.relfinrank L := by
     exact Eq.symm (relfinrank_eq_finrank_of_le h₂)
   simp only [mul_eq_mul_left_iff, this]
 
 lemma degree_of_Ln (n : ℕ) (L : ℕ →  IntermediateField ℚ ℂ) (h:  ∃   (_: ∀i,  L i ≤ L (i + 1)),
     K_zero M = L 0 ∧ (∀ i < n, relfinrank (L i) (L (i+1)) = 2)): relfinrank (K_zero M) (L n) = 2^n := by
   obtain ⟨hL, hL0, h_degree⟩ := h
-  have: K_zero M ≤ L n := by
-    rw[hL0]
-    exact monotone_nat_of_le_succ (fun n ↦ hL n) (Nat.zero_le n)
-  induction n
-  case zero => simp only [hL0, relfinrank_self, pow_zero]
-  case succ n Ih =>
-    rw[relfinrank_eq_finrank_of_le this]
-    have hn: K_zero M ≤ L n := by
-      rw[hL0]
-      exact monotone_nat_of_le_succ (fun n ↦ hL n) (Nat.zero_le n)
-    obtain h_degree' := h_degree n (by linarith)
-    specialize hL n
-    rw[pow_succ, ←Ih ?_ hn, relfinrank_eq_finrank_of_le hn, ←h_degree', relfinrank_eq_finrank_of_le hL]
-    symm
-    have: FiniteDimensional.finrank ↥(L n) ↥(extendScalars hL) = FiniteDimensional.finrank ↥(extendScalars hn) ↥(extendScalars hL) := by norm_cast
-    rw[this]
-    exact mulfinrank_help (K_zero M) (L n) (L (n + 1)) hn hL
-    intro i hi
-    rw[h_degree i ]
-    exact Nat.lt_add_right 1 hi
+  have hmono : Monotone L := monotone_nat_of_le_succ hL
+  induction n with
+  | zero => simp only [hL0, relfinrank_self, pow_zero]
+  | succ n ih =>
+    have hn : K_zero M ≤ L n := hL0.symm ▸ hmono (Nat.zero_le n)
+    rw [← relfinrank_mul_relfinrank hn (hL n),
+      ih (fun i hi => h_degree i (by omega)), h_degree n (by omega), pow_succ]
 
 
 lemma Classfication_z_in_M_inf_2m {M : Set ℂ} (h₀: 0 ∈ M) (h₁:1 ∈ M) (z : ℂ) :
@@ -502,8 +406,8 @@ lemma Classfication_z_in_M_inf_2m {M : Set ℂ} (h₀: 0 ∈ M) (h₁:1 ∈ M) (
   have hn: relfinrank (K_zero M) (L n) = 2^n := by
     exact degree_of_Ln n L ⟨hL, hL0, h_degree⟩
   rw[relfinrank_eq_finrank_of_le this] at hn
-  have hm: ∃m, FiniteDimensional.finrank (K_zero M) ((K_zero M) ⟮z⟯) = 2^m := by
-    have : FiniteDimensional.finrank (K_zero M) ((K_zero M) ⟮z⟯) ∣ 2^n := by
+  have hm: ∃m, Module.finrank (K_zero M) ((K_zero M) ⟮z⟯) = 2^m := by
+    have : Module.finrank (K_zero M) ((K_zero M) ⟮z⟯) ∣ 2^n := by
       rw[←hn]
       apply finrank_div
       simp only [adjoin_le_iff, coe_extendScalars, Set.le_eq_subset, Set.singleton_subset_iff,
@@ -530,7 +434,7 @@ lemma Classfication_z_in_M_inf_2m_not {M : Set ℂ} (h₀: 0 ∈ M) (h₁:1 ∈ 
   apply Classfication_z_in_M_inf_2m (h₀: 0 ∈ M) (h₁:1 ∈ M)
 
 
-lemma Classfication_z_in_M_inf_2m_rat {M : Set ℂ} (h₀: 0 ∈ M) (h₁:1 ∈ M) (z : ℂ) (h: ∃j:ℕ, FiniteDimensional.finrank ℚ (K_zero M) = 2^j) :
+lemma Classfication_z_in_M_inf_2m_rat {M : Set ℂ} (h₀: 0 ∈ M) (h₁:1 ∈ M) (z : ℂ) (h: ∃j:ℕ, Module.finrank ℚ (K_zero M) = 2^j) :
     ¬ (∃ m, 2 ^ m = (minpoly ℚ z).degree) → z ∉ M_inf M := by
   apply Not.imp_symm
   simp only [not_not, Nat.cast_ofNat]
@@ -538,7 +442,9 @@ lemma Classfication_z_in_M_inf_2m_rat {M : Set ℂ} (h₀: 0 ∈ M) (h₁:1 ∈ 
     intro h'
     obtain ⟨m, hm⟩ := h'
     obtain ⟨j, hj⟩ := h
-    have hmj: FiniteDimensional.finrank ℚ (restrictScalars ℚ ((K_zero M) ⟮z⟯)) = 2^(m+j) := by
+    letI : IsScalarTower ℚ (K_zero M) ((K_zero M)⟮z⟯) :=
+      IsScalarTower.of_algebraMap_eq' rfl
+    have hmj: Module.finrank ℚ (restrictScalars ℚ ((K_zero M) ⟮z⟯)) = 2^(m+j) := by
       have: minpoly (↥(K_zero M)) z ≠ 0 := by
         apply Polynomial.zero_le_degree_iff.mp
         rw[←hm]
@@ -547,11 +453,11 @@ lemma Classfication_z_in_M_inf_2m_rat {M : Set ℂ} (h₀: 0 ∈ M) (h₁:1 ∈ 
       norm_cast at hm
       rw[pow_add, ←hj, hm,  ← IntermediateField.adjoin.finrank, mul_comm]
       symm
-      apply FiniteDimensional.finrank_mul_finrank
+      apply Module.finrank_mul_finrank
       . by_contra h
         have: minpoly (↥(K_zero M)) z = 0:= minpoly.eq_zero h
         contradiction
-    have hdiv: FiniteDimensional.finrank ℚ ℚ⟮z⟯ ∣ FiniteDimensional.finrank ℚ (restrictScalars ℚ ((K_zero M) ⟮z⟯)) := by
+    have hdiv: Module.finrank ℚ ℚ⟮z⟯ ∣ Module.finrank ℚ (restrictScalars ℚ ((K_zero M) ⟮z⟯)) := by
       apply finrank_div
       rw [restrictScalars_adjoin]
       apply IntermediateField.adjoin.mono

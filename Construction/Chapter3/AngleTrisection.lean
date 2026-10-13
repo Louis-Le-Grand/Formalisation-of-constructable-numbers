@@ -1,10 +1,10 @@
-import Construction.Chapter2.ClasificationMinf2
+import Construction.Chapter3.DoubleCube
 import Construction.NotMyCode.map_of_isScalarTower
 
 import Mathlib.Algebra.Polynomial.SpecificDegree
-import Mathlib.Data.Real.Irrational
+import Mathlib.NumberTheory.Real.Irrational
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
-import Mathlib.Algebra.Polynomial.Degree.Definitions
+import Mathlib.Algebra.Polynomial.Degree.Defs
 import Mathlib.RingTheory.Polynomial.RationalRoot
 
 
@@ -101,7 +101,7 @@ lemma H_roots: ¬ ∃ a, a ∈ H.roots := by
 
 lemma H_irreducible : Irreducible H := by
   rw[irreducible_iff_roots_eq_zero_of_degree_le_three]
-  . exact Multiset.eq_zero_of_forall_not_mem (fun a ha ↦ H_roots ⟨a, ha⟩)
+  . exact Multiset.eq_zero_of_forall_notMem (fun a ha ↦ H_roots ⟨a, ha⟩)
   . apply le_trans (b:=3)
     linarith
     apply Eq.le
@@ -123,7 +123,6 @@ lemma H''_alpha_zero: 8* Complex.cos (↑Real.pi / 3 / 3) ^ 3 - 6 * Complex.cos 
     rw [← this]
     congr 1
     field_simp
-    ring
   norm_cast
   rw[Real.cos_pi_div_three]
   simp
@@ -161,10 +160,7 @@ lemma real_component_in_M_inf (M : Set ℂ) (h₀ : 0 ∈ M) (h₁ : 1 ∈ M):  
     exact real_in_M_inf M h₀ h₁ _ h
   contradiction
 
-lemma not_mod_eq_imp_not_eq (a b n : ℕ ) (h : ¬ a % n = b % n) : ¬ a = b := by
-  exact fun a_1 ↦ h (congrFun (congrArg HMod.hMod a_1) n)
-
---lemma dim_k_zero_ang: ∃ j:ℕ, FiniteDimensional.finrank ℚ ↥(K_zero {0, 1, Complex.exp (Complex.I * ↑Real.pi / 3)}) = (2 ^ j) := by sorry
+--lemma dim_k_zero_ang: ∃ j:ℕ, Module.finrank ℚ ↥(K_zero {0, 1, Complex.exp (Complex.I * ↑Real.pi / 3)}) = (2 ^ j) := by sorry
 
 namespace IntermediateField --! add to 'mathlib'?
 lemma adjoin_le  (K : Type*) (E : Type*) [Field K] [Field E] [Algebra K E] {S : IntermediateField K E}  (s : Set E) (H : s ⊆ S): adjoin K s ≤ S := adjoin_le_iff.mpr H
@@ -179,10 +175,6 @@ lemma adjoin_eq_sInf (K : Type*) (E : Type*) [Field K] [Field E] [Algebra K E] (
       simp only [coe_sInf, Set.sInf_eq_sInter, Set.sInter_image, Set.mem_setOf_eq, Set.le_eq_subset,
         Set.subset_iInter_iff, imp_self, implies_true]
     exact this hx
-
-
-lemma adjoin_union (K : Type*) (E : Type*) [Field K] [Field E] [Algebra K E] (s t : Set E) :
-  IntermediateField.adjoin K (s ∪ t) = IntermediateField.adjoin K s ⊔ IntermediateField.adjoin K t := (@IntermediateField.gc K _ E).l_sup
 
 
 lemma bot_union_adjoin (K : Type*) (E : Type*) [Field K] [Field E] [Algebra K E] (A : Set E) :
@@ -213,28 +205,30 @@ lemma h: (K_zero ({0, 1, Complex.exp (Complex.I * ↑Real.pi / 3)} : Set ℂ)) =
     IntermediateField.adjoin_empty]
 
 
---lemma X: 1 < FiniteDimensional.finrank ℚ  (IntermediateField.adjoin ℚ {Complex.exp (Complex.I * ↑Real.pi / 3), (starRingEnd ℂ) (Complex.exp (Complex.I * ↑Real.pi / 3))}) := by sorry
+--lemma X: 1 < Module.finrank ℚ  (IntermediateField.adjoin ℚ {Complex.exp (Complex.I * ↑Real.pi / 3), (starRingEnd ℂ) (Complex.exp (Complex.I * ↑Real.pi / 3))}) := by sorry
 
 example: x = 2 ↔ 1 < x ∧ x ≤ 2 := by
   rw [Nat.le_antisymm_iff, and_comm, Nat.succ_le_iff]
 
 
 lemma le_adjion_root_three:  Complex.exp (Complex.I * ↑Real.pi / 3) ∈ IntermediateField.adjoin ℚ {Real.sqrt 3 * Complex.I} := by
-  rw[←mul_div, mul_comm, ←Complex.cos_add_sin_I]
+  rw [show I * (Real.pi : ℂ) / 3 = ((Real.pi / 3 : ℝ) : ℂ) * I by push_cast; ring,
+    ← Complex.cos_add_sin_I]
   norm_cast
   rw [Real.cos_pi_div_three, Real.sin_pi_div_three]
   push_cast
-  rw[mul_comm, mul_div, mul_comm]
+  rw [show (↑(Real.sqrt 3) : ℂ) / 2 * I = ↑(Real.sqrt 3) * I / 2 by ring]
   refine add_mem (div_mem (OneMemClass.one_mem _ ) (ofNat_mem _ 2)) ?_
   exact (div_mem (IntermediateField.mem_adjoin_simple_self _ _) (ofNat_mem _ 2))
 
 lemma le_adjion_root_three': (starRingEnd ℂ) (Complex.exp (Complex.I * ↑Real.pi / 3)) ∈ IntermediateField.adjoin ℚ {Real.sqrt 3 * Complex.I} := by
-  rw[←mul_div, mul_comm, ←Complex.cos_add_sin_I]
+  rw [show I * (Real.pi : ℂ) / 3 = ((Real.pi / 3 : ℝ) : ℂ) * I by push_cast; ring,
+    ← Complex.cos_add_sin_I]
   norm_cast
   rw [Real.cos_pi_div_three, Real.sin_pi_div_three, map_add, conj_ofReal, map_mul, conj_ofReal,
-    Complex.conj_I, mul_comm, neg_mul, Mathlib.Tactic.RingNF.add_neg]
+    Complex.conj_I]
   push_cast
-  rw[mul_div, mul_comm]
+  rw [show (1 : ℂ) / 2 + ↑(Real.sqrt 3) / 2 * -I = 1 / 2 - ↑(Real.sqrt 3) * I / 2 by ring]
   refine sub_mem (div_mem (OneMemClass.one_mem _ ) (ofNat_mem _ 2)) ?_
   exact (div_mem (IntermediateField.mem_adjoin_simple_self _ _) (ofNat_mem _ 2))
 
@@ -248,9 +242,8 @@ lemma P_eval: (aeval (↑√3 * I)) P_ang = 0 := by
   simp only [map_add, map_pow, aeval_X, mul_pow, I_sq, mul_neg, mul_one, aeval_C,
     eq_ratCast, Rat.cast_ofNat, P_ang]
   norm_cast
-  rw[Real.sq_sqrt]
-  ring_nf
-  linarith
+  rw [Real.sq_sqrt (by norm_num)]
+  norm_num
 
 
 lemma degrre_root_three: natDegree (minpoly ℚ (Real.sqrt 3 * Complex.I)) = 2 := by
@@ -258,7 +251,7 @@ lemma degrre_root_three: natDegree (minpoly ℚ (Real.sqrt 3 * Complex.I)) = 2 :
     refine minpoly.eq_of_irreducible_of_monic ?_ ?_ ?_
     . simp only [P_ang]
       rw[irreducible_iff_roots_eq_zero_of_degree_le_three]
-      . refine Multiset.eq_zero_of_forall_not_mem ?_
+      . refine Multiset.eq_zero_of_forall_notMem ?_
         simp only [mem_roots', ne_eq, IsRoot.def, eval_add, eval_pow, eval_X, eval_C, not_and]
         intros a _
         by_contra h
@@ -284,12 +277,12 @@ lemma z_in_bot_Q(z : ℂ) : z ∈ (⊥ : IntermediateField ℚ ℂ) →  z.im = 
 
 lemma z_in_bot_Q_not (z : ℂ):  ¬ (z.im = 0) → z ∉ (⊥ : IntermediateField ℚ ℂ) := by
   apply  Not.imp_symm
-  rw [Mathlib.Tactic.PushNeg.not_not_eq]
+  rw [not_not]
   exact z_in_bot_Q z
 
-lemma finrank_zero (L : IntermediateField ℚ ℂ): (¬ FiniteDimensional ℚ L) → FiniteDimensional.finrank ℚ L = 0 := by
+lemma finrank_zero (L : IntermediateField ℚ ℂ): (¬ FiniteDimensional ℚ L) → Module.finrank ℚ L = 0 := by
   intro h
-  exact FiniteDimensional.finrank_of_not_finite h
+  exact Module.finrank_of_not_finite h
 
 lemma eaual_adjion_root_three: IntermediateField.adjoin ℚ {Real.sqrt 3 * Complex.I} = IntermediateField.adjoin ℚ {cexp (I * ↑Real.pi / 3), (starRingEnd ℂ) (cexp (I * ↑Real.pi / 3))} := by
   apply le_antisymm
@@ -320,7 +313,8 @@ lemma pi_third_not_in_M_inf :
   . simp only [Set.mem_insert_iff, one_ne_zero, Set.mem_singleton_iff, true_or, or_true]
   . rw[h]
     refine ⟨1, ?_⟩
-    rw[←eaual_adjion_root_three, pow_one, ←degrre_root_three, IntermediateField.adjoin.finrank]
+    rw [← eaual_adjion_root_three, pow_one, IntermediateField.adjoin.finrank]
+    · exact degrre_root_three
     . exact ⟨P_ang, (monic_X_pow_add_C 3 (Ne.symm (Nat.zero_ne_add_one 1))), P_eval⟩
   simp
   intro x
@@ -345,7 +339,6 @@ variable (α : ℂ)
 lemma Angle_not_Trisectable :
   ∃ (α : ℂ), (Complex.exp (Complex.I * α/3) : ℂ) ∉ M_inf {(0:ℂ) ,1, Complex.exp (Complex.I * α)} := by
   use (Real.pi/3)
-  nth_rw 2 [←mul_div_assoc]
-  apply pi_third_not_in_M_inf
+  simpa only [ofReal_div, ofReal_ofNat, mul_div_assoc] using pi_third_not_in_M_inf
 
 --end constructionAngleTrisection

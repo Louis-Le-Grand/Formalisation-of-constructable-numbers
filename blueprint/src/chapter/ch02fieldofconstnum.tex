@@ -12,7 +12,7 @@ In this section, we will utilise the constructed points from sectoion \ref{basic
 \end{theorem}
 \begin{proof}
     \leanok
-    \uses{lem:M_in_M_inf, cor:construction_add, cor:construction_mul_complex, lem:construction_neg, cor:inv_M_inf}
+    \uses{lem:M_in_M_inf, lem:construction_add, cor:construction_mul_complex, lem:construction_neg, cor:inv_M_inf}
     To show that $M_{\infty}$ is a subfield of $\mathbb{C}$ we have to show that $0,1\in M_{\infty}$ and $M_{\infty}$ is closed under addition, multiplication, subtraction and division.
     \begin{itemize}
         \item [$0,1$:] This follows from $0,1 \in M$ and Lemma \ref{lem:M_in_M_inf}.
@@ -56,7 +56,7 @@ In this section, we will utilise the constructed points from sectoion \ref{basic
 \end{lemma}
 \begin{proof}
     \leanok
-    \uses{cor:construction_imath, cor:z_iff_re_im_M_inf, cor:construction_imath, cor:construction_radius, lem:angle_M_inf}
+    \uses{cor:construction_imath, cor:z_iff_re_im_M_inf, lem:construction_radius, lem:angle_M_inf}
     This lemma is a direct consequence of section \ref{basic_constructions}.
     \begin{itemize}
         \item[(i):] We can apply construction \ref{cor:construction_imath}
@@ -376,7 +376,7 @@ Since $\lambda$ is a solution of a quadratic equation we now get that $\lambda$ 
 %3.18
 \begin{lemma} 
     \label{lem:ConjClosed.Intersection_circle_circle}
-    \lean{ConjClosed.icc_L, ConjClosed.icc_L'}
+    \lean{ConjClosed.icc_L}
     \leanok
     \uses{def:conj_closed}
     Let $L$ be a subfield of $\mathbb{C}$, with $L = conj(L)$. For $i = 1,2 $ let $z_i = x_i + \imath y_i \in L$ with $z_1 \ne z_2$ and let $r_i > 0$ in $\mathbb{R}$ with $r_i^2 \in L$. Define
@@ -390,14 +390,15 @@ Since $\lambda$ is a solution of a quadratic equation we now get that $\lambda$ 
     For $z \in C_1 \cap C_2$ there is a $w \in L$ such that $z \in L(\sqrt{w})$.
 \end{lemma}
 \begin{proof}
-    \uses{lem:ConjClosed.distSq, lem:ConjClosed.Intersection_line_circle}
+    \leanok
+    \uses{lem:ConjClosed.distSq_L, lem:ConjClosed.Intersection_line_circle}
     Define 
     $z \in C_1 \cap C_2$,
     $d=C_2.c-C_2.c$,
     $D=d\overline d$,
     $s=\frac{r_1^2-r_2^2+D}{2D}$.
    
-    Have $\(D\ne0\)$,$\(D,s\in L\)$
+    Have $D\ne0$, $D,s\in L$
 
     Set
     $x=\frac{z-a}{d}-s$,
@@ -484,7 +485,7 @@ This section develops a conjugation-closed field that depends on the set $\mathc
 \end{lemma}
 \begin{proof}
     \leanok
-    \uses{lem:M_M_inf, lem:conj_M_Inf, def:K_M_0}
+    \uses{lem:M_in_M_inf, lem:construction_conj, def:K_M_0}
 From the definition of $K_0 := \Q(M\cup Conj(M))$, 
 it can be seen that this is the smallest subfield of $\C$ containing both $Q$ and $M\cup Conj(M)$. 
 Consequently, it is sufficient to demonstrate that both $\Q$ and $M\cup Conj(M)$ are contained within $M_{\infty}$. 
@@ -504,6 +505,8 @@ The following section will demonstrate that for an element to be constructible, 
     Let $K, L$ be subfield of $\C$, with $K\le L$. Then $[L:K] = 2$ is equivalent to the existence of a $w*w \in K$ with $w \notin K$ and $L = K(w)$.
 \end{lemma}
 \begin{proof}
+    \proves{lem:dergree_two_eq_sqr}
+    \leanok
     $(ii)\implies (i)$: Let $w$ be as in $(ii)$.Then $\sqrt{w}$ is a root of $X^2 - w \in K[X]$. Since $\sqrt{w} \notin K$ this polynomial is irreducible in $K[X]$. Therefore $[L:K] = 2$.\\
     $(i)\implies (ii)$: Let $[L:K] = 2$ and $\alpha \in L \setminus K$. Then $K(\alpha) = L$ and 
     $$\mu_{\alpha, K}=X^2 + bX + c \quad b,c \in K$$
@@ -525,6 +528,7 @@ The following section will demonstrate that for an element to be constructible, 
     There is an intermediate field $L$ of $\mathbb{C}/K_0$ with $z \in L$, so that $L$ arises from $K_0$ by a finite sequence of adjunctions of square roots.
 \end{lemma}
 \begin{proof}
+    \leanok
     \uses{lem:dergree_two_eq_sqr}
     "$\Rightarrow:$" Let $n$ be the smallest natural number such that there exists a chain of subfields $L_1 \subset L_2 \subset \ldots \subset L_n$ with $z \in L_n$ and $[L_{i+1}:L_i] = 2$ for $i = 0, \ldots, n-1$. Now lemma \ref{lem:dergree_two_eq_sqr} gives us that there exists a $w \in L_{n-1}$ such that $L_n$ arises from $L_{n-1}$ by adjoining $\sqrt{w}$.\\
     "$\Leftarrow:$" Let $L$ be an intermediate field of $\mathbb{C}/K_0$ with $z \in L$ and $L$ arises from $K_0$ by a finte sequence of adjunctions of square roots. Then there exists a chain of subfields $L_1 \subset L_2 \subset \ldots \subset L_n$ with $z \in L_n$ and $L_{i+1}:= L_i(\sqrt{w_i})$ for $i = 0, \ldots, n-1$.
@@ -538,23 +542,23 @@ The following section will demonstrate that for an element to be constructible, 
 \end{lemma}
 
 \begin{proof}
-\leanok
-\uses{cor:K_zero_conjectClosed, lem:ConjClosed.Intersection_line_line, lem:ConjClosed.Intersection_line_circle, lem:ConjClosed.Intersection_circle_circle, lem:ConjClosed.conj_inclusion}
-Induction over $n$
-\begin{itemize}
-    \item Base case $n=1$: \\
-        $K_0 \le K_0$ and $K_0$ is conjugation closed \ref{cor:K_zero_conjectClosed}.
-    \item induction hypothesis: \\
-        Assume that for $n$ there is a chain of conjugation closed  intermediate fields $K_0 \le K_1 \le \ldots \le K_n$ such that $M_i\subset K_i$ and $K_i:= K_{i-1}(X_i)$ for a set of square roots $X_i$ of elements of $K_{i-1}$.
-    \item Inductive step $n \to n+1$: \\
-        For $z\in M_{n+1}$ there are four cases: 
-        \begin{itemize}
-            \item [$z \in M_n$:] By the induction hypothesis $z \in K_n$ and $K_n$ is conjugation closed and arises from $K_0$ by a sequence of adjunctinos of square roots.
-            \item [$z \in ILL (M_n)$:] By the induction hypothesis $z \in ILL (K_n)$ and using \ref{lem:ConjClosed.Intersection_line_line} we get that $z \in K_{n}$.
-            \item [$z \in ILC (M_n)$:] By the induction hypothesis $z \in ILC (K_n)$ and using \ref{lem:ConjClosed.Intersection_line_circle} there is a $w \in K_n$ such that $z \in K_n(\sqrt{w})$ insert  $\sqrt{w}, \overline{\sqrt{w}}$ to $X_n$.
-            \item [$z \in ICC (M_n)$:] By the induction hypothesis $z \in ICC (K_n)$ and using \ref{lem:ConjClosed.Intersection_circle_circle} there is a $w \in K_n$ such that $z \in K_n(\sqrt{w})$ insert $\sqrt{w}, \overline{\sqrt{w}}$ to $X_n$.
-        \end{itemize}
-\end{itemize}
+    \leanok
+    \uses{cor:K_zero_conjectClosed, lem:ConjClosed.Intersection_line_line, lem:ConjClosed.Intersection_line_circle, lem:ConjClosed.Intersection_circle_circle, lem:ConjClosed.conj_inclusion}
+    Induction over $n$
+    \begin{itemize}
+        \item Base case $n=1$: \\
+            $K_0 \le K_0$ and $K_0$ is conjugation closed \ref{cor:K_zero_conjectClosed}.
+        \item induction hypothesis: \\
+            Assume that for $n$ there is a chain of conjugation closed  intermediate fields $K_0 \le K_1 \le \ldots \le K_n$ such that $M_i\subset K_i$ and $K_i:= K_{i-1}(X_i)$ for a set of square roots $X_i$ of elements of $K_{i-1}$.
+        \item Inductive step $n \to n+1$: \\
+            For $z\in M_{n+1}$ there are four cases: 
+            \begin{itemize}
+                \item [$z \in M_n$:] By the induction hypothesis $z \in K_n$ and $K_n$ is conjugation closed and arises from $K_0$ by a sequence of adjunctinos of square roots.
+                \item [$z \in ILL (M_n)$:] By the induction hypothesis $z \in ILL (K_n)$ and using \ref{lem:ConjClosed.Intersection_line_line} we get that $z \in K_{n}$.
+                \item [$z \in ILC (M_n)$:] By the induction hypothesis $z \in ILC (K_n)$ and using \ref{lem:ConjClosed.Intersection_line_circle} there is a $w \in K_n$ such that $z \in K_n(\sqrt{w})$ insert  $\sqrt{w}, \overline{\sqrt{w}}$ to $X_n$.
+                \item [$z \in ICC (M_n)$:] By the induction hypothesis $z \in ICC (K_n)$ and using \ref{lem:ConjClosed.Intersection_circle_circle} there is a $w \in K_n$ such that $z \in K_n(\sqrt{w})$ insert $\sqrt{w}, \overline{\sqrt{w}}$ to $X_n$.
+            \end{itemize}
+    \end{itemize}
 \end{proof}
 
 \begin{theorem}[constructable iff chain dergee2]

@@ -29,7 +29,7 @@ We will use $\mathbb{C}$ as plane of drawing and $\mathcal{M} \subset \mathbb{C}
     \label{lem:circle_not_eq_iff}
     \lean{Construction.circle_not_eq_iff, Construction.circle_not_eq_iff_radius}
     \leanok
-    \uses{def:circel}
+    \uses{def:circle}
     If we have two circles $C_1 = (c_1,r_1)$, $C_2 = (c_2,r_2)$ and we have $c_1 \ne c_2$ or $r_1  \ne r_2 $ then the circles aren't equal. 
 \end{lemma}
 \begin{proof}
@@ -423,7 +423,7 @@ This construction is taken from \cite{JAN_SCHRÖER:2023}.\\
 One can construct the point $z_1 + z_2$ by drawing a circle with center $z_1$ and radius $\|z_2\|$ and a circle with center $z_2$ and radius $\|z_1\|$ and taking the intersection of the two circles.\ref{Fig.2}
 \begin{proof}
     \leanok
-    \uses{def:line, def:circle,  lem:icc_M_inf, lem:M_in_M_inf}
+    \uses{def:line, def:circle, lem:icc_M_inf, lem:M_in_M_inf}
     First we have the case that $z_1 \ne z_2$.\\
     Define $c_1 = \{z_1,\dist (0\ z_2)\}$ and $c_2 = \{z_2,\dist (0\ z_1)\}$.\\
     By assumption $0, z_1, z_2 \in M_{\infty}$, so $c_1, c_2 \in \mathcal{C(M_{\infty})}$ and since $z_1 \ne z_2$ we get $c_1 \ne c_2$.\\
@@ -497,7 +497,7 @@ One can construct the point $z_1 + z_2$ by drawing a circle with center $z_1$ an
 \end{corollary}
 \begin{proof}
     \leanok
-    \uses{def:line, def:set_of_lines, cor:construction_sub,lem:parallel_by_basis} 
+    \uses{def:line, def:set_of_lines, cor:construction_sub, lem:parallel_by_basis}
     Let $l$ be a line through $x,y \in \mathcal{M_{\infty}}$ and $z \in \mathcal{M_{\infty}}$.\\
     After corollary \ref{cor:construction_sub} we get $z - x \in \mathcal{M_{\infty}}$ and therfore $z-x + y \in \mathcal{M_{\infty}}$\ref{lem:construction_add}.\\
     Define $l' = \{z, z-x+y\}$, then $l' \in \mathcal{L(M_{\infty})}$ and since a line is defined by two points and we moved them the same distance ($z-x$) $l'$ is parallel to $l$.\ref{lem:parallel_by_basis}
@@ -623,7 +623,7 @@ The second step is to construct the point, designated as $\imath r$, which is ac
 To get the point $z.re$ we draw a line through $z$ and $\overline{z}$. Then $z.re$ is the intersection with the real line, defined by $0$ and $1$.\ref{Fig z.re}
 \begin{proof}
     \leanok
-    \uses{def:line, } %TODO c_in_C_M, ilc_M_inf, M_M_inf
+    \uses{def:line, def:set_of_lines, lem:ill_M_inf, lem:construction_conj, lem:M_in_M_inf}
     Without loss of generality we can assume that $z \in \C\setminus\R$.\\
     Define the lines $l = \{z, \overline{z}\}$ and $l_{\Re} = \{1, 0\}$.\\
     By using Lemma \ref{lem:construction_conj}, they are in $\mathcal{L(M_{\infty})}$.\\
@@ -661,7 +661,7 @@ To get the point $z.im$ we draw a line through $z$ and $z-1$. Now we get $\imath
 \begin{proof}
     \leanok
     \proves{lem:construction_imag}
-    \uses{def:line, def:circle, c_in_C_M, ilc_M_inf, M_M_inf}%TODO 
+    \uses{def:line, def:set_of_lines, def:circle, def:set_of_circles, lem:ill_M_inf, lem:ilc_M_inf, lem:M_in_M_inf, cor:construction_sub, cor:construction_imath}
     Define the lines $l = \{z, z-1\}$ and $l_{\Im} = \{\imath, 0\}$.\\
     Now it is analog to the proof of lemma \ref{lem:construction_real}, that $z.im \cdot \imath  \in l \cap l_{\Im}$. 
     %TODO: Remove +0 if issue is fixed
@@ -906,7 +906,7 @@ We get the radius by taking the intersection of the real axis with a circle in z
 \begin{proof}
     \proves{lem:construction_radius}
     \leanok
-    \uses{lem:Construction.zero_real_root_M_inf, lem:Construction.mul_M_inf, lem:Construction.add_M_Inf, lem:Construction.real_in_M_inf, lem:Construction.im_in_M_inf}  
+    \uses{lem:pos_real_root, lem:construction_mul, lem:construction_add, lem:construction_real, lem:construction_imag}
     We use the fact that $r = \|z\| = \sqrt{\Re(z)^2 + \Im(z)^2}$. Since we have spilt $r$ in already constructed parts, we get that $r \in M_{\infty}$.
 \end{proof}
 

@@ -63,66 +63,28 @@ lemma M_inf_in_M_I' (M : Set ℂ)(x:ℂ): x ∈ M_inf M ↔ ∀ᶠ n in Filter.a
   simp
 
 lemma L_M_inf_iff_M_M (M: Set ℂ): l ∈ L (M_inf M) ↔ ∀ᶠ n in Filter.atTop, l ∈ L (M_I M n) := by
-  unfold L
-  simp
   constructor
-  intro h
-  obtain ⟨z₁, z₂, h, hz₁, hz₂, Noteq⟩ := h
-  rw[M_inf_in_M_I'] at hz₁ hz₂
-  rw [←@Filter.eventually_atTop]
-  filter_upwards [hz₁, hz₂]
-  rw [h]
-  simp
-  intro a hz₁a hz₂a
-  use z₁
-  use z₂;
-  intro h
-  obtain ⟨n, hn⟩ := h
-  have h: ∃ z₁ z₂, l = {z₁ := z₁, z₂ := z₂} ∧ z₁ ∈ M_I M n ∧ z₂ ∈ M_I M n ∧ z₁ ≠ z₂ := by
-    apply hn
-    simp
-  obtain ⟨z₁, z₂, h, hz₁, hz₂, Noteq⟩ := h
-  use z₁
-  use z₂
-  rw [h]
-  simp
-  constructor
-  . exact M_I_in_M_inf_elm M z₁ n hz₁
-  constructor
-  . exact M_I_in_M_inf_elm M z₂ n hz₂
-  exact Noteq
+  · rintro ⟨z₁, z₂, rfl, hz₁, hz₂, hne⟩
+    rw [M_inf_in_M_I'] at hz₁ hz₂
+    filter_upwards [hz₁, hz₂] with n h₁ h₂
+    exact ⟨z₁, z₂, rfl, h₁, h₂, hne⟩
+  · intro h
+    obtain ⟨n, hn⟩ := h.exists
+    obtain ⟨z₁, z₂, rfl, h₁, h₂, hne⟩ := hn
+    exact ⟨z₁, z₂, rfl, M_I_in_M_inf_elm M z₁ n h₁,
+      M_I_in_M_inf_elm M z₂ n h₂, hne⟩
 
 lemma C_M_inf_iff_M_M (M: Set ℂ): c ∈ C (M_inf M) ↔ ∀ᶠ n in Filter.atTop, c ∈ C (M_I M n) := by
-  unfold C
-  simp
   constructor
-  intro h
-  obtain ⟨z, r₁, r₂, h, hz, hr₁, hr₂⟩ := h
-  rw[M_inf_in_M_I'] at hz hr₁ hr₂
-  rw [←@Filter.eventually_atTop]
-  filter_upwards [hz, hr₁, hr₂]
-  rw [h]
-  simp
-  intro a hza hr₁a hr₂a
-  use z
-  use r₁
-  use r₂
-  intro h
-  obtain ⟨n, hn⟩ := h
-  have h: ∃ z r₁ r₂, c = {c:=z, r:=(dist r₁ r₂)} ∧ z ∈ M_I M n ∧ r₁ ∈ M_I M n ∧ r₂ ∈ M_I M n := by
-    apply hn
-    simp
-  obtain ⟨z, r₁, r₂, h, hz, hr₁, hr₂⟩ := h
-  use z
-  use r₁
-  use r₂
-  rw [h]
-  simp
-  constructor
-  . exact M_I_in_M_inf_elm M z n hz
-  constructor
-  . exact M_I_in_M_inf_elm M r₁ n hr₁
-  exact M_I_in_M_inf_elm M r₂ n hr₂
+  · rintro ⟨z, r₁, r₂, rfl, hz, h₁, h₂⟩
+    rw [M_inf_in_M_I'] at hz h₁ h₂
+    filter_upwards [hz, h₁, h₂] with n hz h₁ h₂
+    exact ⟨z, r₁, r₂, rfl, hz, h₁, h₂⟩
+  · intro h
+    obtain ⟨n, hn⟩ := h.exists
+    obtain ⟨z, r₁, r₂, rfl, hz, h₁, h₂⟩ := hn
+    exact ⟨z, r₁, r₂, rfl, M_I_in_M_inf_elm M z n hz,
+      M_I_in_M_inf_elm M r₁ n h₁, M_I_in_M_inf_elm M r₂ n h₂⟩
 
 lemma ill_M_inf (M: Set ℂ): ill (M_inf M) ⊆ M_inf M := by
   intro z

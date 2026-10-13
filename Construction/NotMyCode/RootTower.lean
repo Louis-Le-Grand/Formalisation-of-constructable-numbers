@@ -1,6 +1,6 @@
 import Construction.NotMyCode.DegreeTwo
 import Construction.NotMyCode.PR14987
-import Mathlib.Data.Complex.Basic
+import Mathlib.Basic.Complex.Basic
 import Mathlib.Algebra.Algebra.Rat
 
 open IntermediateField
@@ -110,7 +110,7 @@ lemma Tower.exists_chain {K P : Field} (h : Tower K P) :
         · omega
         · exact le_rfl
       · simpa [L'] using hzero
-      · simp [L']
+      · simp [L', Q]
       · intro i hi
         by_cases hin : i < n
         · simpa [L', show i ≤ n by omega, show i + 1 ≤ n by omega] using hdeg i hin

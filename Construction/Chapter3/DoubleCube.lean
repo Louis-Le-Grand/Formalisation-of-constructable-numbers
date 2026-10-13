@@ -1,8 +1,8 @@
-import Construction.Chapter2.ClasificationMinf2
+import Construction.Chapter2.ClassificationMinf2
 import Construction.NotMyCode.map_of_isScalarTower
 
 import Mathlib.Algebra.Polynomial.SpecificDegree
-import Mathlib.Data.Real.Irrational
+import Mathlib.NumberTheory.Real.Irrational
 
 open Construction Polynomial
 
@@ -16,11 +16,11 @@ lemma irrational_thirdroot_two: Irrational (2 ^ (1/3:ℝ)) := by
   apply irrational_nrt_of_notint_nrt 3 2 ?_ ?_ (Nat.zero_lt_succ 2)
   . simp only [one_div, Int.cast_ofNat]
     exact @Real.rpow_inv_natCast_pow 2 3 zero_le_two (Ne.symm (Nat.zero_ne_add_one 2))
-  . rw [Mathlib.Tactic.PushNeg.not_exists_eq]
+  . rw [not_exists]
     intro x
     by_contra h
     have: ¬ x ≤ (1:ℝ)  := by
-      rw[←lt_iff_not_le, ←h, @Real.one_lt_rpow_iff 2 (1/3) zero_le_two]
+      rw[not_le, ←h, @Real.one_lt_rpow_iff 2 (1/3) zero_le_two]
       norm_num
     have: x < (2:ℝ)  := by
       rw[←Real.rpow_one 2, ←h, @Real.rpow_lt_rpow_left_iff 2 (1/3:ℝ) (1:ℝ) one_lt_two]
@@ -42,7 +42,7 @@ lemma if_cube_eq_two_irrat (x:ℝ): x ^ 3 = 2 → Irrational x := by
   exact irrational_thirdroot_two
 
 lemma P_roots: roots P = 0 := by
-  refine Multiset.eq_zero_of_forall_not_mem ?_
+  refine Multiset.eq_zero_of_forall_notMem ?_
   simp only [P, mem_roots', ne_eq, IsRoot.def, eval_sub, eval_pow, eval_X, eval_C, not_and]
   intros a _
   by_contra h

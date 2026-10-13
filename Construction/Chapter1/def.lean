@@ -1,4 +1,4 @@
-import Mathlib.Data.Complex.Basic
+import Mathlib.Basic.Complex.Basic
 import Mathlib.Geometry.Euclidean.Sphere.Basic
 
 
@@ -11,7 +11,7 @@ def line.points (l: line) : Set ℂ:= {(t : ℂ) * l.z₁ + (1-t) * l.z₂ | (t 
 --not bp
 lemma line_not_eq_if (l₁ l₂: line) (h: ∃ x, x ∈ l₁.points ∧ x ∉ l₂.points) :  l₁.points ≠ l₂.points := by
   obtain ⟨x, hx₁, hx₂⟩ := h
-  rw [Ne.eq_def, Set.ext_iff, Mathlib.Tactic.PushNeg.not_forall_eq]
+  rw [Ne.eq_def, Set.ext_iff, not_forall]
   use x
   simp only [hx₁, hx₂, iff_false, not_true_eq_false, not_false_eq_true]
 

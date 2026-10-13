@@ -7,7 +7,7 @@ import Mathlib.Analysis.MellinTransform
 namespace  Construction
 lemma z_neg_M_inf (M: Set ℂ) (h₀: (0:ℂ)∈ M) (z : ℂ) (hz : z ∈ (M_inf M)) : -z ∈ (M_inf M) := by
   by_cases z0:(z=0)
-  . simp[z0]
+  . simp +zetaDelta[z0]
     apply M_M_inf
     exact h₀
   let l : line := {z₁ := 0, z₂ := z}
@@ -17,20 +17,20 @@ lemma z_neg_M_inf (M: Set ℂ) (h₀: (0:ℂ)∈ M) (z : ℂ) (hz : z ∈ (M_inf
     use 0;
     use z;
     constructor;
-    simp;
+    simp +zetaDelta;
     constructor;
     . apply M_M_inf M h₀;
     constructor;
     . exact hz;
     . symm
-      simp[z0]
+      simp +zetaDelta[z0]
   have hc : c ∈ C (M_inf M) := by
     rw[c_in_C_M]
     use 0
     use 0
     use z
     constructor
-    . simp_all only [dist_zero_left, Complex.norm_eq_abs, l, c]
+    . simp_all only [dist_zero_left, l, c]
     constructor
     . apply M_M_inf M h₀
     constructor
@@ -39,11 +39,11 @@ lemma z_neg_M_inf (M: Set ℂ) (h₀: (0:ℂ)∈ M) (z : ℂ) (hz : z ∈ (M_inf
   have hlc : -z ∈ c.points ∩ l.points := by
     rw [Set.mem_inter_iff]
     constructor
-    . simp[Construction.circle.points]
-    simp[line.points]
+    . simp +zetaDelta[Construction.circle.points]
+    simp +zetaDelta[line.points]
     use 2
     push_cast
-    ring_nf
+    ring_nf +zetaDelta
   apply ilc_M_inf M
   unfold ilc
   rw [Set.mem_setOf]
@@ -57,7 +57,7 @@ lemma add_M_Inf (M: Set ℂ) (h₀: (0:ℂ)∈ M) (z₁ z₂ : ℂ) (hz₁ : z�
      z₁ + z₂ ∈ (M_inf M) := by
   by_cases h: (z₁ = z₂)
   by_cases hz₁0: (z₁ = 0)
-  . simp[hz₁0]
+  . simp +zetaDelta[hz₁0]
     exact hz₂
   . let c: Construction.circle := {c := z₁, r := (dist 0 z₁)}
     let l: line := {z₁ := z₁, z₂ := 0}
@@ -67,7 +67,7 @@ lemma add_M_Inf (M: Set ℂ) (h₀: (0:ℂ)∈ M) (z₁ z₂ : ℂ) (hz₁ : z�
       use 0
       use z₁
       constructor
-      . simp_all only [dist_zero_left, Complex.norm_eq_abs, c]
+      . simp_all only [dist_zero_left, c]
       constructor
       . exact hz₁
       constructor
@@ -78,7 +78,7 @@ lemma add_M_Inf (M: Set ℂ) (h₀: (0:ℂ)∈ M) (z₁ z₂ : ℂ) (hz₁ : z�
       use z₁
       use 0
       constructor
-      . simp
+      . simp +zetaDelta
       constructor
       . exact hz₁
       constructor
@@ -95,10 +95,10 @@ lemma add_M_Inf (M: Set ℂ) (h₀: (0:ℂ)∈ M) (z₁ z₂ : ℂ) (hz₁ : z�
     . exact hl
     rw [Set.mem_inter_iff]
     constructor
-    . simp only [h, circle.points, dist_zero_left, Complex.norm_eq_abs, mem_sphere_iff_norm,
+    . simp +zetaDelta only [h, circle.points, dist_zero_left, mem_sphere_iff_norm,
       add_sub_cancel_right]
     . use 2
-      simp only [Complex.ofReal_ofNat, h, two_mul, mul_zero, add_zero]
+      simp +zetaDelta only [Complex.ofReal_ofNat, h, two_mul, mul_zero, add_zero]
   let c₁ : Construction.circle := {c := z₁, r := (dist 0 z₂)}
   let c₂ : Construction.circle := {c := z₂, r := (dist 0 z₁)}
   have hc₁ : c₁ ∈ C (M_inf M) := by
@@ -107,7 +107,7 @@ lemma add_M_Inf (M: Set ℂ) (h₀: (0:ℂ)∈ M) (z₁ z₂ : ℂ) (hz₁ : z�
     use 0
     use z₂
     constructor
-    . simp_all only [dist_zero_left, Complex.norm_eq_abs, c₁]
+    . simp_all only [dist_zero_left, c₁]
     constructor
     . exact hz₁
     constructor
@@ -119,7 +119,7 @@ lemma add_M_Inf (M: Set ℂ) (h₀: (0:ℂ)∈ M) (z₁ z₂ : ℂ) (hz₁ : z�
     use 0
     use z₁
     constructor
-    . simp_all only [dist_zero_left, Complex.norm_eq_abs, c₂]
+    . simp_all only [dist_zero_left, c₂]
     constructor
     . exact hz₂
     constructor
@@ -127,7 +127,7 @@ lemma add_M_Inf (M: Set ℂ) (h₀: (0:ℂ)∈ M) (z₁ z₂ : ℂ) (hz₁ : z�
     . exact hz₁
   have hcc : z₁ + z₂ ∈ c₁.points ∩ c₂.points := by
     rw [Set.mem_inter_iff]
-    simp[Construction.circle.points]
+    simp +zetaDelta[Construction.circle.points]
   apply icc_M_inf M
   unfold icc
   rw [Set.mem_setOf]
@@ -156,7 +156,7 @@ lemma parallel_lines_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (z : ℂ) (hz: z ∈ (M_
     use z
     use z-l₁.z₁+l₁.z₂
     constructor
-    . simp
+    . simp +zetaDelta
     constructor
     . exact hz
     constructor
@@ -170,7 +170,7 @@ lemma parallel_lines_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (z : ℂ) (hz: z ∈ (M_
     . refine Ne.intro ?_
       intro h
       rw[←sub_eq_iff_eq_add] at h
-      simp at h
+      simp +zetaDelta at h
       have h': l₁.z₂ ≠  l₁.z₁ := by
         symm
         apply l_in_L_M_imp' (M_inf M) l₁
@@ -181,9 +181,9 @@ lemma parallel_lines_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (z : ℂ) (hz: z ∈ (M_
   exact hl₂
   constructor
   . unfold line.points
-    simp
+    simp +zetaDelta
     use 1
-    simp
+    simp +zetaDelta
   . apply parallel_basis
     unfold line.z₁ line.z₂
     ring
@@ -199,7 +199,7 @@ lemma conj_M_Inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (z : ℂ) (hz : z 
     use 0
     use z
     constructor
-    . simp_all only [dist_zero_left, Complex.norm_eq_abs, c₀]
+    . simp_all only [dist_zero_left, c₀]
     constructor
     . apply M_M_inf M h₀
     constructor
@@ -211,7 +211,7 @@ lemma conj_M_Inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (z : ℂ) (hz : z 
     use 1
     use z
     constructor
-    . simp_all only [dist_zero_left, Complex.norm_eq_abs, c₁]
+    . simp_all only [dist_zero_left, c₁]
     constructor
     . apply M_M_inf M h₁
     constructor
@@ -219,10 +219,10 @@ lemma conj_M_Inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (z : ℂ) (hz : z 
     exact hz
   have hcc : (starRingEnd ℂ) z ∈ c₀.points ∩ c₁.points := by
     rw [Set.mem_inter_iff]
-    simp[Construction.circle.points]
-    rw[dist_comm, Complex.dist_eq, Complex.abs_eq_sqrt_sq_add_sq, Complex.abs_eq_sqrt_sq_add_sq,
+    simp +zetaDelta[Construction.circle.points]
+    rw[dist_comm, Complex.dist_eq, Complex.norm_eq_sqrt_sq_add_sq, Complex.norm_eq_sqrt_sq_add_sq,
     ←Mathlib.Tactic.RingNF.add_neg, ←Mathlib.Tactic.RingNF.add_neg, Complex.add_re, Complex.add_im]
-    simp
+    simp +zetaDelta
   apply icc_M_inf M
   unfold icc
   rw [Set.mem_setOf]
@@ -234,7 +234,7 @@ lemma conj_M_Inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (z : ℂ) (hz : z 
   . exact hc₁
   constructor
   . exact hcc
-  exact circle_not_eq_iff  (by simp only [ne_eq, zero_ne_one, not_false_eq_true])
+  exact circle_not_eq_iff  (by simp +zetaDelta only [ne_eq, zero_ne_one, not_false_eq_true])
 
 open Complex
 
@@ -250,9 +250,9 @@ lemma ir_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (r : ℝ) (hr : ↑r
     use -1
     use 1
     have h : dist (-1:ℂ) (1) = 2 := by
-      simp[dist_comm,dist_eq,Complex.abs,one_add_one_eq_two]
+      simp +zetaDelta[dist_comm,dist_eq,Complex.norm_def,one_add_one_eq_two]
     constructor
-    . simp_all only [h]
+    . simp_all +zetaDelta only [h]
     constructor
     . apply M_M_inf M h₁
     constructor
@@ -265,9 +265,9 @@ lemma ir_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (r : ℝ) (hr : ↑r
     use 1
     use -1
     have: dist (1:ℂ) (-1) = 2 := by
-      simp[dist_eq,Complex.abs,one_add_one_eq_two]
+      simp +zetaDelta[dist_eq,Complex.norm_def,one_add_one_eq_two]
     constructor
-    . simp_all only [this]
+    . simp_all +zetaDelta only [this]
     constructor
     . apply z_neg_M_inf M h₀ (z:=1)
       apply M_M_inf M h₁
@@ -276,35 +276,35 @@ lemma ir_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (r : ℝ) (hr : ↑r
     apply z_neg_M_inf M h₀ (z:=1)
     apply M_M_inf M h₁
   have hz₁: l.z₁ ∈ c₁.points := by
-    simp[Construction.circle.points,Complex.abs_eq_sqrt_sq_add_sq]
-    ring_nf
+    simp +zetaDelta[Construction.circle.points,Complex.norm_eq_sqrt_sq_add_sq]
+    ring_nf +zetaDelta
     rw [Real.sqrt_eq_cases]
-    simp
+    simp +zetaDelta
     ring
   have hz₂: l.z₂ ∈ c₁.points := by
-    simp[Construction.circle.points,Complex.abs_eq_sqrt_sq_add_sq]
-    ring_nf
+    simp +zetaDelta[Construction.circle.points,Complex.norm_eq_sqrt_sq_add_sq]
+    ring_nf +zetaDelta
     rw [Real.sqrt_eq_cases]
-    simp
+    simp +zetaDelta
     ring
   have hz₃: l.z₁ ∈ c₂.points := by
-    simp[Construction.circle.points,Complex.abs_eq_sqrt_sq_add_sq]
-    ring_nf
+    simp +zetaDelta[Construction.circle.points,Complex.norm_eq_sqrt_sq_add_sq]
+    ring_nf +zetaDelta
     rw [Real.sqrt_eq_cases]
-    simp
+    simp +zetaDelta
     ring
   have hz₄: l.z₂ ∈ c₂.points := by
-    simp[Construction.circle.points,Complex.abs_eq_sqrt_sq_add_sq]
-    ring_nf
+    simp +zetaDelta[Construction.circle.points,Complex.norm_eq_sqrt_sq_add_sq]
+    ring_nf +zetaDelta
     rw [Real.sqrt_eq_cases]
-    simp
+    simp +zetaDelta
     ring
   have hl: l ∈ L (M_inf M) := by
     unfold L
     use l.z₁
     use l.z₂
     constructor
-    . simp
+    . simp +zetaDelta
     constructor
     . apply icc_M_inf M
       unfold icc
@@ -320,7 +320,7 @@ lemma ir_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (r : ℝ) (hr : ↑r
       . constructor
         exact hz₁
         exact hz₃
-      exact circle_not_eq_iff  (by simp only [ne_eq, CharZero.eq_neg_self_iff, one_ne_zero, not_false_eq_true])
+      exact circle_not_eq_iff  (by simp +zetaDelta only [ne_eq, CharZero.eq_neg_self_iff, one_ne_zero, not_false_eq_true])
     constructor
     . apply icc_M_inf M
       unfold icc
@@ -336,17 +336,17 @@ lemma ir_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (r : ℝ) (hr : ↑r
       . constructor
         exact hz₂
         exact hz₄
-      exact circle_not_eq_iff  (by simp only [ne_eq, CharZero.eq_neg_self_iff, one_ne_zero,
+      exact circle_not_eq_iff  (by simp +zetaDelta only [ne_eq, CharZero.eq_neg_self_iff, one_ne_zero,
         not_false_eq_true])
-    simp only [ne_eq, mk.injEq, CharZero.eq_neg_self_iff, Nat.ofNat_nonneg, Real.sqrt_eq_zero, OfNat.ofNat_ne_zero, and_false, not_false_eq_true]
+    simp +zetaDelta only [ne_eq, mk.injEq, CharZero.eq_neg_self_iff, Nat.ofNat_nonneg, Real.sqrt_eq_zero, OfNat.ofNat_ne_zero, and_false, not_false_eq_true]
   have hc : c ∈ C (M_inf M) := by
     rw[c_in_C_M]
     use 0
     use 0
     use r
     constructor
-    . simp_all only [dist_zero_left, Complex.norm_eq_abs, c]
-      simp
+    . simp_all only [dist_zero_left, c]
+      simp +zetaDelta
     constructor
     . apply M_M_inf M h₀
     constructor
@@ -363,13 +363,13 @@ lemma ir_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (r : ℝ) (hr : ↑r
   . exact hl
   rw [Set.mem_inter_iff]
   constructor
-  . simp[Construction.circle.points]
-  simp[line.points]
+  . simp +zetaDelta[Construction.circle.points]
+  simp +zetaDelta[line.points]
   use (1/2 + r/(2 * (Real.sqrt 3)))
   norm_cast
   rw[Complex.ofReal_mul', Complex.ofReal_mul']
-  ring_nf
-  simp[Complex.mk_eq_add_mul_I]
+  ring_nf +zetaDelta
+  simp +zetaDelta[Complex.mk_eq_add_mul_I]
   ring
 
 lemma imath_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M): Complex.I ∈ M_inf M := by
@@ -382,13 +382,13 @@ lemma real_in_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (z: ℂ) (h: z 
   have hr: ∃ r : ℝ, r = z := by
     use z.re
     rw[Complex.ext_iff]
-    simp
+    simp +zetaDelta
     symm
     exact hreal
   have hz: z = ↑(z.re) := by
     obtain ⟨r, hr⟩ := hr
     rw[←hr]
-    simp
+    simp +zetaDelta
   rw[←hz]
   exact h
   by_cases him: z.re = 0
@@ -401,26 +401,26 @@ lemma real_in_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (z: ℂ) (h: z 
     use z
     use starRingEnd ℂ z
     constructor
-    . simp
+    . simp +zetaDelta
     constructor
     . exact h
     constructor
     . apply conj_M_Inf M h₀ h₁ z h
     by_contra h
     rw [Complex.ext_iff] at h
-    simp only [conj_re, conj_im, CharZero.eq_neg_self_iff, true_and] at h
+    simp +zetaDelta only [conj_re, conj_im, CharZero.eq_neg_self_iff, true_and] at h
     contradiction
   have hlr : lr ∈ L (M_inf M) := by
     unfold L
     use 1
     use 0
     constructor
-    . simp
+    . simp +zetaDelta
     constructor
     . apply M_M_inf M h₁
     constructor
     . apply M_M_inf M h₀
-    simp
+    simp +zetaDelta
   apply ill_M_inf M
   unfold ill
   rw [Set.mem_setOf]
@@ -432,24 +432,24 @@ lemma real_in_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (z: ℂ) (h: z 
   . exact hlr
   rw [Set.mem_inter_iff]
   constructor
-  . simp[line.points]
+  . simp +zetaDelta[line.points]
     use 1/2
     refine Complex.ext_iff.mpr ?h.a
-    simp
-    ring_nf
-    simp
-  simp only [line.points, mul_one, mul_zero, add_zero, ne_eq]
-  rw [Set.ext_iff, Mathlib.Tactic.PushNeg.not_forall_eq]
+    simp +zetaDelta
+    ring_nf +zetaDelta
+    simp +zetaDelta
+  simp +zetaDelta only [line.points, mul_one, mul_zero, add_zero, ne_eq]
+  rw [Set.ext_iff, not_forall]
   use 0
-  simp only [Set.mem_setOf_eq, ofReal_eq_zero, exists_eq, iff_true, not_exists]
+  simp +zetaDelta only [Set.mem_setOf_eq, ofReal_eq_zero, exists_eq, iff_true, not_exists]
   intro x
-  ring_nf
+  ring_nf +zetaDelta
   rw[add_comm, ←add_sub_assoc, sub_eq_zero, Complex.ext_iff]
   by_contra cont
   obtain ⟨cont_re, _⟩ := cont
-  simp only [add_re, conj_re, mul_re, ofReal_re, ofReal_im, zero_mul, sub_zero, conj_im, mul_neg,
-    neg_zero, add_left_eq_self] at cont_re
-  contradiction
+  simp +zetaDelta only [add_re, conj_re, mul_re, ofReal_re, ofReal_im, zero_mul, sub_zero, conj_im, mul_neg,
+    neg_zero] at cont_re
+  exact him (by linarith)
 
 lemma i_z_imp_z_in_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (z: ℝ) (h: I * z ∈ M_inf M):
     ↑z ∈ M_inf M := by
@@ -461,7 +461,7 @@ lemma i_z_imp_z_in_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (z: ℝ) (
     use 0
     use I*z
     constructor
-    . simp_all only [dist_zero_left, Complex.norm_eq_abs, c]
+    . simp_all only [dist_zero_left, c]
     constructor
     . apply M_M_inf M h₀
     constructor
@@ -472,12 +472,12 @@ lemma i_z_imp_z_in_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (z: ℝ) (
     use 1
     use 0
     constructor
-    . simp
+    . simp +zetaDelta
     constructor
     . apply M_M_inf M h₁
     constructor
     . apply M_M_inf M h₀
-    simp
+    simp +zetaDelta
   apply ilc_M_inf M
   unfold ilc
   rw [Set.mem_setOf]
@@ -489,8 +489,8 @@ lemma i_z_imp_z_in_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (z: ℝ) (
   . exact hlr
   rw [Set.mem_inter_iff]
   constructor
-  . simp[Construction.circle.points]
-  simp[line.points];
+  . simp +zetaDelta[Construction.circle.points]
+  simp +zetaDelta[line.points];
 
 lemma im_in_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (z: ℂ) (h: z ∈ M_inf M): ↑z.im ∈ M_inf M := by
   let l : line := {z₁ := z, z₂ := z-1}
@@ -500,7 +500,7 @@ lemma im_in_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (z: ℂ) (h: z �
     use z
     use z-1
     constructor
-    . simp
+    . simp +zetaDelta
     constructor
     . exact h
     constructor
@@ -513,12 +513,12 @@ lemma im_in_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (z: ℂ) (h: z �
     use I
     use 0
     constructor
-    . simp
+    . simp +zetaDelta
     constructor
     . apply imath_M_inf M h₀ h₁
     constructor
     . apply M_M_inf M h₀
-    simp
+    simp +zetaDelta
   have hi: I * z.im  ∈ M_inf M := by
     apply ill_M_inf M
     unfold ill
@@ -532,40 +532,40 @@ lemma im_in_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (z: ℂ) (h: z �
     rw [Set.mem_inter_iff]
     constructor
     . constructor
-      . simp[line.points]
+      . simp +zetaDelta[line.points]
         use (1-z.re)
-        ring_nf
+        ring_nf +zetaDelta
         push_cast
         rw[← add_sub_assoc, neg_add_cancel, zero_sub, neg_add_eq_sub]
         refine sub_eq_of_eq_add' ?h.h
         rw[mul_comm]
         exact Eq.symm (re_add_im z)
-      simp[line.points]
+      simp +zetaDelta[line.points]
       use z.im
       ring
-    simp only [line.points, mul_zero, add_zero, ne_eq]
-    rw [Set.ext_iff, Mathlib.Tactic.PushNeg.not_forall_eq]
+    simp +zetaDelta only [line.points, mul_zero, add_zero, ne_eq]
+    rw [Set.ext_iff, not_forall]
     by_cases hI: z.im = 0
     . use I
-      simp only [Set.mem_setOf_eq, ne_eq, I_ne_zero, not_false_eq_true, mul_eq_right₀,
+      simp +zetaDelta only [Set.mem_setOf_eq, ne_eq, I_ne_zero, not_false_eq_true, mul_eq_right₀,
         ofReal_eq_one, exists_eq, iff_true, not_exists]
       intro x
-      ring_nf
+      ring_nf +zetaDelta
       by_contra cont
-      simp[Complex.ext_iff] at cont
+      simp +zetaDelta[Complex.ext_iff] at cont
       obtain ⟨_, cont⟩ := cont
-      have : z.im ≠ 0 := by simp only [cont, ne_eq, one_ne_zero, not_false_eq_true]
+      have : z.im ≠ 0 := by simp +zetaDelta only [cont, ne_eq, one_ne_zero, not_false_eq_true]
       contradiction
-    simp[line.points] at hI
+    try simp +zetaDelta[line.points] at hI
     use 0
-    simp only [Set.mem_setOf_eq, mul_eq_zero, ofReal_eq_zero, I_ne_zero, or_false, exists_eq,
+    simp +zetaDelta only [Set.mem_setOf_eq, mul_eq_zero, ofReal_eq_zero, I_ne_zero, or_false, exists_eq,
       iff_true, not_exists]
     intro x
-    ring_nf
+    ring_nf +zetaDelta
     rw[Complex.ext_iff]
     by_contra cont
     obtain ⟨_, cont⟩ := cont
-    simp at cont
+    simp +zetaDelta at cont
     contradiction
   apply i_z_imp_z_in_M_inf M h₀ h₁ z.im hi
 
@@ -578,7 +578,7 @@ lemma z_iff_re_im_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (z: ℂ): z
     apply im_in_M_inf M h₀ h₁ z h
   intro h
   obtain ⟨hr, hi⟩ := h
-  have hz: z = ↑z.re + ↑z.im * I := by simp
+  have hz: z = ↑z.re + ↑z.im * I := by simp +zetaDelta
   rw[hz]
   apply add_M_Inf M h₀ ↑z.re (↑z.im * I)
   exact hr
@@ -599,20 +599,20 @@ lemma ab_in_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (a b :ℝ) (ha: �
     use a
     use I
     constructor
-    . simp
+    . simp +zetaDelta
     constructor
     . exact ha
     constructor
     . apply imath_M_inf M h₀ h₁
     by_contra h
     rw [Complex.ext_iff] at h
-    simp at h
+    simp +zetaDelta at h
   have hl₂ : l₂ ∈ L (M_inf M) := by
     unfold L
     use (a+I*b-I)
     use I*b
     constructor
-    . simp
+    . simp +zetaDelta
     constructor
     . apply sub_M_Inf M h₀ (a+I*b) I
       apply add_M_Inf M h₀ a (I*b)
@@ -623,18 +623,18 @@ lemma ab_in_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (a b :ℝ) (ha: �
     . exact ir_M_inf M h₀ h₁ b hb
     by_contra h
     rw [Complex.ext_iff] at h
-    simp at h
+    simp +zetaDelta at h
   have hlr : lr ∈ L (M_inf M) := by
     unfold L
     use 1
     use 0
     constructor
-    . simp
+    . simp +zetaDelta
     constructor
     . apply M_M_inf M h₁
     constructor
     . apply M_M_inf M h₀
-    simp
+    simp +zetaDelta
   apply ill_M_inf M
   unfold ill
   rw [Set.mem_setOf]
@@ -647,32 +647,32 @@ lemma ab_in_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (a b :ℝ) (ha: �
   rw [Set.mem_inter_iff]
   constructor
   . constructor
-    . simp[line.points]
+    . simp +zetaDelta[line.points]
       use b
       ring
     use a*b
     ring
-  simp only [line.points, mul_one, mul_zero, add_zero, ne_eq]
-  rw [Set.ext_iff, Mathlib.Tactic.PushNeg.not_forall_eq]
+  simp +zetaDelta only [line.points, mul_one, mul_zero, add_zero, ne_eq]
+  rw [Set.ext_iff, not_forall]
   use 0
-  simp only [Set.mem_setOf_eq, ofReal_eq_zero, exists_eq, iff_true, not_exists]
+  simp +zetaDelta only [Set.mem_setOf_eq, ofReal_eq_zero, exists_eq, iff_true, not_exists]
   intro x
-  ring_nf
+  ring_nf +zetaDelta
   rw[Complex.ext_iff]
   by_contra cont
   obtain ⟨cont_re, cont_im⟩ := cont
-  simp only [add_re, sub_re, mul_re, ofReal_re, ofReal_im, mul_zero, sub_zero, I_re, I_im, mul_one,
+  simp +zetaDelta only [add_re, sub_re, mul_re, ofReal_re, ofReal_im, mul_zero, sub_zero, I_re, I_im, mul_one,
     sub_self, zero_mul, add_zero, zero_re, mul_eq_zero, add_im, sub_im, mul_im, zero_sub, one_mul,
     zero_add, zero_im] at cont_re cont_im
   rw [neg_add_eq_zero] at cont_im
   rw [cont_im] at cont_re
-  have : a * b = 0 := by simp only [mul_eq_zero]; rw[or_comm]; exact cont_re
+  have : a * b = 0 := by simp +zetaDelta only [mul_eq_zero]; rw[or_comm]; exact cont_re
   contradiction
 
 lemma mul_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (a b :ℂ ) (ha: a ∈ M_inf M) (hb: b ∈ M_inf M): a * b ∈ M_inf M:= by
   refine (z_iff_re_im_M_inf M h₀ h₁ (a * b)).mpr ?_
   constructor
-  simp
+  simp +zetaDelta
   apply sub_M_Inf M h₀
   norm_cast
   apply ab_in_M_inf M h₀ h₁
@@ -682,7 +682,7 @@ lemma mul_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (a b :ℂ ) (ha: a 
   apply ab_in_M_inf M h₀ h₁
   exact im_in_M_inf M h₀ h₁ a ha
   exact im_in_M_inf M h₀ h₁ b hb
-  simp
+  simp +zetaDelta
   apply add_M_Inf M h₀
   norm_cast
   apply ab_in_M_inf M h₀ h₁
@@ -697,7 +697,7 @@ lemma ainv_in_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (a :ℝ) (ha: �
   by_cases h: a = 0
   . rw[h]
     apply M_M_inf
-    simp
+    simp +zetaDelta
     exact h₀
   rw[←ne_eq] at h
   let l: line := {z₁ := 1-I*a+I, z₂ := I}
@@ -707,7 +707,7 @@ lemma ainv_in_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (a :ℝ) (ha: �
     use (1-I*a+I)
     use I
     constructor
-    . simp
+    . simp +zetaDelta
     constructor
     . apply add_M_Inf M h₀ (1-I*a) I
       apply sub_M_Inf M h₀ 1 (I*a)
@@ -718,18 +718,18 @@ lemma ainv_in_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (a :ℝ) (ha: �
     . exact imath_M_inf M h₀ h₁
     by_contra h
     rw [Complex.ext_iff] at h
-    simp at h
+    simp +zetaDelta at h
   have hlr : lr ∈ L (M_inf M) := by
     unfold L
     use 1
     use 0
     constructor
-    . simp
+    . simp +zetaDelta
     constructor
     . apply M_M_inf M h₁
     constructor
     . apply M_M_inf M h₀
-    simp
+    simp +zetaDelta
   apply ill_M_inf M
   unfold ill
   rw [Set.mem_setOf]
@@ -742,31 +742,31 @@ lemma ainv_in_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (a :ℝ) (ha: �
   rw [Set.mem_inter_iff]
   constructor
   . constructor
-    . simp[line.points]
+    . simp +zetaDelta[line.points]
       use a⁻¹
-      ring_nf
+      ring_nf +zetaDelta
       rw [mul_rotate]
-      simp[*]
-    simp[line.points]
+      simp +zetaDelta[*]
+    simp +zetaDelta[line.points]
     use a⁻¹
     norm_cast
-  simp only [line.points, mul_one, mul_zero, add_zero, ne_eq]
-  rw [Set.ext_iff, Mathlib.Tactic.PushNeg.not_forall_eq]
+  simp +zetaDelta only [line.points, mul_one, mul_zero, add_zero, ne_eq]
+  rw [Set.ext_iff, not_forall]
   use 0
-  simp only [Set.mem_setOf_eq, ofReal_eq_zero, exists_eq, iff_true, not_exists]
+  simp +zetaDelta only [Set.mem_setOf_eq, ofReal_eq_zero, exists_eq, iff_true, not_exists]
   intro x
-  ring_nf
+  ring_nf +zetaDelta
   rw[Complex.ext_iff]
   by_contra cont
   obtain ⟨cont_re, cont_im⟩ := cont
-  simp only [add_re, sub_re, ofReal_re, mul_re, I_re, mul_zero, ofReal_im, I_im, mul_one, sub_self,
+  simp +zetaDelta only [add_re, sub_re, ofReal_re, mul_re, I_re, mul_zero, ofReal_im, I_im, mul_one, sub_self,
     zero_mul, mul_im, add_zero, sub_zero, zero_re, add_im, sub_im, zero_add, zero_sub, zero_im] at cont_re cont_im
   rw [cont_re] at cont_im
-  simp only [zero_mul, neg_zero, zero_add, one_ne_zero] at cont_im
+  simp +zetaDelta only [zero_mul, neg_zero, zero_add, one_ne_zero] at cont_im
 
 -- Helper lemma for the next lemma
 lemma z_inv_eq (z:ℂ) (hz: z ≠ 0): z⁻¹ = z.re / (z.re^2+z.im^2)-(z.im/ (z.re^2+z.im^2) )*I:= by
-   calc z⁻¹ = 1/ z := by simp
+   calc z⁻¹ = 1/ z := by simp +zetaDelta
   _ = (starRingEnd ℂ z /  starRingEnd ℂ z)*(1/z) := by
       rw[div_self,one_mul]
       simp_all only [ne_eq, map_eq_zero, not_false_eq_true]
@@ -780,8 +780,8 @@ lemma z_inv_eq (z:ℂ) (hz: z ≠ 0): z⁻¹ = z.re / (z.re^2+z.im^2)-(z.im/ (z.
     have h: starRingEnd ℂ z = z.re - z.im *I := by
       refine ((fun {z w} ↦ Complex.ext_iff.mpr) ?_).symm
       constructor
-      simp
-      simp
+      simp +zetaDelta
+      simp +zetaDelta
     rw[h]
   _ = z.re / (z.re^2+z.im^2)-(z.im/ (z.re^2+z.im^2) )*I := by rw [←div_sub_div_same, mul_div_right_comm]
 
@@ -790,7 +790,7 @@ lemma inv_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (a :ℂ ) (ha: a �
   by_cases h: a = 0
   . rw[h]
     apply M_M_inf
-    simp
+    simp +zetaDelta
     exact h₀;
   rw[←ne_eq] at h;rw[z_inv_eq _ h]
   refine sub_M_Inf M h₀ (↑a.re / (↑a.re ^ 2 + ↑a.im ^ 2)) (↑a.im / (↑a.re ^ 2 + ↑a.im ^ 2) * I) ?_ ?_
@@ -835,9 +835,7 @@ lemma midpoiont (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (a b : ℂ) (ha: a 
   exact M_M_inf M h₁
 
 lemma root_cast (x: ℝ) (h: x ≥ 0): ↑((x:ℝ) ^ (1/2:ℝ)) = (x:ℂ) ^ (1/2:ℂ) := by
-  rw[ofReal_cpow]
-  field_simp
-  exact h
+  simpa using ofReal_cpow h (1 / 2 : ℝ)
 
 lemma inv_comp_root (r:ℝ) (h: 0 < r): ↑r ^ (1 / 2:ℂ ) = ((1 / (r:ℂ) )^ (1 / 2:ℂ))⁻¹:= by
   nth_rewrite 2 [one_div]
@@ -851,21 +849,21 @@ lemma inv_comp_root (r:ℝ) (h: 0 < r): ↑r ^ (1 / 2:ℂ ) = ((1 / (r:ℂ) )^ (
 -- lemma neg_comp_root (r:ℝ) (h: 0 > r): ↑r ^ (1 / 2:ℂ ) = ((r:ℂ) ^ (1 / 2:ℂ)) * I := by
 --   sorry
 
---  lemma root_copmlex (z : ℂ): z ^ (1/2:ℂ) = (((abs z)+z.re)/2)^ (1/2:ℂ)+I*z.im/|z.im| *
---     (((abs z )-z.re)/2)^ (1/2:ℂ) := by sorry
+--  lemma root_copmlex (z : ℂ): z ^ (1/2:ℂ) = (((‖z‖)+z.re)/2)^ (1/2:ℂ)+I*z.im/|z.im| *
+--     (((‖z‖ )-z.re)/2)^ (1/2:ℂ) := by sorry
 
 lemma point_in_circle_pythagorean (z: ℂ) (c: Construction.circle) (hr: 0 < c.r): z ∈ c.points ↔ (dist c.c.re z.re)^2 + (dist c.c.im z.im)^2 = c.r^2 := by
-  simp only [Construction.circle.points, Set.mem_setOf_eq, mem_sphere_iff_norm, norm_eq_abs]
+  simp +zetaDelta only [Construction.circle.points, Set.mem_setOf_eq, mem_sphere_iff_norm]
   rw[←dist_eq]
   constructor
   . intro h
-    rw [← h, dist_eq, Real.dist_eq, Real.dist_eq, Complex.sq_abs, normSq_apply]
+    rw [← h, dist_eq, Real.dist_eq, Real.dist_eq, Complex.sq_norm, normSq_apply]
     rw[pow_two, pow_two, abs_sub_sq, abs_sub_sq, sub_re, sub_im,←sub_eq_zero, ←sub_sub, one_add_one_eq_two]
     ring
   . intro h
     rw [←abs_of_pos hr, ←abs_dist,←sq_eq_sq_iff_abs_eq_abs, ← h]
-    rw[dist_eq, Real.dist_eq, Real.dist_eq, Complex.sq_abs, normSq_apply, ←sub_eq_zero,  sub_re, sub_im, pow_two, pow_two, abs_sub_sq, abs_sub_sq]
-    ring_nf
+    rw[dist_eq, Real.dist_eq, Real.dist_eq, Complex.sq_norm, normSq_apply, ←sub_eq_zero,  sub_re, sub_im, pow_two, pow_two, abs_sub_sq, abs_sub_sq]
+    ring_nf +zetaDelta
 
 lemma one_real_root (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (r : ℝ) (hr: ↑r ∈ M_inf M) (hr': r ≥ 1):
     (r:ℂ) ^ (1/2:ℂ)  ∈ M_inf M := by
@@ -879,7 +877,7 @@ lemma one_real_root (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (r : ℝ) (hr: 
     use (0)
     use (r/2)
     constructor
-    . simp only [dist_zero_left, norm_div, norm_eq_abs, abs_ofReal, RCLike.norm_ofNat]
+    . simp +zetaDelta only [dist_zero_left, norm_div, norm_real, Real.norm_eq_abs, RCLike.norm_ofNat]
     constructor
     . rw[div_eq_mul_inv]
       apply mul_M_inf M h₀ h₁
@@ -904,25 +902,25 @@ lemma one_real_root (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (r : ℝ) (hr: 
     use 1
     use I + 1
     constructor
-    . simp
+    . simp +zetaDelta
     constructor
     . apply M_M_inf M h₁
     constructor
     . apply add_M_Inf M h₀
       apply imath_M_inf M h₀ h₁
       apply M_M_inf M h₁
-    simp
+    simp +zetaDelta
   have hlr : lr ∈ L (M_inf M) := by
     unfold L
     use 1
     use 0
     constructor
-    . simp
+    . simp +zetaDelta
     constructor
     . apply M_M_inf M h₁
     constructor
     . apply M_M_inf M h₀
-    simp
+    simp +zetaDelta
   let x : ℂ := 1 + I * (r-1)^(1/2:ℂ)
   have hx : 1 + I * (r-1)^(1/2:ℂ) ∈ M_inf M := by
     apply ilc_M_inf M
@@ -937,7 +935,7 @@ lemma one_real_root (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (r : ℝ) (hr: 
     rw [Set.mem_inter_iff]
     constructor
     . rw[point_in_circle_pythagorean]
-      simp only [div_ofNat_re, ofReal_re, add_re, one_re, mul_re, I_re, zero_mul, I_im,
+      simp +zetaDelta only [div_ofNat_re, ofReal_re, add_re, one_re, mul_re, I_re, zero_mul, I_im,
         one_mul, zero_sub, Real.dist_eq, _root_.sq_abs, div_ofNat_im, ofReal_im, zero_div, add_im,
         one_im, mul_im, zero_add, abs_neg, div_pow]
       norm_cast
@@ -951,50 +949,35 @@ lemma one_real_root (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (r : ℝ) (hr: 
       ring
       exact Ne.symm (NeZero.ne' 2)
       linarith
-      simp only [gt_iff_lt, Nat.ofNat_pos, div_pos_iff_of_pos_right, abs_pos, ne_eq]
+      simp +zetaDelta only [gt_iff_lt, Nat.ofNat_pos, div_pos_iff_of_pos_right, abs_pos, ne_eq]
       linarith
-    simp only [line.points, mul_one, Set.mem_setOf_eq]
+    simp +zetaDelta only [line.points, mul_one, Set.mem_setOf_eq]
     use 1 - (r-1)^(1/2:ℝ)
-    ring_nf
+    ring_nf +zetaDelta
     push_cast
     rw [root_cast]
-    ring_nf
+    ring_nf +zetaDelta
     rw[mul_comm]
-    simp only [ofReal_add, ofReal_neg, ofReal_one, one_div]
+    simp +zetaDelta only [ofReal_add, ofReal_neg, ofReal_one, one_div]
     rw [neg_add_eq_sub, ge_iff_le, le_tsub_iff_left, add_zero]
     exact hr'
     exact hr'
-  have hx' : dist 0 x =  dist (0:ℂ) ((r:ℂ) ^ (1/2:ℂ) ) := by
-    nth_rewrite 2 [←abs_dist]
-    rw[←abs_dist,←sq_eq_sq_iff_abs_eq_abs, dist_eq, dist_eq, Complex.sq_abs, Complex.sq_abs,
-      normSq_apply, normSq_apply, ←sub_eq_zero, sub_re, sub_im, sub_re, sub_im, zero_re,
-      zero_im, zero_sub, zero_sub, zero_sub, zero_sub, ←root_cast, ofReal_re, ofReal_im,
-      neg_zero, mul_zero, add_zero, ←pow_two, ←pow_two, ←pow_two]
-    nth_rewrite 3 [neg_eq_neg_one_mul, pow_two]
-    rw[←mul_assoc]
-    nth_rewrite 2 [mul_comm]
-    rw[←mul_assoc, ←neg_eq_neg_one_mul, neg_neg, one_mul, ←pow_two]
-    nth_rewrite 3 [←Real.rpow_natCast]
-    push_cast
-    rw[←Real.rpow_mul, one_div_mul_eq_div, div_self, Real.rpow_one]
-    ring_nf
-    simp only [add_re, one_re, mul_re, I_re, zero_mul, I_im, one_mul, zero_sub, add_im,
-      one_im, mul_im, zero_add]
-    norm_cast
-    rw[←root_cast, ofReal_im, ofReal_re]
-    simp only [neg_zero, add_zero, one_pow, Int.reduceNegSucc, Int.cast_neg, Int.cast_one]
-    nth_rewrite 1 [←Real.rpow_natCast]
-    push_cast
-    rw[←Real.rpow_mul, one_div_mul_eq_div, div_self, Real.rpow_one]
-    simp only [add_sub_cancel_right, add_neg_cancel]
-    . simp only [ne_eq, OfNat.ofNat_ne_zero, not_false_eq_true]
-    . linarith
-    . rw [@Int.cast_negSucc, zero_add]
-      push_cast
-      linarith
-    . simp only [ne_eq, OfNat.ofNat_ne_zero, not_false_eq_true]
-    . linarith
-    . linarith
+  have hx' : dist 0 x = dist (0:ℂ) ((r:ℂ) ^ (1/2:ℂ)) := by
+    have hr0 : 0 ≤ r := by linarith
+    have hr1 : 0 ≤ r - 1 := by linarith
+    rw [← root_cast r hr0]
+    simp only [dist_zero_left, Complex.norm_real, Real.norm_eq_abs,
+      abs_of_nonneg (Real.rpow_nonneg hr0 _)]
+    dsimp [x]
+    rw [show (r : ℂ) - 1 = ((r - 1 : ℝ) : ℂ) by push_cast; rfl,
+      ← root_cast (r - 1) hr1, Complex.norm_eq_sqrt_sq_add_sq]
+    simp only [add_re, one_re, mul_re, I_re, zero_mul, I_im, ofReal_im,
+      mul_zero, sub_self, add_zero, add_im, one_im, mul_im, ofReal_re,
+      one_mul, zero_add, one_pow]
+    rw [← Real.sqrt_eq_rpow, Real.sq_sqrt hr1]
+    simp only [add_sub_cancel_left, Real.sqrt_eq_rpow]
+    congr 1
+    ring
   have hc₁ : c ∈ C (M_inf M) := by
     rw[c_in_C_M]
     use 0
@@ -1018,10 +1001,10 @@ lemma one_real_root (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (r : ℝ) (hr: 
   . exact hlr
   rw [Set.mem_inter_iff]
   constructor
-  . simp[Construction.circle.points]
-  simp[line.points]
+  . simp +zetaDelta[Construction.circle.points]
+  simp +zetaDelta[line.points]
   use r ^ (1/2:ℝ)
-  ring_nf
+  ring_nf +zetaDelta
   rw [root_cast]
   apply ge_trans (b:=1) hr' (by simp)
 
@@ -1039,15 +1022,12 @@ lemma zero_real_root_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (r : ℝ
       rw [div_eq_mul_inv, one_mul]
       apply inv_M_inf M h₀ h₁
       exact hr
-      rw [one_div, ge_iff_le, le_inv, inv_one]
-      rw [not_le] at hinv
-      simp only [le_of_lt, hinv]
-      exact zero_lt_one
-      exact h
+      rw [one_div, ge_iff_le, one_le_inv₀ h]
+      exact le_of_lt (lt_of_not_ge hinv)
   . have: r = 0 := by linarith
     rw[this]
     apply M_M_inf
-    simp
+    simp +zetaDelta
     exact h₀
 
     /-. have g: 0 < -r := by
@@ -1074,7 +1054,7 @@ lemma zero_real_root_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (r : ℝ
         exact hr
         rw [one_div, ge_iff_le, le_inv, inv_one]
         rw [not_le] at hinv
-        simp only [le_of_lt, hinv]
+        simp +zetaDelta only [le_of_lt, hinv]
         exact zero_lt_one
         exact g
         apply imath_M_inf M h₀ h₁
@@ -1082,13 +1062,11 @@ lemma zero_real_root_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (r : ℝ
  -/
 
 lemma abs_M_Inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (z : ℂ) (hz: z ∈ M_inf M):
-    ↑(abs z) ∈ M_inf M := by
-  have: (abs z:ℂ) = (z.re^2+z.im^2)^(1/2:ℂ) := by
-    rw [abs_eq_sqrt_sq_add_sq, Real.sqrt_eq_rpow, root_cast]
-    simp only [ofReal_add, ofReal_pow, one_div]
-    nth_rewrite 2 [←abs_sq]
-    rw [←abs_sq]
-    apply ge_trans (b:=|z.re^2+z.im^2|) (by exact abs_add (z.re ^ 2) (z.im ^ 2)) (by simp)
+    ↑(‖z‖) ∈ M_inf M := by
+  have: (‖z‖:ℂ) = (z.re^2+z.im^2)^(1/2:ℂ) := by
+    rw [norm_eq_sqrt_sq_add_sq, Real.sqrt_eq_rpow, root_cast]
+    simp +zetaDelta only [ofReal_add, ofReal_pow, one_div]
+    positivity
   rw[this]
   norm_cast
   apply zero_real_root_M_inf M h₀ h₁ _ _ (add_nonneg (pow_two_nonneg z.re) (pow_two_nonneg z.im))
@@ -1111,7 +1089,7 @@ lemma abs_M_Inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (z : ℂ) (hz: z �
 lemma rabs_M_Inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (r : ℝ) (hr: ↑r ∈ M_inf M):
     ↑|r| ∈ M_inf M := by
   by_cases h: r ≥ 0
-  . have h': ↑|r| = r := by simp[h]
+  . have h': ↑|r| = r := by simp +zetaDelta[h]
     rw[h']
     apply real_in_M_inf M h₀ h₁ r hr
   . have h': ↑|r| = -r := by simp_all [h, le_of_lt]
@@ -1124,7 +1102,7 @@ lemma angle_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (z : ℂ) (hz: z 
   by_cases h: 0 = z
   . rw[←h]
     apply M_M_inf
-    simp
+    simp +zetaDelta
     exact h₁
   rw[←ne_eq] at h
   let l : line := {z₁ := z, z₂ := 0}
@@ -1135,7 +1113,7 @@ lemma angle_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (z : ℂ) (hz: z 
     use 0
     use 1
     constructor
-    . simp
+    . simp +zetaDelta
     constructor
     . exact M_M_inf M h₀
     constructor
@@ -1146,7 +1124,7 @@ lemma angle_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (z : ℂ) (hz: z 
     use z
     use 0
     constructor
-    . simp
+    . simp +zetaDelta
     constructor
     . exact hz
     constructor
@@ -1164,15 +1142,15 @@ lemma angle_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (z : ℂ) (hz: z 
   . exact hl
   rw [Set.mem_inter_iff]
   constructor
-  . simp[Construction.circle.points, abs_exp]
-  simp[line.points]
-  use 1/ (abs z)
-  nth_rw 2 [←abs_mul_exp_arg_mul_I z]
+  . simp +zetaDelta[Construction.circle.points, norm_exp]
+  simp +zetaDelta[line.points]
+  use 1/ (‖z‖)
+  nth_rw 2 [←norm_mul_exp_arg_mul_I z]
   rw[←mul_assoc]
   push_cast
   rw[one_div_mul_eq_div, div_self,one_mul]
   norm_cast
-  rw [←ne_eq, AbsoluteValue.ne_zero_iff]
+  rw [← ne_eq, norm_ne_zero_iff]
   symm
   exact h
 
@@ -1182,7 +1160,7 @@ lemma exp_one (a : ℝ): exp (a * I) = 1 ↔ ∃ n : ℤ, a = n * 2 * Real.pi :=
   . intro h
     rw [exp_mul_I,Complex.ext_iff] at h
     obtain ⟨hcos, hsin⟩ := h
-    simp only [add_re, mul_re, I_re, mul_zero, sin_ofReal_im, I_im, mul_one, sub_self, add_zero,
+    simp +zetaDelta only [add_re, mul_re, I_re, mul_zero, sin_ofReal_im, I_im, mul_one, sub_self, add_zero,
       one_re, add_im, cos_ofReal_im, mul_im, zero_add, one_im] at hcos hsin
     norm_cast at hsin hcos
     rw[Real.sin_eq_zero_iff] at hsin
@@ -1190,7 +1168,7 @@ lemma exp_one (a : ℝ): exp (a * I) = 1 ↔ ∃ n : ℤ, a = n * 2 * Real.pi :=
     exact hcos
   . intro h
     obtain ⟨n, hn⟩ := h
-    simp only [hn, ofReal_mul, ofReal_intCast, ofReal_ofNat, mul_assoc]
+    simp +zetaDelta only [hn, ofReal_mul, ofReal_intCast, ofReal_ofNat, mul_assoc]
     nth_rw 2 [← mul_assoc]
     rw[exp_int_mul_two_pi_mul_I]
 
@@ -1205,7 +1183,7 @@ lemma exp_eq_iff (a b : ℝ): exp (a * I) = exp (b * I) ↔ ∃ n : ℤ, a = n *
     linarith
   . intros h
     obtain ⟨n, hn⟩ := h
-    simp only [hn, ofReal_add, ofReal_mul, ofReal_intCast, ofReal_ofNat, add_mul, exp_add,
+    simp +zetaDelta only [hn, ofReal_add, ofReal_mul, ofReal_intCast, ofReal_ofNat, add_mul, exp_add,
       mul_assoc]
     nth_rw 2 [← mul_assoc]
     rw[exp_int_mul_two_pi_mul_I, one_mul]
@@ -1221,32 +1199,34 @@ lemma exp_ang_neg_one (z : ℂ): exp (↑z.arg * I) = -1 ↔ z.arg = Real.pi := 
       have : n * 2 * Real.pi + Real.pi ∈ Set.Ioc (-Real.pi) Real.pi := by
         rw [←hn]
         exact arg_mem_Ioc z
-      simp at this
+      simp +zetaDelta at this
       obtain ⟨h₁, h₂⟩ := this
       rw[← zero_add (-Real.pi), add_comm, ←lt_tsub_iff_left, sub_neg_eq_add, add_assoc,
         ←mul_two Real.pi] at h₁
       nth_rewrite 3 [mul_comm] at h₁
       rw [add_comm] at h₁
       rw[mul_assoc, ← one_add_mul (n:ℝ) (2 * Real.pi)] at h₁
-      rw[mul_comm, ←div_lt_iff' (by linarith), zero_div,← neg_lt_iff_pos_add'] at h₁
+      have hpos : 0 < 2 * Real.pi := by positivity
+      have hnpos : 0 < 1 + (n : ℝ) := (mul_pos_iff.mp h₁).resolve_right (by rintro ⟨_, hneg⟩; linarith) |>.1
+      have h₁ : (-1 : ℝ) < n := by linarith
       rw[mul_nonpos_iff] at h₂
       have :  (Real.pi ≤ 0) = False := by
-        simp only [eq_iff_iff, iff_false, not_le]
+        simp +zetaDelta only [eq_iff_iff, iff_false, not_le]
         exact Real.pi_pos
       rw[this, and_false, false_or] at h₂
       obtain ⟨h₂, _⟩ := h₂
       rw[mul_nonpos_iff] at h₂
       have : ((2:ℝ) ≤ 0) = False := by
-        simp only [eq_iff_iff, iff_false, not_le]
+        simp +zetaDelta only [eq_iff_iff, iff_false, not_le]
         exact two_pos
       rw[this, and_false, false_or] at h₂
       obtain ⟨h₂, _⟩ := h₂
       norm_cast at h₁ h₂
-      simp only [Int.reduceNegSucc, Int.reduceNeg] at h₁
+      simp +zetaDelta only [Int.reduceNegSucc, Int.reduceNeg] at h₁
       linarith [h₁, h₂]
     rw[this] at hn
     rw[hn]
-    simp
+    simp +zetaDelta
   . intro h
     rw [←exp_pi_mul_I, h]
 
@@ -1254,7 +1234,7 @@ lemma angle_half_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (z : ℂ) (h
     ↑(exp (arg z/2*I)) ∈ M_inf M := by
   by_cases h: arg z = Real.pi
   . have : exp (Real.pi/2 * I ) = I := by
-      simp only [exp_mul_I, cos_pi_div_two, sin_pi_div_two, one_mul, zero_add]
+      simp +zetaDelta only [exp_mul_I, cos_pi_div_two, sin_pi_div_two, one_mul, zero_add]
     rw[h,this]
     exact imath_M_inf M h₀ h₁
   let c : Construction.circle := {c := 0, r := 1}
@@ -1265,7 +1245,7 @@ lemma angle_half_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (z : ℂ) (h
     use 0
     use 1
     constructor
-    . simp
+    . simp +zetaDelta
     constructor
     . exact M_M_inf M h₀
     constructor
@@ -1276,7 +1256,7 @@ lemma angle_half_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (z : ℂ) (h
     use (((exp (arg z*I)) + 1)/2)
     use 0
     constructor
-    . simp
+    . simp +zetaDelta
     constructor
     . apply midpoiont M h₀ h₁
       apply angle_M_inf M h₀ h₁
@@ -1284,7 +1264,7 @@ lemma angle_half_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (z : ℂ) (h
       apply M_M_inf M h₁
     constructor
     . exact M_M_inf M h₀
-    . simp only [ne_eq, div_eq_zero_iff, OfNat.ofNat_ne_zero, or_false]
+    . simp +zetaDelta only [ne_eq, div_eq_zero_iff, OfNat.ofNat_ne_zero, or_false]
       rw [add_eq_zero_iff_eq_neg, exp_ang_neg_one]
       exact h
   apply ilc_M_inf M
@@ -1296,22 +1276,23 @@ lemma angle_half_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (z : ℂ) (h
   refine ⟨hl, ?_⟩
   rw [Set.mem_inter_iff]
   constructor
-  . simp[Construction.circle.points]
+  . simp +zetaDelta[Construction.circle.points]
     norm_cast
-    exact abs_exp_ofReal_mul_I ( arg z/2)
-  . simp[line.points]
+    exact norm_exp_ofReal_mul_I ( arg z/2)
+  . simp +zetaDelta[line.points]
 
     have : ∃ r:ℝ, (z.arg * I / 2).exp/(((z.arg * I).exp + 1) / 2) = r := by
       use ((z.arg * I / 2).exp/(((z.arg * I).exp + 1) / 2)).re
-      simp only [← div_mul, Complex.ext_iff, ofReal_re, mul_im, ofReal_im, true_and, im_ofNat, mul_zero,
+      simp +zetaDelta only [← div_mul, Complex.ext_iff, ofReal_re, mul_im, ofReal_im, true_and, im_ofNat, mul_zero,
       re_ofNat, zero_add, mul_eq_zero, OfNat.ofNat_ne_zero, or_false]
 
       have  (a : ℝ)(h: ¬(↑a * I).exp = -1): im ((exp (a * I / 2)) / (exp (a * I) + 1)) = 0 := by
         have g: (((a).cos + (a).sin * I + 1) * ((a).cos - (a).sin * I + 1)) = 2*(1+ (a).cos) := by
-          ring_nf
-          simp only [ofReal_cos, ofReal_sin, I_sq, mul_neg, mul_one, sub_neg_eq_add,
+          ring_nf +zetaDelta
+          simp +zetaDelta only [ofReal_cos, ofReal_sin, I_sq, mul_neg, mul_one, sub_neg_eq_add,
             cos_sq_add_sin_sq]
-          ring_nf
+          have htrig := Complex.cos_sq_add_sin_sq (a : ℂ)
+          linear_combination htrig
 
         have : (↑(a / 2).sin * (↑a.cos + 1) - ↑(a / 2).cos * ↑a.sin) * I = 0 := by
           have hcos :  (a).cos = (a/2).cos ^ 2 - (a/2).sin ^ 2 := by
@@ -1322,14 +1303,14 @@ lemma angle_half_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (z : ℂ) (h
           norm_cast
           rw[mul_sub]
           calc _ = ((a/2).sin * (a/2).cos^2 - 2 * (a/2).cos^2 * (a/2).sin - (a/2).sin *
-            (a/2).sin^2 + (a/2).sin) * I := by push_cast; ring_nf
-            _ = ((a/2).sin * ((a/2).cos^2 - 2 * (a/2).cos^2  - (a/2).sin^2 + 1)) * I := by ring_nf
-            _ = ((a/2).sin * (- ((a/2).cos^2 + (a/2).sin^2) + 1)) * I := by ring_nf
-            _ = ((a/2).sin * (- 1 + 1)) * I := by norm_cast; simp only [Real.cos_sq_add_sin_sq,
+            (a/2).sin^2 + (a/2).sin) * I := by push_cast; ring_nf +zetaDelta
+            _ = ((a/2).sin * ((a/2).cos^2 - 2 * (a/2).cos^2  - (a/2).sin^2 + 1)) * I := by ring_nf +zetaDelta
+            _ = ((a/2).sin * (- ((a/2).cos^2 + (a/2).sin^2) + 1)) * I := by ring_nf +zetaDelta
+            _ = ((a/2).sin * (- 1 + 1)) * I := by norm_cast; simp +zetaDelta only [Real.cos_sq_add_sin_sq,
               neg_add_cancel, mul_zero, ofReal_zero, zero_mul, Int.reduceNegSucc, Int.cast_zero]
-            _ = 0 := by ring_nf
+            _ = 0 := by ring_nf +zetaDelta
 
-        calc _ = ((↑a / 2*I).exp / ((↑a * I).exp + 1)).im := by ring_nf
+        calc _ = ((↑a / 2*I).exp / ((↑a * I).exp + 1)).im := by ring_nf +zetaDelta
         _ = (((a / 2).cos + (a / 2).sin * I) / ((a).cos + (a).sin * I + 1)).im := by
           rw [exp_mul_I, exp_mul_I]; norm_cast
         _ = ((((a / 2).cos + (a / 2).sin * I)  / ((a).cos + (a).sin * I + 1)) *
@@ -1341,17 +1322,17 @@ lemma angle_half_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (z : ℂ) (h
         _ = ((((a / 2).cos + (a / 2).sin * I) * ((a).cos - (a).sin * I + 1)) /
           (2*(1+ (a).cos))).im := by rw[g]
         _ = (((a / 2).cos * ((a).cos + 1) - (a / 2).sin  * (a).sin * I^2 - (a / 2).cos * (a).sin * I
-          + (a / 2).sin * ((a).cos+1) * I) / (2*(1+ (a).cos))).im := by ring_nf
+          + (a / 2).sin * ((a).cos+1) * I) / (2*(1+ (a).cos))).im := by ring_nf +zetaDelta
         _ = (((a / 2).cos * ((a).cos + 1) + (a / 2).sin  * (a).sin  - (a / 2).cos * (a).sin * I
           + (a / 2).sin * ((a).cos+1) * I) / (2*(1+ (a).cos))).im := by
-            simp only [I_sq, mul_neg, mul_one, sub_neg_eq_add]
+            simp +zetaDelta only [I_sq, mul_neg, mul_one, sub_neg_eq_add]
         _ = (((a / 2).cos * ((a).cos + 1) + (a / 2).sin  * (a).sin
           + ((a / 2).sin * ((a).cos+1) - (a / 2).cos * (a).sin) * I) / (2*(1+ (a).cos))).im := by
-            ring_nf
+            ring_nf +zetaDelta
         _ = (((a / 2).cos * ((a).cos + 1) + (a / 2).sin  * (a).sin
           + (0:ℂ) ) / (2*(1+ (a).cos))).im := by rw [this]
         _ = (((a / 2).cos * ((a).cos + 1) + (a / 2).sin  * (a).sin) / (2*(1+ (a).cos)):ℂ).im := by
-          simp only [ofReal_cos, ofReal_div, ofReal_ofNat, ofReal_sin, add_zero]
+          simp +zetaDelta only [ofReal_cos, ofReal_div, ofReal_ofNat, ofReal_sin, add_zero]
         _ = 0 := by norm_cast
 
       apply this
@@ -1361,25 +1342,25 @@ lemma angle_half_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (z : ℂ) (h
     use r
     rw[←hr]
     calc (z.arg * I / 2).exp / (((z.arg * I).exp + 1) / 2) * (((z.arg * I).exp + 1) / 2)
-    = (((z.arg * I).exp + 1) / 2) / (((z.arg * I).exp + 1) / 2) * (z.arg * I / 2).exp := by ring_nf
+    = (((z.arg * I).exp + 1) / 2) / (((z.arg * I).exp + 1) / 2) * (z.arg * I / 2).exp := by ring_nf +zetaDelta
      _ = (z.arg * I / 2).exp := by
         rw [div_self, one_mul]
-        simp only [ne_eq, div_eq_zero_iff, OfNat.ofNat_ne_zero, or_false]
+        simp +zetaDelta only [ne_eq, div_eq_zero_iff, OfNat.ofNat_ne_zero, or_false]
         rw [add_eq_zero_iff_eq_neg, exp_ang_neg_one]
         exact h
-     _ = (z.arg / 2 * I ).exp := by ring_nf
+     _ = (z.arg / 2 * I ).exp := by ring_nf +zetaDelta
 
 
 --! Währe schöner min  z ^ (1/2:ℂ) ∈ M_inf M
 lemma root_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (z : ℂ) (hz: z ∈ M_inf M):
-    (↑(Complex.abs z) ^ (1/2:ℂ) * ((↑z.arg/2 * I).exp) )∈ M_inf M := by
+    (↑(‖z‖) ^ (1/2:ℂ) * ((↑z.arg/2 * I).exp) )∈ M_inf M := by
     norm_cast
     apply mul_M_inf M h₀ h₁
     apply zero_real_root_M_inf M h₀ h₁
     apply abs_M_Inf M h₀ h₁
     exact hz
-    simp only [ge_iff_le, apply_nonneg]
-    simp only [ofReal_div, ofReal_ofNat]
+    exact norm_nonneg z
+    simp +zetaDelta only [ofReal_div, ofReal_ofNat]
     exact angle_half_M_inf M h₀ h₁ z hz
 
 --It is nicer to yous polar coordinates
@@ -1447,5 +1428,5 @@ lemma root_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (z : ℂ) (hz: z �
 --   mul_zero :=  fun a => by ring
 --   inv := fun a => a⁻¹
 --   exists_pair_ne := ⟨0, 1, fun h => by simp_all only [zero_ne_one]⟩
---   inv_zero := by simp
+--   inv_zero := by simp +zetaDelta
 --   mul_inv_cancel := fun a ha => by rw[mul_comm, inv_mul_cancel ha]

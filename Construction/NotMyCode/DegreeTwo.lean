@@ -1,4 +1,6 @@
-import Mathlib.FieldTheory.Adjoin
+import Mathlib.FieldTheory.IntermediateField.Adjoin.Basic
+import Mathlib.FieldTheory.Minpoly.Finite
+import Mathlib.Algebra.CharP.Algebra
 import Mathlib.Tactic.FieldSimp
 import Mathlib.Tactic.LinearCombination
 
@@ -15,7 +17,7 @@ private lemma minpoly_two_le_iff {x : E} (hx : IsIntegral K x) :
     Subtype.exists, exists_prop, exists_eq_right] using minpoly.two_le_natDegree_iff hx
 
 theorem dergree_two_rank_two :
-    FiniteDimensional.finrank K L = 2 ↔
+    Module.finrank K L = 2 ↔
       ∃ x : E, L = IntermediateField.adjoin K {x} ∧ (minpoly K x).natDegree = 2 := by
   constructor
   · intro hdim
@@ -23,7 +25,7 @@ theorem dergree_two_rank_two :
     have hnot : ¬ L ≤ ⊥ := by
       intro h
       have hL : L = ⊥ := le_antisymm h bot_le
-      have hone : FiniteDimensional.finrank K L = 1 :=
+      have hone : Module.finrank K L = 1 :=
         IntermediateField.finrank_eq_one_iff.mpr hL
       omega
     obtain ⟨x, hxL, hxK⟩ := SetLike.not_le_iff_exists.mp hnot
@@ -33,8 +35,9 @@ theorem dergree_two_rank_two :
         exists_eq_right] using hxK
     have hx : IsIntegral K x := (IsIntegral.of_finite K (⟨x, hxL⟩ : L)).map L.val
     have hdle : (minpoly K x).natDegree ≤ 2 := by
-      have h := minpoly.natDegree_le (K := K) (⟨x, hxL⟩ : L)
+      have h := minpoly.natDegree_le (A := K) (⟨x, hxL⟩ : L)
       rw [← minpoly.algHom_eq L.val L.val.injective (⟨x, hxL⟩ : L)] at h
+      change (minpoly K x).natDegree ≤ Module.finrank K L at h
       simpa only [hdim] using h
     have hd : (minpoly K x).natDegree = 2 :=
       le_antisymm hdle ((minpoly_two_le_iff K hx).mpr hxK')
@@ -51,7 +54,7 @@ theorem dergree_two_rank_two :
     rw [IntermediateField.adjoin.finrank hx, hd]
 
 theorem dergree_two_eq_sqr [CharZero K] :
-    FiniteDimensional.finrank K L = 2 ↔
+    Module.finrank K L = 2 ↔
       ∃ x : E, x ^ 2 ∈ K ∧ x ∉ K ∧ L = IntermediateField.adjoin K {x} := by
   letI : CharZero E := charZero_of_injective_algebraMap (algebraMap K E).injective
   rw [dergree_two_rank_two K L]
@@ -83,6 +86,7 @@ theorem dergree_two_eq_sqr [CharZero K] :
     have hxy : x = (y - (b : E)) / 2 := by
       dsimp [y]
       field_simp
+      ring
     have hyK : y ∉ K := by
       intro hy
       apply hxK

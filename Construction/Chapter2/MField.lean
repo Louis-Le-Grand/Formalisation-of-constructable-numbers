@@ -1,5 +1,5 @@
 import Construction.Chapter1.basic_construction
-import Mathlib.FieldTheory.Adjoin
+import Mathlib.FieldTheory.IntermediateField.Adjoin.Basic
 
 open Construction
 noncomputable def MField (M: Set ℂ)(h₀: 0 ∈ M)(h₁: 1∈ M): Subfield ℂ := {
@@ -39,7 +39,7 @@ lemma MField_re_im' (M: Set ℂ)(h₀: 0 ∈ M)(h₁: 1∈ M): ∀ x : ℂ, x �
   exact z_iff_re_im_M_inf M h₀ h₁ x
 
 lemma MField_polar (M: Set ℂ)(h₀: 0 ∈ M)(h₁: 1∈ M): ∀ x : ℂ, x ∈ MField M h₀ h₁ ↔
-    ↑(Complex.abs x) ∈ MField M h₀ h₁ ∧ Complex.exp (Complex.arg x * Complex.I) ∈  MField M h₀ h₁ := by
+    ↑(norm x) ∈ MField M h₀ h₁ ∧ Complex.exp (Complex.arg x * Complex.I) ∈  MField M h₀ h₁ := by
   intro x
   constructor
   . intro hx
@@ -48,7 +48,7 @@ lemma MField_polar (M: Set ℂ)(h₀: 0 ∈ M)(h₁: 1∈ M): ∀ x : ℂ, x ∈
     apply angle_M_inf M h₀ h₁ x hx
   intro hx
   obtain ⟨habs, hang⟩ := hx
-  rw[←Complex.abs_mul_exp_arg_mul_I x]
+  rw[←Complex.norm_mul_exp_arg_mul_I x]
   apply mul_M_inf M h₀ h₁ _ _ habs hang
 
 class QuadraticClosed (F: Type*) [Field F] : Prop where
@@ -58,19 +58,17 @@ instance MField_QuadraticClosed (M: Set ℂ)(h₀: 0 ∈ M)(h₁: 1∈ M) :
     QuadraticClosed (MField M h₀ h₁) where
   exists_root := by
     intro x
-    rw[Subtype.exists]
-    use (↑(Complex.abs x) ^ (1/2:ℂ) * ((↑ (Complex.arg x)/(2:ℂ) * Complex.I).exp))
-    constructor
-    rw[←pow_two]
-    simp only [one_div, SubmonoidClass.mk_pow, Complex.cpow_ofNat_inv_pow, Subtype.coe_eta]
-    simp_rw[pow_two]
-    ring_nf
-    norm_cast
-    simp_rw[←Complex.exp_nat_mul (↑(x:ℂ).arg * Complex.I * (1 / 2)) 2]
-    simp only [one_div, Complex.cpow_ofNat_inv_pow, Nat.cast_ofNat]
-    ring_nf
-    simp only [Complex.abs_mul_exp_arg_mul_I, Subtype.coe_eta]
-    exact root_M_inf M h₀ h₁ x (by rw[←MField_mem M h₀ h₁ x]; simp only [SetLike.coe_mem])
+    let y : ℂ := ↑‖(x : ℂ)‖ ^ (1 / 2 : ℂ) * Complex.exp (↑(Complex.arg x) / 2 * Complex.I)
+    have hy : y ∈ MField M h₀ h₁ :=
+      root_M_inf M h₀ h₁ x (MField_mem M h₀ h₁ x |>.mp x.property)
+    refine ⟨⟨y, hy⟩, ?_⟩
+    apply Subtype.ext
+    change y * y = (x : ℂ)
+    dsimp [y]
+    rw [← pow_two, mul_pow]
+    simp only [one_div, Complex.cpow_ofNat_inv_pow]
+    rw [← Complex.exp_nat_mul]
+    convert Complex.norm_mul_exp_arg_mul_I (x : ℂ) using 1 <;> ring
 
 lemma MField_QuadraticClosed_def (M: Set ℂ)(h₀: 0 ∈ M)(h₁: 1∈ M) {x : ℂ} (h: x ∈ (MField M h₀ h₁)): ∃ y : (MField M h₀ h₁), y * y = x := by
   have: ∃ x' : (MField M h₀ h₁), x' = x := by
@@ -243,11 +241,10 @@ lemma ill_L (l₁ l₂ : line): z ∈ l₁.points ∩ l₂.points ↔ ∃ i j : 
     one_im, sub_self, ofReal_sub, ofReal_add, ofReal_mul, ofReal_one, add_im, mul_im, add_zero]
   ring_nf
   rw[←sub_eq_zero] at h₁ h₂
-  simp only at h₁ h₂
   ring_nf at h₁ h₂
   calc _ = ↑j * ↑l₂.z₁.re - ↑j * ↑l₂.z₂.re + (↑l₂.z₂.re - ↑i * ↑l₁.z₁.re) + ↑i * ↑l₁.z₂.re - ↑l₁.z₂.re + (↑j * ↑l₂.z₁.im * I - ↑j * ↑l₂.z₂.im * I)  - ↑i * ↑l₁.z₁.im * I + ↑i * ↑l₁.z₂.im * I + ↑l₂.z₂.im * I - ↑l₁.z₂.im * I := by ring_nf
    _ = - (↑i * ↑l₁.z₁.re - ↑i * ↑l₁.z₂.re + ↑l₁.z₂.re + ↑j * ↑l₂.z₂.re + (-(↑j * ↑l₂.z₁.re) - ↑l₂.z₂.re) + ↑i * I * ↑l₁.z₁.im - ↑i * I * ↑l₁.z₂.im + (↑j * I * ↑l₂.z₂.im - ↑j * I * ↑l₂.z₁.im) + (I * ↑l₁.z₂.im - I * ↑l₂.z₂.im)) := by ring_nf
-   _ = 0 := by rw[h₁, zero_add, h₂, neg_zero]
+   _ = 0 := by linear_combination -h₁ - h₂
 
 --(Nempty: l.points ∩ g.points ≠ ∅) (hl: l.z₁ ≠ l.z₂)
 -- lemma ilc_L (l: line) (g: Construction.circle) (hg: 0 ≤ g.r): z ∈ l.points ∩ g.points ↔
@@ -256,10 +253,10 @@ lemma ill_L (l₁ l₂ : line): z ∈ l₁.points ∩ l₂.points ↔ ∃ i j : 
 --     let c := (l.z₂.re - g.c.re)^2 - (I*l.z₂.im - I*g.c.im)^2 - g.r^2
 --     ∃ ι:ℝ, ι^2 * a + ι * b + c = 0  ∧ ι * l.z₁ + (1- ι) * l.z₂ = z := by
 --   refine ⟨?_, ?_⟩ <;> intro h <;> simp only [line.points, circle.points, Set.mem_inter_iff,
---     Set.mem_setOf_eq, mem_sphere_iff_norm, norm_eq_abs] at h ⊢
+--     Set.mem_setOf_eq, mem_sphere_iff_norm] at h ⊢
 --   . obtain ⟨⟨t ,h₁⟩, h₂⟩ := h
 --     refine ⟨t, ?_, h₁⟩
---     rw[←sq_eq_sq (AbsoluteValue.nonneg _ _) hg, Complex.sq_abs, normSq_apply, ←h₁, ←sub_eq_zero] at h₂
+--     rw[←sq_eq_sq₀ (norm_nonneg _) hg, Complex.sq_norm, normSq_apply, ←h₁, ←sub_eq_zero] at h₂
 --     simp only [sub_re, add_re, mul_re, ofReal_re, ofReal_im, zero_mul, sub_zero, one_re, sub_im,
 --       one_im, sub_self, add_im, mul_im, add_zero] at h₂
 --     simp_rw [←mul_sub I, mul_pow,←mul_assoc, mul_comm _ I, ←mul_assoc, ←pow_two I, I_sq, neg_one_mul, neg_mul, sub_neg_eq_add]
@@ -268,7 +265,7 @@ lemma ill_L (l₁ l₂ : line): z ∈ l₁.points ∩ l₂.points ↔ ∃ i j : 
 --     ring_nf
 --   . obtain ⟨ι, h₁, h₂⟩ := h
 --     refine ⟨⟨ι, h₂⟩, ?_⟩
---     rw[←sq_eq_sq (AbsoluteValue.nonneg _ _) hg, Complex.sq_abs, normSq_apply, ←h₂, ←sub_eq_zero]
+--     rw[←sq_eq_sq₀ (norm_nonneg _) hg, Complex.sq_norm, normSq_apply, ←h₂, ←sub_eq_zero]
 --     simp_rw [←mul_sub I, mul_pow,←mul_assoc, mul_comm _ I, ←mul_assoc, ←pow_two I, I_sq, neg_one_mul, neg_mul, sub_neg_eq_add] at h₁
 --     simp only [sub_re, add_re, mul_re, ofReal_re, ofReal_im, zero_mul, sub_zero, one_re, sub_im, one_im, sub_self, add_im, mul_im, add_zero]
 --     norm_cast at h₁
@@ -281,10 +278,10 @@ lemma ilc_L  (c: Construction.circle) (l: line) (hc: 0 ≤ c.r): z ∈ c.points 
     let c := (l.z₂.re - c.c.re)^2 - (I*l.z₂.im - I*c.c.im)^2 - c.r^2
     ∃ ι:ℝ, ι^2 * a + ι * b + c = 0  ∧ ι * l.z₁ + (1- ι) * l.z₂ = z := by
   refine ⟨?_, ?_⟩ <;> intro h <;> simp only [line.points, circle.points, Set.mem_inter_iff,
-    Set.mem_setOf_eq, mem_sphere_iff_norm, norm_eq_abs] at h ⊢
+    Set.mem_setOf_eq, mem_sphere_iff_norm] at h ⊢
   . obtain ⟨ h₁, ⟨t ,h₂⟩⟩ := h
     refine ⟨t, ?_, h₂⟩
-    rw[←sq_eq_sq (AbsoluteValue.nonneg _ _) hc, Complex.sq_abs, normSq_apply, ←h₂, ←sub_eq_zero] at h₁
+    rw[←sq_eq_sq₀ (norm_nonneg _) hc, Complex.sq_norm, normSq_apply, ←h₂, ←sub_eq_zero] at h₁
     simp only [sub_re, add_re, mul_re, ofReal_re, ofReal_im, zero_mul, sub_zero, one_re, sub_im,
       one_im, sub_self, add_im, mul_im, add_zero] at h₁
     simp_rw [←mul_sub I, mul_pow,←mul_assoc, mul_comm _ I, ←mul_assoc, ←pow_two I, I_sq, neg_one_mul, neg_mul, sub_neg_eq_add]
@@ -293,7 +290,7 @@ lemma ilc_L  (c: Construction.circle) (l: line) (hc: 0 ≤ c.r): z ∈ c.points 
     ring_nf
   . obtain ⟨ι, h₁, h₂⟩ := h
     refine ⟨?_, ⟨ι, h₂⟩⟩
-    rw[←sq_eq_sq (AbsoluteValue.nonneg _ _) hc, Complex.sq_abs, normSq_apply, ←h₂, ←sub_eq_zero]
+    rw[←sq_eq_sq₀ (norm_nonneg _) hc, Complex.sq_norm, normSq_apply, ←h₂, ←sub_eq_zero]
     simp_rw [←mul_sub I, mul_pow,←mul_assoc, mul_comm _ I, ←mul_assoc, ←pow_two I, I_sq, neg_one_mul, neg_mul, sub_neg_eq_add] at h₁
     simp only [sub_re, add_re, mul_re, ofReal_re, ofReal_im, zero_mul, sub_zero, one_re, sub_im, one_im, sub_self, add_im, mul_im, add_zero]
     norm_cast at h₁
@@ -493,7 +490,7 @@ lemma quadratic_formula (x a b c : ℂ) (h:  a * x ^ 2 +  b * x + c = 0) (ha: a�
     rw [← pow_two, ← Complex.cpow_nat_mul]
     simp only [discrim, mul_assoc, mul_comm a c, Nat.cast_ofNat, one_div, isUnit_iff_ne_zero, ne_eq,
       OfNat.ofNat_ne_zero, not_false_eq_true, IsUnit.mul_inv_cancel, Complex.cpow_one]
-  rw [pow_two, ←mul_assoc, quadratic_eq_zero_iff ha this] at h
+  rw [pow_two, quadratic_eq_zero_iff ha this] at h
   exact h
 
 lemma ilc_L' (z : ℂ) (h : z ∈ ilc L): ∃ ω ∈ L, ∃ x : ℂ, x * x = ω ∧ z ∈ L⟮x⟯ := by
@@ -520,7 +517,7 @@ lemma ilc_L' (z : ℂ) (h : z ∈ ilc L): ∃ ω ∈ L, ∃ x : ℂ, x * x = ω 
     simp only [Construction.C, SetLike.mem_coe, ne_eq, Set.mem_setOf_eq] at hc
     obtain ⟨_, _, _, _, _⟩ := hc
     norm_cast
-    simp_all only [dist_eq,Complex.sq_abs, distSq_L]
+    simp_all only [dist_eq,Complex.sq_norm, distSq_L]
   let u := (l.z₁.re - l.z₂.re)^2 - (l.z₁.im*I - l.z₂.im*I)^2
   let v := 2*((l.z₁.re - l.z₂.re) * (l.z₂.re - c.c.re) - (l.z₁.im*I - l.z₂.im*I) * (l.z₂.im*I-c.c.im*I))
   let w := (l.z₂.re - c.c.re)^2 - (l.z₂.im*I - c.c.im*I)^2 - c.r^2
@@ -615,13 +612,13 @@ lemma icc_L (z : ℂ) (h : z ∈ icc L): ∃ ω ∈ L,∃ x : ℂ, x * x = ω �
     refine div_mem (add_mem (sub_mem ?_ ?_) hD') (mul_mem (ofNat_mem L 2) hD')
     . obtain ⟨_, a, b, hc, _, ha, hb⟩ := hc₁
       simp only [hc, dist_eq]
-      rw [← Complex.ofReal_pow, Complex.sq_abs, ← Complex.mul_conj]
+      rw [← Complex.ofReal_pow, Complex.sq_norm, ← Complex.mul_conj]
       refine L.mul_mem (L.sub_mem ha hb) ?_
       simp only [map_sub]
       exact sub_mem (ConjClosed.conj_L L a ha) (ConjClosed.conj_L L b hb)
     . obtain ⟨_, a, b, hc, _, ha, hb⟩ := hc₂
       simp only [hc, dist_eq]
-      rw [← Complex.ofReal_pow, Complex.sq_abs, ← Complex.mul_conj]
+      rw [← Complex.ofReal_pow, Complex.sq_norm, ← Complex.mul_conj]
       refine L.mul_mem (L.sub_mem ha hb) ?_
       simp only [map_sub]
       exact sub_mem (ConjClosed.conj_L L a ha) (ConjClosed.conj_L L b hb)
@@ -630,11 +627,12 @@ lemma icc_L (z : ℂ) (h : z ∈ icc L): ∃ ω ∈ L,∃ x : ℂ, x * x = ω �
   have hz : z = c₁.c + d * (s + x) := by
     simp only [add_sub_cancel, x]
     field_simp [hd0]
+    ring
   refine ⟨s^2 - c₁.r^2 / D, ?_, x, ?_, ?_⟩
   have hr₁: (c₁.r^2 :ℂ) ∈ L := by
     obtain ⟨_, a, b, hc, _, ha, hb⟩ := hc₁
     simp only [hc, dist_eq]
-    rw [← Complex.ofReal_pow, Complex.sq_abs, ← Complex.mul_conj]
+    rw [← Complex.ofReal_pow, Complex.sq_norm, ← Complex.mul_conj]
     refine L.mul_mem (L.sub_mem ha hb) ?_
     simp only [map_sub]
     exact sub_mem (ConjClosed.conj_L L a ha) (ConjClosed.conj_L L b hb)
@@ -644,10 +642,9 @@ lemma icc_L (z : ℂ) (h : z ∈ icc L): ∃ ω ∈ L,∃ x : ℂ, x * x = ω �
 
     have circle_eq (c : Construction.circle) (hz : z ∈ c.points) :
         (z - c.c) * (starRingEnd ℂ) (z - c.c) = (c.r : ℂ)^2 := by
-      have hr : Complex.abs (z - c.c) = c.r := by
-        change dist z c.c = c.r
-        exact Metric.mem_sphere.mp hz
-      rw [Complex.mul_conj, ← Complex.sq_abs, Complex.ofReal_pow, hr]
+      have hr : norm (z - c.c) = c.r := by
+        simpa only [dist_eq_norm] using Metric.mem_sphere.mp hz
+      rw [Complex.mul_conj, ← Complex.sq_norm, Complex.ofReal_pow, hr]
 
     have h₁ := circle_eq c₁ h_icc.1
     have h₂ := circle_eq c₂ h_icc.2
@@ -681,7 +678,6 @@ lemma icc_L (z : ℂ) (h : z ∈ icc L): ∃ ω ∈ L,∃ x : ℂ, x * x = ω �
               d * (starRingEnd ℂ) (z - c₁.c)) / D := by
           simp only [map_div₀, map_sub, u, D]
           field_simp [hd0, hcd0]
-          ring
         _ = ((c₁.r : ℂ)^2 - (c₂.r : ℂ)^2 + D) / D := by
           rw [hlin]
         _ = 2 * s := by
@@ -724,5 +720,5 @@ end ConjClosed
 
 example ( a b c :ℂ) (h: c ≠ 0): a * c = b ↔ a = b * c⁻¹ := by
   refine ⟨?_, ?_⟩ <;> intros h'
-  . rw [CancelDenoms.inv_subst h h']
+  . exact (eq_mul_inv_iff_mul_eq₀ h).mpr h'
   . exact (eq_mul_inv_iff_mul_eq₀ h).mp h'

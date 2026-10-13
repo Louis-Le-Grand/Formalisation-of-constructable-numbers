@@ -1,89 +1,76 @@
+name: Lean, documentation and blueprint
+
 on:
   push:
-    branches:
-      - main
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
 
-# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
   contents: read
-  pages: write
-  id-token: write
+
+concurrency:
+  group: blueprint-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   build_project:
     runs-on: ubuntu-latest
-    name: Build project
+    name: Build project and documentation
     steps:
       - name: Checkout project
-        uses: actions/checkout@v2
+        uses: actions/checkout@v7
+
+      - name: Build Lean project
+        uses: leanprover/lean-action@v1
         with:
-          fetch-depth: 0
+          build-args: Construction
 
-      - name: Install elan
-        run: curl https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -sSf | sh -s -- -y --default-toolchain leanprover/lean4:4.5.0
+      - name: Build API documentation
+        run: lake -R -Kenv=dev build Construction:docs
 
-      - name: Get cache
-        run: ~/.elan/bin/lake exe cache get || true
-
-      - name: Build project
-        run: ~/.elan/bin/lake build Construction
-
-      - name: Cache mathlib docs
-        uses: actions/cache@v3
+      - name: Build blueprint and dependency graph
+        uses: xu-cheng/texlive-action@v3
         with:
-          path: |
-            .lake/build/doc/Init
-            .lake/build/doc/Lake
-            .lake/build/doc/Lean
-            .lake/build/doc/Std
-            .lake/build/doc/Mathlib
-            .lake/build/doc/declarations
-            !.lake/build/doc/declarations/declaration-data-Construction*
-          key: MathlibDoc-${{ hashFiles('lake-manifest.json') }}
-          restore-keys: |
-            MathlibDoc-
-
-      - name: Build documentation
-        run: ~/.elan/bin/lake -R -Kenv=dev build Construction:docs
-
-      - name: Build blueprint and copy to `docs/blueprint`
-        uses: xu-cheng/texlive-action@v2
-        with:
-          docker_image: ghcr.io/xu-cheng/texlive-full:20231201
+          docker_image: ghcr.io/xu-cheng/texlive-full:20250401
           run: |
-            apk update
-            apk add --update make py3-pip git pkgconfig graphviz graphviz-dev gcc musl-dev
-            git config --global --add safe.directory $GITHUB_WORKSPACE
-            git config --global --add safe.directory `pwd`
+            apk add --no-cache make py3-pip git pkgconfig graphviz graphviz-dev gcc musl-dev
+            git config --global --add safe.directory "$GITHUB_WORKSPACE"
             python3 -m venv env
-            source env/bin/activate
-            pip install --upgrade pip requests wheel
-            pip install pygraphviz --global-option=build_ext --global-option="-L/usr/lib/graphviz/" --global-option="-R/usr/lib/graphviz/"
-            pip install leanblueprint
-            leanblueprint pdf
-            mkdir docs
-            cp blueprint/print/print.pdf docs/blueprint.pdf
+            . env/bin/activate
+            pip install --upgrade pip wheel
+            pip install leanblueprint==0.0.20
             leanblueprint web
+            python3 scripts/update_dependency_graph.py
+            leanblueprint pdf
+            mkdir -p docs
+            cp blueprint/print/print.pdf docs/blueprint.pdf
             cp -r blueprint/web docs/blueprint
 
-      - name: Check declarations
-        run: |
-            ~/.elan/bin/lake exe checkdecls blueprint/lean_decls
+      - name: Check blueprint declarations
+        run: lake exe checkdecls blueprint/lean_decls
 
-      - name: Move documentation to `docs/docs`
+      - name: Collect API documentation
         run: |
           sudo chown -R runner docs
           cp -r .lake/build/doc docs/docs
 
-      - name: Upload docs & blueprint artifact
-        uses: actions/upload-pages-artifact@v1
+      - name: Upload docs and blueprint
+        uses: actions/upload-pages-artifact@v4
         with:
           path: docs/
 
+  deploy:
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    needs: build_project
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v1
-
-      - name: Make sure the cache works
-        run: |
-          mv docs/docs .lake/build/doc
+        uses: actions/deploy-pages@v4

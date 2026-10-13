@@ -1,5 +1,5 @@
 import Construction.Chapter2.KZero
-import Construction.NotMyCode.PR14987
+import Mathlib.FieldTheory.Relrank
 
 open IntermediateField Construction
 

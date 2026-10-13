@@ -1,5 +1,5 @@
 import Construction.Chapter2.MField
-import Construction.NotMyCode.PR14987
+import Mathlib.FieldTheory.Relrank
 
 import Mathlib.RingTheory.Norm.Basic
 import Mathlib.Deprecated.Subfield

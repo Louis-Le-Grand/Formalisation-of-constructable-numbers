@@ -11,4 +11,5 @@ import Construction.Chapter3.DoubleCube
 import Construction.Chapter3.AngleTrisection
 
 import Construction.NotMyCode.map_of_isScalarTower
-import Construction.NotMyCode.PR14987
+import Construction.NotMyCode.DegreeTwo
+import Construction.NotMyCode.RootTower

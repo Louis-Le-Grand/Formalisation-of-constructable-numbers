@@ -1,4 +1,4 @@
-import Construction.Chapter2.ClasificationMinf
+import Construction.Chapter2.ClasificationMinf2
 import Construction.NotMyCode.map_of_isScalarTower
 
 import Mathlib.Algebra.Polynomial.SpecificDegree

@@ -39,7 +39,9 @@ jobs:
             python3 -m venv env
             . env/bin/activate
             pip install --upgrade pip wheel
-            pip install leanblueprint==0.0.20
+            # Alpine stores Graphviz plugins outside the default linker search path.
+            LDFLAGS="-L/usr/lib/graphviz -Wl,-rpath,/usr/lib/graphviz" \
+              pip install leanblueprint==0.0.20
             leanblueprint web
             python3 scripts/update_dependency_graph.py
             leanblueprint pdf

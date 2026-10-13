@@ -1,4 +1,4 @@
-import Construction.Chapter2.ClassificationMinf2
+import Construction.Chapter2.ClasificationMinf
 import Construction.NotMyCode.map_of_isScalarTower
 
 import Mathlib.Algebra.Polynomial.SpecificDegree
@@ -73,7 +73,7 @@ lemma not_mod_eq_imp_not_eq (a b n : ℕ ) (h : ¬ a % n = b % n) : ¬ a = b := 
 
 lemma third_root_of_two_not_in_M_inf: (2 : ℂ) ^ (1/3: ℂ) ∉ M_inf {(0:ℂ),(1:ℂ)} := by
   apply Classfication_z_in_M_inf_2m_not (Set.mem_insert 0 {1}) (Set.mem_insert_of_mem 0 rfl)
-  simp only [Nat.cast_ofNat, one_div, not_exists]
+  simp only [one_div, not_exists]
   intro x
   have h: ¬ 2 ^ x =  Polynomial.degree (minpoly ℚ ((2:ℂ ) ^ (1/3:ℂ))) := by
     rw[degree_third_root_of_two]

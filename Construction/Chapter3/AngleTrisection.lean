@@ -1,5 +1,4 @@
 import Construction.Chapter3.DoubleCube
-import Construction.NotMyCode.map_of_isScalarTower
 
 import Mathlib.Algebra.Polynomial.SpecificDegree
 import Mathlib.NumberTheory.Real.Irrational
@@ -22,7 +21,7 @@ lemma H_degree : H.natDegree = 3 := by
     simp
     rw[Polynomial.natDegree_sub (p:= (X ^ 3)) (q:= ((Polynomial.C (6/8) * X)))]
     apply Eq.le
-    simp[Polynomial.natDegree_sub_eq_right_of_natDegree_lt (p:= (Polynomial.C (6/8) * X)) (q:= (X^3 :ℚ[X])), Polynomial.natDegree_X_pow, Polynomial.natDegree_C]
+    simp[Polynomial.natDegree_sub_eq_right_of_natDegree_lt (p:= (Polynomial.C (6/8) * X)) (q:= (X^3 :ℚ[X])), Polynomial.natDegree_C]
   . simp_rw[h]
     apply Polynomial.natDegree_cubic_le
 
@@ -172,8 +171,7 @@ lemma adjoin_eq_sInf (K : Type*) (E : Type*) [Field K] [Field E] [Algebra K E] (
     intro x hx
     refine SetLike.mem_coe.mpr ?_
     have: s ≤ (sInf { p : IntermediateField K E | s ⊆ p }) := by
-      simp only [coe_sInf, Set.sInf_eq_sInter, Set.sInter_image, Set.mem_setOf_eq, Set.le_eq_subset,
-        Set.subset_iInter_iff, imp_self, implies_true]
+      simp only [coe_sInf, Set.mem_ofPred_eq, Set.subset_iInter_iff, imp_self, implies_true]
     exact this hx
 
 
@@ -185,12 +183,12 @@ end IntermediateField
 
 lemma h: (K_zero ({0, 1, Complex.exp (Complex.I * ↑Real.pi / 3)} : Set ℂ)) = (IntermediateField.adjoin ℚ
     {Complex.exp (Complex.I * ↑Real.pi / 3), (starRingEnd ℂ) (Complex.exp (Complex.I * ↑Real.pi / 3))}) := by
-  simp only [K_zero, conj_set, pow_one]
+  simp only [K_zero, conj_set]
   have: ({0, 1, Complex.exp (Complex.I * ↑Real.pi / 3)} ∪ {x | ∃ z ∈ ({0, 1, Complex.exp (Complex.I * ↑Real.pi / 3)} : Set ℂ), (starRingEnd ℂ) z = x}) = {0, (1:ℂ)} ∪ {Complex.exp (Complex.I * ↑Real.pi / 3), (starRingEnd ℂ) (Complex.exp (Complex.I * ↑Real.pi / 3))} := by
     simp only [Set.mem_insert_iff, Set.mem_singleton_iff, exists_eq_or_imp, map_zero, map_one,
       exists_eq_left, Set.union_insert, Set.union_singleton]
     ext x
-    simp_all only [Set.mem_union, Set.mem_insert_iff, Set.mem_singleton_iff, Set.mem_setOf_eq, or_assoc]
+    simp_all only [Set.mem_union, Set.mem_insert_iff, Set.mem_singleton_iff, Set.mem_ofPred_eq, or_assoc]
     rw[@eq_comm _ 0, @eq_comm _ 1, @or_comm (x = Complex.exp (Complex.I * ↑Real.pi / 3)), or_assoc,
       or_assoc, ←or_assoc, ←@or_assoc (x=0), or_self_left, or_assoc, ←or_assoc, or_comm,
       @or_comm ((starRingEnd ℂ) (Complex.exp (Complex.I * ↑Real.pi / 3)) = x), @eq_comm _ _ x, or_assoc]
@@ -286,8 +284,7 @@ lemma finrank_zero (L : IntermediateField ℚ ℂ): (¬ FiniteDimensional ℚ L)
 
 lemma eaual_adjion_root_three: IntermediateField.adjoin ℚ {Real.sqrt 3 * Complex.I} = IntermediateField.adjoin ℚ {cexp (I * ↑Real.pi / 3), (starRingEnd ℂ) (cexp (I * ↑Real.pi / 3))} := by
   apply le_antisymm
-  . simp only [IntermediateField.adjoin_le_iff, Set.le_eq_subset, Set.singleton_subset_iff,
-      SetLike.mem_coe]
+  . simp only [IntermediateField.adjoin_le_iff, Set.singleton_subset_iff, SetLike.mem_coe]
     have: (1 / 2) + (√3 * I / 2) ∈ IntermediateField.adjoin ℚ {cexp (I * ↑Real.pi / 3), (starRingEnd ℂ) (cexp (I * ↑Real.pi / 3))} := by
       apply IntermediateField.subset_adjoin
       simp only [Set.mem_insert_iff, Set.mem_singleton_iff]
@@ -302,7 +299,7 @@ lemma eaual_adjion_root_three: IntermediateField.adjoin ℚ {Real.sqrt 3 * Compl
     ring_nf at this ⊢
     exact this
 
-  . simp only [IntermediateField.adjoin_le_iff, Set.le_eq_subset]
+  . simp only [IntermediateField.adjoin_le_iff]
     rw[Set.pair_subset_iff]
     exact ⟨le_adjion_root_three, le_adjion_root_three'⟩
 
@@ -321,8 +318,8 @@ lemma pi_third_not_in_M_inf :
   have h: ↑(Complex.exp (Complex.I * (↑Real.pi / 3) / 3)).re = (Real.cos ((Real.pi/3)/3): ℂ):= by
     rw[←mul_div I , mul_comm I, ←Complex.cos_add_sin_I]
     norm_cast
-    simp only [ofReal_ofNat, add_re, mul_re, I_re, mul_zero,
-      I_im, mul_one, zero_sub, ofReal_re, ofReal_im, neg_zero, add_zero]
+    simp only [add_re, mul_re, I_re, mul_zero, I_im, mul_one, zero_sub, ofReal_re, ofReal_im,
+      neg_zero, add_zero]
   rw[h]
   have h: ¬ 2 ^ x =  Polynomial.degree (minpoly ℚ ((Real.cos ((Real.pi/3)/3)): ℂ)) := by
     rw[exp_pi_ninth]

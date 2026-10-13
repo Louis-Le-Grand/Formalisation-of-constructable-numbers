@@ -87,15 +87,14 @@ lemma C_M_inf_iff_M_M (M: Set ℂ): c ∈ C (M_inf M) ↔ ∀ᶠ n in Filter.atT
       M_I_in_M_inf_elm M r₁ n h₁, M_I_in_M_inf_elm M r₂ n h₂⟩
 
 lemma ill_M_inf (M: Set ℂ): ill (M_inf M) ⊆ M_inf M := by
-  intro z
-  intro hz
+  intro z hz
   unfold ill at hz
-  rw [@Set.mem_setOf] at hz
+  rw [@Set.mem_ofPred] at hz
   obtain ⟨l₁, hl₁, l₂, hl₂, hz⟩ := hz;
     rw [L_M_inf_iff_M_M] at hl₁ hl₂
   have zILL : ∃ n, z ∈ ill (M_I M n) := by
       unfold ill
-      simp[exists_comm.mp]
+      simp
       simp at hl₁ hl₂
       obtain ⟨a₁, hl₁⟩ := hl₁
       obtain ⟨a₂, hl₂⟩ := hl₂;let n := max a₁ a₂
@@ -114,20 +113,18 @@ lemma ill_M_inf (M: Set ℂ): ill (M_inf M) ⊆ M_inf M := by
   obtain ⟨n, hzn⟩ := zILL
   apply M_I_in_M_inf_elm M z n.succ
   unfold M_I ICL_M
-  simp_all only [Filter.eventually_atTop, ge_iff_le, Set.mem_inter_iff, Set.mem_union,
-    or_true, true_or]
+  simp_all only [Filter.eventually_atTop, Set.mem_inter_iff, Set.mem_union, or_true, true_or]
 
 lemma ilc_M_inf (M: Set ℂ): ilc (M_inf M) ⊆ M_inf M := by
-  intro z
-  intro hz
+  intro z hz
   unfold ilc at hz
-  rw [@Set.mem_setOf] at hz
+  rw [@Set.mem_ofPred] at hz
   obtain ⟨c, hc, l, hl, hz⟩ := hz;
     rw [C_M_inf_iff_M_M] at hc
   rw [L_M_inf_iff_M_M] at hl
   have zILC : ∃ n, z ∈ ilc (M_I M n) := by
     unfold ilc
-    simp[exists_comm.mp]
+    simp
     simp at hc hl
     obtain ⟨a₁, hc⟩ := hc
     obtain ⟨a₂, hl⟩ := hl;let n := max a₁ a₂
@@ -145,19 +142,17 @@ lemma ilc_M_inf (M: Set ℂ): ilc (M_inf M) ⊆ M_inf M := by
   obtain ⟨n, hzn⟩ := zILC
   apply M_I_in_M_inf_elm M z n.succ
   unfold M_I ICL_M
-  simp_all only [Filter.eventually_atTop, ge_iff_le, Set.mem_inter_iff, Set.mem_union,
-    or_true, true_or]
+  simp_all only [Filter.eventually_atTop, Set.mem_inter_iff, Set.mem_union, or_true, true_or]
 
 lemma icc_M_inf (M: Set ℂ): icc (M_inf M) ⊆ M_inf M := by
-  intro z
-  intro hz
+  intro z hz
   unfold icc at hz
-  rw [@Set.mem_setOf] at hz
+  rw [@Set.mem_ofPred] at hz
   obtain ⟨c₁, hc₁, c₂, hc₂, hz⟩ := hz;
   rw [C_M_inf_iff_M_M] at hc₁ hc₂
   have zICC : ∃ n, z ∈ icc (M_I M n) := by
     unfold icc
-    simp[exists_comm.mp]
+    simp
     simp at hc₁ hc₂
     obtain ⟨a₁, hc₁⟩ := hc₁
     obtain ⟨a₂, hc₂⟩ := hc₂
@@ -176,5 +171,4 @@ lemma icc_M_inf (M: Set ℂ): icc (M_inf M) ⊆ M_inf M := by
   obtain ⟨n, hzn⟩ := zICC
   apply M_I_in_M_inf_elm M z n.succ
   unfold M_I ICL_M
-  simp_all only [Filter.eventually_atTop, ge_iff_le, Set.mem_inter_iff, Set.mem_union,
-    or_true, true_or]
+  simp_all only [Filter.eventually_atTop, Set.mem_inter_iff, Set.mem_union, or_true]

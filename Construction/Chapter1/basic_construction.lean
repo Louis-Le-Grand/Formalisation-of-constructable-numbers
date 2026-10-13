@@ -46,7 +46,7 @@ lemma z_neg_M_inf (M: Set ℂ) (h₀: (0:ℂ)∈ M) (z : ℂ) (hz : z ∈ (M_inf
     ring_nf +zetaDelta
   apply ilc_M_inf M
   unfold ilc
-  rw [Set.mem_setOf]
+  rw [Set.mem_ofPred]
   use c
   constructor
   . exact hc
@@ -86,7 +86,7 @@ lemma add_M_Inf (M: Set ℂ) (h₀: (0:ℂ)∈ M) (z₁ z₂ : ℂ) (hz₁ : z�
       . exact hz₁0
     apply ilc_M_inf M
     unfold ilc
-    rw [Set.mem_setOf]
+    rw [Set.mem_ofPred]
     use c
     constructor
     . exact hc
@@ -130,7 +130,7 @@ lemma add_M_Inf (M: Set ℂ) (h₀: (0:ℂ)∈ M) (z₁ z₂ : ℂ) (hz₁ : z�
     simp +zetaDelta[Construction.circle.points]
   apply icc_M_inf M
   unfold icc
-  rw [Set.mem_setOf]
+  rw [Set.mem_ofPred]
   use c₁
   constructor
   . exact hc₁
@@ -211,7 +211,7 @@ lemma conj_M_Inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (z : ℂ) (hz : z 
     use 1
     use z
     constructor
-    . simp_all only [dist_zero_left, c₁]
+    . simp_all only [c₁]
     constructor
     . apply M_M_inf M h₁
     constructor
@@ -225,7 +225,7 @@ lemma conj_M_Inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (z : ℂ) (hz : z 
     simp +zetaDelta
   apply icc_M_inf M
   unfold icc
-  rw [Set.mem_setOf]
+  rw [Set.mem_ofPred]
   use c₀
   constructor
   . exact hc₀
@@ -250,9 +250,9 @@ lemma ir_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (r : ℝ) (hr : ↑r
     use -1
     use 1
     have h : dist (-1:ℂ) (1) = 2 := by
-      simp +zetaDelta[dist_comm,dist_eq,Complex.norm_def,one_add_one_eq_two]
+      simp +zetaDelta [dist_comm, dist_eq, one_add_one_eq_two]
     constructor
-    . simp_all +zetaDelta only [h]
+    . simp_all +zetaDelta only
     constructor
     . apply M_M_inf M h₁
     constructor
@@ -265,9 +265,9 @@ lemma ir_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (r : ℝ) (hr : ↑r
     use 1
     use -1
     have: dist (1:ℂ) (-1) = 2 := by
-      simp +zetaDelta[dist_eq,Complex.norm_def,one_add_one_eq_two]
+      simp +zetaDelta [dist_eq, one_add_one_eq_two]
     constructor
-    . simp_all +zetaDelta only [this]
+    . simp_all +zetaDelta only
     constructor
     . apply z_neg_M_inf M h₀ (z:=1)
       apply M_M_inf M h₁
@@ -308,7 +308,7 @@ lemma ir_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (r : ℝ) (hr : ↑r
     constructor
     . apply icc_M_inf M
       unfold icc
-      rw [Set.mem_setOf]
+      rw [Set.mem_ofPred]
       use c₁
       constructor
       . exact hc₁
@@ -324,7 +324,7 @@ lemma ir_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (r : ℝ) (hr : ↑r
     constructor
     . apply icc_M_inf M
       unfold icc
-      rw [Set.mem_setOf]
+      rw [Set.mem_ofPred]
       use c₁
       constructor
       . exact hc₁
@@ -354,7 +354,7 @@ lemma ir_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (r : ℝ) (hr : ↑r
     exact hr
   apply ilc_M_inf M
   unfold ilc
-  rw [Set.mem_setOf]
+  rw [Set.mem_ofPred]
   use c
   constructor
   . exact hc
@@ -423,7 +423,7 @@ lemma real_in_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (z: ℂ) (h: z 
     simp +zetaDelta
   apply ill_M_inf M
   unfold ill
-  rw [Set.mem_setOf]
+  rw [Set.mem_ofPred]
   use l
   constructor
   . exact hl
@@ -441,7 +441,7 @@ lemma real_in_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (z: ℂ) (h: z 
   simp +zetaDelta only [line.points, mul_one, mul_zero, add_zero, ne_eq]
   rw [Set.ext_iff, not_forall]
   use 0
-  simp +zetaDelta only [Set.mem_setOf_eq, ofReal_eq_zero, exists_eq, iff_true, not_exists]
+  simp +zetaDelta only [Set.mem_ofPred_eq, ofReal_eq_zero, exists_eq, iff_true, not_exists]
   intro x
   ring_nf +zetaDelta
   rw[add_comm, ←add_sub_assoc, sub_eq_zero, Complex.ext_iff]
@@ -480,7 +480,7 @@ lemma i_z_imp_z_in_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (z: ℝ) (
     simp +zetaDelta
   apply ilc_M_inf M
   unfold ilc
-  rw [Set.mem_setOf]
+  rw [Set.mem_ofPred]
   use c
   constructor
   . exact hc
@@ -522,7 +522,7 @@ lemma im_in_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (z: ℂ) (h: z �
   have hi: I * z.im  ∈ M_inf M := by
     apply ill_M_inf M
     unfold ill
-    rw [Set.mem_setOf]
+    rw [Set.mem_ofPred]
     use l
     constructor
     . exact hl
@@ -547,7 +547,7 @@ lemma im_in_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (z: ℂ) (h: z �
     rw [Set.ext_iff, not_forall]
     by_cases hI: z.im = 0
     . use I
-      simp +zetaDelta only [Set.mem_setOf_eq, ne_eq, I_ne_zero, not_false_eq_true, mul_eq_right₀,
+      simp +zetaDelta only [Set.mem_ofPred_eq, ne_eq, I_ne_zero, not_false_eq_true, mul_eq_right₀,
         ofReal_eq_one, exists_eq, iff_true, not_exists]
       intro x
       ring_nf +zetaDelta
@@ -556,9 +556,8 @@ lemma im_in_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (z: ℂ) (h: z �
       obtain ⟨_, cont⟩ := cont
       have : z.im ≠ 0 := by simp +zetaDelta only [cont, ne_eq, one_ne_zero, not_false_eq_true]
       contradiction
-    try simp +zetaDelta[line.points] at hI
     use 0
-    simp +zetaDelta only [Set.mem_setOf_eq, mul_eq_zero, ofReal_eq_zero, I_ne_zero, or_false, exists_eq,
+    simp +zetaDelta only [Set.mem_ofPred_eq, mul_eq_zero, ofReal_eq_zero, I_ne_zero, or_false, exists_eq,
       iff_true, not_exists]
     intro x
     ring_nf +zetaDelta
@@ -637,7 +636,7 @@ lemma ab_in_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (a b :ℝ) (ha: �
     simp +zetaDelta
   apply ill_M_inf M
   unfold ill
-  rw [Set.mem_setOf]
+  rw [Set.mem_ofPred]
   use l₂
   constructor
   . exact hl₂
@@ -655,7 +654,7 @@ lemma ab_in_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (a b :ℝ) (ha: �
   simp +zetaDelta only [line.points, mul_one, mul_zero, add_zero, ne_eq]
   rw [Set.ext_iff, not_forall]
   use 0
-  simp +zetaDelta only [Set.mem_setOf_eq, ofReal_eq_zero, exists_eq, iff_true, not_exists]
+  simp +zetaDelta only [Set.mem_ofPred_eq, ofReal_eq_zero, exists_eq, iff_true, not_exists]
   intro x
   ring_nf +zetaDelta
   rw[Complex.ext_iff]
@@ -732,7 +731,7 @@ lemma ainv_in_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (a :ℝ) (ha: �
     simp +zetaDelta
   apply ill_M_inf M
   unfold ill
-  rw [Set.mem_setOf]
+  rw [Set.mem_ofPred]
   use l
   constructor
   . exact hl
@@ -753,7 +752,7 @@ lemma ainv_in_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (a :ℝ) (ha: �
   simp +zetaDelta only [line.points, mul_one, mul_zero, add_zero, ne_eq]
   rw [Set.ext_iff, not_forall]
   use 0
-  simp +zetaDelta only [Set.mem_setOf_eq, ofReal_eq_zero, exists_eq, iff_true, not_exists]
+  simp +zetaDelta only [Set.mem_ofPred_eq, ofReal_eq_zero, exists_eq, iff_true, not_exists]
   intro x
   ring_nf +zetaDelta
   rw[Complex.ext_iff]
@@ -853,7 +852,7 @@ lemma inv_comp_root (r:ℝ) (h: 0 < r): ↑r ^ (1 / 2:ℂ ) = ((1 / (r:ℂ) )^ (
 --     (((‖z‖ )-z.re)/2)^ (1/2:ℂ) := by sorry
 
 lemma point_in_circle_pythagorean (z: ℂ) (c: Construction.circle) (hr: 0 < c.r): z ∈ c.points ↔ (dist c.c.re z.re)^2 + (dist c.c.im z.im)^2 = c.r^2 := by
-  simp +zetaDelta only [Construction.circle.points, Set.mem_setOf_eq, mem_sphere_iff_norm]
+  simp +zetaDelta only [Construction.circle.points, mem_sphere_iff_norm]
   rw[←dist_eq]
   constructor
   . intro h
@@ -925,7 +924,7 @@ lemma one_real_root (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (r : ℝ) (hr: 
   have hx : 1 + I * (r-1)^(1/2:ℂ) ∈ M_inf M := by
     apply ilc_M_inf M
     unfold ilc
-    rw [Set.mem_setOf]
+    rw [Set.mem_ofPred]
     use c₁
     constructor
     . exact hc₁
@@ -949,9 +948,9 @@ lemma one_real_root (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (r : ℝ) (hr: 
       ring
       exact Ne.symm (NeZero.ne' 2)
       linarith
-      simp +zetaDelta only [gt_iff_lt, Nat.ofNat_pos, div_pos_iff_of_pos_right, abs_pos, ne_eq]
+      simp +zetaDelta only [Nat.ofNat_pos, div_pos_iff_of_pos_right, abs_pos, ne_eq]
       linarith
-    simp +zetaDelta only [line.points, mul_one, Set.mem_setOf_eq]
+    simp +zetaDelta only [line.points, mul_one, Set.mem_ofPred_eq]
     use 1 - (r-1)^(1/2:ℝ)
     ring_nf +zetaDelta
     push_cast
@@ -975,7 +974,7 @@ lemma one_real_root (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (r : ℝ) (hr: 
       mul_zero, sub_self, add_zero, add_im, one_im, mul_im, ofReal_re,
       one_mul, zero_add, one_pow]
     rw [← Real.sqrt_eq_rpow, Real.sq_sqrt hr1]
-    simp only [add_sub_cancel_left, Real.sqrt_eq_rpow]
+    simp only [Real.sqrt_eq_rpow]
     congr 1
     ring
   have hc₁ : c ∈ C (M_inf M) := by
@@ -992,7 +991,7 @@ lemma one_real_root (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (r : ℝ) (hr: 
     exact hx
   apply ilc_M_inf M
   unfold ilc
-  rw [Set.mem_setOf]
+  rw [Set.mem_ofPred]
   use c
   constructor
   . exact hc₁
@@ -1092,7 +1091,7 @@ lemma rabs_M_Inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (r : ℝ) (hr: ↑
   . have h': ↑|r| = r := by simp +zetaDelta[h]
     rw[h']
     apply real_in_M_inf M h₀ h₁ r hr
-  . have h': ↑|r| = -r := by simp_all [h, le_of_lt]
+  . have h': ↑|r| = -r := by simp_all [le_of_lt]
     rw[h']
     push_cast
     apply z_neg_M_inf M h₀ r hr
@@ -1133,7 +1132,7 @@ lemma angle_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (z : ℂ) (hz: z 
     exact h
   apply ilc_M_inf M
   unfold ilc
-  rw [Set.mem_setOf]
+  rw [Set.mem_ofPred]
   use c
   constructor
   . exact hc
@@ -1269,7 +1268,7 @@ lemma angle_half_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (z : ℂ) (h
       exact h
   apply ilc_M_inf M
   unfold ilc
-  rw [Set.mem_setOf]
+  rw [Set.mem_ofPred]
   use c
   refine ⟨hc, ?_⟩
   use l
@@ -1289,8 +1288,7 @@ lemma angle_half_M_inf (M: Set ℂ) (h₀: 0 ∈ M) (h₁: 1 ∈ M) (z : ℂ) (h
       have  (a : ℝ)(h: ¬(↑a * I).exp = -1): im ((exp (a * I / 2)) / (exp (a * I) + 1)) = 0 := by
         have g: (((a).cos + (a).sin * I + 1) * ((a).cos - (a).sin * I + 1)) = 2*(1+ (a).cos) := by
           ring_nf +zetaDelta
-          simp +zetaDelta only [ofReal_cos, ofReal_sin, I_sq, mul_neg, mul_one, sub_neg_eq_add,
-            cos_sq_add_sin_sq]
+          simp +zetaDelta only [ofReal_cos, ofReal_sin, I_sq, mul_neg, mul_one, sub_neg_eq_add]
           have htrig := Complex.cos_sq_add_sin_sq (a : ℂ)
           linear_combination htrig
 

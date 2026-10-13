@@ -81,21 +81,21 @@ def M_inf (M : Set ℂ) : Set ℂ :=  ⋃ (n : ℕ), M_I M n
 
 lemma L_mono (M N : Set ℂ) (h: M ⊆ N) : Construction.L M ⊆ Construction.L N := by
   unfold Construction.L
-  simp only [Set.iUnion_subset_iff, Set.subset_def]
+  simp only [Set.subset_def]
   intro l hl
   obtain ⟨z₁, z₂, hl, hz₁, hz₂, hne⟩ := hl
   refine ⟨z₁, z₂, hl,  h hz₁, h hz₂, hne⟩
 
 lemma C_mono (M N : Set ℂ) (h: M ⊆ N) : Construction.C M ⊆ Construction.C N := by
   unfold Construction.C
-  simp only [Set.iUnion_subset_iff, Set.subset_def]
+  simp only [Set.subset_def]
   intro c hc
   obtain ⟨z, r₁, r₂, hl, hz, hr₁, hr₂⟩ := hc
   refine ⟨z, r₁, r₂, hl,  h hz, h hr₁, h hr₂⟩
 
 lemma ill_mono (M N : Set ℂ) (h: M ⊆ N) : ill M ⊆ ill N := by
   unfold ill
-  simp only [Set.iUnion_subset_iff, Set.subset_def]
+  simp only [Set.subset_def]
   intro x hx
   obtain ⟨l₁, hl₁, l₂, hl₂, hx, hlne⟩ := hx
   refine ⟨l₁, ?_, l₂, ?_, hx, hlne⟩
@@ -104,7 +104,7 @@ lemma ill_mono (M N : Set ℂ) (h: M ⊆ N) : ill M ⊆ ill N := by
 
 lemma ilc_mono (M N : Set ℂ) (h: M ⊆ N) : ilc M ⊆ ilc N := by
   unfold ilc
-  simp only [Set.iUnion_subset_iff, Set.subset_def]
+  simp only [Set.subset_def]
   intro x hx
   obtain ⟨c, hc, l, hl, hx, hlne⟩ := hx
   refine ⟨c, ?_, l, ?_, hx, hlne⟩
@@ -113,7 +113,7 @@ lemma ilc_mono (M N : Set ℂ) (h: M ⊆ N) : ilc M ⊆ ilc N := by
 
 lemma icc_mono (M N : Set ℂ) (h: M ⊆ N) : icc M ⊆ icc N := by
   unfold icc
-  simp only [Set.iUnion_subset_iff, Set.subset_def]
+  simp only [Set.subset_def]
   intro x hx
   obtain ⟨c₁, hc₁, c₂, hc₂, hx, hlne⟩ := hx
   refine ⟨c₁, ?_, c₂, ?_, hx, hlne⟩

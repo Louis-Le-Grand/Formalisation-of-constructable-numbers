@@ -68,7 +68,7 @@ instance MField_QuadraticClosed (M: Set ℂ)(h₀: 0 ∈ M)(h₁: 1∈ M) :
     rw [← pow_two, mul_pow]
     simp only [one_div, Complex.cpow_ofNat_inv_pow]
     rw [← Complex.exp_nat_mul]
-    convert Complex.norm_mul_exp_arg_mul_I (x : ℂ) using 1 <;> ring
+    convert Complex.norm_mul_exp_arg_mul_I (x : ℂ) using 1 ; ring_nf
 
 lemma MField_QuadraticClosed_def (M: Set ℂ)(h₀: 0 ∈ M)(h₁: 1∈ M) {x : ℂ} (h: x ∈ (MField M h₀ h₁)): ∃ y : (MField M h₀ h₁), y * y = x := by
   have: ∃ x' : (MField M h₀ h₁), x' = x := by
@@ -82,7 +82,7 @@ def conj_set (M : Set ℂ) : Set ℂ := {starRingEnd ℂ z | z ∈ M}
 
 lemma conj_union (M N : Set ℂ) : conj_set (M ∪ N) = conj_set M ∪ conj_set N := by
   ext x
-  simp only [Set.mem_union, Set.mem_setOf_eq]
+  simp only [Set.mem_union]
   constructor
   intro h
   obtain ⟨z, hz, hX⟩ := h
@@ -93,8 +93,8 @@ lemma conj_union (M N : Set ℂ) : conj_set (M ∪ N) = conj_set M ∪ conj_set 
 
 
 lemma conj_conj_id (M : Set ℂ) : conj_set (conj_set M) = M := by
-  simp only [Set.mem_setOf_eq, exists_exists_and_eq_and, RingHomCompTriple.comp_apply,
-    RingHom.id_apply, exists_eq_right, Set.setOf_mem_eq, conj_set]
+  simp only [Set.mem_ofPred_eq, exists_exists_and_eq_and, RingHomCompTriple.comp_apply,
+    RingHom.id_apply, exists_eq_right, Set.ofPred_mem_eq, conj_set]
 
 class ConjClosed (M : Set ℂ) : Prop where
   equal: M = conj_set M
@@ -123,19 +123,19 @@ lemma M_con_M (M :Set ℂ): ConjClosed (M ∪ (conj_set M)) where
   equal := by rw[conj_union, conj_conj_id, Set.union_comm]
 
 lemma Rat_ConjClosed : ConjClosed {x:ℂ|∃q:ℚ, ↑q = x} where
-  equal := by simp only [conj_set, Set.mem_setOf_eq, exists_exists_eq_and, map_ratCast]
+  equal := by simp only [conj_set, Set.mem_ofPred_eq, exists_exists_eq_and, map_ratCast]
 
 lemma Rat_ConjClosed' : ConjClosed (⊥: IntermediateField ℚ ℂ) where
   equal := by
     ext x
     simp only [SetLike.mem_coe, IntermediateField.mem_bot, Set.mem_range, eq_ratCast, conj_set,
-      exists_exists_eq_and, map_ratCast, Set.mem_setOf_eq]
+      exists_exists_eq_and, map_ratCast, Set.mem_ofPred_eq]
 
 variable (M : Set ℂ) [ConjClosed M]
 
 lemma conj_L (z : ℂ) (h : z ∈ M): conj z ∈ M := by
   have: conj z ∈ conj_set M := by
-    simp only [conj_set, SetLike.mem_coe, Set.mem_setOf_eq]
+    simp only [conj_set, Set.mem_ofPred_eq]
     use z
   rw[←ConjClosed.equal] at this
   exact this
@@ -143,47 +143,47 @@ lemma conj_L (z : ℂ) (h : z ∈ M): conj z ∈ M := by
 
 lemma conj_L' (z : ℂ) (h : conj z  ∈ M):  z ∈ M := by
   have: z ∈ conj_set M := by
-    simp only [conj_set, SetLike.mem_coe, Set.mem_setOf_eq]
+    simp only [conj_set, Set.mem_ofPred_eq]
     refine ⟨(conj z),h ,RCLike.conj_conj z⟩
   rw[←ConjClosed.equal] at this
   exact this
 
 lemma conj_inclusion {M N : Set ℂ} (h: N ⊆ M): conj_set N ⊆ conj_set M := by
-  simp only [conj_set, Set.setOf_subset_setOf, forall_exists_index, and_imp,
+  simp only [conj_set, Set.ofPred_subset_ofPred, forall_exists_index, and_imp,
     forall_apply_eq_imp_iff₂]
   intro x hx
   refine ⟨x, h hx, rfl⟩
 
 lemma conj_mul_field {K : Subfield ℂ} {x y : ℂ} (hx: x ∈ conj_set K) (hy: y ∈ conj_set K): x * y ∈ conj_set K := by
-  simp_all only [conj_set, Set.mem_setOf_eq]
+  simp_all only [conj_set, Set.mem_ofPred_eq]
   obtain ⟨x', hx', hx⟩ := hx
   obtain ⟨y', hy', hy⟩ := hy
   refine ⟨x' * y', mul_mem hx' hy', ?_⟩
   simp_all only [SetLike.mem_coe, map_mul]
 
 lemma conj_one_field {K : Subfield ℂ} : 1 ∈ conj_set K := by
-  simp only [conj_set, Set.mem_setOf_eq]
+  simp only [conj_set, Set.mem_ofPred_eq]
   refine ⟨1, Subfield.one_mem K, Complex.conj_eq_iff_re.mpr rfl⟩
 
 lemma conj_add_field {K : Subfield ℂ} {x y : ℂ} (hx: x ∈ conj_set K) (hy: y ∈ conj_set K): x + y ∈ conj_set K := by
-  simp_all only [conj_set, Set.mem_setOf_eq]
+  simp_all only [conj_set, Set.mem_ofPred_eq]
   obtain ⟨x', hx', hx⟩ := hx
   obtain ⟨y', hy', hy⟩ := hy
   refine ⟨x' + y', add_mem hx' hy', ?_⟩
   simp_all only [SetLike.mem_coe, map_add]
 
 lemma conj_zero_field {K : Subfield ℂ} : 0 ∈ conj_set K := by
-  simp only [conj_set, Set.mem_setOf_eq]
+  simp only [conj_set, Set.mem_ofPred_eq]
   refine ⟨0, Subfield.zero_mem K, Complex.conj_eq_iff_re.mpr rfl⟩
 
 lemma conj_neg_field {K : Subfield ℂ} {x : ℂ} (hx: x ∈ conj_set K): -x ∈ conj_set K := by
-  simp_all only [conj_set, Set.mem_setOf_eq]
+  simp_all only [conj_set, Set.mem_ofPred_eq]
   obtain ⟨x', hx', hx⟩ := hx
   refine ⟨-x', neg_mem hx', ?_⟩
   simp_all only [SetLike.mem_coe, map_neg]
 
 lemma conj_inv_field {K : Subfield ℂ} {x : ℂ} (hx: x ∈ conj_set K): x⁻¹ ∈ conj_set K := by
-  simp_all only [conj_set, Set.mem_setOf_eq]
+  simp_all only [conj_set, Set.mem_ofPred_eq]
   obtain ⟨x', hx', hx⟩ := hx
   refine ⟨x'⁻¹, inv_mem hx', ?_⟩
   simp_all only [SetLike.mem_coe, map_inv₀]
@@ -199,7 +199,7 @@ noncomputable def conj_field (K : Subfield ℂ) : Subfield ℂ where
 
 lemma conj_restrict {K : IntermediateField ℚ ℂ} (E : IntermediateField K ℂ) [ConjClosed E]: ConjClosed (IntermediateField.restrictScalars ℚ E) where
   equal := by
-    simp only [IntermediateField.coe_toSubfield, IntermediateField.coe_restrictScalars]
+    simp only [IntermediateField.coe_restrictScalars]
     exact equal
 
 section Intersection
@@ -207,7 +207,7 @@ open Complex
 
 lemma ill_L (l₁ l₂ : line): z ∈ l₁.points ∩ l₂.points ↔ ∃ i j : ℝ, (i:ℂ) * (l₁.z₁.re - l₁.z₂.re) + j* (l₂.z₂.re - l₂.z₁.re) = l₂.z₂.re - l₁.z₂.re ∧  i * (I*l₁.z₁.im - I*l₁.z₂.im) + j* (I*l₂.z₂.im - I*l₂.z₁.im) = I*l₂.z₂.im - I*l₁.z₂.im ∧ i * l₁.z₁ + (1 - i) * l₁.z₂ = z := by
   refine ⟨?_, ?_⟩ <;> intro h
-  . simp only [line.points, Set.mem_inter_iff, Set.mem_setOf_eq] at h
+  . simp only [line.points, Set.mem_inter_iff, Set.mem_ofPred_eq] at h
     obtain ⟨⟨i, hi⟩, ⟨j, hj⟩⟩ := h
     use i
     use j
@@ -224,7 +224,7 @@ lemma ill_L (l₁ l₂ : line): z ∈ l₁.points ∩ l₂.points ↔ ∃ i j : 
     . rw [←hj, Complex.ext_iff] at hi
       obtain ⟨_, hi⟩ := hi
       simp only [sub_mul, one_mul, ← add_sub_assoc, Complex.sub_im, Complex.add_im, Complex.mul_im,
-        Complex.ofReal_im, Complex.ofReal_re, zero_mul, sub_zero] at hi
+        Complex.ofReal_im, Complex.ofReal_re, zero_mul] at hi
       rw [←sub_eq_zero] at hi
       simp at hi
       simp only [mul_sub, ← add_sub_assoc]
@@ -233,7 +233,7 @@ lemma ill_L (l₁ l₂ : line): z ∈ l₁.points ∩ l₂.points ↔ ∃ i j : 
           _ = I * (i * l₁.z₁.im + l₁.z₂.im - i * l₁.z₂.im - (j * l₂.z₁.im + l₂.z₂.im - j * l₂.z₂.im)):= by ring_nf
           _ = 0 := by norm_cast; rw [hi]; ring_nf; simp only [ofReal_zero, mul_zero]
   obtain ⟨i, j, h₁, h₂, h₃⟩ := h
-  simp only [line.points, Set.mem_inter_iff, Set.mem_setOf_eq]
+  simp only [line.points, Set.mem_inter_iff, Set.mem_ofPred_eq]
   refine ⟨⟨i, h₃⟩, ⟨j, ?_⟩⟩
   rw[←h₃]
   rw [←sub_eq_zero, ←re_add_im (↑j * l₂.z₁ + (1 - ↑j) * l₂.z₂ - (↑i * l₁.z₁ + (1 - ↑i) * l₁.z₂))]
@@ -278,7 +278,7 @@ lemma ilc_L  (c: Construction.circle) (l: line) (hc: 0 ≤ c.r): z ∈ c.points 
     let c := (l.z₂.re - c.c.re)^2 - (I*l.z₂.im - I*c.c.im)^2 - c.r^2
     ∃ ι:ℝ, ι^2 * a + ι * b + c = 0  ∧ ι * l.z₁ + (1- ι) * l.z₂ = z := by
   refine ⟨?_, ?_⟩ <;> intro h <;> simp only [line.points, circle.points, Set.mem_inter_iff,
-    Set.mem_setOf_eq, mem_sphere_iff_norm] at h ⊢
+    Set.mem_ofPred_eq, mem_sphere_iff_norm] at h ⊢
   . obtain ⟨ h₁, ⟨t ,h₂⟩⟩ := h
     refine ⟨t, ?_, h₂⟩
     rw[←sq_eq_sq₀ (norm_nonneg _) hc, Complex.sq_norm, normSq_apply, ←h₂, ←sub_eq_zero] at h₁
@@ -340,7 +340,7 @@ lemma distSq_L (z₁ z₂ : ℂ) (h₁ : z₁ ∈ L) (h₂ : z₂ ∈ L): ↑(Co
 
 
 lemma ill_L' (z : ℂ) (h : z ∈ ill L): z ∈ L := by
-  simp only [ill, ne_eq, Set.mem_setOf_eq] at h
+  simp only [ill, ne_eq, Set.mem_ofPred_eq] at h
   obtain ⟨l₁, hl₁, l₂, hl₂, h, ne⟩ := h
   have zl₁i₂: z ∈ l₁.points ∩ l₂.points := h
   rw [ill_L] at h
@@ -376,10 +376,11 @@ lemma ill_L' (z : ℂ) (h : z ∈ ill L): z ∈ L := by
         norm_cast at h'
         have: l₂.z₁.im  - l₂.z₂.im  = 0 := by
           rw [sub_eq_zero, mul_eq_mul_right_iff] at h
-          simp_all only [SetLike.mem_coe, ne_eq,Complex.ofReal_inj, Complex.I_ne_zero, or_false, sub_self, mul_zero, add_zero, Set.mem_inter_iff]
+          simp_all only [SetLike.mem_coe, ne_eq, Complex.ofReal_inj, Complex.I_ne_zero, or_false,
+            sub_self, Set.mem_inter_iff]
         apply @parallel'_if_im_eq l₁ l₂ ?_ _ this
         simp_all only [SetLike.mem_coe, ne_eq, Set.mem_inter_iff, not_false_eq_true]
-        simp_all only [SetLike.mem_coe, ne_eq, Set.mem_inter_iff, not_false_eq_true]
+        simp_all only [SetLike.mem_coe, ne_eq, Set.mem_inter_iff]
       have: l₁.points = l₂.points := by
         apply @eq_of_parallel l₁ l₂ ?_ this (Exists.intro z zl₁i₂)
         simp_all only [SetLike.mem_coe, ne_eq, Set.mem_inter_iff, not_false_eq_true]
@@ -496,25 +497,25 @@ lemma quadratic_formula (x a b c : ℂ) (h:  a * x ^ 2 +  b * x + c = 0) (ha: a�
 lemma ilc_L' (z : ℂ) (h : z ∈ ilc L): ∃ ω ∈ L, ∃ x : ℂ, x * x = ω ∧ z ∈ L⟮x⟯ := by
   obtain ⟨c, hc, l, hl, hz⟩ := h
   have: 0 ≤ c.r := by
-    simp only [Construction.C, SetLike.mem_coe, ne_eq, Set.mem_setOf_eq] at hc
+    simp only [Construction.C, SetLike.mem_coe, Set.mem_ofPred_eq] at hc
     obtain ⟨_, _, _, _, _⟩ := hc
     simp_all only [dist_nonneg]
   rw[ilc_L _ _ this] at hz
   obtain ⟨ι, ⟨hι, hz⟩⟩ := hz
   have hlz₁: l.z₁ ∈ L := by
-    simp only [Construction.L, SetLike.mem_coe, ne_eq, Set.mem_setOf_eq] at hl
+    simp only [Construction.L, SetLike.mem_coe, ne_eq, Set.mem_ofPred_eq] at hl
     obtain ⟨_, _, _, _, _⟩ := hl
     simp_all only
   have hlz₂: l.z₂ ∈ L := by
-    simp only [Construction.L, SetLike.mem_coe, ne_eq, Set.mem_setOf_eq] at hl
+    simp only [Construction.L, SetLike.mem_coe, ne_eq, Set.mem_ofPred_eq] at hl
     obtain ⟨_, _, _, _, _⟩ := hl
     simp_all only
   have hcc: c.c ∈ L := by
-    simp only [Construction.C, SetLike.mem_coe, ne_eq, Set.mem_setOf_eq] at hc
+    simp only [Construction.C, SetLike.mem_coe, Set.mem_ofPred_eq] at hc
     obtain ⟨_ , _, _, _, _⟩ := hc
     simp_all only
   have hcr: (c.r:ℂ)^2 ∈ L := by
-    simp only [Construction.C, SetLike.mem_coe, ne_eq, Set.mem_setOf_eq] at hc
+    simp only [Construction.C, SetLike.mem_coe, Set.mem_ofPred_eq] at hc
     obtain ⟨_, _, _, _, _⟩ := hc
     norm_cast
     simp_all only [dist_eq,Complex.sq_norm, distSq_L]
@@ -591,7 +592,7 @@ lemma icc_L (z : ℂ) (h : z ∈ icc L): ∃ ω ∈ L,∃ x : ℂ, x * x = ω �
       simp only [hc]
       exact hz
   have h_ne': c₂.c ≠ c₁.c := by
-    simp only [←sub_eq_zero, ne_eq] at h_ne
+    simp only [ne_eq] at h_ne
     intro hcenters
     have hr : c₁.r = c₂.r := by
       calc

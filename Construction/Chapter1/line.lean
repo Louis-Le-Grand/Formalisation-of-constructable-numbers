@@ -5,7 +5,7 @@ namespace Construction
 
 lemma line_pionts_iff (l : line) (α: ℂ) (hα: α ∈ l.points) : l.points = {z | ∃ t:ℝ, α + t * (l.z₁ - l.z₂) = z} := by
   ext x
-  simp only [line.points, Set.mem_setOf_eq] at hα ⊢
+  simp only [line.points, Set.mem_ofPred_eq] at hα ⊢
   obtain ⟨tα, htα⟩ := hα
   refine ⟨?_,?_⟩ <;> intro h <;> obtain ⟨t, ht⟩ := h
   . refine ⟨t - tα, ?_⟩
@@ -100,13 +100,13 @@ lemma parallel_iff_parallel' {hl₁_ne : l₁.z₁ ≠ l₁.z₂}: parallel' l�
   ext x
   refine ⟨?_,?_⟩ <;> intro h
   . obtain ⟨t, ht⟩ := h
-    simp only [Set.mem_setOf_eq, exists_exists_eq_and]
+    simp only [Set.mem_ofPred_eq, exists_exists_eq_and]
     refine ⟨t*k,?_⟩
     ring_nf
     push_cast
     rw [←mul_sub,mul_assoc, ←hk, ←ht]
     ring_nf
-  . simp only [Set.mem_setOf_eq, exists_exists_eq_and] at h ⊢
+  . simp only [Set.mem_ofPred_eq, exists_exists_eq_and] at h ⊢
     obtain ⟨t, ht⟩ := h
     refine ⟨t/k,?_⟩
     ring_nf
@@ -129,7 +129,7 @@ lemma parallel'_if_im_eq {hl₂_ne : l₂.z₁ ≠ l₂.z₂} (hl₁: l₁.z₁.
   refine ⟨ (l₁.z₁.re - l₁.z₂.re) / (l₂.z₁.re - l₂.z₂.re), (div_mul_cancel₀ (l₁.z₁.re - l₁.z₂.re) this).symm⟩
 
 --not in Blueprint for need in the proof of ilc_L'
-lemma parallel'_if_im_eq' {hl₁_ne : l₁.z₁ ≠ l₁.z₂} {hl₂_ne : l₂.z₁ ≠ l₂.z₂} (h: ((l₂.z₂.im * Complex.I - l₂.z₁.im * Complex.I) * (l₁.z₁.re - l₁.z₂.re) - (l₁.z₁.im * Complex.I - l₁.z₂.im * Complex.I) * (l₂.z₂.re - l₂.z₁.re)) =  0): parallel' l₁ l₂ := by
+lemma parallel'_if_im_eq' {_hl₁_ne : l₁.z₁ ≠ l₁.z₂} {hl₂_ne : l₂.z₁ ≠ l₂.z₂} (h: ((l₂.z₂.im * Complex.I - l₂.z₁.im * Complex.I) * (l₁.z₁.re - l₁.z₂.re) - (l₁.z₁.im * Complex.I - l₁.z₂.im * Complex.I) * (l₂.z₂.re - l₂.z₁.re)) =  0): parallel' l₁ l₂ := by
   unfold parallel' direction_vector
   rw[←sub_mul, ←sub_mul,mul_comm _ Complex.I, mul_comm _ Complex.I, mul_assoc, mul_assoc, ←mul_sub Complex.I, mul_eq_zero, sub_eq_zero] at h
   simp only [Complex.I_ne_zero, false_or] at h
@@ -173,7 +173,7 @@ lemma eq_of_parallel {hl₁_ne : l₁.z₁ ≠ l₁.z₂} (h : parallel' l₁ l�
   --rw [@Mathlib.Tactic.PushNeg.ne_empty_eq_nonempty, Set.nonempty_def,] at hx --! for (h: l₁.points ∩ l₂.points ≠ ∅)
   obtain ⟨x, hx₁, hx₂⟩ := hx
   ext z
-  simp only [line_pionts_iff l₁ x hx₁, line_pionts_iff l₂ x hx₂, Set.mem_setOf_eq]
+  simp only [line_pionts_iff l₁ x hx₁, line_pionts_iff l₂ x hx₂, Set.mem_ofPred_eq]
   unfold parallel' direction_vector at h
   obtain ⟨k, hk⟩ := h
   refine ⟨?_,?_⟩ <;> intro h <;> obtain ⟨t, ht⟩ := h

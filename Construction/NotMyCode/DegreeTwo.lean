@@ -21,14 +21,14 @@ theorem dergree_two_rank_two :
       ∃ x : E, L = IntermediateField.adjoin K {x} ∧ (minpoly K x).natDegree = 2 := by
   constructor
   · intro hdim
-    letI : FiniteDimensional K L := FiniteDimensional.of_finrank_pos (by omega)
+    let : FiniteDimensional K L := FiniteDimensional.of_finrank_pos (by omega)
     have hnot : ¬ L ≤ ⊥ := by
       intro h
       have hL : L = ⊥ := le_antisymm h bot_le
       have hone : Module.finrank K L = 1 :=
         IntermediateField.finrank_eq_one_iff.mpr hL
       omega
-    obtain ⟨x, hxL, hxK⟩ := SetLike.not_le_iff_exists.mp hnot
+    obtain ⟨x, hxL, hxK⟩ := IsConcreteLE.not_le_iff_exists.mp hnot
     have hxK' : x ∉ K := by
       simpa only [IntermediateField.mem_bot, Set.mem_range,
         IntermediateField.algebraMap_apply, Subtype.exists, exists_prop,
@@ -56,7 +56,7 @@ theorem dergree_two_rank_two :
 theorem dergree_two_eq_sqr [CharZero K] :
     Module.finrank K L = 2 ↔
       ∃ x : E, x ^ 2 ∈ K ∧ x ∉ K ∧ L = IntermediateField.adjoin K {x} := by
-  letI : CharZero E := charZero_of_injective_algebraMap (algebraMap K E).injective
+  let : CharZero E := charZero_of_injective_algebraMap (algebraMap K E).injective
   rw [dergree_two_rank_two K L]
   constructor
   · rintro ⟨x, hL, hd⟩

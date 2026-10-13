@@ -1,5 +1,5 @@
 import Construction.Chapter2.KZero
-import Construction.NotMyCode.PR14987
+import Mathlib.FieldTheory.Relrank
 import Construction.NotMyCode.DegreeTwo
 import Construction.NotMyCode.RootTower
 
@@ -49,14 +49,14 @@ lemma adjoin_in_MField' (M : Set ℂ) (h₀: 0 ∈ M) (h₁:1 ∈ M) (L : ℕ �
     have: L (n + 1) ≤ (MField M h₀ h₁).toIntermediateField (rat_mem_M_inf M h₀ h₁)  := by
       have: restrictScalars ℚ (extendScalars (h n)) ≤ (MField M h₀ h₁).toIntermediateField (rat_mem_M_inf M h₀ h₁) := by
         rw[hx]
-        simp only [coe_toSubfield, restrictScalars_adjoin, adjoin_le_iff, Set.le_eq_subset,
-          Set.union_subset_iff, SetLike.coe_subset_coe]
+        simp only [restrictScalars_adjoin, adjoin_le_iff, Set.union_subset_iff,
+          SetLike.coe_subset_coe]
         exact ⟨hLn, Set.singleton_subset_iff.mpr hx'⟩
       exact this
     simp only [Subsemiring.coe_carrier_toSubmonoid, Subalgebra.coe_toSubsemiring, coe_toSubalgebra,
-      Set.le_eq_subset, Set.subset_def, SetLike.mem_coe]
+      Set.subset_def, SetLike.mem_coe]
     intro x hx
-    simp_all only [SetLike.mem_coe]
+    simp_all only
     exact this hx
 
 section test
@@ -135,13 +135,13 @@ lemma M_i_in_K_i (M : Set ℂ) (_: 0 ∈ M) (_:1 ∈ M) (n : ℕ) : ∃ α: Fin 
   induction n
   case zero =>
     refine ⟨λ _ ↦ ∅, ?_, ?_⟩
-    . simp only [M_I, succ_adjion, Set.iUnion_of_empty, adjoin_empty, coe_bot, Set.le_eq_subset]
+    . simp only [M_I, succ_adjion, Set.iUnion_of_empty, adjoin_empty, coe_bot]
       unfold Set.range
       dsimp
-      simp only [Subtype.exists, exists_prop, exists_eq_right, Set.subset_setOf]
+      simp only [Subtype.exists, exists_prop, exists_eq_right, Set.subset_ofPred]
       apply M_K_zero M
-    simp only [succ_adjion_root, le_of_subsingleton, Set.iUnion_empty, Set.iUnion_of_empty,
-      adjoin_empty, IsEmpty.forall_iff]
+    simp only [succ_adjion_root, Set.iUnion_empty, Set.iUnion_of_empty, adjoin_empty,
+      IsEmpty.forall_iff]
     simp only [succ_adjion, Set.iUnion_of_empty, adjoin_empty, coe_bot, true_and]
     unfold Set.range
     dsimp
@@ -166,7 +166,7 @@ lemma M_i_in_K_i (M : Set ℂ) (_: 0 ∈ M) (_:1 ∈ M) (n : ℕ) : ∃ α: Fin 
       apply IntermediateField.adjoin_adjoin_left
     refine ⟨α, ?_, ?_, ?_⟩
     . unfold M_I ICL_M
-      simp only [Set.le_eq_subset, Set.union_subset_iff, and_assoc, split, coe_restrictScalars]
+      simp only [Set.union_subset_iff, and_assoc, split, coe_restrictScalars]
       refine ⟨?_, ?_, ?_, ?_⟩
       . apply le_trans h (by apply K_le_K_adjion)
       . have le1: ill (M_I M n) ⊆ ill (succ_adjion (K_zero M) n αn) := by
@@ -178,17 +178,17 @@ lemma M_i_in_K_i (M : Set ℂ) (_: 0 ∈ M) (_:1 ∈ M) (n : ℕ) : ∃ α: Fin 
       . have : ilc (M_I M n) ⊆ ilc (succ_adjion (K_zero M) n αn) := by
           apply ilc_mono _ _ h
         apply le_trans this ?_
-        simp only [Set.le_eq_subset, Set.subset_def]
+        simp only [Set.subset_def]
         intro z hz₁
         have : ∃ ω ∈ ↑(succ_adjion (K_zero M) n αn),∃ x : ℂ, x * x = ω ∧ z ∈ ↑(succ_adjion (K_zero M) n αn)⟮x⟯ := by
           apply @ConjClosed.ilc_L' _ hc _ _
           exact hz₁
         obtain ⟨ω, hω, x, hx, hz⟩ := this
         have : x ∈ K_root  ↑(succ_adjion (K_zero M) n αn) := by
-          simp only [K_root, Set.mem_setOf_eq, hx, hω]
+          simp only [K_root, Set.mem_ofPred_eq, hx, hω]
         have : (↥(succ_adjion (K_zero M) n αn))⟮x⟯ ≤ (adjoin (↥(succ_adjion (K_zero M) n αn)) (K_root (succ_adjion (K_zero M) n αn))) := by
           apply adjoin.mono
-          simp only [Set.singleton_subset_iff, Set.mem_union, this, true_or]
+          simp only [Set.singleton_subset_iff, this]
         exact this hz
       . have : icc (M_I M n) ⊆ icc (succ_adjion (K_zero M) n αn) := by
           apply icc_mono _ _ h
@@ -199,14 +199,14 @@ lemma M_i_in_K_i (M : Set ℂ) (_: 0 ∈ M) (_:1 ∈ M) (n : ℕ) : ∃ α: Fin 
           exact hz₁
         obtain ⟨ω, hω, x, hx, hz⟩ := this
         have : x ∈ K_root  ↑(succ_adjion (K_zero M) n αn) := by
-          simp only [K_root, Set.mem_setOf_eq, hx, hω]
+          simp only [K_root, Set.mem_ofPred_eq, hx, hω]
         have : (↥(succ_adjion (K_zero M) n αn))⟮x⟯ ≤ (adjoin (↥(succ_adjion (K_zero M) n αn)) (K_root (succ_adjion (K_zero M) n αn))) := by
           apply adjoin.mono
-          simp only [Set.singleton_subset_iff, Set.mem_union, this, true_or]
+          simp only [Set.singleton_subset_iff, this]
         exact this hz
     . apply succ_adjion_root_split (K_zero M) n  αn hr α1
-      simp only [SetOfRoots, Set.union_self, Fin.isValue, α1]
-      simp only [K_root, succ_adjion, Set.mem_setOf_eq, imp_self, implies_true]
+      simp only [SetOfRoots, Fin.isValue, α1]
+      simp only [K_root, succ_adjion, Set.mem_ofPred_eq, imp_self, implies_true]
     . rw[split]
       unfold succ_adjion
       simp only [coe_restrictScalars]
@@ -225,7 +225,7 @@ lemma M_i_in_K_i (M : Set ℂ) (_: 0 ∈ M) (_:1 ∈ M) (n : ℕ) : ∃ α: Fin 
               exact a
               simp_all only [RingHomCompTriple.comp_apply, RingHom.id_apply]
           intro x hx
-          simp_all [K_root, Set.mem_setOf_eq, ]
+          simp_all [K_root, Set.mem_ofPred_eq, ]
           rw[(RingHom.map_mul (starRingEnd ℂ) x x).symm]
           have (z : ℂ) (h: z ∈ succ_adjion (K_zero M) n αn): starRingEnd ℂ z ∈  succ_adjion (K_zero M) n αn := by
             exact @ConjClosed.conj_L _ hc z h
@@ -284,9 +284,8 @@ lemma layers_le_closure (K : QuadraticChain.Field) (n : ℕ) (α : Fin n → Set
 
 end QuadraticChain
 
-lemma chain_iff_adjion_roots (M : Set ℂ) (h₀ : 0 ∈ M) (h₁ : 1 ∈ M): (∃n, ∃ α: Fin n → Set ℂ, z ∈ (succ_adjion (K_zero M) n α) ∧ succ_adjion_root (K_zero M) n α) ↔  (∃ (n : ℕ) (L : ℕ →  IntermediateField ℚ ℂ) (h: ∀i,  L i ≤ L (i + 1)),
+lemma chain_iff_adjion_roots (M : Set ℂ) (_h₀ : 0 ∈ M) (_h₁ : 1 ∈ M): (∃n, ∃ α: Fin n → Set ℂ, z ∈ (succ_adjion (K_zero M) n α) ∧ succ_adjion_root (K_zero M) n α) ↔  (∃ (n : ℕ) (L : ℕ →  IntermediateField ℚ ℂ) (_h: ∀i,  L i ≤ L (i + 1)),
     z ∈ L n ∧  K_zero M = L 0 ∧ (∀ i < n, relfinrank (L i) (L (i+1)) = 2)) := by
-  clear h₀ h₁
   constructor
   · rintro ⟨n, α, hz, hr⟩
     have hz' := QuadraticChain.layers_le_closure (K_zero M) n α hr hz
@@ -317,7 +316,7 @@ theorem Classfication_z_in_M_inf  (M : Set ℂ) (z : ℂ) (h₀: 0 ∈ M) (h₁:
   have hLn: (L n).carrier ≤ MField M h₀ h₁ := by
     apply adjoin_in_MField' M h₀ h₁ L h hL₀ n h_deg
   simp only [Subsemiring.coe_carrier_toSubmonoid, Subalgebra.coe_toSubsemiring, coe_toSubalgebra,
-    Set.le_eq_subset, Set.subset_def, SetLike.mem_coe] at hLn
+    Set.subset_def, SetLike.mem_coe] at hLn
   simp_rw[ ←Subfield.mem_carrier] at hLn
   have : (MField M h₀ h₁).carrier = M_inf M := rfl
   rw[this] at hLn
@@ -359,7 +358,7 @@ lemma div_two_2pown (a n : ℕ) (h: a ∣ 2^ n) :  ∃m : ℕ, 2^m  = a:= by
   have: a ≠ 0 := by
     intro ha
     subst a
-    simpa using h
+    simp at h
   use (a.primeFactorsList.length)
   symm
   apply Nat.eq_prime_pow_of_unique_prime_dvd this
@@ -381,7 +380,7 @@ lemma mulfinrank_help (R K L: IntermediateField ℚ ℂ) (h₁: R ≤ K) (h₂: 
   ←IntermediateField.relfinrank_mul_relfinrank h₁ h₂]
   have: Module.finrank K (extendScalars h₂) = K.relfinrank L := by
     exact Eq.symm (relfinrank_eq_finrank_of_le h₂)
-  simp only [mul_eq_mul_left_iff, this]
+  simp only [this]
 
 lemma degree_of_Ln (n : ℕ) (L : ℕ →  IntermediateField ℚ ℂ) (h:  ∃   (_: ∀i,  L i ≤ L (i + 1)),
     K_zero M = L 0 ∧ (∀ i < n, relfinrank (L i) (L (i+1)) = 2)): relfinrank (K_zero M) (L n) = 2^n := by
@@ -410,8 +409,7 @@ lemma Classfication_z_in_M_inf_2m {M : Set ℂ} (h₀: 0 ∈ M) (h₁:1 ∈ M) (
     have : Module.finrank (K_zero M) ((K_zero M) ⟮z⟯) ∣ 2^n := by
       rw[←hn]
       apply finrank_div
-      simp only [adjoin_le_iff, coe_extendScalars, Set.le_eq_subset, Set.singleton_subset_iff,
-        SetLike.mem_coe, hLn]
+      simp only [adjoin_le_iff, coe_extendScalars, Set.singleton_subset_iff, SetLike.mem_coe, hLn]
     apply div_two_2pown' _  _ this
   have: IsIntegral (↥(K_zero M)) z := by
     have _: FiniteDimensional (↥(K_zero M)) (extendScalars this) := by
@@ -430,19 +428,19 @@ lemma Classfication_z_in_M_inf_2m {M : Set ℂ} (h₀: 0 ∈ M) (h₁:1 ∈ M) (
 lemma Classfication_z_in_M_inf_2m_not {M : Set ℂ} (h₀: 0 ∈ M) (h₁:1 ∈ M) (z : ℂ) :
     ¬ (∃ m ,2 ^ m = (minpoly (K_zero M) z).degree) → z ∉ M_inf M := by
   apply Not.imp_symm
-  simp only [not_not, Nat.cast_ofNat]
+  simp only [not_not]
   apply Classfication_z_in_M_inf_2m (h₀: 0 ∈ M) (h₁:1 ∈ M)
 
 
 lemma Classfication_z_in_M_inf_2m_rat {M : Set ℂ} (h₀: 0 ∈ M) (h₁:1 ∈ M) (z : ℂ) (h: ∃j:ℕ, Module.finrank ℚ (K_zero M) = 2^j) :
     ¬ (∃ m, 2 ^ m = (minpoly ℚ z).degree) → z ∉ M_inf M := by
   apply Not.imp_symm
-  simp only [not_not, Nat.cast_ofNat]
+  simp only [not_not]
   have:  (∃ m ,2 ^ m = (minpoly (K_zero M) z).degree) → ∃ m, 2 ^ m = (minpoly ℚ z).degree := by
     intro h'
     obtain ⟨m, hm⟩ := h'
     obtain ⟨j, hj⟩ := h
-    letI : IsScalarTower ℚ (K_zero M) ((K_zero M)⟮z⟯) :=
+    let : IsScalarTower ℚ (K_zero M) ((K_zero M)⟮z⟯) :=
       IsScalarTower.of_algebraMap_eq' rfl
     have hmj: Module.finrank ℚ (restrictScalars ℚ ((K_zero M) ⟮z⟯)) = 2^(m+j) := by
       have: minpoly (↥(K_zero M)) z ≠ 0 := by

@@ -391,32 +391,45 @@ Since $\lambda$ is a solution of a quadratic equation we now get that $\lambda$ 
 \end{lemma}
 \begin{proof}
     \uses{lem:ConjClosed.distSq, lem:ConjClosed.Intersection_line_circle}
-    The initial step is to demonstrate that $ z\in C_1 \cap C_2 \Leftrightarrow \exists G,  z\in G \cap C_1 \land z \in G \cap C_2$.\\
-    "$\Rightarrow$": If $z$ is to be in both $G \cap C_1$ and $G \cap C_2$, it must be the case that $z$ is in both $C_1$ and $C_2$. Consequently, it is also in $C_1 \cap C_2$. \\
-    "$\Leftarrow$": We begin by establishing that $z=x + iy\in C_1\cap C_2$ is equivalent to:
-        $$\|z-z_1\| = r_1 \land \|z - z_2\| = r_2 \Leftrightarrow 2(x_2-x_1)x-2(\imath y_2-\imath y_1)\imath y = r_1^2-r_2^2-x_1^2+x_2^2+(\imath y_1)^2-(\imath y_2)^2$$
-        The remaining task is to identify two elements in $L$ that satisfy the given equation. This can be achieved by considering three cases:
-        In the initial case, where $x_1 = x_2$, it can be demonstrated that $y_1 \ne y_2$, as otherwise it would follow that $C_1=C_2$. Here, we can choose
-        \begin{align*}
-            z_1 &:= 1 + \imath (\frac{r_1^2 - r_2^2 + (\imath y_2)^2 - (\imath y_1)^2}{-2(y_2-y_1)})\\
-            z_2 &:= 0 + \imath (\frac{r_1^2 - r_2^2 + (\imath y_2)^2 - (\imath y_1)^2}{-2(y_2-y_1)})
-        \end{align*}
-        In the second case we have $y_1 = y_2$ and $x_1 \ne x_2$. Here we can choose 
-        \footnote[1]{During the process of formalising this proof, it became evident that for $y_1=y_2=0$ and $L\subseteq\R$, there does not exist a line $G$ with the property that $G\cap C_1=G\cap C_2=C_1\cap C_2$.
-            This error can also be found in the source \cite{JAN_SCHRÖER:2023} and was noticed too late, so it could not be corrected in time. The existence of an $w$ such that $z\in L(\sqrt{w})$ is still correct and is the result we are interested in.}
-        \begin{align*}
-            z_1 &:= (\frac{r_1^2 - r_2^2 + x_2^2 - x_1^2}{2(x_2-x_1)}) + \imath y_1\\
-            z_2 &:= (\frac{r_1^2 - r_2^2 + x_2^2 - x_1^2}{2(x_2-x_1)}) - \imath y_1
-        \end{align*}
-    %$$\|z - z_1\| = r_1 \land \|z - z_2\| = r_2 \Leftrightarrow 2(x_2-x_1)x-2(\imath y_2-\imath y_1)\imath y = r_1^2-r_2^2-x_^2+x_2^2+(\imath y_1)^2-(\imath y_2)^2$$ % \overset{0\le\|\cdot\|\land0\le r}{\Leftrightarrow}
-        For $ x_1 \ne x_2$ and $y_1 \ne y_2$ chose 
-        \begin{align*}
-            z_1 &:= (\frac{r_1^2 - r_2^2 + x_2^2 - x_1^2 + (\imath y_2)^2 - (\imath y_1)^2+2(\imath (y_2)-(\imath y_1))(\imath y_1)}{2(x_2-x_1)}) + \imath y_1\\ % x_1 + \imath (\frac{r_1^2 - r_2^2 + x_2^2 - x_1^2 + (\imath y_2)^2 - (\imath y_1)^2-2(x_2-x_1)x_1}{2(y_2-y_1)})\\
-            z_2 &:= (\frac{r_1^2 - r_2^2 + x_2^2 - x_1^2 + (\imath y_2)^2 - (\imath y_1)^2+2(\imath (y_2)-(\imath y_1))(\imath y_2)}{2(x_2-x_1)}) + \imath y_2\\
-        \end{align*}
-    
-        Since the points $z_1$ and $z_2$ lie in $L$, we can conclude that the line $G$ lies in the set of lines of $L$. This allows us to apply the results stated in lemma \ref{lem:ConjClosed.Intersection_line_circle} to obtain $w$, with the result that $z$ is contained within the set $L(w)$.
-\end{proof}
+    Define 
+    $z \in C_1 \cap C_2$,
+    $d=C_2.c-C_2.c$,
+    $D=d\overline d$,
+    $s=\frac{r_1^2-r_2^2+D}{2D}$.
+   
+    Have $\(D\ne0\)$,$\(D,s\in L\)$
+
+    Set
+    $x=\frac{z-a}{d}-s$,
+    $\omega=s^2-\frac{r_1^2}{D}\in L$.
+
+    Resulting in $x^2=\omega$. And therefore $z=a+d(s+x)\in L\langle x\rangle$
+%    The initial step is to demonstrate that $ z\in C_1 \cap C_2 \Leftrightarrow \exists G,  z\in G \cap C_1 \land z \in G \cap C_2$.\\
+%    "$\Rightarrow$": If $z$ is to be in both $G \cap C_1$ and $G \cap C_2$, it must be the case that $z$ is in both $C_1$ and $C_2$. Consequently, it is also in $C_1 \cap C_2$. \\
+%    "$\Leftarrow$": We begin by establishing that $z=x + iy\in C_1\cap C_2$ is equivalent to:
+%        $$\|z-z_1\| = r_1 \land \|z - z_2\| = r_2 \Leftrightarrow 2(x_2-x_1)x-2(\imath y_2-\imath y_1)\imath y = r_1^2-r_2^2-x_1^2+x_2^2+(\imath y_1)^2-(\imath y_2)^2$$
+%        The remaining task is to identify two elements in $L$ that satisfy the given equation. This can be achieved by considering three cases:
+%        In the initial case, where $x_1 = x_2$, it can be demonstrated that $y_1 \ne y_2$, as otherwise it would follow that $C_1=C_2$. Here, we can choose
+%        \begin{align*}
+%            z_1 &:= 1 + \imath (\frac{r_1^2 - r_2^2 + (\imath y_2)^2 - (\imath y_1)^2}{-2(y_2-y_1)})\\
+%            z_2 &:= 0 + \imath (\frac{r_1^2 - r_2^2 + (\imath y_2)^2 - (\imath y_1)^2}{-2(y_2-y_1)})
+%        \end{align*}
+%        In the second case we have $y_1 = y_2$ and $x_1 \ne x_2$. Here we can choose 
+%        \footnote[1]{During the process of formalising this proof, it became evident that for $y_1=y_2=0$ and $L\subseteq\R$, there does not exist a line $G$ with the property that $G\cap C_1=G\cap C_2=C_1\cap C_2$.
+%            This error can also be found in the source \cite{JAN_SCHRÖER:2023} and was noticed too late, so it could not be corrected in time. The existence of an $w$ such that $z\in L(\sqrt{w})$ is still correct and is the result we are interested in.}
+%        \begin{align*}
+%            z_1 &:= (\frac{r_1^2 - r_2^2 + x_2^2 - x_1^2}{2(x_2-x_1)}) + \imath y_1\\
+%            z_2 &:= (\frac{r_1^2 - r_2^2 + x_2^2 - x_1^2}{2(x_2-x_1)}) - \imath y_1
+%        \end{align*}
+%    %$$\|z - z_1\| = r_1 \land \|z - z_2\| = r_2 \Leftrightarrow 2(x_2-x_1)x-2(\imath y_2-\imath y_1)\imath y = r_1^2-r_2^2-x_^2+x_2^2+(\imath y_1)^2-(\imath y_2)^2$$ % \overset{0\le\|\cdot\|\land0\le r}{\Leftrightarrow}
+%        For $ x_1 \ne x_2$ and $y_1 \ne y_2$ chose 
+%        \begin{align*}
+%            z_1 &:= (\frac{r_1^2 - r_2^2 + x_2^2 - x_1^2 + (\imath y_2)^2 - (\imath y_1)^2+2(\imath (y_2)-(\imath y_1))(\imath y_1)}{2(x_2-x_1)}) + \imath y_1\\ % x_1 + \imath (\frac{r_1^2 - r_2^2 + x_2^2 - x_1^2 + (\imath y_2)^2 - (\imath y_1)^2-2(x_2-x_1)x_1}{2(y_2-y_1)})\\
+%            z_2 &:= (\frac{r_1^2 - r_2^2 + x_2^2 - x_1^2 + (\imath y_2)^2 - (\imath y_1)^2+2(\imath (y_2)-(\imath y_1))(\imath y_2)}{2(x_2-x_1)}) + \imath y_2\\
+%        \end{align*}
+%    
+%        Since the points $z_1$ and $z_2$ lie in $L$, we can conclude that the line $G$ lies in the set of lines of $L$. This allows us to apply the results stated in lemma \ref{lem:ConjClosed.Intersection_line_circle} to obtain $w$, with the result that $z$ is contained within the set $L(w)$.
+    \end{proof}
 
 \section[K zero]{The Field $\mathcal{K}_0$}
 This section develops a conjugation-closed field that depends on the set $\mathcal{M}$.

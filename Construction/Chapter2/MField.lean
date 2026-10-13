@@ -580,45 +580,145 @@ lemma ilc_L' (z : ℂ) (h : z ∈ ilc L): ∃ ω ∈ L, ∃ x : ℂ, x * x = ω 
 -- lemma icc_L' (z : ℂ) (h : z ∈ icc L): ∃ ω ∈ L, z ∈ L⟮ω^(1/2:ℂ)⟯ := by sorry
 
 
---Work in progress in Minex\icc_L
-lemma icc_L' (z :ℂ) {c₁ c₂ : Construction.circle} (hc₁: c₁ ∈ C L) (hc₂: c₂ ∈ C L) (h_ne : c₁.points' ≠ c₂.points'): z ∈ c₁.points ∩ c₂.points ↔
-  ∃ l :line, l ∈ Construction.L L ∧  z ∈ l.points ∩ c₁.points ∧ z ∈ l.points ∩ c₂.points := by
-  refine ⟨?_,?_⟩ <;> intro h
-  . have h₁: z ∈ c₁.points := by
-      exact Set.mem_of_mem_inter_left h
-    have h₂: z ∈ c₂.points := by
-      exact Set.mem_of_mem_inter_right h
-
-    sorry
-    -- let l: line := {z₁ := c₁.c, z₂ := c₂.c}
-    -- have hz': z ∈ icc L := by
-    --     unfold icc
-    --     refine ⟨c₁, hc₁, c₂, hc₂, h, h_ne⟩
-    -- have hl: l ∈ Construction.L L := by
-    --   refine (l_in_L_M ↑L).mpr ⟨c₁.c, c₂.c, rfl, ?_, ?_, ?_⟩
-    --   . rw [@c_in_C_M] at hc₁
-    --     obtain ⟨z, _, _, hc₁, hz, _⟩ := hc₁
-    --     simp_all only
-    --   . rw [@c_in_C_M] at hc₂
-    --     obtain ⟨z, _, _, hc₂, hz, _⟩ := hc₂
-    --     simp_all only
-    --   . sorry
-    -- have hlz: z ∈ l.points := by
-    --   sorry
-    -- use l, hl
-    -- refine ⟨Set.mem_inter hlz h₁, Set.mem_inter hlz h₂⟩
-  . obtain ⟨_, _ , h₁, h₂⟩ := h
-    exact ⟨Set.mem_of_mem_inter_right h₁,Set.mem_of_mem_inter_right h₂⟩
-
-
 lemma icc_L (z : ℂ) (h : z ∈ icc L): ∃ ω ∈ L,∃ x : ℂ, x * x = ω ∧ z ∈ L⟮x⟯ := by
   obtain ⟨c₁, hc₁, c₂, hc₂, h_icc, h_ne⟩ := h
-  rw[icc_L' _ z hc₁ hc₂ h_ne] at h_icc
-  obtain ⟨l, hl, hl₁, _⟩ := h_icc
-  have h:  z ∈ ilc L := by
-    refine ⟨c₁, hc₁, l, hl, ?_⟩
-    simp_all only [ne_eq, Set.mem_inter_iff, true_and, and_self]
-  exact ilc_L' L z h
+  let d := c₂.c - c₁.c
+  let D := d * conj d
+  let s := (c₁.r ^ 2 - c₂.r ^ 2 + D) / (2 * D)
+  have hd: d ∈ L := by
+    refine (sub_mem ?_ ?_)
+    . obtain ⟨z, _, _, hc, hz, _⟩ := hc₂
+      simp only [hc]
+      exact hz
+    . obtain ⟨z, _, _, hc, hz, _⟩ := hc₁
+      simp only [hc]
+      exact hz
+  have h_ne': c₂.c ≠ c₁.c := by
+    simp only [←sub_eq_zero, ne_eq] at h_ne
+    intro hcenters
+    have hr : c₁.r = c₂.r := by
+      calc
+        c₁.r = dist z c₁.c := (Metric.mem_sphere.mp h_icc.1).symm
+        _ = dist z c₂.c := by rw [hcenters]
+        _ = c₂.r := Metric.mem_sphere.mp h_icc.2
+    apply h_ne
+    change (⟨c₁.c, c₁.r⟩ : EuclideanGeometry.Sphere ℂ) =
+      ⟨c₂.c, c₂.r⟩
+    rw [hcenters, hr]
+  have hD: D  ≠ 0 := by
+    simp only [map_sub, ne_eq, mul_eq_zero, not_or, D, d]
+    refine ⟨sub_ne_zero_of_ne h_ne', ?_⟩
+    . rw [← @RingHom.map_sub]
+      exact (map_ne_zero_iff (starRingEnd ℂ) (RingHom.injective (starRingEnd ℂ))).mpr (sub_ne_zero_of_ne h_ne')
+  have hD': D ∈ L := mul_mem hd (conj_L L d hd)
+  have hs: s ∈ L := by
+    refine div_mem (add_mem (sub_mem ?_ ?_) hD') (mul_mem (ofNat_mem L 2) hD')
+    . obtain ⟨_, a, b, hc, _, ha, hb⟩ := hc₁
+      simp only [hc, dist_eq]
+      rw [← Complex.ofReal_pow, Complex.sq_abs, ← Complex.mul_conj]
+      refine L.mul_mem (L.sub_mem ha hb) ?_
+      simp only [map_sub]
+      exact sub_mem (ConjClosed.conj_L L a ha) (ConjClosed.conj_L L b hb)
+    . obtain ⟨_, a, b, hc, _, ha, hb⟩ := hc₂
+      simp only [hc, dist_eq]
+      rw [← Complex.ofReal_pow, Complex.sq_abs, ← Complex.mul_conj]
+      refine L.mul_mem (L.sub_mem ha hb) ?_
+      simp only [map_sub]
+      exact sub_mem (ConjClosed.conj_L L a ha) (ConjClosed.conj_L L b hb)
+  let x:= (z - c₁.c)/d -s
+  have hd0 : d ≠ 0 := sub_ne_zero_of_ne h_ne'
+  have hz : z = c₁.c + d * (s + x) := by
+    simp only [add_sub_cancel, x]
+    field_simp [hd0]
+  refine ⟨s^2 - c₁.r^2 / D, ?_, x, ?_, ?_⟩
+  have hr₁: (c₁.r^2 :ℂ) ∈ L := by
+    obtain ⟨_, a, b, hc, _, ha, hb⟩ := hc₁
+    simp only [hc, dist_eq]
+    rw [← Complex.ofReal_pow, Complex.sq_abs, ← Complex.mul_conj]
+    refine L.mul_mem (L.sub_mem ha hb) ?_
+    simp only [map_sub]
+    exact sub_mem (ConjClosed.conj_L L a ha) (ConjClosed.conj_L L b hb)
+  refine sub_mem (pow_mem hs 2) (div_mem hr₁ hD')
+  . have hcd0 : (starRingEnd ℂ) d ≠ 0 :=
+      (mul_ne_zero_iff.mp hD).2
+
+    have circle_eq (c : Construction.circle) (hz : z ∈ c.points) :
+        (z - c.c) * (starRingEnd ℂ) (z - c.c) = (c.r : ℂ)^2 := by
+      have hr : Complex.abs (z - c.c) = c.r := by
+        change dist z c.c = c.r
+        exact Metric.mem_sphere.mp hz
+      rw [Complex.mul_conj, ← Complex.sq_abs, Complex.ofReal_pow, hr]
+
+    have h₁ := circle_eq c₁ h_icc.1
+    have h₂ := circle_eq c₂ h_icc.2
+
+    have he : z - c₂.c = (z - c₁.c) - d := by
+      simp only [d]
+      ring_nf
+
+
+    rw [he, map_sub] at h₂
+
+    have hlin :
+        (z - c₁.c) * (starRingEnd ℂ) d +
+          d * (starRingEnd ℂ) (z - c₁.c) =
+        (c₁.r : ℂ)^2 - (c₂.r : ℂ)^2 + D := by
+      simp only [map_sub, D]
+      rw [←h₁, ←h₂]
+      simp only [map_sub]
+      ring_nf
+    let u : ℂ := (z - c₁.c) / d
+
+    have hprod :
+        u * (starRingEnd ℂ) u = (c₁.r : ℂ)^2 / D := by
+      simp only [map_div₀, map_sub, u, D, ← h₁, map_sub]
+      exact div_mul_div_comm (z - c₁.c) d ((starRingEnd ℂ) z - (starRingEnd ℂ) c₁.c) ((starRingEnd ℂ) d)
+
+    have hsum : u + (starRingEnd ℂ) u = 2 * s := by
+      calc
+        u + (starRingEnd ℂ) u =
+            ((z - c₁.c) * (starRingEnd ℂ) d +
+              d * (starRingEnd ℂ) (z - c₁.c)) / D := by
+          simp only [map_div₀, map_sub, u, D]
+          field_simp [hd0, hcd0]
+          ring
+        _ = ((c₁.r : ℂ)^2 - (c₂.r : ℂ)^2 + D) / D := by
+          rw [hlin]
+        _ = 2 * s := by
+          simp only [s]
+          rw[←mul_div_assoc, mul_comm 2, mul_div_assoc, mul_comm 2, div_mul_cancel_right₀]
+          ring_nf
+          exact Ne.symm (NeZero.ne' 2)
+    have: x = u - s := by simp [x, s, u]
+    rw [this]
+    linear_combination u * hsum - hprod
+
+  -- Simplify (3 times the same thing)
+  . rw[hz]
+    refine add_mem ?_ (mul_mem ?_ (add_mem ?_ (mem_adjoin_simple_self (↥L) x)))
+    . obtain ⟨z, _, _, hc, hz, _⟩ := hc₁
+      simp only [hc]
+      rw [← @adjoin_simple_le_iff]
+      have: (↥L)⟮z⟯ = ⊥ := by
+        refine adjoin_simple_eq_bot_iff.mpr ?_
+        simp only [← mem_carrier, bot_toSubalgebra, Subsemiring.coe_carrier_toSubmonoid,
+          Subalgebra.coe_toSubsemiring, Algebra.coe_bot, Set.mem_range, Subtype.exists]
+        exact BEx.intro z hz rfl
+      simp only [this, bot_le]
+    . rw [← @adjoin_simple_le_iff]
+      have: (↥L)⟮d⟯ = ⊥ := by
+        refine adjoin_simple_eq_bot_iff.mpr ?_
+        simp only [← mem_carrier, bot_toSubalgebra, Subsemiring.coe_carrier_toSubmonoid,
+          Subalgebra.coe_toSubsemiring, Algebra.coe_bot, Set.mem_range, Subtype.exists]
+        exact BEx.intro d hd rfl
+      simp only [this, bot_le]
+    . rw [← @adjoin_simple_le_iff]
+      have: (↥L)⟮s⟯ = ⊥ := by
+        refine adjoin_simple_eq_bot_iff.mpr ?_
+        simp only [← mem_carrier, bot_toSubalgebra, Subsemiring.coe_carrier_toSubmonoid,
+          Subalgebra.coe_toSubsemiring, Algebra.coe_bot, Set.mem_range, Subtype.exists]
+        exact BEx.intro s hs rfl
+      simp only [this, bot_le]
 
 end ConjClosed
 

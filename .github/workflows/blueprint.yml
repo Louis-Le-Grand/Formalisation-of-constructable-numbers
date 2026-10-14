@@ -48,6 +48,11 @@ jobs:
           lint: "default"
           mk_all-check: "true"
 
+      - name: Generate TOML metadata for docgen-action
+        # docgen-action reads lakefile.toml; Lake still builds from lakefile.lean.
+        # Generate this in CI so the two configurations cannot drift apart.
+        run: lake translate-config toml lakefile.toml
+
       - name: Compile blueprint and documentation
         uses: leanprover-community/docgen-action@deed0cdc44dd8e5de07a300773eb751d33e32fc8 # 2025-10-26
         with:

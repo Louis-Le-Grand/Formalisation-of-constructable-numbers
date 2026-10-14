@@ -1,77 +1,54 @@
-name: Lean, documentation and blueprint
+name: Compile blueprint
 
 on:
   push:
-    branches: [main]
-  pull_request:
-  workflow_dispatch:
+    branches:
+      [main] # Trigger on pushes to the default branch
+  workflow_dispatch:        # Allow manual triggering of the workflow from the GitHub Actions interface
 
-permissions:
-  contents: read
-
+# Cancel previous runs if a new commit is pushed to the same PR or branch
 concurrency:
-  group: blueprint-${{ github.ref }}
-  cancel-in-progress: true
+  group: ${{ github.ref }}  # Group runs by the ref (branch or PR)
+  cancel-in-progress: true  # Cancel any ongoing runs in the same group
+
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: read          # Read access to repository contents
+  pages: write            # Write access to GitHub Pages
+  id-token: write         # Write access to ID tokens
+  issues: write           # Write access to issues
+  pull-requests: write    # Write access to pull requests
 
 jobs:
   build_project:
     runs-on: ubuntu-latest
-    name: Build project and documentation
+    name: Build project
     steps:
+      - name: Cleanup to free disk space
+        uses: jlumbroso/free-disk-space@54081f138730dfa15788a46383842cd2f914a1be # v1.3.0
+        with:
+          tool-cache: false
+          android: true
+          dotnet: false
+          haskell: false
+          large-packages: false
+          docker-images: false
+          swap-storage: false
+
       - name: Checkout project
-        uses: actions/checkout@v7
-
-      - name: Build Lean project
-        uses: leanprover/lean-action@v1
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
         with:
-          build-args: Construction
+          fetch-depth: 0 # Fetch all history for all branches and tags
 
-      - name: Build API documentation
-        run: lake -R -Kenv=dev build Construction:docs
-
-      - name: Build blueprint and dependency graph
-        uses: xu-cheng/texlive-action@v3
+      - name: Build and lint project
+        uses: leanprover/lean-action@434f25c2f80ded67bba02502ad3a86f25db50709 # 2025-07-02
         with:
-          docker_image: ghcr.io/xu-cheng/texlive-full:20250401
-          run: |
-            apk add --no-cache make py3-pip git pkgconfig graphviz graphviz-dev gcc musl-dev
-            git config --global --add safe.directory "$GITHUB_WORKSPACE"
-            python3 -m venv env
-            . env/bin/activate
-            pip install --upgrade pip wheel
-            # Alpine stores Graphviz plugins outside the default linker search path.
-            LDFLAGS="-L/usr/lib/graphviz -Wl,-rpath,/usr/lib/graphviz" \
-              pip install leanblueprint==0.0.20
-            leanblueprint web
-            leanblueprint pdf
-            mkdir -p docs
-            cp blueprint/print/print.pdf docs/blueprint.pdf
-            cp -r blueprint/web docs/blueprint
+          build: true
+          lint: true
+          mk_all-check: true
 
-      - name: Check blueprint declarations
-        run: lake exe checkdecls blueprint/lean_decls
-
-      - name: Collect API documentation
-        run: |
-          sudo chown -R runner docs
-          cp -r .lake/build/doc docs/docs
-
-      - name: Upload docs and blueprint
-        uses: actions/upload-pages-artifact@v4
+      - name: Compile blueprint and documentation
+        uses: leanprover-community/docgen-action@deed0cdc44dd8e5de07a300773eb751d33e32fc8 # 2025-10-26
         with:
-          path: docs/
-
-  deploy:
-    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
-    needs: build_project
-    runs-on: ubuntu-latest
-    permissions:
-      pages: write
-      id-token: write
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+          blueprint: true
+          homepage: home_page

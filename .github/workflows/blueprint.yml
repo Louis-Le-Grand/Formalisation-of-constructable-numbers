@@ -43,7 +43,6 @@ jobs:
             LDFLAGS="-L/usr/lib/graphviz -Wl,-rpath,/usr/lib/graphviz" \
               pip install leanblueprint==0.0.20
             leanblueprint web
-            python3 scripts/update_dependency_graph.py
             leanblueprint pdf
             mkdir -p docs
             cp blueprint/print/print.pdf docs/blueprint.pdf

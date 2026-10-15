@@ -15,6 +15,7 @@ blueprint/print/
 *.blg
 *.log
 *.out
+*.toc
 *.pdf
 *.fls
 *.fdb_latexmk

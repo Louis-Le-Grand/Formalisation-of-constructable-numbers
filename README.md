@@ -2,6 +2,8 @@
 
 [![Documentation](https://img.shields.io/badge/Documentation-passing-green)](https://Louis-Le-Grand.github.io/Formalisation-of-constructable-numbers/docs) [![Blueprint](https://img.shields.io/badge/Blueprint-WIP-blue)](https://Louis-Le-Grand.github.io/Formalisation-of-constructable-numbers/blueprint)  [![Paper](https://img.shields.io/badge/Paper-green)](https://github.com/Louis-Le-Grand/Formalisation-of-constructable-numbers/blob/Submitted/blueprint/src/print.pdf)
 
+# Status of the Formalisation
+The formalisation has been completed, but GitHub Actions does not run for the decimation and the blueprint is out of date.
 
 # Submitted version
 The version of the project in which it was submitted is [here](https://github.com/Louis-Le-Grand/Formalisation-of-constructable-numbers/tree/Submitted).

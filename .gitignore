@@ -17,6 +17,7 @@ blueprint/print/
 *.out
 *.pdf
 *.fls
+*.toc
 *.fdb_latexmk
 *.synctex.gz
 fox.md
